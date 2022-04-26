@@ -6,7 +6,7 @@ public interface UserService {
     //회원가입
     User createUser(User user);
     //회원정보 조회
-//    User findById();
+    User findById(String userId);
     //이메일로 회원정보 조회
     User findByEmail(String userEmail);
     //회원정보 수정

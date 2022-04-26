@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -30,8 +31,8 @@ public class User implements Serializable {
     LocalDateTime userJoindata;
     @Column(name = "user_store")
     String userStore;
-    @Column(name = "user_licenseNum")
-    String userLicenseNum;
+    @Column(name = "user_licensenum")
+    String userLicensenum;
     @Column(name = "user_image")
     String userImage;
     @Column(name = "user_storesignup")

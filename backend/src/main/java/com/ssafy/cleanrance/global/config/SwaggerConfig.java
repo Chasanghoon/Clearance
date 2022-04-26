@@ -26,7 +26,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ssafy.clearance"))
+//                .apis(RequestHandlerSelectors.basePackage("com.ssafy.clearance"))
                 .paths(PathSelectors.ant("/api/**"))
                 .build();
     }
