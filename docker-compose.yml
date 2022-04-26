@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   frontend:
-    image: frontend-vue
+    image: frontend-react
     build:
       context: frontend/
       dockerfile: Dockerfile
