@@ -1,8 +1,8 @@
-package com.ssafy.tourist.global.util;
+package com.ssafy.cleanrance.global.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
-import com.ssafy.tourist.global.model.response.BaseResponseBody;
+import com.ssafy.cleanrance.global.model.response.BaseResponseBody;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;

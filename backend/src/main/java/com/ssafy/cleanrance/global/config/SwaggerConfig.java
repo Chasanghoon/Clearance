@@ -1,4 +1,4 @@
-package com.ssafy.tourist.global.config;
+package com.ssafy.cleanrance.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ssafy.tourist"))
+                .apis(RequestHandlerSelectors.basePackage("com.ssafy.clearance"))
                 .paths(PathSelectors.ant("/api/**"))
                 .build();
     }
@@ -61,8 +61,8 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("혼자어때 API")
-                .description("SSAFY 6th 특화 프로젝트 혼자어때")
+        return new ApiInfoBuilder().title("Clearance API")
+                .description("SSAFY 6기 자율 프로젝트 Clearance")
                 .termsOfServiceUrl("https://edu.ssafy.com")
                 .contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com"))
                 .license("SSAFY License")

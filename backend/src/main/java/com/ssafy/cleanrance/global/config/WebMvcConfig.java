@@ -1,4 +1,4 @@
-package com.ssafy.tourist.global.config;
+package com.ssafy.cleanrance.global.config;
 
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

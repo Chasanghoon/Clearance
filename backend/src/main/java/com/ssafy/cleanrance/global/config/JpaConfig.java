@@ -1,4 +1,4 @@
-package com.ssafy.tourist.global.config;
+package com.ssafy.cleanrance.global.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

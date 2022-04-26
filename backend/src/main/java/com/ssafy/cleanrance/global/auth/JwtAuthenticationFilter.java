@@ -1,11 +1,11 @@
-package com.ssafy.tourist.global.auth;
+package com.ssafy.cleanrance.global.auth;
 
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ssafy.tourist.domain.user.service.UserService;
-import com.ssafy.tourist.global.util.JwtTokenUtil;
-import com.ssafy.tourist.global.util.ResponseBodyWriteUtil;
-import com.ssafy.tourist.domain.user.db.entity.User;
+import com.ssafy.cleanrance.domain.user.service.UserService;
+import com.ssafy.cleanrance.global.util.JwtTokenUtil;
+import com.ssafy.cleanrance.global.util.ResponseBodyWriteUtil;
+import com.ssafy.cleanrance.domain.user.db.entity.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

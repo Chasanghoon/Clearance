@@ -1,8 +1,8 @@
-package com.ssafy.tourist.global.config;
+package com.ssafy.cleanrance.global.config;
 
-import com.ssafy.tourist.domain.user.service.UserService;
-import com.ssafy.tourist.global.auth.JwtAuthenticationFilter;
-import com.ssafy.tourist.global.auth.SsafyUserDetailService;
+import com.ssafy.cleanrance.domain.user.service.UserService;
+import com.ssafy.cleanrance.global.auth.JwtAuthenticationFilter;
+import com.ssafy.cleanrance.global.auth.SsafyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

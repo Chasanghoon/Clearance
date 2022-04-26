@@ -1,7 +1,7 @@
-package com.ssafy.tourist.global.auth;
+package com.ssafy.cleanrance.global.auth;
 
-import com.ssafy.tourist.domain.user.db.entity.User;
-import com.ssafy.tourist.domain.user.service.UserService;
+import com.ssafy.cleanrance.domain.user.db.entity.User;
+import com.ssafy.cleanrance.domain.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
