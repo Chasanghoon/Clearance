@@ -9,7 +9,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "5001:5001" 
     volumes:
       - /etc/letsencrypt/copy/k6e203.p.ssafy.io:/var/www/html
     container_name: "frontend"
