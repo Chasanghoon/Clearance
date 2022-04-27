@@ -5,6 +5,8 @@ import pymysql
 import json
 import datetime
 
+import ssl
+
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
 
@@ -45,4 +47,6 @@ def hello():
     return json.dumps(rows, cls=CustomJSONEncoder)
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port="5000", debug=True)
+    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    ssl_context.load_cert_chain(certfile='/root/cert.pem', keyfile='/root/privkey.pem', password='ssafy')
+    app.run(host="0.0.0.0", port=5000, ssl_context=ssl_context, debug=True)
