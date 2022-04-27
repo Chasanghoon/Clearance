@@ -1,18 +1,48 @@
-from flask import Flask # 서버 구현을 위한 Flask 객체 import
-from flask_restx import Api, Resource # Api 구현을 위한 Api 객체 import
+from flask import Flask
+from flask_cors import CORS
+from flask.json import JSONEncoder
+import pymysql
+import json
+import datetime
 
-app = Flask(__name__) # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
-# api = Api(app) # Flask 객체에 Api 객체 등록
+class CustomJSONEncoder(JSONEncoder):
+    def default(self, obj):
 
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
 
-# @api.route("/data")
-# class HelloWorld(Resource):
-    # def get(self): # GET 요청시 리턴 값에 해당하는 dict를 JSON 형태로 변환
-    #     return {"hello" : "world!"}
+        return JSONEncoder.default(self, obj)
 
-@app.route('/data')
+app = Flask(__name__)
+
+cors = CORS(app, resources={"/data/": {"origin": ""}})
+
+@app.route('/data', methods = ['GET'])
 def hello():
-    return 'Hello, My First Flask!'
+
+    db = pymysql.connect(
+        host="k6e203.p.ssafy.io",
+        port=3306,
+        user="ssafy",
+        password="ssafy",
+        db='free_ssafy',
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        init_command='SET NAMES UTF8'
+    )
+
+    curs = db.cursor()
+
+    sql = "SELECT * FROM free_ssafy.user"
+
+    curs.execute(sql)
+
+    rows = curs.fetchall()
+
+    db.commit()
+    db.close()
+
+    return json.dumps(rows, cls=CustomJSONEncoder)
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port="5001")
+    app.run(host="127.0.0.1", port="5000", debug=True)
