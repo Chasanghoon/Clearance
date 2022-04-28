@@ -8,17 +8,17 @@ import com.ssafy.cleanrance.domain.user.service.UserService;
 import com.ssafy.cleanrance.global.auth.JwtAuthenticationFilter;
 import com.ssafy.cleanrance.global.model.response.BaseResponseBody;
 import com.ssafy.cleanrance.global.util.JwtTokenUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
+import io.swagger.models.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -33,7 +33,8 @@ public class UserController {
     PasswordEncoder passwordEncoder;
     @Autowired
     JwtTokenUtil jwtTokenUtil;
-    @PostMapping("/signup/store")
+
+    @PostMapping(value = "/signup/store",consumes = {"multipart/form-data"})
     @ApiOperation(value = "매장 회원가입", notes = "매장 회원가입을 진행한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -41,14 +42,18 @@ public class UserController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity signupStore(@RequestBody StoreSignUpRequest storeSignUpRequest) throws IOException {
-        String str =userService.createStore(storeSignUpRequest);
+    public ResponseEntity signupStore(
+            @RequestPart MultipartFile image,
+            @RequestPart StoreSignUpRequest storeSignUpRequest) throws IOException {
+        String str =userService.createStore(storeSignUpRequest,image);
         if("OK".equals(str)){
             return new ResponseEntity(HttpStatus.OK);
         }else{
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
     }
+
+
     @PostMapping("/signup/user")
     @ApiOperation(value = "구매자 회원가입", notes = "구매자 회원가입을 진행한다.")
     @ApiResponses({
@@ -108,15 +113,5 @@ public class UserController {
         }
         throw new IllegalStateException("잘못된 정보입니다.");
     }
-//    @GetMapping("/license")
-//    @ApiOperation(value = "사업자등록번호 조회", notes = "사업자등록번호로 상태를 조회한다.")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "성공"),
-//            @ApiResponse(code = 401, message = "인증 실패"),
-//            @ApiResponse(code = 404, message = "사용자 없음"),
-//            @ApiResponse(code = 500, message = "서버 오류")
-//    })
-//    public  ResponseEntity<?> license(@RequestParam String licensenum){
-//
-//    }
+
 }

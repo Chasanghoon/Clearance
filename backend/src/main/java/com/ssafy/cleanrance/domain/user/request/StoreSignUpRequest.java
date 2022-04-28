@@ -1,6 +1,5 @@
 package com.ssafy.cleanrance.domain.user.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -26,10 +25,6 @@ public class StoreSignUpRequest {
     String user_phone;
     @ApiModelProperty(name = "매장 주소", example = "부산 사상구 낙동대로 733")
     String user_address;
-//  이미지
-//    @ApiModelProperty(name = "매장 이미지")
-//    MultipartFile user_image;
-    @ApiModelProperty(name = "매장 사업자등록번호")
+    @ApiModelProperty(name = "매장 사업자등록번호", example = "0000000000")
     String user_licensenum;
-
 }

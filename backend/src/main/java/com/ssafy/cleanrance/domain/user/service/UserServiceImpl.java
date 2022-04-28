@@ -6,7 +6,9 @@ import com.ssafy.cleanrance.domain.user.db.repository.UserRepository;
 import com.ssafy.cleanrance.domain.user.db.repository.UserRepositorySupport;
 import com.ssafy.cleanrance.domain.user.request.StoreSignUpRequest;
 import com.ssafy.cleanrance.domain.user.request.UserSignUpRequest;
+import com.ssafy.cleanrance.global.util.ImageUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.Optional;
 
 @Service("userService")
@@ -36,13 +38,12 @@ public class UserServiceImpl implements UserService{
     @Autowired
     PasswordEncoder passwordEncoder;
     @Override
-    public String createStore(StoreSignUpRequest storeSignUpRequest) throws IOException {
+    public String createStore(StoreSignUpRequest storeSignUpRequest, MultipartFile image) throws IOException {
         Optional<User> check = userRepository.findById(storeSignUpRequest.getUser_id());
-        if(check.isPresent()) {
+        if(check.isPresent()){
             return "";
         }
         User user = new User();
-        //request toUser
         user.setUserId(storeSignUpRequest.getUser_id());
         user.setUserRole(2);
         user.setUserName(storeSignUpRequest.getUser_store());
@@ -53,58 +54,58 @@ public class UserServiceImpl implements UserService{
         LocalDateTime time = LocalDateTime.now();
         user.setUserJoindate(time);
         user.setUserStore(storeSignUpRequest.getUser_store());
+
         //이미지 Base64 인코딩 소스로 변환
-//        MultipartFile file = storeSignUpRequest.getUser_image();
-//        String img = null;
-//        if(null != file){
-//            Base64.Encoder encoder = Base64.getEncoder();
-//            byte[] imgEncode = encoder.encode(file.getBytes());
-//            img = new String(imgEncode, "UTF-8");
-//            System.out.println(img);
-//        }
-//        user.setUserImage(img);
+        MultipartFile mfile = image;
+        File file = ImageUtil.multipartFileToFile(mfile);
+        byte[] byteArr = FileUtils.readFileToByteArray(file);
+        String base64 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
+        System.out.println(base64);
+        //인코딩된 소스로 userImage 저장
+        user.setUserImage(base64);
         //매장 주소로 위도 경도 찾기
-        String APIKey = "162a4b2b1191ced1dc56afc5f9bbde83";
-        String URL="http://dapi.kakao.com/v2/local/search/address.json?query=";
-        String jsonString = null;
-        String addr = user.getUserAddress();
-        try{
-            addr = URLEncoder.encode(storeSignUpRequest.getUser_address(),"UTF-8");
-            String juso = URL+addr;
-            URL url = new URL(juso);
-            URLConnection conn = url.openConnection();
-            conn.setRequestProperty("Authorization","KakaoAK "+APIKey);
-            //리턴 받은 json읽어오기
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            //String Buffer에 담기
-            StringBuffer docJson = new StringBuffer();
-            String line;
-            while((line = br.readLine()) != null){
-                docJson.append(line);
-            }
-            br.close();
-            //JSONObject로 변경
-            JSONObject jsonObject = new JSONObject(docJson.toString());
-            //documents와 meta 두개의 맵중에 x,y가 들어있는 documents가져오기
-            JSONArray jsonArray= (JSONArray) jsonObject.get("documents");
-            JSONObject tempObj = (JSONObject) jsonArray.get(0);
-            System.out.println("lat : " + tempObj.getDouble("y"));
-            System.out.println("lng : " + tempObj.getDouble("x"));
-            double y = tempObj.getDouble("y");
-            double x = tempObj.getDouble("x");
-            Location location = new Location();
-            location.setLocationXpoint(x);
-            location.setLocationYpoint(y);
-            location.setUserId(user.getUserId());
+//        String APIKey = "162a4b2b1191ced1dc56afc5f9bbde83";
+//        String URL="http://dapi.kakao.com/v2/local/search/address.json?query=";
+//        String jsonString = null;
+//        String addr = user.getUserAddress();
+//        try{
+//            addr = URLEncoder.encode(storeSignUpRequest.getUser_address(),"UTF-8");
+//            String juso = URL+addr;
+//            URL url = new URL(juso);
+//            URLConnection conn = url.openConnection();
+//            conn.setRequestProperty("Authorization","KakaoAK "+APIKey);
+//            //리턴 받은 json읽어오기
+//            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+//            //String Buffer에 담기
+//            StringBuffer docJson = new StringBuffer();
+//            String line;
+//            while((line = br.readLine()) != null){
+//                docJson.append(line);
+//            }
+//            br.close();
+//            //JSONObject로 변경
+//            JSONObject jsonObject = new JSONObject(docJson.toString());
+//            //documents와 meta 두개의 맵중에 x,y가 들어있는 documents가져오기
+//            JSONArray jsonArray= (JSONArray) jsonObject.get("documents");
+//            JSONObject tempObj = (JSONObject) jsonArray.get(0);
+//            System.out.println("lat : " + tempObj.getDouble("y"));
+//            System.out.println("lng : " + tempObj.getDouble("x"));
+//            double y = tempObj.getDouble("y");
+//            double x = tempObj.getDouble("x");
+//            Location location = new Location();
+//            location.setLocationXpoint(x);
+//            location.setLocationYpoint(y);
+//            location.setUserId(user.getUserId());
             userRepository.save(user);
-            locationRepository.save(location);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//            locationRepository.save(location);
+//
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return "OK";
     }
     @Override
