@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,7 +18,11 @@ public class QUser extends EntityPathBase<User> {
 
     private static final long serialVersionUID = -1350160178L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QUser user = new QUser("user");
+
+    public final QLocation location;
 
     public final StringPath userAddress = createString("userAddress");
 
@@ -27,9 +32,11 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath userImage = createString("userImage");
 
-    public final DateTimePath<java.time.LocalDateTime> userJoindata = createDateTime("userJoindata", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> userJoindate = createDateTime("userJoindate", java.time.LocalDateTime.class);
 
     public final StringPath userLicensenum = createString("userLicensenum");
+
+    public final StringPath userName = createString("userName");
 
     public final StringPath userPassword = createString("userPassword");
 
@@ -42,15 +49,24 @@ public class QUser extends EntityPathBase<User> {
     public final BooleanPath userStoresignup = createBoolean("userStoresignup");
 
     public QUser(String variable) {
-        super(User.class, forVariable(variable));
+        this(User.class, forVariable(variable), INITS);
     }
 
     public QUser(Path<? extends User> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QUser(PathMetadata metadata) {
-        super(User.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QUser(PathMetadata metadata, PathInits inits) {
+        this(User.class, metadata, inits);
+    }
+
+    public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.location = inits.isInitialized("location") ? new QLocation(forProperty("location"), inits.get("location")) : null;
     }
 
 }
