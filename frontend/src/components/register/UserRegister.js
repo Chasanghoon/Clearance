@@ -92,24 +92,44 @@ function UserRegister() {
     }
 
     const onSubmit = (e) => {
-        
-        console.log("온 서브밋 실행")
+
         if (validation()) return;
 
-        // API Call
-        console.log("API 통신하기")
+        // ! axios GET
+        // console.log("axios get")
+        // axios
+        //     .get("http://localhost:8080/api/user/?userId=테스트")
+        //     .then((result) => {
+        //         console.log(result);
+        //         console.log(result.data.userId);
+        //         alert("회원가입 완료!");
+        //     })
+        //     .catch(() => { console.error("axios get 실패했다.") });
+
+        // ! axios POST
+        console.log("axios post")
         axios
-        .get("http://localhost:8080/api/user/user1?userId=user1")
-        .then((result)=> {
-            console.log(result);
-            console.log(result.data.userId);
-        })
-        .catch(()=>{console.error("axios 통신 실패했다.")}
-            );
-
-
-    }
-
+            .post("http://localhost:8080/api/signup/user",
+                {
+                    user_address: address,
+                    user_email: email,
+                    user_id: userId,
+                    user_name: userName,
+                    user_password: password,
+                    user_phone: phone
+                },
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                },
+            )
+            .then(() => {
+                console.log("axios post 성공")
+                alert("회원가입 완료!");
+            })
+            .catch(() => {
+                console.error("axios post 실패")
+            });
+    };
     return (
         <div>
             <Container className='mt-5'>
@@ -144,14 +164,6 @@ function UserRegister() {
                             {emailError && <div className="invalid-input">올바른 이메일 형식을 입력하세요.</div>}
                         </Col>
                     </Form.Group>
-
-
-                    {/* 
-                    // ! ******************************************
-                    // ? phone, address, Detailed Address 넣어야함
-                    // ! ******************************************
-                    */}
-
                     <Form.Group as={Row} className="mb-3">
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="연락처" value={phone} onChange={onChangePhone} />
