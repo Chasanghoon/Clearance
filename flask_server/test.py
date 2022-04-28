@@ -17,14 +17,32 @@ app = Flask(__name__)
 
 cors = CORS(app, resources={"/data/": {"origin": ""}})
 
-@app.route('/data/basket-add', methods = ['POST'])
-def basket_add():
-
+@app.route('/data/basket/<string:user_id>', methods = ['GET'])
+def basket_check(user_id):
     # db 연결
     db = pymysql.connect(
         host="localhost",
         user="root",
-        password="a79468520",
+        password="root",
+        db='free_ssafy',
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        init_command='SET NAMES UTF8'
+    )
+
+    # data 조회하기
+
+
+
+
+
+@app.route('/data/basket-add', methods = ['POST'])
+def basket_add():
+    # db 연결
+    db = pymysql.connect(
+        host="localhost",
+        user="root",
+        password="root",
         db='free_ssafy',
         charset='utf8',
         cursorclass=pymysql.cursors.DictCursor,
@@ -67,12 +85,11 @@ def basket_add():
 
 @app.route('/data/basket-rem', methods = ['DELETE'])
 def basket_remove():
-
     # db 연결
     db = pymysql.connect(
         host="localhost",
         user="root",
-        password="a79468520",
+        password="root",
         db='free_ssafy',
         charset='utf8',
         cursorclass=pymysql.cursors.DictCursor,
