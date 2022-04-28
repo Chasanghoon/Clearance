@@ -6,22 +6,22 @@ import com.ssafy.cleanrance.domain.user.db.repository.UserRepository;
 import com.ssafy.cleanrance.domain.user.db.repository.UserRepositorySupport;
 import com.ssafy.cleanrance.domain.user.request.StoreSignUpRequest;
 import com.ssafy.cleanrance.domain.user.request.UserSignUpRequest;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Optional;
 
 @Service("userService")
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     PasswordEncoder passwordEncoder;
     @Override
-    public String createStore(StoreSignUpRequest storeSignUpRequest) {
+    public String createStore(StoreSignUpRequest storeSignUpRequest) throws IOException {
         Optional<User> check = userRepository.findById(storeSignUpRequest.getUser_id());
         if(check.isPresent()) {
             return "";
@@ -53,6 +53,17 @@ public class UserServiceImpl implements UserService{
         LocalDateTime time = LocalDateTime.now();
         user.setUserJoindate(time);
         user.setUserStore(storeSignUpRequest.getUser_store());
+        //이미지 Base64 인코딩 소스로 변환
+//        MultipartFile file = storeSignUpRequest.getUser_image();
+//        String img = null;
+//        if(null != file){
+//            Base64.Encoder encoder = Base64.getEncoder();
+//            byte[] imgEncode = encoder.encode(file.getBytes());
+//            img = new String(imgEncode, "UTF-8");
+//            System.out.println(img);
+//        }
+//        user.setUserImage(img);
+        //매장 주소로 위도 경도 찾기
         String APIKey = "162a4b2b1191ced1dc56afc5f9bbde83";
         String URL="http://dapi.kakao.com/v2/local/search/address.json?query=";
         String jsonString = null;

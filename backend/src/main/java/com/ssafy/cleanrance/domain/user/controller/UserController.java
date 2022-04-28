@@ -20,6 +20,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @Api(value = "유저 API", tags = {"User"})
 @RestController
 @RequestMapping("/api")
@@ -39,7 +41,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity signupStore(@RequestBody StoreSignUpRequest storeSignUpRequest){
+    public ResponseEntity signupStore(@RequestBody StoreSignUpRequest storeSignUpRequest) throws IOException {
         String str =userService.createStore(storeSignUpRequest);
         if("OK".equals(str)){
             return new ResponseEntity(HttpStatus.OK);
@@ -63,7 +65,7 @@ public class UserController {
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
     }
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user")
     @ApiOperation(value = "회원 본인 정보 조회", notes = "회원 본인의 정보를 응답한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -76,7 +78,7 @@ public class UserController {
         return ResponseEntity.status(200).body(user);
     }
 
-    @DeleteMapping("/member/{userId}")
+    @DeleteMapping("/member")
     @ApiOperation(value = "회원삭제", notes = "회원을 삭제한다.")    @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -106,5 +108,15 @@ public class UserController {
         }
         throw new IllegalStateException("잘못된 정보입니다.");
     }
-
+//    @GetMapping("/license")
+//    @ApiOperation(value = "사업자등록번호 조회", notes = "사업자등록번호로 상태를 조회한다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "사용자 없음"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public  ResponseEntity<?> license(@RequestParam String licensenum){
+//
+//    }
 }

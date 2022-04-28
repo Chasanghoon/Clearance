@@ -4,9 +4,11 @@ import com.ssafy.cleanrance.domain.user.db.entity.User;
 import com.ssafy.cleanrance.domain.user.request.StoreSignUpRequest;
 import com.ssafy.cleanrance.domain.user.request.UserSignUpRequest;
 
+import java.io.IOException;
+
 public interface UserService {
     //회원가입
-    String createStore(StoreSignUpRequest storeSignUpRequest);
+    String createStore(StoreSignUpRequest storeSignUpRequest) throws IOException;
     String createUser(UserSignUpRequest userSignUpRequest);
     //회원정보 조회
     User findById(String userId);

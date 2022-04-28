@@ -1,14 +1,18 @@
 package com.ssafy.cleanrance.domain.user.request;
 
-import io.swagger.annotations.Api;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Getter
 @Setter
 @ApiModel("StoreSignUpRequest")
+@Builder
 public class StoreSignUpRequest {
     @ApiModelProperty(name = "매장 ID", example = "storeTest1")
     String user_id;
@@ -23,6 +27,9 @@ public class StoreSignUpRequest {
     @ApiModelProperty(name = "매장 주소", example = "부산 사상구 낙동대로 733")
     String user_address;
 //  이미지
-//    @ApiModelProperty(name = "매장 사업자등록번호")
-//    String user_licensenum;
+//    @ApiModelProperty(name = "매장 이미지")
+//    MultipartFile user_image;
+    @ApiModelProperty(name = "매장 사업자등록번호")
+    String user_licensenum;
+
 }
