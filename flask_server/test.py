@@ -62,7 +62,37 @@ def basket_add():
     db.commit()
     db.close()
 
-    result = 'success'
+    result = 'success?'
+    return jsonify(result=result)
+
+@app.route('/data/basket-rem', methods = ['DELETE'])
+def basket_remove():
+
+    # db 연결
+    db = pymysql.connect(
+        host="localhost",
+        user="root",
+        password="a79468520",
+        db='free_ssafy',
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        init_command='SET NAMES UTF8'
+    )
+
+    # request에서 data 받아오기
+    data = request.get_json()
+    user_id = data['user_id']
+    product_id = data['product_id']
+
+    curs = db.cursor()
+    sql = "delete from basket where user_id = %s and product_id = %s"
+    curs.execute(sql, (user_id, product_id))
+
+    # db 저장 / 연결 종료
+    db.commit()
+    db.close()
+
+    result = 'success?'
     return jsonify(result=result)
 
 if __name__ == "__main__":
