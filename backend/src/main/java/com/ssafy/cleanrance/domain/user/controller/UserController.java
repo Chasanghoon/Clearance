@@ -43,8 +43,8 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity signupStore(
-            @RequestPart MultipartFile image,
-            @RequestPart StoreSignUpRequest storeSignUpRequest) throws IOException {
+            @RequestPart StoreSignUpRequest storeSignUpRequest,
+            @RequestPart(value = "file", required = false) MultipartFile image) throws IOException {
         String str =userService.createStore(storeSignUpRequest,image);
         if("OK".equals(str)){
             return new ResponseEntity(HttpStatus.OK);

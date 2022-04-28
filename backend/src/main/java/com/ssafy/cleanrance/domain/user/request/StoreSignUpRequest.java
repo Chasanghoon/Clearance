@@ -5,13 +5,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Getter
 @Setter
 @ApiModel("StoreSignUpRequest")
-@Builder
 public class StoreSignUpRequest {
     @ApiModelProperty(name = "매장 ID", example = "storeTest1")
     String user_id;
