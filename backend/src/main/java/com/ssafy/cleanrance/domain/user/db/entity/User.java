@@ -3,10 +3,7 @@ package com.ssafy.cleanrance.domain.user.db.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -19,6 +16,8 @@ public class User implements Serializable {
     String userId;
     @Column(name = "user_role")
     int userRole;
+    @Column(name = "user_name")
+    String userName;
     @Column(name = "user_password")
     String userPassword;
     @Column(name = "user_email")
@@ -28,7 +27,7 @@ public class User implements Serializable {
     @Column(name = "user_address")
     String userAddress;
     @Column(name = "user_joindate")
-    LocalDateTime userJoindata;
+    LocalDateTime userJoindate;
     @Column(name = "user_store")
     String userStore;
     @Column(name = "user_licensenum")
@@ -37,4 +36,6 @@ public class User implements Serializable {
     String userImage;
     @Column(name = "user_storesignup")
     Boolean userStoresignup;
+    @OneToOne(mappedBy = "user")
+    private Location location;
 }
