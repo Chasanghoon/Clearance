@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td{
+	border : 1px solid black;
+}
+</style>
+<meta charset="UTF-8">
+<title>회원관리</title>
+</head>
+<body>
+<table>
+	<tr>
+		<th>사번</th>
+		<th>이름</th>
+		<th>부서</th>
+		<th>전화번호</th>
+	</tr>
+		{% for emp in empList%}
+		<tr>
+			<td>{{emp.empno}}</td>
+			<td>{{emp.name}}</td>
+			<td>{{emp.department}}</td>
+			<td>{{emp.phone}}</td>
+		</tr>
+		{% endfor %}
+</table>
+</body>
+</html>

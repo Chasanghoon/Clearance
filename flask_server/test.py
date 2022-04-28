@@ -1,64 +1,69 @@
-from urllib import request
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
+from flask.json import JSONEncoder, jsonify
 import pymysql
-import test
+import json
+import datetime
 
+class CustomJSONEncoder(JSONEncoder):
+    def default(self, obj):
 
-db = pymysql.connect(host='k6e203.p.ssafy.io', user='ssafy', password='ssafy', charset='utf8')
-curs = db.cursor()
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
 
-import ssl
-
+        return JSONEncoder.default(self, obj)
 
 app = Flask(__name__)
 
-app.debug = True
+cors = CORS(app, resources={"/data/": {"origin": ""}})
 
-cors = CORS(app, resources={"/data/" : {"origin" : ""}})
+@app.route('/data/basket-add', methods = ['POST'])
+def basket_add():
 
-@app.route('/data', methods = ['GET'])
-def hello():
-
+    # db 연결
     db = pymysql.connect(
-        host="k6e203.p.ssafy.io",
-        port=3306,
-        user="ssafy",
-        password="ssafy",
+        host="localhost",
+        user="root",
+        password="a79468520",
         db='free_ssafy',
         charset='utf8',
         cursorclass=pymysql.cursors.DictCursor,
         init_command='SET NAMES UTF8'
     )
 
-
+    # request에서 data 받아오기
+    data = request.get_json()
+    user_id = data['user_id']
+    product_id = data['product_id']
+    basket_count = data['basket_count']
 
     curs = db.cursor()
-
-    sql = "SELECT user_id, user_role, user_password, user_email FROM free_ssafy.user"
-
+    # 필요한 data 불러오기
+    sql = "select store_user_id from product where product_id = {};".format(product_id)
     curs.execute(sql)
-
     rows = curs.fetchall()
+    store_user_id = rows[0]['store_user_id']
 
+    # Insert data
+    # case1 성공
+    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookCheck)
+    # values ("customer", 1, "store1", 3, 0);'''
+    # case2 실패
+    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookCheck)
+    #          values ({}, {}, {}, {}, {})'''.format(user_id, product_id, store_user_id, basket_count, 0);
+    # curs.execute(sql)
+
+    # case3 성공
+    sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookCheck)
+             values (%s, %s, %s, %s, %s)'''
+    curs.execute(sql, (user_id, product_id, store_user_id, basket_count, 0))
+
+    # db 저장 / 연결 종료
     db.commit()
     db.close()
 
-    return json.dumps({'test': rows})
-
-
+    result = 'success'
+    return jsonify(result=result)
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port="5000", debug=True)
-
-
-class CustomJSONEncoder(JSONEncoder):
-    def default(self, obj):
-
-        if isinstance(obj, decimal.Decimal):
-            return float(obj)
-
-        if isinstance(obj, datetime.datetime):
-            return obj.strftime('%Y-%m-%d %H:%M:%S')
-
-        return JSONEncoder.default(self, obj)
+    app.run(host="127.0.0.1", port=5001, debug=True)
