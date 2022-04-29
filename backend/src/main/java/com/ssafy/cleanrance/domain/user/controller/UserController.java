@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Api(value = "유저 API", tags = {"User"})
 @RestController
@@ -70,7 +71,8 @@ public class UserController {
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
     }
-    @GetMapping("/user")
+
+    @GetMapping("/member")
     @ApiOperation(value = "회원 본인 정보 조회", notes = "회원 본인의 정보를 응답한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -83,8 +85,25 @@ public class UserController {
         return ResponseEntity.status(200).body(user);
     }
 
+    @PutMapping("/member")
+    @ApiOperation(value = "회원 본인 정보 수정", notes = "회원 정보(비밀번호,이메일,전화번호,주소)를 수정하여 저장한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<Optional<User>> updateUser(@RequestBody User user){
+        Optional<User> update = Optional.ofNullable(userService.updateUser(user).orElse(null));
+        if(null == update){
+            throw new IllegalStateException("없는 아이디");
+        }
+        return ResponseEntity.status(200).body(update);
+    }
+
     @DeleteMapping("/member")
-    @ApiOperation(value = "회원삭제", notes = "회원을 삭제한다.")    @ApiResponses({
+    @ApiOperation(value = "회원삭제", notes = "회원을 삭제한다.")
+    @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
@@ -105,11 +124,13 @@ public class UserController {
     })
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest){
         User user = userService.findById(authRequest.getUser_id());
+        String user_id = authRequest.getUser_id();
         if(null != user){
             if(!passwordEncoder.matches(authRequest.getUser_password(), user.getUserPassword())){
                 throw new IllegalStateException("잘못된 비밀번호입니다.");
             }
-            return ResponseEntity.status(200).body(jwtTokenUtil.getToken(user.getUserId()));
+            String[] arr = {jwtTokenUtil.getToken(user.getUserId()), user_id};
+            return ResponseEntity.status(200).body(arr);
         }
         throw new IllegalStateException("잘못된 정보입니다.");
     }

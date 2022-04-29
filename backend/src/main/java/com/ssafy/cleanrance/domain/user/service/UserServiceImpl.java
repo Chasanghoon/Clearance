@@ -45,15 +45,15 @@ public class UserServiceImpl implements UserService{
         }
         User user = new User();
         user.setUserId(storeSignUpRequest.getUser_id());
+        user.setUserName(storeSignUpRequest.getUser_name());
         user.setUserRole(2);
-        user.setUserName(storeSignUpRequest.getUser_store());
+        user.setUserName(storeSignUpRequest.getUser_name());
         user.setUserPassword(passwordEncoder.encode(storeSignUpRequest.getUser_password()));
         user.setUserEmail(storeSignUpRequest.getUser_email());
         user.setUserPhone(storeSignUpRequest.getUser_phone());
         user.setUserAddress(storeSignUpRequest.getUser_address());
         LocalDateTime time = LocalDateTime.now();
         user.setUserJoindate(time);
-        user.setUserStore(storeSignUpRequest.getUser_store());
         user.setUserLicensenum(storeSignUpRequest.getUser_licensenum());
         //이미지 Base64 인코딩 소스로 변환
         MultipartFile mfile = image;
@@ -132,12 +132,23 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findById(String userId) {
         User user = userRepositorySupport.findById(userId);
+
         return user;
     }
 
+
     @Override
-    public User findByEmail(String userEmail) {
-        return null;
+    public Optional<User> updateUser(User user) {
+        Optional<User> updateUser = userRepository.findById(user.getUserId());
+//       비밀번호,이메일,전화번호,주소
+        updateUser.ifPresent(selectUser ->{
+            selectUser.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+            selectUser.setUserEmail(user.getUserEmail());
+            selectUser.setUserPhone(user.getUserPhone());
+            selectUser.setUserEmail(user.getUserEmail());
+            userRepository.save(selectUser);
+        });
+        return updateUser;
     }
 
     @Override

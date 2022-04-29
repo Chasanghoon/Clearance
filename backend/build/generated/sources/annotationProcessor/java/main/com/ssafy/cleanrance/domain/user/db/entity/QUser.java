@@ -44,10 +44,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<Integer> userRole = createNumber("userRole", Integer.class);
 
-    public final StringPath userStore = createString("userStore");
-
-    public final BooleanPath userStoresignup = createBoolean("userStoresignup");
-
     public QUser(String variable) {
         this(User.class, forVariable(variable), INITS);
     }
