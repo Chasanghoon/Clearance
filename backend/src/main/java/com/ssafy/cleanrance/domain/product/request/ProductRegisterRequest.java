@@ -21,8 +21,6 @@ public class ProductRegisterRequest {
     int product_price;
     @ApiModelProperty(name = "할인율", example = "0.5")
     float product_discount;
-    @ApiModelProperty(name = "상품 할인가", example = "1000")
-    int product_discountPrice;
     @ApiModelProperty(name = "재고", example = "30")
     int product_stock;
     @ApiModelProperty(name = "유통기한", example = "20221225")

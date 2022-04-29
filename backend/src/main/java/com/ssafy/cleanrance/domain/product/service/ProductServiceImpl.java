@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService{
         product.setStoreUserId(productRegisterRequest.getStore_user_id());
         product.setProductPrice(productRegisterRequest.getProduct_price());
         product.setProductDiscount(productRegisterRequest.getProduct_discount());
-        product.setProductDiscountprice(productRegisterRequest.getProduct_discountPrice());
+        product.setProductDiscountprice((int) (productRegisterRequest.getProduct_price() * productRegisterRequest.getProduct_discount()));
         product.setProductStock(productRegisterRequest.getProduct_stock());
         product.setProductExpdate(productRegisterRequest.getProduct_expDate());
         //이미지 Base64 인코딩 소스로 변환
