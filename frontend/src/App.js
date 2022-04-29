@@ -1,26 +1,23 @@
-import logo from './logo.svg';
-import pengu from './pengu.jpg'
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './components/login/Login';
+import Main from './components/main/Main';
+import UserRegister from './components/register/UserRegister';
+
+
 
 function App() {
   return (
-      <div className="App">
-      <header className="App-header">
-        <img src={pengu} />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+    <>
+      <BrowserRouter>
+         <Routes>
+          <Route path="/" element={ <Main /> } />
 
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<UserRegister />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
