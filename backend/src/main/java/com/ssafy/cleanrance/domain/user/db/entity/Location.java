@@ -1,5 +1,6 @@
 package com.ssafy.cleanrance.domain.user.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.cleanrance.domain.user.db.entity.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Location implements Serializable {
     @Column(name = "user_id")
     String userId;
     @OneToOne
+//    @JsonManagedReference
     @JoinColumn(name = "user_id",insertable = false,updatable = false)
     private User user;
 }
