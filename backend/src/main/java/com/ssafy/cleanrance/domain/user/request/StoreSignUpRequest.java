@@ -13,8 +13,8 @@ import lombok.Setter;
 public class StoreSignUpRequest {
     @ApiModelProperty(name = "매장 ID", example = "storeTest1")
     String user_id;
-    @ApiModelProperty(name="매장 이름", example = "사상점")
-    String user_store;
+    @ApiModelProperty(name = "매장 담당자", example = "담당자1")
+    String user_name;
     @ApiModelProperty(name="매장 비밀번호", example = "test1")
     String user_password;
     @ApiModelProperty(name="매장 이메일", example = "storeTest1@ssafy.com")

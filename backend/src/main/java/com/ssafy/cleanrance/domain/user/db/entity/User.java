@@ -1,5 +1,6 @@
 package com.ssafy.cleanrance.domain.user.db.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,16 +27,16 @@ public class User implements Serializable {
     String userPhone;
     @Column(name = "user_address")
     String userAddress;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "user_joindate")
     LocalDateTime userJoindate;
-    @Column(name = "user_store")
-    String userStore;
     @Column(name = "user_licensenum")
     String userLicensenum;
     @Column(name = "user_image")
     String userImage;
-    @Column(name = "user_storesignup")
-    Boolean userStoresignup;
+
+//    @JsonIgnore
     @OneToOne(mappedBy = "user")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Location location;
 }

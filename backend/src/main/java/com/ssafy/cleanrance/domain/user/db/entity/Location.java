@@ -1,5 +1,6 @@
 package com.ssafy.cleanrance.domain.user.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.cleanrance.domain.user.db.entity.User;
 import lombok.Getter;
 import lombok.Setter;
