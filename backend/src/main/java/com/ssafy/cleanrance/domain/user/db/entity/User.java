@@ -27,16 +27,16 @@ public class User implements Serializable {
     String userPhone;
     @Column(name = "user_address")
     String userAddress;
-//    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "user_joindate")
     LocalDateTime userJoindate;
     @Column(name = "user_licensenum")
     String userLicensenum;
     @Column(name = "user_image")
     String userImage;
-    @OneToOne(mappedBy = "user")
+
 //    @JsonIgnore
-//    @JsonBackReference
-    @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+    @OneToOne(mappedBy = "user")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Location location;
 }

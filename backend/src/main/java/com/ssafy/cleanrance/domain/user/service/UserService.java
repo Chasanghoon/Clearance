@@ -11,9 +11,9 @@ import java.util.Optional;
 public interface UserService {
     //회원가입
     String createStore(StoreSignUpRequest storeSignUpRequest, MultipartFile image) throws IOException;
-    String createUser(UserSignUpRequest userSignUpRequest);
+    String createUser(UserSignUpRequest userSignUpRequest, MultipartFile image) throws IOException;
     //회원정보 조회
-    User findById(String userId);
+    Optional<User> findById(String userId);
     //회원정보 수정
     Optional<User> updateUser(User user);
     //회원 탈퇴

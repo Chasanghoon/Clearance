@@ -63,8 +63,10 @@ public class UserController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity signupUser(@RequestBody UserSignUpRequest userSignUpRequest){
-        String str = userService.createUser(userSignUpRequest);
+    public ResponseEntity signupUser(
+            @RequestPart UserSignUpRequest userSignUpRequest,
+            @RequestPart(value = "file") MultipartFile image) throws IOException {
+        String str = userService.createUser(userSignUpRequest, image);
         if("OK".equals(str)){
             return new ResponseEntity(HttpStatus.OK);
         }else{
@@ -80,13 +82,14 @@ public class UserController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<User> findUser(@RequestParam String userId){
-        User user = userService.findById(userId);
+    public ResponseEntity<Optional<User>> findUser(@RequestParam String userId){
+        Optional<User> user = userService.findById(userId);
         return ResponseEntity.status(200).body(user);
     }
 
     @PutMapping("/member")
-    @ApiOperation(value = "회원 본인 정보 수정", notes = "회원 정보(비밀번호,이메일,전화번호,주소)를 수정하여 저장한다.")
+    @ApiOperation(value = "회원 본인 정보 수정", notes = "회원 정보(비밀번호,이메일,전화번호,주소)를 수정하여 저장한다.<br/>" +
+            "<strong>userJoinDate빼주세요!!!넣으면 오류남!!!</strong>")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -110,7 +113,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity delete(@RequestParam String userId){
-        userService.deleteUser(userId).equals("OK");
+        userService.deleteUser(userId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -123,13 +126,13 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest){
-        User user = userService.findById(authRequest.getUser_id());
+        Optional<User> user = userService.findById(authRequest.getUser_id());
         String user_id = authRequest.getUser_id();
         if(null != user){
-            if(!passwordEncoder.matches(authRequest.getUser_password(), user.getUserPassword())){
+            if(!passwordEncoder.matches(authRequest.getUser_password(), user.get().getUserPassword())){
                 throw new IllegalStateException("잘못된 비밀번호입니다.");
             }
-            String[] arr = {jwtTokenUtil.getToken(user.getUserId()), user_id};
+            String[] arr = {jwtTokenUtil.getToken(user.get().getUserId()), user_id};
             return ResponseEntity.status(200).body(arr);
         }
         throw new IllegalStateException("잘못된 정보입니다.");

@@ -22,7 +22,6 @@ public class Location implements Serializable {
     @Column(name = "user_id")
     String userId;
     @OneToOne
-//    @JsonManagedReference
     @JoinColumn(name = "user_id",insertable = false,updatable = false)
     private User user;
 }

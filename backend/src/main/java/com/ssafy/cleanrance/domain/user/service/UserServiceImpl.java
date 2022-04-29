@@ -39,10 +39,6 @@ public class UserServiceImpl implements UserService{
     PasswordEncoder passwordEncoder;
     @Override
     public String createStore(StoreSignUpRequest storeSignUpRequest, MultipartFile image) throws IOException {
-        Optional<User> check = userRepository.findById(storeSignUpRequest.getUser_id());
-        if(check.isPresent()){
-            return "";
-        }
         User user = new User();
         user.setUserId(storeSignUpRequest.getUser_id());
         user.setUserName(storeSignUpRequest.getUser_name());
@@ -98,7 +94,6 @@ public class UserServiceImpl implements UserService{
             location.setUserId(user.getUserId());
             userRepository.save(user);
             locationRepository.save(location);
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
@@ -109,7 +104,7 @@ public class UserServiceImpl implements UserService{
         return "OK";
     }
     @Override
-    public String createUser(UserSignUpRequest userSignUpRequest) {
+    public String createUser(UserSignUpRequest userSignUpRequest, MultipartFile image) throws IOException {
         Optional<User> check = userRepository.findById(userSignUpRequest.getUser_id());
         if(check.isPresent()) {
            return "";
@@ -124,15 +119,21 @@ public class UserServiceImpl implements UserService{
         user.setUserAddress(userSignUpRequest.getUser_address());
         LocalDateTime time = LocalDateTime.now();
         user.setUserJoindate(time);
-        //이미지
+        //이미지 Base64 인코딩 소스로 변환
+        MultipartFile mfile = image;
+        File file = ImageUtil.multipartFileToFile(mfile);
+        byte[] byteArr = FileUtils.readFileToByteArray(file);
+        String base64 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
+        System.out.println(base64);
+        //인코딩된 소스로 userImage 저장
+        user.setUserImage(base64);
         userRepository.save(user);
         return "OK";
     }
 
     @Override
-    public User findById(String userId) {
-        User user = userRepositorySupport.findById(userId);
-
+    public Optional<User> findById(String userId) {
+        Optional<User> user = userRepository.findById(userId);
         return user;
     }
 
@@ -153,10 +154,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String deleteUser(String userId) {
-        Optional<User> user = Optional.ofNullable(userRepositorySupport.findById(userId));
-        if(null != user){
-            userRepository.deleteById(userId);
-        }
+        Optional<User> user = userRepository.findById(userId);
+        System.out.println(user);
+        userRepository.deleteById(userId);
         return "OK";
     }
 }
