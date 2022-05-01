@@ -21,9 +21,10 @@ cors = CORS(app, resources={"/data/": {"origin": ""}})
 def basket_check(user_id):
     # db 연결
     db = pymysql.connect(
-        host="localhost",
-        user="root",
-        password="root",
+        host="k6e203.p.ssafy.io",
+        port=3306,
+        user="ssafy",
+        password="ssafy",
         db='free_ssafy',
         charset='utf8',
         cursorclass=pymysql.cursors.DictCursor,
@@ -33,7 +34,7 @@ def basket_check(user_id):
     # user_id로 장바구니 조회
     curs = db.cursor()
     sql = '''select basket_id, product_id, basket_count from basket 
-             where user_id = %s and basket_bookCheck = %s;'''
+             where user_id = %s and basket_bookcheck = %s;'''
     curs.execute(sql, (user_id, 0))
     rows = curs.fetchall()
 
@@ -52,21 +53,21 @@ def basket_check(user_id):
 
         
         # print(rows2)
-        # [{'store_user_id': 'store1', 'product_name': '피자', 'product_price': 20000, 'product_discountPrice': 15000,'product_imageFront': None}]
+        # [{'store_user_id': 'store1', 'product_name': '피자', 'product_price': 20000, 'product_discountprice': 15000,'product_imagefront': None}]
+
         # product *로 변경
-        
         store_user_id = rows2[0]["store_user_id"]
         product_name = rows2[0]["product_name"]
         product_price = rows2[0]["product_price"]
-        product_discountPrice = rows2[0]["product_discountPrice"]
-        product_imageFront = rows2[0]["product_imageFront"]
+        product_discountprice = rows2[0]["product_discountprice"]
+        product_imagefront = rows2[0]["product_imagefront"]
 
         # +++추가
         category_id = rows2[0]["category_id"]
         product_discount = rows2[0]["product_discount"]
         product_stock = rows2[0]["product_stock"]
-        product_expDate = rows2[0]["product_expDate"]
-        product_imageBack = rows2[0]["product_imageBack"]
+        product_expdate = rows2[0]["product_expdate"]
+        product_imageback = rows2[0]["product_imageback"]
 
         sql = "select user_name from user where user_id = %s"
         curs.execute(sql, (store_user_id))
@@ -86,8 +87,8 @@ def basket_check(user_id):
                 # "store_user_id" : store_user_id,
                 "product_name" : product_name,
                 "product_price" : product_price,
-                "product_discountPrice" : product_discountPrice,
-                "product_imageFront" : product_imageFront,
+                "product_discountprice" : product_discountprice,
+                "product_imagefront" : product_imagefront,
 
                 # +++ 추가
                 "product_id" : product_id,
@@ -95,8 +96,8 @@ def basket_check(user_id):
                 "category_id" : category_id,
                 "product_discount" : product_discount,
                 "product_stock" : product_stock,
-                "product_expDate" : product_expDate,
-                "product_imageBack" : product_imageBack,
+                "product_expdate" : product_expdate,
+                "product_imageback" : product_imageback,
 
             }
         )
@@ -113,9 +114,10 @@ def basket_check(user_id):
 def basket_add():
     # db 연결
     db = pymysql.connect(
-        host="localhost",
-        user="root",
-        password="root",
+        host="k6e203.p.ssafy.io",
+        port=3306,
+        user="ssafy",
+        password="ssafy",
         db='free_ssafy',
         charset='utf8',
         cursorclass=pymysql.cursors.DictCursor,
@@ -137,15 +139,15 @@ def basket_add():
 
     # Insert data
     # case1 성공
-    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookCheck)
+    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookcheck)
     # values ("customer", 1, "store1", 3, 0);'''
     # case2 실패
-    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookCheck)
+    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookcheck)
     #          values ({}, {}, {}, {}, {})'''.format(user_id, product_id, store_user_id, basket_count, 0);
     # curs.execute(sql)
 
     # case3 성공
-    sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookCheck)
+    sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookcheck)
              values (%s, %s, %s, %s, %s)'''
     curs.execute(sql, (user_id, product_id, store_user_id, basket_count, 0))
 
@@ -161,9 +163,10 @@ def basket_add():
 def basket_remove():
     # db 연결
     db = pymysql.connect(
-        host="localhost",
-        user="root",
-        password="root",
+        host="k6e203.p.ssafy.io",
+        port=3306,
+        user="ssafy",
+        password="ssafy",
         db='free_ssafy',
         charset='utf8',
         cursorclass=pymysql.cursors.DictCursor,

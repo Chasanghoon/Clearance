@@ -54,9 +54,9 @@ def basket_check(user_id):
         rows2 = curs.fetchall()
 
         # print(rows2)
-        # [{'store_user_id': 'store1', 'product_name': '피자', 'product_price': 20000, 'product_discountPrice': 15000,'product_imageFront': None}]
-        # product *로 변경
+        # [{'store_user_id': 'store1', 'product_name': '피자', 'product_price': 20000, 'product_discountprice': 15000,'product_imagefront': None}]
 
+        # product *로 변경
         store_user_id = rows2[0]["store_user_id"]
         product_name = rows2[0]["product_name"]
         product_price = rows2[0]["product_price"]
@@ -140,10 +140,10 @@ def basket_add():
 
     # Insert data
     # case1 성공
-    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookCheck)
+    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookcheck)
     # values ("customer", 1, "store1", 3, 0);'''
     # case2 실패
-    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookCheck)
+    # sql = '''insert into basket (user_id, product_id, store_user_id, basket_count, basket_bookcheck)
     #          values ({}, {}, {}, {}, {})'''.format(user_id, product_id, store_user_id, basket_count, 0);
     # curs.execute(sql)
 
