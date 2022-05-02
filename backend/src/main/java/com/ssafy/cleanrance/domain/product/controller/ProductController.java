@@ -3,8 +3,9 @@ package com.ssafy.cleanrance.domain.product.controller;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.request.ProductDeleteReq;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
+import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.service.ProductService;
-import com.ssafy.cleanrance.domain.user.db.entity.User;
+import com.ssafy.cleanrance.global.model.response.BaseResponseBody;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,24 @@ public class ProductController {
         }else{
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
+    }
+
+    @PutMapping(value = "/product/modify")
+    @ApiOperation(value = "상품정보 수정", notes = "상품 정보를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity modify(
+            @ApiParam(value = "상품정보 수정", required = true)
+            @RequestPart ProductUpdatePutRequest productUpdatePutRequest,
+            @RequestPart(value = "frontimage", required = false) MultipartFile image1,
+            @RequestPart(value = "backimage", required = false) MultipartFile image2) throws IOException {
+//        Product product = productService.updateStore(productUpdatePutRequest, image1, image2);
+        Product product = productService.updateStore(productUpdatePutRequest, image1, image2);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
     @GetMapping("/product")
