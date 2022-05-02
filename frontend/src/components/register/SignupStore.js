@@ -26,8 +26,9 @@ function SignupStore() {
     const [userNameError, setUserNameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
-    const [addressError, setAddressError] = useState("");
-    const [licenseNumError, setLicenseNumError] = useState("");
+    const [addressError, setAddressError] = useState(false);
+    const [licenseNumError, setLicenseNumError] = useState(false);
+    const [licenseNumCheck, setLicenseNumCheck] = useState(true);
 
     const onChangeUserId = (e) => {
         const userIdRegex = /^[a-zA-z0-9]{4,12}$/;
@@ -70,7 +71,7 @@ function SignupStore() {
         setAddress(e.target.value)
     };
     const onChangeLicenseNum = (e) => {
-        const licenseNumErrorRegex = /^[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{5}$/;
+        const licenseNumErrorRegex = /^[0-9]{10}$/;
         if ((!e.target.value || (licenseNumErrorRegex.test(e.target.value)))) setLicenseNumError(false);
         else setLicenseNumError(true);
         setLicenseNum(e.target.value)
@@ -86,9 +87,41 @@ function SignupStore() {
         if (!address) setAddressError(true);
         if (!licenseNum) setLicenseNumError(true);
 
-        if (userIdError || passwordError || confirmPasswordError || userNameError || emailError || phoneError || addressError || licenseNumError) return true;
+        if (userIdError || passwordError || confirmPasswordError || userNameError || emailError || phoneError || addressError || licenseNumError || licenseNumCheck) return true;
         else return false;
     };
+
+    const checkLicenseNum = () => {
+        alert("사업자 등록번호 확인 : " + licenseNum);
+
+        axios
+            .post("https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=2LlEyKxqr1YfX0CBc7emYGAsWH2IYBHaW3%2FaUCe68sdkVkrNRiRCjvdwbGZ3Z4MqvbUQTa%2BgMx0sxGXW%2F4fsrA%3D%3D",
+            {
+                "b_no": [
+                    `${licenseNum}`
+                ]
+            })
+            .then((e)=>{
+                console.log("사업자 등록번호 확인 성공");
+                console.log(e);
+                console.log(e.data.data[0].b_no);
+                console.log(e.data.data[0].tax_type);
+                const checkTaxType = "국세청에 등록되지 않은 사업자등록번호입니다.";
+                if(e.data.data[0].tax_type !== checkTaxType){
+                    console.log("정상 처리.");
+                    setLicenseNumCheck(false);
+                }else{
+                    console.log("오류 처리");
+                    setLicenseNumError(false);
+                    setLicenseNumCheck(true);
+                }
+            })
+            .catch((e)=>{
+                console.log("사업자 등록번호 확인 실패");
+                console.log(e);
+            })
+
+    }
 
     const onSubmit = (e) => {
 
@@ -117,6 +150,7 @@ function SignupStore() {
             user_name: userName,
             user_password: password,
             user_phone: phone,
+            user_licensenum: licenseNum,
         }
 
         const formData = new FormData();
@@ -228,13 +262,13 @@ function SignupStore() {
                     <Form.Group as={Row} className="mb-3">
                         {/* <Form.Control maxLength={20} placeholder="사업자 등록 번호" value={licenseNum} onChange={onChangeLicenseNum} />
                         {licenseNumError && <div className="invalid-input">올바른 사업자 등록 번호를 입력하세요.</div>}
-                        <Button>사업자 등록 번호 확인</Button> */}                        
+                        <Button>사업자 등록 번호 확인</Button> */}
                         <Col>
-                        <InputGroup>
-                            <Form.Control maxLength={20} placeholder="사업자 등록 번호" value={licenseNum} onChange={onChangeLicenseNum} />
-                            <Button>사업자 등록 번호 확인</Button>
-                        </InputGroup>
-                            {licenseNumError && <div className="invalid-input">올바른 사업자 등록 번호를 입력하세요.</div>}
+                            <InputGroup>
+                                <Form.Control maxLength={20} placeholder="사업자 등록 번호" value={licenseNum} onChange={onChangeLicenseNum} />
+                                <Button onClick={checkLicenseNum}>사업자 등록 번호 확인</Button>
+                            </InputGroup>
+                            {(licenseNumError|| licenseNumCheck) && <div className="invalid-input">올바른 사업자 등록 번호 10자리를 숫자만 입력하세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
@@ -247,7 +281,7 @@ function SignupStore() {
                         <Button onClick={deleteImage}>Delete Image</Button>
                         <Form.Control type="file" accept="image/*" onChange={saveImage} style={{ display: "none" }} />
                     </Form.Group>
-                    <div className="d-grid gap-1">
+                    <div className="d-grid gap-1 mb-3">
                         <Button variant="secondary" onClick={onSubmit}>Sign Up</Button>
                     </div>
                 </Form>
