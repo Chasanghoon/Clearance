@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from "react-bootstrap/Button";
+import NavBar from '../NavBar';
+import Map from "./Map";
 
 function Main() {
 
@@ -26,6 +28,7 @@ function Main() {
             <Link to="signupUser"><Button variant="success"> 일반 회원가입 </Button></Link>
             <Link to="signupStore"><Button variant="danger"> 매장 회원가입 </Button></Link>
             <Button onClick={Logout}>로그아웃</Button>
+            <Map></Map>
         </>
     );
 }
