@@ -14,7 +14,7 @@ function Start() {
             }>you can become A smart <br/> Consumer</div>
             <h1 style={{
                 position: 'relative',
-                left: '30px'
+                
             }}>Clearance</h1>
             <Link to="login"><Button> 로그인 </Button></Link>
             <br/>
