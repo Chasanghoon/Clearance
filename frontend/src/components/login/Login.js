@@ -47,7 +47,7 @@ function Login(props) {
                 console.log(e.data[1]);
                 sessionStorage.setItem("id", e.data[1]);
                 sessionStorage.setItem("access_token", e.data[0]);
-                navigate("/");
+                navigate("/main");
                 
             })
             .catch((e) => {
