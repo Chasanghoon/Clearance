@@ -5,6 +5,7 @@ import Login from './components/login/Login';
 import Main from './components/main/Main';
 import SignupUser from './components/register/SignupUser';
 import SignupStore from './components/register/SignupStore';
+import Reservation from './components/reservation/Reservation';
 import Start from './components/Start';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/main" element={<Main></Main>} />
           <Route path="/signupUser" element={<SignupUser />} />
           <Route path="/signupStore" element={<SignupStore />} />
+          <Route path="/reservation" element={<Reservation />} />
           
           <Route path="/login" element={<Login />} />
         </Routes>
