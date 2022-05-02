@@ -5,11 +5,28 @@ const { kakao } = window;
 
 
 function Map() {
-    
+// new kakao.maps.LatLng(33.450701, 126.570667)
     useEffect(() => {
         let container = document.getElementById("map");
+
+        let lat = 0;
+        let lon = 0;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                lat = position.coords.latitude; // 위도
+                lon = position.coords.longitude; // 경도
+                console.log("왜 맵이 안나옴?")
+                console.log(lat, lon)
+            });
+        } else {
+            lat = 33.450701;
+            lon = 126.570667;
+        }
+
+        let pos = new kakao.maps.LatLng(lat, lon)
+
         let options = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667),
+            center: pos,
 			level: 3,
         }
         let map = new window.kakao.maps.Map(container, options);
@@ -17,7 +34,7 @@ function Map() {
         console.log("loading kakaomap");
 
         // --------------- 마커 표시 ---------------
-        let markerPosition = new kakao.maps.LatLng(33.450701, 126.570667); 
+        let markerPosition = new kakao.maps.LatLng(lat, lon); 
 
         var marker = new kakao.maps.Marker({
             position: markerPosition,
@@ -43,7 +60,7 @@ function Map() {
             },
             {
                 title: '텃밭', 
-                latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+                latlng: new kakao.maps.LatLng(35.1731702, 128.5619712)
             },
             {
                 title: '근린공원',
@@ -52,7 +69,7 @@ function Map() {
         ];
         console.log(positions)
 
-        kakao.maps.event.addListener(marker, 'click', function () { alert(0); })
+        kakao.maps.event.addListener(marker, 'click', function () { console.log(pos,lat,lon) })
         
         // 마커 이미지의 이미지 주소입니다
         let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
@@ -90,7 +107,7 @@ function Map() {
         <div className={cn("Map")}>
             <div className={cn("MapContainer")} id="map" style={{
                 width: '100%',
-                height: '200px'
+                height: '500px'
             }}>
             
         </div>
