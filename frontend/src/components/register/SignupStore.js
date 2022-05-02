@@ -180,6 +180,7 @@ function SignupStore() {
     const [image, setImage] = useState({
         image_file: "",
         preview_URL: "img/default_image.png",
+        
     });
 
     const [loaded, setLoaded] = useState(false);

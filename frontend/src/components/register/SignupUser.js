@@ -100,17 +100,17 @@ function SignupUser() {
 
         // ! axios POST
         console.log("axios post")
-        const storeSignUpRequest = {
+        const userSignUpRequest = {
             user_address: address,
             user_email: email,
             user_id: userId,
-            user_store: userName,
+            user_name: userName,
             user_password: password,
             user_phone: phone
         }
 
         const formData = new FormData();
-        formData.append('storeSignUpRequest', new Blob([JSON.stringify(storeSignUpRequest)], { type: "application/json" }));
+        formData.append('userSignUpRequest', new Blob([JSON.stringify(userSignUpRequest)], { type: "application/json" }));
         formData.append('file', image.image_file);
 
         axios
