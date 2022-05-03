@@ -35,7 +35,7 @@ public class ConsumerController {
         return ResponseEntity.status(200).body(list);
     }
 
-    @GetMapping("/book")
+    @GetMapping("/book/date")
     @ApiOperation(value = "회원의 날짜별 예약 내역 조회", notes = "회원 아이디와 날짜로 예약정보를 조회후 응답한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
