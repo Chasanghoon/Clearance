@@ -8,7 +8,8 @@ import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 
 
-function Main() {
+function Main(props) {
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -21,9 +22,20 @@ function Main() {
 
     return (
         <div>
-            <NavBar/>
-            <h1>메인페이지</h1>            
-            {/* <Map></Map> */}
+            <Navbar></Navbar>
+            <h1>메인페이지</h1>
+            <Link to="../login"><Button variant="primary"> 로그인 </Button></Link>
+            <Link to="../signupUser"><Button variant="success"> 일반 회원가입 </Button></Link>
+            <Link to="../signupStore"><Button variant="danger"> 매장 회원가입 </Button></Link>
+            <Link to="../"><Button onClick={Logout}>로그아웃</Button></Link>
+            <Link to="../basket"><Button>장바구니 가자</Button></Link>
+            <div>
+                <input style={{
+                    backgroundColor:'beige'
+                }}></input>
+            </div>
+            <Map></Map>
+            
             <div>
                 <BasketModal></BasketModal>
             </div>
@@ -31,7 +43,7 @@ function Main() {
             모달 띄우기
         </Button>
 
-      <Modal
+    <Modal
         show={show}
         onHide={handleClose}
         backdrop="static"
@@ -45,11 +57,11 @@ function Main() {
           escape key.
         </Modal.Body>
         <Modal.Footer>
-          <Link to="../login"><Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose}>
             계속 쇼핑하기
-                    </Button></Link>
+                    </Button>
                     <br/>
-          <Button variant="primary">장바구니로 이동</Button>
+          <Link to="../basket"><Button variant="primary">장바구니로 이동</Button></Link>
         </Modal.Footer>
       </Modal>
         </div>
