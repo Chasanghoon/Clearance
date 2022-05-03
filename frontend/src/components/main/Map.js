@@ -1,54 +1,65 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import cn from "classnames";
+import axios from "axios";
 
 const { kakao } = window;
 
+//geolocation의 비동기 처리가 필요할듯
 
 function Map() {
-// new kakao.maps.LatLng(33.450701, 126.570667)
+
+    let lat = 33.450701;
+    let lon = 126.570667;
+
+    if (navigator.geolocation) { //비동기 방식으로 데이터를 받아옴(like setTimeout)
+        navigator.geolocation.getCurrentPosition(function (position) {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+        });
+    }
+
+    
     useEffect(() => {
         let container = document.getElementById("map");
+        
+        setTimeout(function () {
+            let map = new window.kakao.maps.Map(container, {
+            center: new kakao.maps.LatLng(lat, lon),
+			level: 7,
+        });
+            console.log(lat, lon);
+            map.center = (new kakao.maps.LatLng(lat, lon))
 
-        let lat = 0;
-        let lon = 0;
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                lat = position.coords.latitude; // 위도
-                lon = position.coords.longitude; // 경도
-                console.log("왜 맵이 안나옴?")
-                console.log(lat, lon)
-            });
-        } else {
-            lat = 33.450701;
-            lon = 126.570667;
-        }
 
-        let pos = new kakao.maps.LatLng(lat, lon)
-
-        let options = {
-            center: pos,
-			level: 3,
-        }
-        let map = new window.kakao.maps.Map(container, options);
-
-        console.log("loading kakaomap");
-
-        // --------------- 마커 표시 ---------------
-        let markerPosition = new kakao.maps.LatLng(lat, lon); 
+        // (05.04)위 경도 받아오는 test
+    // axios
+    //     .post("대충 URL",
+    // {
+    //     lat: lat,
+    //     lon: lon,
+    // }
+    //     ,
+    // {
+    //     headers: { 'Content-Type': 'application/json' }
+    // },
+    // )
+    //     .then((e) => {
+    //     console.log("위도/경도 전송");
+    //         console.log(e);
+    //         localStorage.getItem("lat", e.data[0]);
+    //         localStorage.getItem("lon", e.data[1]);
+    //     })
+    //     .catch((e) => {
+    //     console.error("axios post 실패");
+    //             console.error(e.message);
+    // })
 
         var marker = new kakao.maps.Marker({
-            position: markerPosition,
+            map: map,
+            position: new kakao.maps.LatLng(lat, lon),
         });
 
-        // 마커가 지도 위에 표시되도록 설정합니다
-                marker.setMap(map);
-        
-        
-        
-        // infowindow.open(map, marker)
-
         // 마커를 표시할 위치와 title 객체 배열입니다 
-        // db에서 리스트를 가져와서 
         var positions = [
             {
                 title: '카카오', 
@@ -69,7 +80,7 @@ function Map() {
         ];
         console.log(positions)
 
-        kakao.maps.event.addListener(marker, 'click', function () { console.log(pos,lat,lon) })
+        kakao.maps.event.addListener(marker, 'click', function () { console.log(lat,lon) })
         
         // 마커 이미지의 이미지 주소입니다
         let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
@@ -98,9 +109,13 @@ function Map() {
                 image: markerImage, // 마커 이미지
                 
             });
-            kakao.maps.event.addListener(markers, 'click', function () { alert(positions[i].title); })
+            kakao.maps.event.addListener(markers, 'click', function () { alert( positions.position); })
             //클릭 시, 해당 마커에 들어있는 내용을 출력해주면 perfect
         }
+            
+        },100);
+
+        console.log("loading kakaomap");
 
     },[]);
     return (
@@ -109,7 +124,6 @@ function Map() {
                 width: '100%',
                 height: '500px'
             }}>
-            
         </div>
     </div>
     );
