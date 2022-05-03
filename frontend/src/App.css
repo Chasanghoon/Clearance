@@ -2,9 +2,10 @@
     font-family: "LeeSeoyun";
     font-weight: 50;
     src: url("./asset/fonts/LeeSeoyun.ttf");
-  }
+}
+ 
   
-  .App{
+.App{
       text-align: center;
       font-family: "LeeSeoyun";
-  }
+}
