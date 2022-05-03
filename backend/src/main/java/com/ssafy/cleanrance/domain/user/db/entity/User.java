@@ -35,8 +35,4 @@ public class User implements Serializable {
     @Column(name = "user_image")
     String userImage;
 
-//    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Location location;
 }
