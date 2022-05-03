@@ -5,6 +5,7 @@ import com.ssafy.cleanrance.domain.product.request.ProductDeleteReq;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
 import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.service.ProductService;
+import com.ssafy.cleanrance.domain.user.db.entity.User;
 import com.ssafy.cleanrance.global.model.response.BaseResponseBody;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Api(value = "유저 API", tags = {"Product"})
 @RestController
@@ -51,14 +53,12 @@ public class ProductController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity modify(
-            @ApiParam(value = "상품정보 수정", required = true)
-            @RequestPart ProductUpdatePutRequest productUpdatePutRequest,
-            @RequestPart(value = "frontimage", required = false) MultipartFile image1,
-            @RequestPart(value = "backimage", required = false) MultipartFile image2) throws IOException {
-//        Product product = productService.updateStore(productUpdatePutRequest, image1, image2);
-        Product product = productService.updateStore(productUpdatePutRequest, image1, image2);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    public ResponseEntity<Optional<Product>> modify(@RequestBody Product product) {
+        Optional<Product> productmodify =  Optional.ofNullable(productService.updateStore(product).orElse(null));
+        if(null == productmodify){
+            throw new IllegalStateException("없는 아이디");
+        }
+        return ResponseEntity.status(200).body(productmodify);
     }
 
     @GetMapping("/product")
