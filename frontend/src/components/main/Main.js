@@ -22,12 +22,11 @@ function Main(props) {
 
     return (
         <div>
-            <Navbar></Navbar>
+            <NavBar></NavBar>
             <h1>메인페이지</h1>
             <Link to="../login"><Button variant="primary"> 로그인 </Button></Link>
             <Link to="../signupUser"><Button variant="success"> 일반 회원가입 </Button></Link>
             <Link to="../signupStore"><Button variant="danger"> 매장 회원가입 </Button></Link>
-            <Link to="../"><Button onClick={Logout}>로그아웃</Button></Link>
             <Link to="../basket"><Button>장바구니 가자</Button></Link>
             <div>
                 <input style={{
