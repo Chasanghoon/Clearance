@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import './Login.css';
 
 function Login(props) {
 
@@ -46,7 +47,7 @@ function Login(props) {
                 console.log(e.data[1]);
                 sessionStorage.setItem("id", e.data[1]);
                 sessionStorage.setItem("access_token", e.data[0]);
-                navigate("/");
+                navigate("/main");
                 
             })
             .catch((e) => {
@@ -59,8 +60,11 @@ function Login(props) {
 
     return (
         <div>
+            <div className='title'>
+                <h1>Clearance</h1>
+            </div>
             <Container className='mt-5'>
-                <Form>
+                <Form className='form'>
                     <Form.Group as={Row} className="mb-3">
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="아이디" value={userId} onChange={onChangeId}/>
@@ -73,7 +77,7 @@ function Login(props) {
                     </Form.Group>
 
                     <div className="d-grid gap-1 mb-3">
-                        <Button variant="secondary" onClick={onSubmit}>Login</Button>
+                        <Button className='button' onClick={onSubmit}>Login</Button>
                     </div>
                 </Form>
                 {/* <br />

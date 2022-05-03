@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import { InputGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import './Signup.css';
 
 function SignupStore() {
 
@@ -180,6 +181,7 @@ function SignupStore() {
     const [image, setImage] = useState({
         image_file: "",
         preview_URL: "img/default_image.png",
+        
     });
 
     const [loaded, setLoaded] = useState(false);
@@ -215,6 +217,9 @@ function SignupStore() {
 
     return (
         <div>
+            <div className='title'>
+                <h1>Clearance</h1>
+            </div>
             <Container className='mt-5'>
                 <Form>
                     <Form.Group as={Row} className="mb-3">
@@ -226,7 +231,7 @@ function SignupStore() {
                     <Form.Group as={Row} className="mb-3">
                         <Col sm>
                             <Form.Control maxLength={20} type="password" placeholder="비밀번호" value={password} onChange={onChangePassword} />
-                            {passwordError && <div className="invalid-input">암호는 8자 이상이어야 하며 문자와 숫자를 하나 이상 포함해야 합니다. </div>}
+                            {passwordError && <div className="invalid-input">문자와 숫자를 하나 이상 포함하고 8자 이상이어야야 합니다.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
@@ -271,15 +276,17 @@ function SignupStore() {
                             {(licenseNumError|| licenseNumCheck) && <div className="invalid-input">올바른 사업자 등록 번호 10자리를 숫자만 입력하세요.</div>}
                         </Col>
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
-                        <div className="img-wrapper">
+                    <Form.Group as={Row} className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
+                        <div className='imageDiv'>
                             {loaded === false || loaded === true ?
-                                (<img src={image.preview_URL} alt="userImage" />) :
+                                (<img className='imgFile' src={image.preview_URL} alt="userImage" />) :
                                 (<Spinner animation="border" variant="warning" />)}
                         </div>
-                        <Button><Form.Label>select image</Form.Label></Button>
-                        <Button onClick={deleteImage}>Delete Image</Button>
-                        <Form.Control type="file" accept="image/*" onChange={saveImage} style={{ display: "none" }} />
+                        <div>
+                            <Button className='imageButton'><Form.Label>프로필 이미지 선택</Form.Label></Button>
+                            <Button className='imageButton' onClick={deleteImage}>프로필 이미지 삭제</Button>
+                            <Form.Control type="file" accept="image/*" onChange={saveImage} style={{ display: "none" }} />
+                        </div>
                     </Form.Group>
                     <div className="d-grid gap-1 mb-3">
                         <Button variant="secondary" onClick={onSubmit}>Sign Up</Button>

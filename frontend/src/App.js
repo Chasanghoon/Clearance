@@ -5,7 +5,11 @@ import Login from './components/login/Login';
 import Main from './components/main/Main';
 import SignupUser from './components/register/SignupUser';
 import SignupStore from './components/register/SignupStore';
+import Reservation from './components/reservation/Reservation';
 import Start from './components/Start';
+import Footer from './components/Footer';
+import Basket from './components/product/Basket';
+
 
 function App() {
   return (
@@ -16,10 +20,14 @@ function App() {
           <Route path="/main" element={<Main></Main>} />
           <Route path="/signupUser" element={<SignupUser />} />
           <Route path="/signupStore" element={<SignupStore />} />
+          <Route path="/reservation" element={<Reservation />} />
           
           <Route path="/login" element={<Login />} />
+          <Route path="/basket" element={<Basket />} />
+
         </Routes>
       </BrowserRouter>
+      <Footer></Footer>
     </div>
   );
 }

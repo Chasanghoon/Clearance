@@ -7,6 +7,7 @@ import { Spinner } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import './Signup.css';
 
 function SignupUser() {
 
@@ -100,17 +101,17 @@ function SignupUser() {
 
         // ! axios POST
         console.log("axios post")
-        const storeSignUpRequest = {
+        const userSignUpRequest = {
             user_address: address,
             user_email: email,
             user_id: userId,
-            user_store: userName,
+            user_name: userName,
             user_password: password,
             user_phone: phone
         }
 
         const formData = new FormData();
-        formData.append('storeSignUpRequest', new Blob([JSON.stringify(storeSignUpRequest)], { type: "application/json" }));
+        formData.append('userSignUpRequest', new Blob([JSON.stringify(userSignUpRequest)], { type: "application/json" }));
         formData.append('file', image.image_file);
 
         axios
@@ -125,7 +126,7 @@ function SignupUser() {
                 console.log("axios post 성공")
                 alert("회원가입 완료!");
                 navigate("/login");
-                
+
             })
             .catch((e) => {
                 console.error("axios post 실패");
@@ -169,11 +170,15 @@ function SignupUser() {
     }
 
     let navigate = useNavigate();
-    
+
     return (
         <div>
+            <div className='title'>
+                <h1>Clearance</h1>
+            </div>
             <Container className='mt-5'>
                 <Form>
+
                     <Form.Group as={Row} className="mb-3">
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="아이디" value={userId} onChange={onChangeUserId} />
@@ -183,7 +188,7 @@ function SignupUser() {
                     <Form.Group as={Row} className="mb-3">
                         <Col sm>
                             <Form.Control maxLength={20} type="password" placeholder="비밀번호" value={password} onChange={onChangePassword} />
-                            {passwordError && <div className="invalid-input">암호는 8자 이상이어야 하며 문자와 숫자를 하나 이상 포함해야 합니다. </div>}
+                            {passwordError && <div className="invalid-input">문자와 숫자를 하나 이상 포함하고 8자 이상이어야야 합니다.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
@@ -216,15 +221,17 @@ function SignupUser() {
                             {addressError && <div className="invalid-input">주소를 입력해주세요. <br /> 부산 사하구 하신중앙로 2 이런 형식으로 넣어야함...</div>}
                         </Col>
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formFile" style={{"textAlign" : "center"}}>
-                        <div className="img-wrapper">
+                    <Form.Group as={Row} className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
+                        <div className='imageDiv'>
                             {loaded === false || loaded === true ?
-                                (<img src={image.preview_URL} alt="userImage" />) :
+                                (<img className='imgFile' src={image.preview_URL} alt="userImage" />) :
                                 (<Spinner animation="border" variant="warning" />)}
                         </div>
-                        <Button><Form.Label>select image</Form.Label></Button>
-                        <Button onClick={deleteImage}>Delete Image</Button>
-                        <Form.Control type="file" accept="image/*" onChange={saveImage} style={{ display: "none" }} />
+                        <div>
+                            <Button className='imageButton'><Form.Label>프로필 이미지 선택</Form.Label></Button>
+                            <Button className='imageButton' onClick={deleteImage}>프로필 이미지 삭제</Button>
+                            <Form.Control type="file" accept="image/*" onChange={saveImage} style={{ display: "none" }} />
+                        </div>
                     </Form.Group>
                     <div className="d-grid gap-1 mb-3">
                         <Button variant="secondary" onClick={onSubmit}>Sign Up</Button>
