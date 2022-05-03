@@ -25,7 +25,6 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public String createStore(ProductRegisterRequest productRegisterRequest, MultipartFile image1, MultipartFile image2) throws IOException {
         Product product = new Product();
-        product.setProductId(productRegisterRequest.getProduct_id());
         product.setCategoryId(productRegisterRequest.getCategory_id());
         product.setStoreUserId(productRegisterRequest.getStore_user_id());
         product.setProductPrice(productRegisterRequest.getProduct_price());
