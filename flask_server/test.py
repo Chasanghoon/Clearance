@@ -288,17 +288,20 @@ class ReservationCreate(Resource):
             product_stock = rows2[0]['product_stock']
 
             book_price = product_discountprice * basket_count
+            book_count = basket_count
 
             # 예약 CREATE
-            sql = '''insert into book (basket_id, user_id, product_id, store_user_id, book_price, book_date, book_hour, book_status)
-                     values (%s, %s, %s, %s, %s, %s, %s, %s)'''
+            sql = '''insert into book (basket_id, user_id, product_id, store_user_id, book_price, book_count, book_date, book_hour, book_status)
+                     values (%s, %s, %s, %s, %s, %s, %s, %s, %s)'''
 
-            curs.execute(sql, (basket_id, user_id, product_id, store_user_id, book_price, book_date, book_hour, 0))
+            curs.execute(sql, (basket_id, user_id, product_id, store_user_id, book_price, book_count, book_date, book_hour, 0))
 
             # 상품 재고 감소
             new_product_stock = product_stock - basket_count
             if new_product_stock < 0:
                 return jsonify("재고가 부족합니다.")
+            elif new_product_stock == 0:
+                return jsonify("재고 0 -> 상품삭제?")
             sql = "update product set product_stock=%s where product_id=%s"
             curs.execute(sql, (new_product_stock, product_id))
 
@@ -336,15 +339,62 @@ class ReservationComplete(Resource):
 
         # db에서 data 받아오기
         curs = db.cursor()
-        sql = "select * from basket where basket_id = %s"
+
+        # Book Table
+        sql = "select * from book where basket_id = %s"
         curs.execute(sql, (basket_id))
         rows = curs.fetchall()
         user_id = rows[0]['user_id']
         product_id = rows[0]['product_id']
         store_user_id = rows[0]['store_user_id']
-        basket_count = rows[0]['basket_count']
+        book_price = rows[0]['book_price']
+        book_count = rows[0]['book_count']
+        book_date = rows[0]['book_date']
+        book_hour = rows[0]['book_hour']
 
+        # Product Table
+        sql = "select product_name, product_price, product_discountprice, product_imagefront from product where product_id=%s"
+        curs.execute(sql, (product_id))
+        rows = curs.fetchall()
+        product_name = rows[0]['product_name']
+        product_price = rows[0]['product_price']
+        product_discountprice = rows[0]['product_discountprice']
+        product_imagefront = rows[0]['product_imagefront']
 
+        # User Table
+        sql = "select user_name, user_address, user_phone from user where user_id=%s"
+        curs.execute(sql, (store_user_id))
+        rows = curs.fetchall()
+        user_name = rows[0]['user_name']
+        user_address = rows[0]['user_address']
+        user_phone = rows[0]['user_phone']
+
+        # Location Table
+        sql = "select location_xpoint, location_ypoint from location where user_id=%s"
+        curs.execute(sql, (store_user_id))
+        rows = curs.fetchall()
+        if not rows:
+            return jsonify("좌표데이터가 없습니다.")
+        location_xpoint = rows[0]['location_xpoint']
+        location_ypoint = rows[0]['location_ypoint']
+
+        res.append(
+            {
+                "user_name" : user_name,
+                "user_address" : user_address,
+                "user_phone" : user_phone,
+                "location_xpoint" : location_xpoint,
+                "location_ypoint" : location_ypoint,
+                "book_date" : book_date,
+                "book_hour" : book_hour,
+                "product_imagefront" : product_imagefront,
+                "product_name" : product_name,
+                "product_price" : product_price,
+                "product_discountprice" : product_discountprice,
+                "book_count" : book_count,
+                "book_price" : book_price,
+            }
+        )
 
         return jsonify(res)
 
