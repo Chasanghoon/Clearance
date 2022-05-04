@@ -11,11 +11,16 @@ function Map() {
     let lat = 33.450701;
     let lon = 126.570667;
 
+    //네비게이션이 먼저 되게 만들어줘야 함!
     if (navigator.geolocation) { //비동기 방식으로 데이터를 받아옴(like setTimeout)
         navigator.geolocation.getCurrentPosition(function (position) {
             lat = position.coords.latitude;
             lon = position.coords.longitude;
         });
+
+        
+    } else {
+        console.log("권한 없음");
     }
 
     
@@ -32,27 +37,19 @@ function Map() {
 
 
         // (05.04)위 경도 받아오는 test
-    // axios
-    //     .post("대충 URL",
-    // {
-    //     lat: lat,
-    //     lon: lon,
-    // }
-    //     ,
-    // {
-    //     headers: { 'Content-Type': 'application/json' }
-    // },
-    // )
-    //     .then((e) => {
-    //     console.log("위도/경도 전송");
-    //         console.log(e);
-    //         localStorage.getItem("lat", e.data[0]);
-    //         localStorage.getItem("lon", e.data[1]);
-    //     })
-    //     .catch((e) => {
-    //     console.error("axios post 실패");
-    //             console.error(e.message);
-    // })
+    axios
+        .get(`http://localhost:8080/api/map?ypoint=35.1275983422866&xpoint=128.968358334702`,
+    )
+        .then((e) => {
+        console.log("위도/경도 전송");
+            console.log(e);
+            localStorage.getItem("lat", e.data[0]);
+            localStorage.getItem("lon", e.data[1]);
+        })
+        .catch((e) => {
+        console.error("axios post 실패");
+                console.error(e.message);
+    })
 
         var marker = new kakao.maps.Marker({
             map: map,
@@ -113,7 +110,7 @@ function Map() {
             //클릭 시, 해당 마커에 들어있는 내용을 출력해주면 perfect
         }
             
-        },100);
+        },1000);
 
         console.log("loading kakaomap");
 
