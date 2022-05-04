@@ -28,7 +28,7 @@ function ReservationResult(props) {
     }
     return (
         <div>
-            {/* <NavBar /> */}
+            <NavBar />
             <h1>예약 완료</h1>
             <div style={{ backgroundColor: "#F5F5F5", margin: "10px 5% 0px 5%" }}>
                 <Map // 지도를 표시할 Container
