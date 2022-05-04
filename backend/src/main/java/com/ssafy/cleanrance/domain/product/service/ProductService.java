@@ -2,6 +2,7 @@ package com.ssafy.cleanrance.domain.product.service;
 
 import com.querydsl.core.Tuple;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
+import com.ssafy.cleanrance.domain.product.db.entity.ProductCategory;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
 import com.ssafy.cleanrance.domain.product.response.ProductFindStoreId;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,4 +30,6 @@ public interface ProductService {
     List<Product> findProductByStoreIdAndCategory(String storeId, int categoryId);
     //매장 & 검색어 상품 조회
     List<Product> findProductByStoreIdAndWord(String storeId, String word);
+    //카테고리 목록 조회
+    List<ProductCategory> findProductCategory();
 }

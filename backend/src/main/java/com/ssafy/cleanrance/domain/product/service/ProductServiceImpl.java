@@ -1,6 +1,8 @@
 package com.ssafy.cleanrance.domain.product.service;
 import com.querydsl.core.Tuple;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
+import com.ssafy.cleanrance.domain.product.db.entity.ProductCategory;
+import com.ssafy.cleanrance.domain.product.db.repository.ProductCategoryRepository;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepository;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySupport;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
@@ -30,6 +32,8 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     ProductRepositorySupport productRepositorySupport;
 
+    @Autowired
+    ProductCategoryRepository productCategoryRepository;
     @Override
     public String createStore(ProductRegisterRequest productRegisterRequest, MultipartFile image1, MultipartFile image2) throws IOException {
         Product product = new Product();
@@ -102,6 +106,12 @@ public class ProductServiceImpl implements ProductService{
         List<Product> list = productRepositorySupport.findProductByStoreIdAndWord(storeId,word);
 //        String str = new String(word.getBytes(StandardCharsets.UTF_8));
 //        List<Product> list = productRepository.findBystoreUserIdAndProductNameContaining(storeId, str);
+        return list;
+    }
+
+    @Override
+    public List<ProductCategory> findProductCategory() {
+        List<ProductCategory> list= productCategoryRepository.findAll();
         return list;
     }
 
