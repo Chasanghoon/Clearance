@@ -19,11 +19,11 @@ public class QProductCategory extends EntityPathBase<ProductCategory> {
 
     public static final QProductCategory productCategory = new QProductCategory("productCategory");
 
-    public final StringPath category_name = createString("category_name");
-
     public final StringPath categoryCal = createString("categoryCal");
 
     public final NumberPath<Integer> categoryId = createNumber("categoryId", Integer.class);
+
+    public final StringPath categoryName = createString("categoryName");
 
     public QProductCategory(String variable) {
         super(ProductCategory.class, forVariable(variable));

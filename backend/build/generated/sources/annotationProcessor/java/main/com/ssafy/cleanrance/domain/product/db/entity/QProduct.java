@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -18,13 +17,9 @@ public class QProduct extends EntityPathBase<Product> {
 
     private static final long serialVersionUID = 1265285338L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QProduct product = new QProduct("product");
 
     public final NumberPath<Integer> categoryId = createNumber("categoryId", Integer.class);
-
-    public final QProductCategory productCategory;
 
     public final NumberPath<Float> productDiscount = createNumber("productDiscount", Float.class);
 
@@ -47,24 +42,15 @@ public class QProduct extends EntityPathBase<Product> {
     public final StringPath storeUserId = createString("storeUserId");
 
     public QProduct(String variable) {
-        this(Product.class, forVariable(variable), INITS);
+        super(Product.class, forVariable(variable));
     }
 
     public QProduct(Path<? extends Product> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QProduct(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QProduct(PathMetadata metadata, PathInits inits) {
-        this(Product.class, metadata, inits);
-    }
-
-    public QProduct(Class<? extends Product> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.productCategory = inits.isInitialized("productCategory") ? new QProductCategory(forProperty("productCategory")) : null;
+        super(Product.class, metadata);
     }
 
 }

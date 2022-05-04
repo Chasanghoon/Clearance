@@ -1,5 +1,7 @@
 package com.ssafy.cleanrance.domain.user.service;
 
+import com.ssafy.cleanrance.domain.product.db.entity.Product;
+import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySupport;
 import com.ssafy.cleanrance.domain.user.db.entity.Location;
 import com.ssafy.cleanrance.domain.user.db.repository.LocationRepository;
 
@@ -13,7 +15,8 @@ import java.util.List;
 public class LocationServiceImpl implements LocationService{
     @Autowired
     LocationRepository locationRepository;
-
+    @Autowired
+    ProductRepositorySupport productRepositorySupport;
     @Override
     public List<Location> findLoc(double ypoint, double xpoint) {
         List<Location> loc = locationRepository.findAll();
@@ -36,6 +39,37 @@ public class LocationServiceImpl implements LocationService{
             }
         }
         return list;
+    }
+
+    @Override
+    public List<Object> findLocAndProduct(double ypoint, double xpoint) {
+        List<Location> loc = locationRepository.findAll();
+        List<Location> list = new ArrayList<>();
+        int num = 5000;
+        for (Location l: loc) {
+            double x = l.getLocationXpoint();
+            double y = l.getLocationYpoint();
+            double theta = x- xpoint;
+            double dist = Math.sin(def2rad(y)) * Math.sin(def2rad(ypoint)) + Math.cos(def2rad(y)) * Math.cos(def2rad(ypoint)) * Math.cos(def2rad(theta));
+            dist = Math.acos(dist);
+            dist = rad2deg(dist);
+            dist = dist * 60 * 1.1515;
+            //meter로 변환
+            dist = dist * 1609.344;
+
+            System.out.println(dist);
+            if(dist <5000){
+                list.add(l);
+            }
+        }
+        Location lo = list.get(0);
+        System.out.println("LocationSize: "+list.size());
+        List<Product> productList = productRepositorySupport.findProductByStoreId(lo.getUserId());
+        System.out.println("prductListSize: "+productList.size());
+        List<Object> obj = new ArrayList<>();
+        obj.add(list);
+        obj.add(productList);
+        return obj;
     }
 
     //십진수를 radian으로 변경
