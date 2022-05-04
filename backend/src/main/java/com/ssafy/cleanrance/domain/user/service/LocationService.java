@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface LocationService {
     List<Location> findLoc(double ypoint, double xpoint);
+    List<Object> findLocAndProduct(double ypoint, double xpoint);
 }
