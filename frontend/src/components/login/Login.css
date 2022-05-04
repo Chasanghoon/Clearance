@@ -1,0 +1,22 @@
+/* .title{
+    margin-top: 40%;
+    margin-bottom: 50px;
+    
+}
+.title h1{
+    font-size: 450%;
+    font-weight: bold;
+    color: #FFC812;
+    text-shadow: 2px 2px 3px rgb(148, 148, 148)
+} */
+.form {
+    margin-top: 60%;
+    margin-bottom: 30%;
+}
+.text{
+    text-align: center;
+}
+.button{
+    background-color: #FFC812;
+    border: none;
+}

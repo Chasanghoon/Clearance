@@ -21,7 +21,5 @@ public class Location implements Serializable {
     double locationYpoint;
     @Column(name = "user_id")
     String userId;
-    @OneToOne
-    @JoinColumn(name = "user_id",insertable = false,updatable = false)
-    private User user;
+
 }

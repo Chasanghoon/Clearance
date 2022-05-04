@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 @ApiModel("ProductRegisterRequest")
 public class ProductRegisterRequest {
-    @ApiModelProperty(name = "제품 ID", example = "1")
-    int product_id;
     @ApiModelProperty(name = "카테고리 ID", example = "1")
     int category_id;
     @ApiModelProperty(name = "매장 ID", example = "storeTest1")
