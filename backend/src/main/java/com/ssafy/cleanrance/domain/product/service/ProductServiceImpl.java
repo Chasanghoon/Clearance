@@ -1,16 +1,24 @@
 package com.ssafy.cleanrance.domain.product.service;
+import com.querydsl.core.Tuple;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepository;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySupport;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
-import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
+import com.ssafy.cleanrance.domain.product.response.ProductFindStoreId;
 import com.ssafy.cleanrance.global.util.ImageUtil;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.FileUtils;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service("productService")
@@ -76,6 +84,27 @@ public class ProductServiceImpl implements ProductService{
         return updateStore;
     }
 
+    @Override
+    public List<Product> findProductByStoreId(String storeId) {
+        List<Product> productlist = productRepositorySupport.findProductByStoreId(storeId);
+        System.out.println(productlist.size());
+        return productlist;
+    }
+
+    @Override
+    public List<Product> findProductByStoreIdAndCategory(String storeId, int categoryId) {
+        List<Product> list = productRepositorySupport.findProductByStoreIdAndCategoryId(storeId, categoryId);
+        return list;
+    }
+
+    @Override
+    public List<Product> findProductByStoreIdAndWord(String storeId, String word) {
+        List<Product> list = productRepositorySupport.findProductByStoreIdAndWord(storeId,word);
+//        String str = new String(word.getBytes(StandardCharsets.UTF_8));
+//        List<Product> list = productRepository.findBystoreUserIdAndProductNameContaining(storeId, str);
+        return list;
+    }
+
 //    @Override
 //    public Product updateStore(ProductUpdatePutRequest productUpdatePutRequest) throws IOException {
 //        Product product = productRepositorySupport.findById(productUpdatePutRequest.getProduct_id());
@@ -105,5 +134,24 @@ public class ProductServiceImpl implements ProductService{
 //        return product;
 //    }
 
-
+//    @Override
+//    public List<ProductFindStoreId> findProductByStoreId(String storeId) throws ParseException {
+//        List<Product> productlist = productRepositorySupport.findProductByStoreId(storeId);
+//        List<ProductFindStoreId> list = new ArrayList<>();
+//        for (Product p: productlist) {
+//            ProductFindStoreId productFindStoreId = new ProductFindStoreId();
+//            productFindStoreId.setProduct_id(p.getProductId());
+//            productFindStoreId.setCategory_id(p.getCategoryId());
+//            productFindStoreId.setProduct_name(p.getProductName());
+//            productFindStoreId.setProduct_price(p.getProductPrice());
+//            productFindStoreId.setProduct_discount(p.getProductDiscount());
+//            productFindStoreId.setProduct_discountprice(p.getProductDiscountprice());
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date date = sdf.parse(p.getProductExpdate());
+//            productFindStoreId.setProduct_expdate(date);
+//            productFindStoreId.setProduct_imagefront(p.getProductImagefront());
+//            list.add(productFindStoreId);
+//        }
+//        return list;
+//    }
 }

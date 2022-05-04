@@ -36,7 +36,7 @@ public class Product implements Serializable {
     @Column(name = "product_imageback")
     String productImageback;
 
-    @ManyToOne(targetEntity = ProductCategory.class, fetch=FetchType.LAZY)
-    @JoinColumn(name = "category_id",insertable = false,updatable = false)
-    private ProductCategory productCategory;
+//    @ManyToOne(targetEntity = ProductCategory.class, fetch=FetchType.LAZY)
+//    @JoinColumn(name = "category_id",insertable = false,updatable = false)
+//    private ProductCategory productCategory;
 }
