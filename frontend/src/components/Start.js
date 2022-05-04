@@ -6,6 +6,18 @@ import './Start.css';
 
 function Start() {
     const [modalShow, setModalShow] = React.useState(false);
+
+    let lat = 33.450701;
+    let lon = 126.570667;
+
+    // 임시 지정. Zustand 만들 때 전역변수로  값을 가져와줘야 함!
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+        });
+    }
+
     return (
         <>
             <div className='title'>
