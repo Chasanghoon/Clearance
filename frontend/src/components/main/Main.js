@@ -24,45 +24,15 @@ function Main(props) {
         <div>
             <NavBar></NavBar>
             <h1>메인페이지</h1>
-            <Link to="../login"><Button variant="primary"> 로그인 </Button></Link>
-            <Link to="../signupUser"><Button variant="success"> 일반 회원가입 </Button></Link>
-            <Link to="../signupStore"><Button variant="danger"> 매장 회원가입 </Button></Link>
-            <Link to="../basket"><Button>장바구니 가자</Button></Link>
-            <div>
-                <input style={{
-                    backgroundColor:'beige'
-                }}></input>
-            </div>
-            <Map></Map>
             
-            <div>
-                <BasketModal></BasketModal>
+            <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
+              <Map></Map>
             </div>
-            <Button variant="primary" onClick={handleShow}>
-            모달 띄우기
-        </Button>
-
-    <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          I will not close if you click outside me. Don't even try to press
-          escape key.
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            계속 쇼핑하기
-                    </Button>
-                    <br/>
-          <Link to="../basket"><Button variant="primary">장바구니로 이동</Button></Link>
-        </Modal.Footer>
-      </Modal>
+            <div>
+                <input style={{backgroundColor:'beige'}}></input>
+            </div>
+            
+            
         </div>
     );
 }

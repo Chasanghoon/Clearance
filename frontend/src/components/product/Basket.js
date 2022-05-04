@@ -1,6 +1,6 @@
 // 장바구니 관리 파일 (예상 url : /basket/{user})
 import React from "react";
-import NavBar from "../NavBar";
+import NavBar from "../common/NavBar";
 
 
 function Basket() {
