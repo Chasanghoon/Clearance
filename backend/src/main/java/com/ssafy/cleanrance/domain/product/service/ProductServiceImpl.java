@@ -14,6 +14,10 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.FileUtils;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -48,14 +52,18 @@ public class ProductServiceImpl implements ProductService{
         //이미지 Base64 인코딩 소스로 변환
         MultipartFile imagefront = image1;
         File file1 = ImageUtil.multipartFileToFile(imagefront);
-        byte[] byteArr1 = FileUtils.readFileToByteArray(file1);
+        //이미지1 파일 크기 변환
+        File resizefile1 = resizeFile(file1);
+        byte[] byteArr1 = FileUtils.readFileToByteArray(resizefile1);
         String base64_1 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr1);
         System.out.println(base64_1);
         product.setProductImagefront(base64_1);
 
         MultipartFile imageback = image2;
         File file2 = ImageUtil.multipartFileToFile(imageback);
-        byte[] byteArr2 = FileUtils.readFileToByteArray(file2);
+        //이미지2 파일 크기 변환
+        File resizefile2 = resizeFile(file2);
+        byte[] byteArr2 = FileUtils.readFileToByteArray(resizefile2);
         String base64_2 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr2);
         System.out.println(base64_2);
         product.setProductImageback(base64_2);
@@ -164,4 +172,28 @@ public class ProductServiceImpl implements ProductService{
 //        }
 //        return list;
 //    }
+
+    private File resizeFile(File file) throws IOException {
+        BufferedImage originImage = ImageIO.read(file);
+        int type = originImage.getType() ==0? BufferedImage.TYPE_INT_ARGB : originImage.getType();
+        BufferedImage resizeImage = resizeImg(originImage, type);
+        File resizeFile = new File("resize.png");
+        ImageIO.write(resizeImage, "png", resizeFile);
+        return resizeFile;
+    }
+
+    private BufferedImage resizeImg(BufferedImage origin, int type){
+        BufferedImage resizeImg = new BufferedImage(100,100, type);
+        Graphics2D graphics2D = resizeImg.createGraphics();
+        graphics2D.drawImage(origin, 0,0, 100,100, null);
+        graphics2D.dispose();
+        graphics2D.setComposite(AlphaComposite.Src);
+        //보간 관련
+        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        //렌더링
+        graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+        //안티엘리어싱 여부
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        return resizeImg;
+    }
 }
