@@ -6,6 +6,7 @@ import BasketModal from '../product/BasketModal';
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import Navbar from '../NavBar';
+import Product from '../product/Product';
 
 
 function Main(props) {
@@ -47,6 +48,7 @@ function Main(props) {
             <Button variant="primary" onClick={handleShow}>
             모달 띄우기
         </Button>
+        <Product></Product>
 
     <Modal
         show={show}
@@ -68,7 +70,8 @@ function Main(props) {
                     <br/>
           <Link to="../basket"><Button variant="primary">장바구니로 이동</Button></Link>
         </Modal.Footer>
-      </Modal>
+        </Modal>
+        
         </div>
     );
 }
