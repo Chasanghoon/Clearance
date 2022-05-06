@@ -24,6 +24,8 @@ public class QBook extends EntityPathBase<Book> {
 
     public final ListPath<Basket, QBasket> baskets = this.<Basket, QBasket>createList("baskets", Basket.class, QBasket.class, PathInits.DIRECT2);
 
+    public final NumberPath<Integer> bookCount = createNumber("bookCount", Integer.class);
+
     public final DateTimePath<java.util.Date> bookDate = createDateTime("bookDate", java.util.Date.class);
 
     public final StringPath bookHour = createString("bookHour");

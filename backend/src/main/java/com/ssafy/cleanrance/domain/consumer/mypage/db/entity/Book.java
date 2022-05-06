@@ -32,6 +32,8 @@ public class Book implements Serializable {
     int bookPrice;
     @Column(name = "book_date")
     Date bookDate;
+    @Column(name = "book_count")
+    int bookCount;
     @Column(name = "book_hour")
     String bookHour;
     @Column(name = "book_status")
