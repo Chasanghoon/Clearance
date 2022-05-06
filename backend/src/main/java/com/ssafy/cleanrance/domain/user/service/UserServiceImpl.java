@@ -17,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 
 import java.net.MalformedURLException;
@@ -122,7 +125,15 @@ public class UserServiceImpl implements UserService{
         //이미지 Base64 인코딩 소스로 변환
         MultipartFile mfile = image;
         File file = ImageUtil.multipartFileToFile(mfile);
-        byte[] byteArr = FileUtils.readFileToByteArray(file);
+        //파일 크기 조정
+        // read an image to BufferedImage for processing
+        BufferedImage originImage = ImageIO.read(file);
+        int type = originImage.getType() ==0? BufferedImage.TYPE_INT_ARGB : originImage.getType();
+        BufferedImage resizeImg = resizeImage(originImage, type);
+        File resizeFile = new File("saved.png");
+        ImageIO.write(resizeImg, "png", resizeFile);
+        //end 파일 크기 조정
+        byte[] byteArr = FileUtils.readFileToByteArray(resizeFile);
         String base64 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
         System.out.println(base64);
         //인코딩된 소스로 userImage 저장
@@ -158,5 +169,19 @@ public class UserServiceImpl implements UserService{
         System.out.println(user);
         userRepository.deleteById(userId);
         return "OK";
+    }
+    private BufferedImage resizeImage(BufferedImage origin, int type){
+        BufferedImage resizeImg = new BufferedImage(100,100, type);
+        Graphics2D graphics2D = resizeImg.createGraphics();
+        graphics2D.drawImage(origin, 0,0, 100,100, null);
+        graphics2D.dispose();
+        graphics2D.setComposite(AlphaComposite.Src);
+        //보간 관련
+        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        //렌더링
+        graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+        //안티엘리어싱 여부
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        return resizeImg;
     }
 }
