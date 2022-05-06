@@ -97,7 +97,7 @@ class Basket(Resource):
                         "product_name" : product_name,
                         "product_price" : product_price,
                         "product_discountprice" : product_discountprice,
-                        # "product_imagefront" : product_imagefront,
+                        "product_imagefront" : product_imagefront,
 
                         # +++ 추가
                         "product_id" : product_id,
@@ -106,7 +106,7 @@ class Basket(Resource):
                         "product_discount" : product_discount,
                         "product_stock" : product_stock,
                         "product_expdate" : product_expdate,
-                        # "product_imageback" : product_imageback,
+                        "product_imageback" : product_imageback,
 
                     }
                 )
@@ -318,6 +318,10 @@ class ReservationCreate(Resource):
             # print(rows)
             # [{'basket_id': 20}, {'basket_id': 21}]
 
+            if not rows:
+                result = "장바구니에 상품이 없습니다."
+                return jsonify(result=result)
+
 
             book_price = 0
             for e in rows:
@@ -375,7 +379,7 @@ class ReservationCreate(Resource):
             db.commit()
             db.close()
 
-            return jsonify(book_set)
+            return jsonify({"book_set":book_set})
 
         except:
             result = 'fail'
