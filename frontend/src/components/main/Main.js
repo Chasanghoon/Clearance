@@ -6,6 +6,8 @@ import Map from "./Map";
 import BasketModal from '../product/BasketModal';
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import Navbar from '../NavBar';
+import Product from '../product/Product';
 
 
 function Main(props) {
