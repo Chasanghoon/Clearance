@@ -38,7 +38,8 @@ public class Book implements Serializable {
     String bookHour;
     @Column(name = "book_status")
     int bookStatus;
-
+    @Column(name ="book_set")
+    int bookSet;
     @OneToMany(mappedBy = "book")
     @JsonBackReference //순환참조 방지
     private List<Basket> baskets = new ArrayList<>();

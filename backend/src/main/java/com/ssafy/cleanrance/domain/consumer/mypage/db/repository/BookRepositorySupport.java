@@ -1,6 +1,7 @@
 package com.ssafy.cleanrance.domain.consumer.mypage.db.repository;
 
 
+import com.querydsl.core.types.dsl.Coalesce;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.QBook;
@@ -19,4 +20,9 @@ public class BookRepositorySupport {
         return jpaQueryFactory.select(qBook).from(qBook)
                 .where(qBook.userId.eq(userId)).fetch();
     }
+    public List<Book> findBookByuserIdAndbookSet(String userId, int bookSet){
+        return jpaQueryFactory.select(qBook).from(qBook)
+                .where(qBook.userId.eq(userId).and(qBook.bookSet.eq(bookSet))).fetch();
+    }
+
 }
