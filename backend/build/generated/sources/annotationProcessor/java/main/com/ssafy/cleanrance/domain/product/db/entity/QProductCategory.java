@@ -5,7 +5,7 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 
 
@@ -19,11 +19,11 @@ public class QProductCategory extends EntityPathBase<ProductCategory> {
 
     public static final QProductCategory productCategory = new QProductCategory("productCategory");
 
-    public final StringPath category_name = createString("category_name");
-
     public final StringPath categoryCal = createString("categoryCal");
 
     public final NumberPath<Integer> categoryId = createNumber("categoryId", Integer.class);
+
+    public final StringPath categoryName = createString("categoryName");
 
     public QProductCategory(String variable) {
         super(ProductCategory.class, forVariable(variable));

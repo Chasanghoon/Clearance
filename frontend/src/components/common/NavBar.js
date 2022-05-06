@@ -16,11 +16,11 @@ const NavBar = () => {
         setIsOpen(isOpen => !isOpen); // on,off 개념 boolean
     }
     // ! axios get
-    console.log("axios get")
+    // console.log("axios get")
     axios
         .get(`http://localhost:8080/api/member?userId=${sessionStorage.getItem("id")}`)
         .then((result) => {
-            console.log(result);
+            // console.log(result);
             setUserId(result.data.userId);
             setImage(result.data.userImage);
         })
@@ -29,15 +29,13 @@ const NavBar = () => {
             console.error(e)
         });
 
-
         const Logout = (e) => {
             sessionStorage.clear();
             console.log("id : " + sessionStorage.getItem("id"));
             console.log("token : " + sessionStorage.getItem("access_token"));
-    
         };
     return (
-        <div>
+        <div className="test">
             <Container>
                 <Row className="navRow">
                     <Col>
@@ -56,7 +54,8 @@ const NavBar = () => {
                         </div>
                         <span>{userId}</span>
                         <br />
-                        <Link to="/" style={{ color: 'black', textDecoration: 'none'}}>마이페이지</Link>
+                        <Link to="/storeMyPage" style={{ color: 'black', textDecoration: 'none'}}>매장 마이페이지</Link>
+                        <Link to="/userMyPage" style={{ color: 'black', textDecoration: 'none'}}>유저 마이페이지</Link>
                         <Link to="/" style={{ color: 'black', textDecoration: 'none'}}>장바구니</Link>
                         <Link onClick={Logout} to="/" style={{ color: 'black', textDecoration: 'none'}}>로그아웃</Link>
                     </Nav>

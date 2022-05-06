@@ -1,0 +1,52 @@
+{
+"seller" : 
+[
+        "판매자",
+        "in1"
+    ],
+"product" :
+  [
+        {
+            "basket_count": 2,
+            "category_id": 1,
+            "product_discount": 0.5,
+            "product_discountprice": 1000,
+            "product_expdate": "Sun, 25 Dec 2022 00:00:00 GMT",
+            "product_id": 1,
+            "product_name": null,
+            "product_image": "image1",
+            "product_price": 2000,
+            "product_stock": 27,
+            "store_user_id": "storeTest1",
+            "user_name": "판매자"
+        },
+        {
+            "basket_count": 2,
+            "category_id": 1,
+            "product_discount": 0.5,
+            "product_discountprice": 1100,
+            "product_expdate": "Sun, 25 Dec 2022 00:00:00 GMT",
+            "product_id": 11,
+            "product_name": "과일2",
+            "product_image": "image2",
+            "product_price": 2200,
+            "product_stock": 22,
+            "store_user_id": "in1",
+            "user_name": "in1"
+        },
+        {
+            "basket_count": 1,
+            "category_id": 2,
+            "product_discount": 0.5,
+            "product_discountprice": 550,
+            "product_expdate": "Sun, 25 Dec 2022 00:00:00 GMT",
+            "product_id": 13,
+            "product_name": "채소1",
+            "product_image": "image3",
+            "product_price": 1100,
+            "product_stock": 10,
+            "store_user_id": "in1",
+            "user_name": "in1"
+        }
+    ]
+}
