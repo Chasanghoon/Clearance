@@ -4,13 +4,16 @@ import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.db.entity.ProductCategory;
 import com.ssafy.cleanrance.domain.product.request.ProductDeleteReq;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
+import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.service.ProductService;
+import com.ssafy.cleanrance.global.model.response.BaseResponseBody;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,6 +25,9 @@ import java.util.Optional;
 public class ProductController {
     @Autowired
     ProductService productService;
+
+    private static final int SUCCESS = 1;
+    private static final int FAIL = -1;
 
     @PostMapping(value = "/product/register",consumes = {"multipart/form-data"})
     @ApiOperation(value = "상품 등록", notes = "상품 등록을 진행한다.")
@@ -52,12 +58,18 @@ public class ProductController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<Optional<Product>> modify(@RequestBody Product product) {
-        Optional<Product> productmodify =  Optional.ofNullable(productService.updateStore(product).orElse(null));
-        if(null == productmodify){
-            throw new IllegalStateException("없는 아이디");
+    public ResponseEntity<? extends BaseResponseBody> modify(@RequestBody ProductUpdatePutRequest productUpdatePutRequest) {
+        Product product1 = productService.findById(productUpdatePutRequest.getProduct_id());
+        if(product1!=null){
+            Product product = productService.updateProduct(productUpdatePutRequest);
         }
-        return ResponseEntity.status(200).body(productmodify);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+
+//        if(productService.updateProduct(productUpdatePutRequest) == SUCCESS) {
+//            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
+//        }else{
+//            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "This Id doesn't exist."));
+//        }
     }
 
     @GetMapping("/product")

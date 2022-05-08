@@ -1,13 +1,11 @@
 package com.ssafy.cleanrance.domain.consumer.mypage.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,4 +40,8 @@ public class Book implements Serializable {
     @OneToMany(mappedBy = "book")
     @JsonBackReference //순환참조 방지
     private List<Basket> baskets = new ArrayList<>();
+
+//    @ManyToOne(targetEntity = Product.class, fetch=FetchType.LAZY)
+//    @JoinColumn(name = "product_imagefront",insertable = false,updatable = false)
+//    private Product product;
 }
