@@ -12,13 +12,16 @@ import Footer from './components/common/Footer';
 import Basket from './components/product/Basket';
 import StoreMyPage from './components/myPage/store/StoreMyPage';
 import StoreProfile from './components/myPage/store/StoreProfile';
-import ProductManagement from './components/myPage/store/ProductManagement';
+import ProductManagement from './components/myPage/store/product/ProductManagement';
+import AllProductManagement from './components/myPage/store/product/AllProductManagement';
+import RegistrationProduct from './components/myPage/store/product/RegistrationProduct';
 import CheckReservation from './components/myPage/store/CheckReservation';
 import StoreCarbon from './components/myPage/store/StoreCarbon';
 import UserMyPage from './components/myPage/user/UserMyPage';
 import UserProfile from './components/myPage/user/UserProfile';
 import BookingHistory from './components/myPage/user/BookingHistory';
 import UserCarbon from './components/myPage/user/UserCarbon';
+
 
 
 function App() {
@@ -37,6 +40,8 @@ function App() {
           <Route path="/storeMyPage" element={<StoreMyPage />} />
           <Route path="/storeProfile" element={<StoreProfile />} />
           <Route path="/productManagement" element={<ProductManagement />} />
+          <Route path="/allProductManagement" element={<AllProductManagement />} />
+          <Route path="/registrationProduct" element={<RegistrationProduct />} />
           <Route path="/checkReservation" element={<CheckReservation />} />
           <Route path="/storeCarbon" element={<StoreCarbon />} />
 

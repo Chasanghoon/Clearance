@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/esm/locale";
 import { Button, Container } from 'react-bootstrap';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function ProductManagement(props) {
     const [selectDate, setSelectDate] = useState();
@@ -38,7 +39,8 @@ function ProductManagement(props) {
                     selected={selectDate}
                     onChange={(date) => setSelectDate(date)}
                     inline />
-                <Button variant='warning'>전체 상품 관리</Button>
+                    <Link to={"/allProductManagement"}><Button variant='warning'>전체 상품 관리</Button></Link>
+                
 
             </Container>
 
