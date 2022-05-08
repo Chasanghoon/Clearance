@@ -62,9 +62,10 @@ public class ProductController {
         Product product1 = productService.findById(productUpdatePutRequest.getProduct_id());
         if(product1!=null){
             Product product = productService.updateProduct(productUpdatePutRequest);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        }else{
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "ProductID doesn't exist"));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-
 //        if(productService.updateProduct(productUpdatePutRequest) == SUCCESS) {
 //            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
 //        }else{
