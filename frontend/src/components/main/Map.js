@@ -1,10 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Map, MapMarker, useMap } from "react-kakao-maps-sdk";
-import useStore from "../../store/store";
+import useMainStore from "../../store/MainStore";
 
 function SampleMap() {
-  const people = useStore(state => state.people)
+
+  const cp = useMainStore(state => state.setPosition)
+
+  const nearStore = useMainStore(state => state.nearStore)
+  const ns = useMainStore(state => state.setNearStore)
+  const storePos = [];
+
+  const nearProduct = useMainStore(state => state.nearProduct)
+  const np = useMainStore(state => state.setNearProduct)
+
 const [isOpen, setIsOpen] = useState(false)
 const [state, setState] = useState({
     center: {
@@ -16,23 +25,27 @@ const [state, setState] = useState({
 })
     
     const data = [
-    // {
-    //   title: "카카오",
-    //   latlng: { lat: 33.450705, lng: 126.570677 },
-    // },
-    // {
-    //   title: "생태연못",
-    //   latlng: { lat: 33.450936, lng: 126.569477 },
-    // },
-    // {
-    //   title: "텃밭",
-    //   latlng: { lat: 33.450879, lng: 126.56994 },
-    // },
-    // {
-    //   title: "근린공원",
-    //   latlng: { lat: 33.451393, lng: 126.570738 },
-    // },
+    {
+      title: "카카오",
+      latlng: { lat: 33.450705, lng: 126.570677 },
+    },
+    {
+      title: "생태연못",
+      latlng: { lat: 33.450936, lng: 126.569477 },
+    },
+    {
+      title: "텃밭",
+      latlng: { lat: 33.450879, lng: 126.56994 },
+    },
+    {
+      title: "근린공원",
+      latlng: { lat: 33.451393, lng: 126.570738 },
+    },
   ]
+
+      //데이터 받아오기! (geolocation으로 현재 위치를 받아옴 -> axios로 주변 매점 정보 가져옴 -> store에 해당 매점 데이터 저장
+    // store에 저장된 데이터를 이용해서 map에 마커를 띄움. 그리고 그 marker를 클릭하면 main에서 등록한 상품들을 출력)
+  
   
   
     
@@ -77,6 +90,25 @@ const [state, setState] = useState({
             isLoading: false,
             
           }))
+          cp(state.center.lat, state.center.lng)
+          
+          axios
+      .get(`http://localhost:8080/api/mapProduct?ypoint=35.1275983422866&xpoint=128.968358334702`)
+      .then((e) => {
+        console.log("axios 성공")
+        console.log(e.data[0]);
+        ns(e.data[0]);
+
+        
+        np(e.data[1]);
+
+      })
+      .catch((e) => {
+        console.log(e.message)
+      })
+          
+
+
         },
         (err) => {
           setState((prev) => ({
@@ -91,25 +123,7 @@ const [state, setState] = useState({
           timeout: Infinity
         }
       )
-      //데이터 받아오기! (geolocation으로 현재 위치를 받아옴 -> axios로 주변 매점 정보 가져옴 -> store에 해당 매점 데이터 저장
-      // store에 저장된 데이터를 이용해서 map에 마커를 띄움. 그리고 그 marker를 클릭하면 main에서 등록한 상품들을 출력)
-      axios
-        .get(`https://k6e203.p.ssafy.io/api/map/?ypoint=35.1275983422866&xpoint=128.968358334702`)
-        .then((e) => {
-          console.log("axios 성공")
-          console.log(e.data);
-          for (let i = 0; i < e.data.length; i++) {
-            data.push({
-              title: e.data[i].userId,
-              latlng: { lat: e.data[i].locationYpoint, lng: e.data[i].locationXpoint },
-            });
-          }
-
-        })
-        .catch((e) => {
-          console.log(e.message)
-        })
-      console.log(data);
+      
     } else {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
@@ -120,13 +134,26 @@ const [state, setState] = useState({
     }
   }, [])
 
+
+  console.log(nearStore)
+  console.log(nearProduct)
+  for (let i = 0; i < nearStore.length; i++) {
+    storePos.push({
+      latlng: {
+        lat: nearStore[i].locationYpoint,
+        lng: nearStore[i].locationXpoint,
+      },
+      userId: nearStore[i].userId,
+    })
+  }
+  console.log(storePos);
   return (
     <>
       <Map // 지도를 표시할 Container
         center={state.center}
         style={{
           // 지도의 크기
-          width: "100%",
+          width: "auto",
           height: "450px",
         }}
         level={3} // 지도의 확대 레벨
@@ -141,6 +168,7 @@ const [state, setState] = useState({
                 console.log(state.center.lat,state.center.lng)
                 setIsOpen(true)
                 console.log()
+                
               }
             }
             // 마커에 마우스아웃 이벤트를 등록합니다
@@ -154,21 +182,15 @@ const [state, setState] = useState({
         {isOpen && <div style={{ padding: "5px", color: "#000" }}>Hello World!</div>}
         </MapMarker>
             )}
-            {data.map((value) => (
-        <EventMarkerContainer
-          key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
-          position={value.latlng}
-          content={value.content}
-          onClick={console.log(value.latlng.lat,value.latlng.lng)}
+        {storePos.map((value) => (
+          <EventMarkerContainer
+            key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
+            position={value.latlng}
+            onClick={console.log(value.latlng.lat,value.latlng.lat,value.userId)}
         />
-      ))}
+            ))}
+        
       </Map>
-      <p>{people.length}</p>
-      <div>
-        {people.map((p) => (
-          <span>{p}</span>
-        ))}
-      </div>
     </>
   )
 }
