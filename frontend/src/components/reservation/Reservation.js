@@ -28,7 +28,6 @@ function Reservation(props) {
 
     useEffect(() => {
         // ! axios get
-    // console.log("axios get")
     axios
     .get("http://localhost:5001/data/reservation-progress/18")
     .then((result) => {
