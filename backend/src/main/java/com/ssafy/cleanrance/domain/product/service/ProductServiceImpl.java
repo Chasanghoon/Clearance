@@ -8,9 +8,13 @@ import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySuppor
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
 import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.response.ProductFindStoreId;
+import com.ssafy.cleanrance.domain.user.db.entity.Location;
+import com.ssafy.cleanrance.domain.user.db.repository.LocationRepository;
 import com.ssafy.cleanrance.global.util.ImageUtil;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +44,8 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     ProductCategoryRepository productCategoryRepository;
 
+    @Autowired
+    LocationRepository locationRepository;
     private static final int SUCCESS = 1;
     private static final int FAIL = -1;
 
@@ -110,19 +116,6 @@ public class ProductServiceImpl implements ProductService{
         return productlist;
     }
 
-    @Override
-    public List<Product> findProductByStoreIdAndCategory(String storeId, int categoryId) {
-        List<Product> list = productRepositorySupport.findProductByStoreIdAndCategoryId(storeId, categoryId);
-        return list;
-    }
-
-    @Override
-    public List<Product> findProductByStoreIdAndWord(String storeId, String word) {
-        List<Product> list = productRepositorySupport.findProductByStoreIdAndWord(storeId,word);
-//        String str = new String(word.getBytes(StandardCharsets.UTF_8));
-//        List<Product> list = productRepository.findBystoreUserIdAndProductNameContaining(storeId, str);
-        return list;
-    }
 
     @Override
     public List<ProductCategory> findProductCategory() {
@@ -227,5 +220,65 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> findProductByDate(String userId, String date) {
         List<Product> list = productRepositorySupport.findProductByDate(userId, date);
         return list;
+    }
+
+    @Override
+    public List<Product> findProductList(double ypoint, double xpoint, String storeId, int categoryId, String word) {
+        List<Location> locations = locationRepository.findAll();
+        //사용자 주위 2km 내의 매장 찾기
+        List<String> loc = new ArrayList<>();
+        int num = 2000;
+        for (Location l: locations) {
+            double x = l.getLocationXpoint();
+            double y = l.getLocationYpoint();
+            double theta = x- xpoint;
+            double dist = Math.sin(def2rad(y)) * Math.sin(def2rad(ypoint)) + Math.cos(def2rad(y)) * Math.cos(def2rad(ypoint)) * Math.cos(def2rad(theta));
+            dist = Math.acos(dist);
+            dist = rad2deg(dist);
+            dist = dist * 60 * 1.1515;
+            //meter로 변환
+            dist = dist * 1609.344;
+            if(dist <num){
+                loc.add(l.getUserId());
+            }
+        }
+        int n = loc.size();
+        String[] arr = new String[n];
+        for(int i=0; i<n; i++){
+            arr[i] = loc.get(i);
+        }
+        List<Product> list = new ArrayList<>();
+        if(storeId == null && categoryId == 20 && null == word){    //매장, 카테고리, 검색어 입력 안 한 경우
+            list = productRepositorySupport.findProduct(arr);
+        }else if(storeId != null && categoryId == 20 && null == word){ //매장만 선택 했을 경우
+            list = productRepositorySupport.findProductByStoreId(storeId);
+        }else if(storeId != null && categoryId != 20 && null == word){ //매장과 카테고리 선택했을 경우
+            list = productRepositorySupport.findProductByStoreIdAndCategoryId(storeId,categoryId);
+        }else if(storeId != null && categoryId == 20 && null != word){ //매장, 검색 했을 경우
+            list = productRepositorySupport.findProductByStoreIdAndWord(storeId, word);
+        }else if(storeId == null && categoryId == 20 && null != word){ //검색했을 경우
+            list = productRepositorySupport.findProductByWord(arr, word);
+        }else if(storeId == null && categoryId !=20 && null == word){ //카테고리 선택했을 경우
+             list = productRepositorySupport.findProductByCategoryId(arr, categoryId);
+        }else if(storeId == null & categoryId !=20 && null != word){ //카테고리와 검색 했을 경우
+            list =productRepositorySupport.findProductByCategoryIdAndWord(arr, categoryId, word);
+        }else{                                                      //셋다 입력한 경우
+            list= productRepositorySupport.findProductByStoreIdAndCategoryIdAndWord(storeId,categoryId,word);
+        }
+        return list;
+    }
+
+    @Override
+    public Page<Product> findProductByStoreId(String storeId, Pageable pageable) {
+
+        return productRepository.findBystoreUserId(storeId, pageable);
+    }
+    //십진수를 radian으로 변경
+    private static double def2rad(double deg){
+        return (deg * Math.PI /180.0);
+    }
+    //radian을 십진수로 변경
+    private  static double rad2deg(double rad){
+        return (rad * 180/ Math.PI);
     }
 }

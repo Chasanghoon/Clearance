@@ -47,4 +47,27 @@ public class ProductRepositorySupport {
                 .where(qProduct.storeUserId.eq(userId).and(qProduct.productExpdate.eq(date))).fetch();
         return list;
     }
+
+    public List<Product> findProductByStoreIdAndCategoryIdAndWord(String storeId, int categoryId, String word){
+        List<Product> list = jpaQueryFactory.select(qProduct).from(qProduct)
+                .where(qProduct.storeUserId.eq(storeId).and(qProduct.categoryId.eq(categoryId).and(qProduct.productName.contains(word)))).fetch();
+        return list;
+    }
+    public List<Product> findProduct(String[] arr){
+        List<Product> list = jpaQueryFactory.select(qProduct).from(qProduct)
+                .where(qProduct.storeUserId.in(arr)).fetch();
+        return list;
+    }
+    public List<Product> findProductByWord(String[] arr, String word){
+        return jpaQueryFactory.select(qProduct).from(qProduct).where(qProduct.storeUserId.in(arr).and(qProduct.productName.contains(word))).fetch();
+    }
+    public List<Product> findProductByCategoryId(String[] arr, int categoryId){
+        return jpaQueryFactory.select(qProduct).from(qProduct)
+                .where(qProduct.storeUserId.in(arr).and(qProduct.categoryId.eq(categoryId))).fetch();
+    }
+
+    public List<Product> findProductByCategoryIdAndWord(String[] arr, int categoryId, String word){
+        return jpaQueryFactory.select(qProduct).from(qProduct)
+                .where(qProduct.storeUserId.in(arr).and(qProduct.categoryId.eq(categoryId).and(qProduct.productName.contains(word)))).fetch();
+    }
 }

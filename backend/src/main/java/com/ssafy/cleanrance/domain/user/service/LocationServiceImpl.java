@@ -21,7 +21,7 @@ public class LocationServiceImpl implements LocationService{
     public List<Location> findLoc(double ypoint, double xpoint) {
         List<Location> loc = locationRepository.findAll();
         List<Location> list = new ArrayList<>();
-        int num = 5000;
+        int num = 2000;
         for (Location l: loc) {
             double x = l.getLocationXpoint();
             double y = l.getLocationYpoint();
@@ -34,7 +34,7 @@ public class LocationServiceImpl implements LocationService{
             dist = dist * 1609.344;
 
             System.out.println(dist);
-            if(dist <5000){
+            if(dist <num){
                 list.add(l);
             }
         }
@@ -45,7 +45,7 @@ public class LocationServiceImpl implements LocationService{
     public List<Object> findLocAndProduct(double ypoint, double xpoint) {
         List<Location> loc = locationRepository.findAll();
         List<Location> list = new ArrayList<>();
-        int num = 5000;
+        int num = 2000;
         for (Location l: loc) {
             double x = l.getLocationXpoint();
             double y = l.getLocationYpoint();
@@ -58,17 +58,17 @@ public class LocationServiceImpl implements LocationService{
             dist = dist * 1609.344;
 
             System.out.println(dist);
-            if(dist <5000){
+            if(dist <num){
                 list.add(l);
             }
         }
-        Location lo = list.get(0);
-        System.out.println("LocationSize: "+list.size());
-        List<Product> productList = productRepositorySupport.findProductByStoreId(lo.getUserId());
-        System.out.println("prductListSize: "+productList.size());
         List<Object> obj = new ArrayList<>();
         obj.add(list);
-        obj.add(productList);
+//        List<List<Product>> productList = new ArrayList<>();
+        for (Location loca: list) {
+            List<Product> products= productRepositorySupport.findProductByStoreId(loca.getUserId());
+            obj.add(products);
+        }
         return obj;
     }
 

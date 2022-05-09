@@ -1,6 +1,8 @@
 package com.ssafy.cleanrance.domain.product.db.repository;
 
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +15,8 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findBystoreUserIdAndProductNameContaining(String storeUserId, String productName);
+
+    Page<Product> findBystoreUserId(String storeId, Pageable pageable);
 
 //    @Query(value = "select product_imagefront, product_name, product_stock, product_expdate\n" +
 //            "from product\n" +
