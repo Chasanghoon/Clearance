@@ -4,6 +4,7 @@ import com.querydsl.core.Tuple;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.db.entity.ProductCategory;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
+import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.response.ProductFindStoreId;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,7 @@ public interface ProductService {
     @Transactional
     void removeProduct(Integer productId);
     // 상품정보 수정
-    Optional<Product> updateStore(Product product);
+    //Optional<Product> updateStore(Product product);
     // 매장별 상품 조회
     List<Product> findProductByStoreId(String storeId);
 //    List<ProductFindStoreId> findProductByStoreId(String storeId) throws ParseException;
@@ -32,4 +33,8 @@ public interface ProductService {
     List<Product> findProductByStoreIdAndWord(String storeId, String word);
     //카테고리 목록 조회
     List<ProductCategory> findProductCategory();
+
+    Product updateProduct(ProductUpdatePutRequest productUpdatePutRequest);
+
+    List<Product> findProductByDate(String userId, String date);
 }

@@ -6,6 +6,7 @@ import com.ssafy.cleanrance.domain.product.db.repository.ProductCategoryReposito
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepository;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySupport;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
+import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.response.ProductFindStoreId;
 import com.ssafy.cleanrance.global.util.ImageUtil;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -38,6 +39,10 @@ public class ProductServiceImpl implements ProductService{
 
     @Autowired
     ProductCategoryRepository productCategoryRepository;
+
+    private static final int SUCCESS = 1;
+    private static final int FAIL = -1;
+
     @Override
     public String createStore(ProductRegisterRequest productRegisterRequest, MultipartFile image1, MultipartFile image2) throws IOException {
         Product product = new Product();
@@ -82,19 +87,21 @@ public class ProductServiceImpl implements ProductService{
         productRepositorySupport.deleteProductkByProductId(productId);
     }
 
-    @Override
-    public Optional<Product> updateStore(Product product) {
-        Optional<Product> updateStore = productRepository.findById(product.getProductId()); // 수정 필요
-        updateStore.ifPresent(selectStore->{
-            selectStore.setProductPrice(product.getProductPrice());
-            selectStore.setProductDiscount(product.getProductDiscount());
-            selectStore.setProductDiscountprice((int) (product.getProductPrice() * product.getProductDiscount()));
-            selectStore.setProductStock(product.getProductStock());
-            selectStore.setProductExpdate(product.getProductExpdate());
-            productRepository.save(selectStore);
-        });
-        return updateStore;
-    }
+//    @Override
+//    public Optional<Product> updateStore(Product product) {
+//        Optional<Product> updateStore = productRepository.findById(product.getProductId()); // 수정 필요
+//        updateStore.ifPresent(selectStore->{
+//            selectStore.setProductPrice(product.getProductPrice());
+//            selectStore.setProductDiscount(product.getProductDiscount());
+//            selectStore.setProductDiscountprice((int) (product.getProductPrice() * product.getProductDiscount()));
+//            selectStore.setProductStock(product.getProductStock());
+//            selectStore.setProductExpdate(product.getProductExpdate());
+//            selectStore.setCategoryId(product.getCategoryId());
+//
+//            productRepository.save(selectStore);
+//        });
+//        return updateStore;
+//    }
 
     @Override
     public List<Product> findProductByStoreId(String storeId) {
@@ -124,33 +131,52 @@ public class ProductServiceImpl implements ProductService{
     }
 
 //    @Override
-//    public Product updateStore(ProductUpdatePutRequest productUpdatePutRequest) throws IOException {
-//        Product product = productRepositorySupport.findById(productUpdatePutRequest.getProduct_id());
-//        product.setCategoryId(productUpdatePutRequest.getCategory_id());
-//        product.setStoreUserId(productUpdatePutRequest.getStore_user_id());
-//        product.setProductPrice(productUpdatePutRequest.getProduct_price());
-//        product.setProductDiscount(productUpdatePutRequest.getProduct_discount());
-//        product.setProductDiscountprice((int) (productUpdatePutRequest.getProduct_price() * productUpdatePutRequest.getProduct_discount()));
-//        product.setProductStock(productUpdatePutRequest.getProduct_stock());
-//        product.setProductExpdate(productUpdatePutRequest.getProduct_expDate());
-//        productRepository.save(product);
-//        //이미지 Base64 인코딩 소스로 변환
-////        MultipartFile imagefront = image1;
-////        File file1 = ImageUtil.multipartFileToFile(imagefront);
-////        byte[] byteArr1 = FileUtils.readFileToByteArray(file1);
-////        String base64_1 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr1);
-////        System.out.println(base64_1);
-////        product.setProductImagefront(base64_1);
-////
-////        MultipartFile imageback = image2;
-////        File file2 = ImageUtil.multipartFileToFile(imageback);
-////        byte[] byteArr2 = FileUtils.readFileToByteArray(file2);
-////        String base64_2 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr2);
-////        System.out.println(base64_2);
-////        product.setProductImageback(base64_2);
-////        productRepository.save(product);
-//        return product;
+//    public int updateProduct(ProductUpdatePutRequest productUpdatePutRequest) {
+//        if(productRepository.findById(productUpdatePutRequest.getProduct_id()).isPresent()){
+//            int productId = productRepository.findById(productUpdatePutRequest.getProduct_id()).get().getProductId();
+//            int categorgId = productUpdatePutRequest.getCategory_id();
+//            String productName = productUpdatePutRequest.getProduct_name();
+//            int productPrice = productUpdatePutRequest.getProduct_price();
+//            float productDiscount = productUpdatePutRequest.getProduct_discount();
+//            int productDiscountPrice = productUpdatePutRequest.getProduct_discountPrice();
+//            int productStock = productUpdatePutRequest.getProduct_stock();
+//            String productExpdate = productUpdatePutRequest.getProduct_expDate();
+//
+//            productRepository.productModifyByProductId(productId, categorgId, productName, productPrice, productDiscount, productDiscountPrice, productStock, productExpdate);
+//            return SUCCESS;
+//        }
+//        return FAIL;
 //    }
+
+    @Override
+    public Product updateProduct(ProductUpdatePutRequest productUpdatePutRequest) {
+        Product product = productRepositorySupport.findById(productUpdatePutRequest.getProduct_id());
+        product.setProductId(productUpdatePutRequest.getProduct_id());
+        product.setCategoryId(productUpdatePutRequest.getCategory_id());
+        product.setStoreUserId(productUpdatePutRequest.getStore_user_id());
+        product.setProductPrice(productUpdatePutRequest.getProduct_price());
+        product.setProductDiscount(productUpdatePutRequest.getProduct_discount());
+        product.setProductDiscountprice((int) (productUpdatePutRequest.getProduct_price() * productUpdatePutRequest.getProduct_discount()));
+        product.setProductStock(productUpdatePutRequest.getProduct_stock());
+        product.setProductExpdate(productUpdatePutRequest.getProduct_expDate());
+        productRepository.save(product);
+        //이미지 Base64 인코딩 소스로 변환
+//        MultipartFile imagefront = image1;
+//        File file1 = ImageUtil.multipartFileToFile(imagefront);
+//        byte[] byteArr1 = FileUtils.readFileToByteArray(file1);
+//        String base64_1 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr1);
+//        System.out.println(base64_1);
+//        product.setProductImagefront(base64_1);
+//
+//        MultipartFile imageback = image2;
+//        File file2 = ImageUtil.multipartFileToFile(imageback);
+//        byte[] byteArr2 = FileUtils.readFileToByteArray(file2);
+//        String base64_2 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr2);
+//        System.out.println(base64_2);
+//        product.setProductImageback(base64_2);
+//        productRepository.save(product);
+        return product;
+    }
 
 //    @Override
 //    public List<ProductFindStoreId> findProductByStoreId(String storeId) throws ParseException {
@@ -195,5 +221,11 @@ public class ProductServiceImpl implements ProductService{
         //안티엘리어싱 여부
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         return resizeImg;
+    }
+
+    @Override
+    public List<Product> findProductByDate(String userId, String date) {
+        List<Product> list = productRepositorySupport.findProductByDate(userId, date);
+        return list;
     }
 }

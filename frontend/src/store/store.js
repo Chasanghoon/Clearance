@@ -1,9 +1,8 @@
 import create from 'zustand'
+import useMainStore from './MainStore';
 
-const useStore = create((set) => ({
-    people: ['john doe', 'jane doe'],
-    addPerson: (person) =>
-        set((state) => ({ people: [...state.people, person] }))
-}))
+const useStore = () => {
+    return { useMainStore }
+}
 
 export default useStore;

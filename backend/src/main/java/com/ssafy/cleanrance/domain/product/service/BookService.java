@@ -6,5 +6,8 @@ import com.ssafy.cleanrance.domain.product.db.entity.ProductCategory;
 import java.util.List;
 
 public interface BookService {
-    List<ProductCategory> findStore(int categoryId, String storeId);
+    // 매장 호출 API
+    List<Float> findStore(String StoreId);
+    // 사용자 호출 API
+    List<Float> findUser(String userId);
 }

@@ -6,7 +6,9 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
+import com.ssafy.cleanrance.domain.consumer.mypage.db.repository.BookRepository;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.repository.BookRepositorySupport;
+import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +24,19 @@ import java.util.List;
 
 @Service("consumerService")
 public class ConsumerServiceImpl implements ConsumerService{
+
     @Autowired
     BookRepositorySupport bookRepositorySupport;
-//    @Override
-//    public List<Book> findBookByuserId(String userId) {
-//        return bookRepositorySupport.findBookByuserId(userId);
-//    }
 
-//    @Override
-//    public List<Book> findBookByDate(String userId, String date) {
-//        return null;
-//    }
+    @Override
+    public List<Book> findBookByuserId(String userId) {
+        return bookRepositorySupport.findBookByuserId(userId);
+    }
+
+    @Override
+    public List<Product> findBookByDate(String userId, String date) {
+        return null;
+    }
 
     @Override
     public String findBookByUserIdAndBookSet(String userId, int bookSet) throws IOException, WriterException {
