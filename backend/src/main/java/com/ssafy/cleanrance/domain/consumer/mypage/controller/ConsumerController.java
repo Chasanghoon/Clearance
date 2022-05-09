@@ -1,5 +1,6 @@
 package com.ssafy.cleanrance.domain.consumer.mypage.controller;
 
+import com.google.zxing.WriterException;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
 import com.ssafy.cleanrance.domain.consumer.mypage.service.ConsumerService;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 @Api(value = "구매자 API", tags = {"Consumer"})
@@ -48,4 +50,18 @@ public class ConsumerController {
 //        List<Product> list = consumerService.findBookByDate(userId, date);
 //        return ResponseEntity.status(200).body(list);
 //    }
+
+    @GetMapping("/book/qrcode")
+    @ApiOperation(value = "회원의 예약별 예약 내역 조회", notes = "회원 아이디와 예약번호로 예약정보를 조회후 QR코드를 생성한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<String> findBookByUserAndBookSet(@RequestParam String userId, @RequestParam int bookSet) throws IOException, WriterException {
+        String image = consumerService.findBookByUserIdAndBookSet(userId, bookSet);
+        return ResponseEntity.status(200).body(image);
+    }
+
 }
