@@ -59,9 +59,21 @@ public class ConsumerController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<String> findBookByUserAndBookSet(@RequestParam String userId, @RequestParam int bookSet) throws IOException, WriterException {
-        String image = consumerService.findBookByUserIdAndBookSet(userId, bookSet);
+    public ResponseEntity<String> findBookByUserAndBookSet(@RequestParam int bookSet) throws IOException, WriterException {
+        String image = consumerService.findBookByUserIdAndBookSet(bookSet);
         return ResponseEntity.status(200).body(image);
     }
 
+    @GetMapping("/book/qrcode/list")
+    @ApiOperation(value = "회원의 예약별 예약 상세내역 조회", notes = "회원 아이디와 예약번호로 예약정보를 조회후 QR코드를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<Product>> findBookByUserAndBookSetList(@RequestParam int bookSet) throws IOException, WriterException {
+        List<Product> list = consumerService.findBookByUserIdAndBookSetList(bookSet);
+        return ResponseEntity.status(200).body(list);
+    }
 }
