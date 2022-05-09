@@ -99,47 +99,47 @@ public class ProductController {
         return ResponseEntity.status(200).body("OK");
     }
 
-    @GetMapping("/product/list")
-    @ApiOperation(value = "매장별 상품 조회", notes = "<strong>매장 아이디</strong>를 통해 매장 상품을 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<List<Product>> findProductByStoreId(@RequestParam String storeId) {
-//        long beforeTime = System.currentTimeMillis();
-        List<Product> list = productService.findProductByStoreId(storeId);
-//        long afterTime = System.currentTimeMillis();
-//        System.out.println("걸리는 시간(m): "+ (afterTime-beforeTime)/1000);
-        return ResponseEntity.status(200).body(list);
-    }
+//    @GetMapping("/product/list")
+//    @ApiOperation(value = "매장별 상품 조회", notes = "<strong>매장 아이디</strong>를 통해 매장 상품을 조회한다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "사용자 없음"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity<List<Product>> findProductByStoreId(@RequestParam String storeId) {
+////        long beforeTime = System.currentTimeMillis();
+//        List<Product> list = productService.findProductByStoreId(storeId);
+////        long afterTime = System.currentTimeMillis();
+////        System.out.println("걸리는 시간(m): "+ (afterTime-beforeTime)/1000);
+//        return ResponseEntity.status(200).body(list);
+//    }
 
-    @GetMapping("/product/list/category")
-    @ApiOperation(value = "매장& 카테고리 상품 조회", notes = "<strong>매장 아이디와 카테고리</strong>를 통해 매장 상품을 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<List<Product>> findProductByStoreIdAndCategory(@RequestParam String storeId,@RequestParam int categoryId) {
-        List<Product> list = productService.findProductByStoreIdAndCategory(storeId, categoryId);
-        return ResponseEntity.status(200).body(list);
-    }
+//    @GetMapping("/product/list/category")
+//    @ApiOperation(value = "매장& 카테고리 상품 조회", notes = "<strong>매장 아이디와 카테고리</strong>를 통해 매장 상품을 조회한다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "사용자 없음"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity<List<Product>> findProductByStoreIdAndCategory(@RequestParam String storeId,@RequestParam int categoryId) {
+//        List<Product> list = productService.findProductByStoreIdAndCategory(storeId, categoryId);
+//        return ResponseEntity.status(200).body(list);
+//    }
 
-    @GetMapping("/product/list/search")
-    @ApiOperation(value = "매장& 검색어 상품 조회", notes = "<strong>매장 아이디와 검색어</strong>를 통해 매장 상품을 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<List<Product>> findProductByStoreIdAndWord(@RequestParam String storeId,@RequestParam String word) {
-        List<Product> list = productService.findProductByStoreIdAndWord(storeId, word);
-        return ResponseEntity.status(200).body(list);
-    }
+//    @GetMapping("/product/list/search")
+//    @ApiOperation(value = "매장& 검색어 상품 조회", notes = "<strong>매장 아이디와 검색어</strong>를 통해 매장 상품을 조회한다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "사용자 없음"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity<List<Product>> findProductByStoreIdAndWord(@RequestParam String storeId,@RequestParam String word) {
+//        List<Product> list = productService.findProductByStoreIdAndWord(storeId, word);
+//        return ResponseEntity.status(200).body(list);
+//    }
 
     @GetMapping("/productcategory")
     @ApiOperation(value = "상품 카테고리 목록 조회", notes = "상품 카테고리 목록을 조회한다.")
@@ -151,6 +151,19 @@ public class ProductController {
     })
     public ResponseEntity<List<ProductCategory>> findCategoryList() {
         List<ProductCategory> list = productService.findProductCategory();
+        return ResponseEntity.status(200).body(list);
+    }
+
+    @GetMapping("/product/list")
+    @ApiOperation(value = "매장별 상품 조회", notes = "<strong>매장 ID, 카테고리ID, 검색어<strong>로 매장 상품을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<Product>> findProductList(@RequestParam String storeId, @RequestParam(required = false, defaultValue = "20")int categoryId, @RequestParam(required = false) String word){
+        List<Product> list = productService.findProductList(storeId, categoryId, word);
         return ResponseEntity.status(200).body(list);
     }
 

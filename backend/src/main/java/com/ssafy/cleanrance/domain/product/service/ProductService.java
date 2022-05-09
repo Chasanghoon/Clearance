@@ -37,4 +37,6 @@ public interface ProductService {
     Product updateProduct(ProductUpdatePutRequest productUpdatePutRequest);
 
     List<Product> findProductByDate(String userId, String date);
+
+    List<Product> findProductList(String storeId, int categoryId, String word);
 }
