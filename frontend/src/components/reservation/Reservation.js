@@ -9,6 +9,7 @@ import { ko } from "date-fns/esm/locale";
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 import NavBar from '../common/NavBar';
+import userStore from '../../store/userStore';
 
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
@@ -28,17 +29,14 @@ function Reservation(props) {
 
     useEffect(() => {
         // ! axios get
+        // ! 스토어 아이디 저스텐드에 저장해서 써야함.
     axios
-    .get("http://localhost:5001/data/reservation-progress/18")
+    .get("http://localhost:5001/data/reservation-progress/Srkdrhkddms")
     .then((result) => {
-        console.log("result.data[0] = " + result.data[0]);
-        // setUserName(result.data[0].user_name);
-        // setUserImage(result.data[0].user_name);
-        // setUserPhone(result.data[0].user_name);
-        // setUserAddress(result.data[0].user_name);
-        const storeData = result.data[0];
-        setStoreInfo(storeData);
-        console.log("storeInfo = " + JSON.stringify(storeInfo));
+        setUserName(result.data[0].user_name);
+        setUserImage(result.data[0].user_image);
+        setUserPhone(result.data[0].user_phone);
+        setUserAddress(result.data[0].user_address);
     })
     .catch((e) => {
         console.error("axios get 실패");
@@ -59,18 +57,17 @@ const submit = ()=> {
             <NavBar></NavBar>
             <div style={{ margin: "20px 20px 20px 20px" }}>
                 <Card>
-                    {/* <Card.Img variant="top" src="img/default_image.png" /> */}
-                    <Card.Img variant="top" src={storeInfo.user_image} />
+                    <Card.Img variant="top" src={userImage} />
                     <Card.Body>
-                        <Card.Title> {storeInfo.user_address} </Card.Title>
+                        <Card.Title> {userName} </Card.Title>
                         <Card.Body>
                             <Row>
                                 <Col xs={3}>전화번호</Col>
-                                <Col>{storeInfo.user_phone}</Col>
+                                <Col>{userPhone}</Col>
                             </Row>
                             <Row>
                                 <Col xs={3}>주소</Col>
-                                <Col>{storeInfo.user_address}</Col>
+                                <Col>{userAddress}</Col>
                             </Row>
                         </Card.Body>
                     </Card.Body>
