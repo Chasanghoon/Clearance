@@ -228,4 +228,20 @@ public class ProductServiceImpl implements ProductService{
         List<Product> list = productRepositorySupport.findProductByDate(userId, date);
         return list;
     }
+
+    @Override
+    public List<Product> findProductList(String storeId, int categoryId, String word) {
+        List<Product> list = new ArrayList<>();
+
+        if (categoryId == 20 && null == word){// 카테고리, 검색어 입력 안한 경우
+            list = productRepositorySupport.findProductByStoreId(storeId);
+        }else if(categoryId != 20 && null == word){ //카테고리만 입력한 경우
+            list = productRepositorySupport.findProductByStoreIdAndCategoryId(storeId, categoryId);
+        }else if(categoryId == 20 && null != word){//검색어만 입력한 경우
+            list = productRepositorySupport.findProductByStoreIdAndWord(storeId, word);
+        }else if(categoryId != 20 && null != word){
+            list = productRepositorySupport.findProductByStoreIdAndCategoryIdAndWord(storeId, categoryId, word);
+        }
+        return list;
+    }
 }

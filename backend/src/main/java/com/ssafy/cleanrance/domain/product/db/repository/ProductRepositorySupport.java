@@ -47,4 +47,10 @@ public class ProductRepositorySupport {
                 .where(qProduct.storeUserId.eq(userId).and(qProduct.productExpdate.eq(date))).fetch();
         return list;
     }
+
+    public List<Product> findProductByStoreIdAndCategoryIdAndWord(String storeId, int categoryId, String word){
+        List<Product> list = jpaQueryFactory.select(qProduct).from(qProduct)
+                .where(qProduct.storeUserId.eq(storeId).and(qProduct.categoryId.eq(categoryId).and(qProduct.productName.contains(word)))).fetch();
+        return list;
+    }
 }
