@@ -5,6 +5,7 @@ from flask.json import JSONEncoder, jsonify
 import pymysql
 import json
 import datetime
+import requests
 
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
@@ -22,7 +23,8 @@ app = Flask(__name__)
 # flask_restx
 api = Api(app)
 
-cors = CORS(app, resources={"/data/": {"origin": ""}})
+cors = CORS(app, resources={r"/data/*": {"origins": "*"}})
+
 
 
 @api.route('/data/basket/<string:user_id>')
@@ -110,6 +112,7 @@ class Basket(Resource):
 
                     }
                 )
+            # 중복제거
             res['seller'] = list(set(res['seller']))
 
             # db 저장 / 연결 종료
@@ -148,7 +151,6 @@ class BasketAdd(Resource):
         )
 
         try:
-
             # request에서 data 받아오기
             data = request.get_json()
             user_id = data['user_id']
@@ -216,6 +218,7 @@ class BasketRemove(Resource):
 
             result = 'success'
             return jsonify(result=result)
+
         except:
             result = "fail"
             return jsonify(result=result)
@@ -363,9 +366,9 @@ class ReservationCreate(Resource):
                 if new_product_stock < 0:
                     return jsonify("상품 {} 재고가 부족합니다.".format(product_id))
 
-                ####################################### 삭제? ################################################
+                # 상품 재고 0
                 elif new_product_stock == 0:
-                    print("이제 상품 재고 0")
+                    print("상품 재고 0")
 
                 sql = "update product set product_stock=%s where product_id=%s"
                 curs.execute(sql, (new_product_stock, product_id))
@@ -608,6 +611,17 @@ class CalenderAll(Resource):
             return jsonify(result=result)
 
 
+@api.route('/data/calender/progress/<string:user_id>')
+class CalenderProgress(Resource):
+    def get(self, user_id):
+        return
+
+
+@api.route('/data/calender/complete/<string:user_id>')
+class CalenderComplete(Resource):
+    def get(self, user_id):
+        return
+
 
 @api.route('/data/calender-detail/all/<string:user_id>/<string:book_date>')
 class CalenderDetailAll(Resource):
@@ -627,10 +641,6 @@ class CalenderDetailAll(Resource):
         res = {"info": []}
 
         try:
-            # # request에서 data 받아오기
-            # data = request.get_json()
-            # book_date = data['book_date']
-
             # db에서 data 받아오기
             curs = db.cursor()
             sql = "select book_set from book where user_id=%s and book_date=%s"
@@ -683,7 +693,7 @@ class CalenderDetailAll(Resource):
                         "book_hour": book_hour,
                         "user_name": user_name,
                         "product_name": product_name,
-                        # "product_imagefront" : product_imagefront,
+                        "product_imagefront" : product_imagefront,
                         "product_price": product_price,
                         "product_discountprice": product_discountprice,
                         "basket_count": basket_count,
@@ -701,6 +711,21 @@ class CalenderDetailAll(Resource):
         except:
             result = "fail"
             return jsonify(result=result)
+
+
+
+@api.route('/data/calender-detail/progress/<string:user_id>/<string:book_date>')
+class CalenderDetailProgress(Resource):
+    def get(self, user_id, book_date):
+        return
+
+
+@api.route('/data/calender-detail/complete/<string:user_id>/<string:book_date>')
+class CalenderDetailComplete(Resource):
+    def get(self, user_id, book_date):
+        return
+
+
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5001, debug=True)
