@@ -222,4 +222,10 @@ public class ProductServiceImpl implements ProductService{
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         return resizeImg;
     }
+
+    @Override
+    public List<Product> findProductByDate(String userId, String date) {
+        List<Product> list = productRepositorySupport.findProductByDate(userId, date);
+        return list;
+    }
 }

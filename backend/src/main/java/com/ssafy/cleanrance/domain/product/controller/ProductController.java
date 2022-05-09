@@ -153,4 +153,17 @@ public class ProductController {
         List<ProductCategory> list = productService.findProductCategory();
         return ResponseEntity.status(200).body(list);
     }
+
+    @GetMapping("/product/date")
+    @ApiOperation(value = "매장별 상품 관리", notes = "매장 ID와 유효기간 입력 후 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<Product>> findBookByUser(@RequestParam String userId, @RequestParam String date){
+        List<Product> list = productService.findProductByDate(userId, date);
+        return ResponseEntity.status(200).body(list);
+    }
 }

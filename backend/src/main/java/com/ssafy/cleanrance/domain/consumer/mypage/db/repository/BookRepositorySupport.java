@@ -4,6 +4,7 @@ package com.ssafy.cleanrance.domain.consumer.mypage.db.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.QBook;
+import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

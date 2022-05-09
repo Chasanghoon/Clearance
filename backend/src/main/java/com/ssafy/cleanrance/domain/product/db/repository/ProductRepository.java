@@ -14,6 +14,11 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findBystoreUserIdAndProductNameContaining(String storeUserId, String productName);
 
+//    @Query(value = "select product_imagefront, product_name, product_stock, product_expdate\n" +
+//            "from product\n" +
+//            "where store_user_id=:userId and product_expdate=:date", nativeQuery = true)
+//    List<Product> findProductByDate(String userId, String date);
+
 //    @Modifying(clearAutomatically = true)
 //    @Transactional
 //    @Query("update Product p set p.categorgId = :categorgId, p.productName = :productName, p.productPrice= :productPrice, p.productDiscount=:productDiscount, p.productDiscountPrice=:productDiscountPrice, p.productStock=:productStock, p.productExpdate= :productExpdate where p.productId = :productId")
