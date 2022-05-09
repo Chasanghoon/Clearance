@@ -1,9 +1,14 @@
 package com.ssafy.cleanrance.domain.consumer.mypage.db.repository;
 
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Coalesce;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.cleanrance.domain.consumer.mypage.bean.ProductName;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.QBook;
+import com.ssafy.cleanrance.domain.product.db.entity.Product;
+import com.ssafy.cleanrance.domain.product.db.entity.QProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +20,16 @@ public class BookRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QBook qBook = QBook.book;
 
+    QProduct qProduct = QProduct.product;
+
     public List<Book> findBookByuserId(String userId){
         return jpaQueryFactory.select(qBook).from(qBook)
                 .where(qBook.userId.eq(userId)).fetch();
+    }
+    public List<ProductName> findBookByuserIdAndbookSet(int bookSet){
+        return jpaQueryFactory.select(Projections.constructor(ProductName.class, qProduct.productImagefront, qProduct.productName, qProduct.productStock, qProduct.productExpdate, qBook.bookStatus))
+                .from(qProduct)
+                .leftJoin(qBook).on(qProduct.productId.eq(qBook.productId))
+                .where(qBook.bookSet.eq(bookSet)).fetch();
     }
 }
