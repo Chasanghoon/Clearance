@@ -1,6 +1,7 @@
 package com.ssafy.cleanrance.domain.consumer.mypage.service;
 
 import com.google.zxing.WriterException;
+import com.ssafy.cleanrance.domain.consumer.mypage.bean.ProductName;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 
@@ -18,5 +19,5 @@ public interface ConsumerService {
     //QR코드 생성
     String findBookByUserIdAndBookSet(int bookSet) throws IOException, WriterException;
 
-    List<Product> findBookByUserIdAndBookSetList(int bookSet);
+    List<ProductName> findBookByUserIdAndBookSetList(int bookSet);
 }

@@ -1,6 +1,7 @@
 package com.ssafy.cleanrance.domain.consumer.mypage.controller;
 
 import com.google.zxing.WriterException;
+import com.ssafy.cleanrance.domain.consumer.mypage.bean.ProductName;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
 import com.ssafy.cleanrance.domain.consumer.mypage.service.ConsumerService;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
@@ -72,8 +73,8 @@ public class ConsumerController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<Product>> findBookByUserAndBookSetList(@RequestParam int bookSet) throws IOException, WriterException {
-        List<Product> list = consumerService.findBookByUserIdAndBookSetList(bookSet);
+    public ResponseEntity<List<ProductName>> findBookByUserAndBookSetList(@RequestParam int bookSet) throws IOException, WriterException {
+        List<ProductName> list = consumerService.findBookByUserIdAndBookSetList(bookSet);
         return ResponseEntity.status(200).body(list);
     }
 }

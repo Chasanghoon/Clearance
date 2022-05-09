@@ -5,6 +5,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.ssafy.cleanrance.domain.consumer.mypage.bean.ProductName;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.repository.BookRepositorySupport;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
@@ -55,8 +56,8 @@ public class ConsumerServiceImpl implements ConsumerService{
     }
 
     @Override
-    public List<Product> findBookByUserIdAndBookSetList(int bookSet) {
-        List<Product> list = bookRepositorySupport.findBookByuserIdAndbookSet(bookSet);
+    public List<ProductName> findBookByUserIdAndBookSetList(int bookSet) {
+        List<ProductName> list = bookRepositorySupport.findBookByuserIdAndbookSet(bookSet);
         return list;
     }
 }
