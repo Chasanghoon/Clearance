@@ -17,13 +17,13 @@ class CustomJSONEncoder(JSONEncoder):
 
         return JSONEncoder.default(self, obj)
 
+
 app = Flask(__name__)
 
 # flask_restx
 api = Api(app)
 
-cors = CORS(app, resources={"/data/": {"origin": ""}})
-
+cors = CORS(app, resources={r"/data/*": {"origins": "*"}})
 
 @api.route('/data/basket/<string:user_id>')
 class Basket(Resource):
