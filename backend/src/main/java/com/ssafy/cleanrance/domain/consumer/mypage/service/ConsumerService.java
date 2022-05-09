@@ -1,8 +1,11 @@
 package com.ssafy.cleanrance.domain.consumer.mypage.service;
 
+import com.google.zxing.WriterException;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface ConsumerService {
@@ -14,4 +17,5 @@ public interface ConsumerService {
     //거래내역 조회
     //탄소발자국 조회
     //QR코드 생성
+    String findBookByUserIdAndBookSet(String userId, int bookSet) throws IOException, WriterException;
 }
