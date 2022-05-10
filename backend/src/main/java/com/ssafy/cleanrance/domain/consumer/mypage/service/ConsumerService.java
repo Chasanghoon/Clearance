@@ -16,8 +16,6 @@ public interface ConsumerService {
     List<Product> findBookByDate(String userId, String date);
     //진행 상황에 따른 예약 내역 조회
     //거래내역 조회
-    //탄소발자국 조회
-    //QR코드 생성
     String findBookByUserIdAndBookSet(int bookSet) throws IOException, WriterException;
 
     List<ProductName> findBookByUserIdAndBookSetList(int bookSet);

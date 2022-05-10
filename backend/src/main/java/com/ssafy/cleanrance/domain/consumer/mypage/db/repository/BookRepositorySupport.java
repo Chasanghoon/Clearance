@@ -33,7 +33,7 @@ public class BookRepositorySupport {
         return jpaQueryFactory.select(Projections.constructor(ProductName.class, qProduct.productImagefront, qProduct.productName, qProduct.productStock, qProduct.productExpdate, qBook.bookStatus))
                 .from(qProduct)
                 .leftJoin(qBook).on(qProduct.productId.eq(qBook.productId))
-                .where(qBook.bookSet.eq(bookSet)).fetch();
+                .where(qBook.bookSet.eq(bookSet).and(qBook.bookStatus.eq(0))).fetch();
     }
 
     public List<Book> findByBookSet(int book_set) {
