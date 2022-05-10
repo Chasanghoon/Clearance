@@ -4,6 +4,7 @@ import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.db.entity.ProductCategory;
 import com.ssafy.cleanrance.domain.product.request.ProductDeleteReq;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
+import com.ssafy.cleanrance.domain.product.request.ProductStockUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.service.ProductService;
 import com.ssafy.cleanrance.global.model.response.BaseResponseBody;
@@ -65,6 +66,29 @@ public class ProductController {
         Product product1 = productService.findById(productUpdatePutRequest.getProduct_id());
         if(product1!=null){
             Product product = productService.updateProduct(productUpdatePutRequest);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        }else{
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "ProductID doesn't exist"));
+        }
+//        if(productService.updateProduct(productUpdatePutRequest) == SUCCESS) {
+//            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
+//        }else{
+//            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "This Id doesn't exist."));
+//        }
+    }
+
+    @PutMapping(value = "/product/countmodify")
+    @ApiOperation(value = "상품수량 수정", notes = "상품 수량을 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> countmodify(@RequestBody ProductStockUpdatePutRequest productStockUpdatePutRequest) {
+        Product product1 = productService.findById(productStockUpdatePutRequest.getProduct_id());
+        if(product1!=null){
+            Product product = productService.updateCountProduct(productStockUpdatePutRequest);
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
         }else{
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "ProductID doesn't exist"));

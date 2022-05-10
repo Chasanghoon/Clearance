@@ -6,6 +6,7 @@ import com.ssafy.cleanrance.domain.product.db.repository.ProductCategoryReposito
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepository;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySupport;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
+import com.ssafy.cleanrance.domain.product.request.ProductStockUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.response.ProductFindStoreId;
 import com.ssafy.cleanrance.domain.user.db.entity.Location;
@@ -273,6 +274,15 @@ public class ProductServiceImpl implements ProductService{
 
         return productRepository.findBystoreUserId(storeId, pageable);
     }
+
+    @Override
+    public Product updateCountProduct(ProductStockUpdatePutRequest productStockUpdatePutRequest) {
+        Product product = productRepositorySupport.findById(productStockUpdatePutRequest.getProduct_id());
+        product.setProductStock(productStockUpdatePutRequest.getProduct_stock());
+        productRepository.save(product);
+        return product;
+    }
+
     //십진수를 radian으로 변경
     private static double def2rad(double deg){
         return (deg * Math.PI /180.0);
