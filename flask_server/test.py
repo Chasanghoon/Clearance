@@ -3,9 +3,7 @@ from flask_restx import Resource, Api, fields
 from flask_cors import CORS
 from flask.json import JSONEncoder, jsonify
 import pymysql
-import json
 import datetime
-import requests
 
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
@@ -102,7 +100,7 @@ class Basket(Resource):
                         "product_name": product_name,
                         "product_price": product_price,
                         "product_discountprice": product_discountprice,
-                        # "product_imagefront" : product_imagefront,
+                        "product_imagefront" : product_imagefront,
 
                         # +++ 추가
                         "product_id": product_id,
@@ -111,7 +109,7 @@ class Basket(Resource):
                         "product_discount": product_discount,
                         "product_stock": product_stock,
                         "product_expdate": product_expdate,
-                        # "product_imageback" : product_imageback,
+                        "product_imageback" : product_imageback,
                     }
                 )
 
