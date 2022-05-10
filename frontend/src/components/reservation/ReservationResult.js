@@ -287,9 +287,8 @@ function ReservationResult(props) {
         // ! 북셋 어디서 가져오지..?
         axios
             .get("http://127.0.0.1:5001/data/reservation-complete/8")
-            // .get("https://k6e203.p.ssafy.io/data/reservation-complete/8")
+            // .get("https://k6e203.p.ssafy.io:5000/data/reservation-complete/8")
             .then((result) => {
-                console.log("휴대폰으로 보고 싶었눈데" + result.data.product);
                 setSellerName(result.data.seller[0].user_name);
                 setSellerImage(result.data.seller[0].user_image);
                 setSellerAddress(result.data.seller[0].user_address);
