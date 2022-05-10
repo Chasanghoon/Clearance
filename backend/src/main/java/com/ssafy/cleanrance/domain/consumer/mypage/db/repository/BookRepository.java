@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
 //    Book findByBookSet(int book_set);
-
+//
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "update book b set b.book_status = 1 where b.product_id = :bookId", nativeQuery = true)
