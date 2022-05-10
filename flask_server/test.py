@@ -26,7 +26,6 @@ api = Api(app)
 cors = CORS(app, resources={r"/data/*": {"origins": "*"}})
 
 
-
 @api.route('/data/basket/<string:user_id>')
 class Basket(Resource):
     def get(self, user_id):
@@ -42,89 +41,114 @@ class Basket(Resource):
             init_command='SET NAMES UTF8'
         )
 
-        try:
-            # user_id로 장바구니 조회
-            curs = db.cursor()
-            sql = '''select basket_id, product_id, basket_count from basket 
-                     where user_id = %s and basket_bookcheck = %s;'''
-            curs.execute(sql, (user_id, 0))
-            rows = curs.fetchall()
+        # try:
+        # user_id로 장바구니 조회
+        curs = db.cursor()
+        sql = '''select basket_id, product_id, basket_count from basket 
+                 where user_id = %s and basket_bookcheck = %s;'''
+        curs.execute(sql, (user_id, 0))
+        rows = curs.fetchall()
 
-            # print(rows)
-            # [{'basket_id': 9, 'product_id': 1, 'basket_count': 1}, {'basket_id': 10, 'product_id': 2, 'basket_count': 2}, {'basket_id': 11, 'product_id': 3, 'basket_count': 2}]
+        # print(rows)
+        # [{'basket_id': 9, 'product_id': 1, 'basket_count': 1}, {'basket_id': 10, 'product_id': 2, 'basket_count': 2}, {'basket_id': 11, 'product_id': 3, 'basket_count': 2}]
 
-            # version1
-            res = {
-                "seller" : [],
-                "product": [],
-            }
-            for e in rows:
-                basket_id = e["basket_id"]
-                product_id = e["product_id"]
-                basket_count = e["basket_count"]
+        # version1
+        res = []
+        for e in rows:
+            basket_id = e["basket_id"]
+            product_id = e["product_id"]
+            basket_count = e["basket_count"]
 
-                sql = '''select * from product where product_id = %s;'''
-                curs.execute(sql, (product_id))
-                rows2 = curs.fetchall()
+            sql = '''select * from product where product_id = %s;'''
+            curs.execute(sql, (product_id))
+            rows2 = curs.fetchall()
+
+            # product *로 변경
+            store_user_id = rows2[0]["store_user_id"]
+            product_name = rows2[0]["product_name"]
+            product_price = rows2[0]["product_price"]
+            product_discountprice = rows2[0]["product_discountprice"]
+            product_imagefront = rows2[0]["product_imagefront"]
+
+            # +++추가
+            category_id = rows2[0]["category_id"]
+            product_discount = rows2[0]["product_discount"]
+            product_stock = rows2[0]["product_stock"]
+            product_expdate = rows2[0]["product_expdate"]
+            product_imageback = rows2[0]["product_imageback"]
+
+            sql = "select user_name from user where user_id = %s"
+            curs.execute(sql, (store_user_id))
+            rows2 = curs.fetchall()
+
+            user_name = rows2[0]["user_name"]
 
 
-                # product *로 변경
-                store_user_id = rows2[0]["store_user_id"]
-                product_name = rows2[0]["product_name"]
-                product_price = rows2[0]["product_price"]
-                product_discountprice = rows2[0]["product_discountprice"]
-                product_imagefront = rows2[0]["product_imagefront"]
+            # res에 key값으로 user_name 있는지 확인
+            search_state = False
+            for i in range(len(res)):
+                if list(res[i].keys())[0] == user_name:
+                    search_state = True
+                    idx = i
+                    break
 
-                # +++추가
-                category_id = rows2[0]["category_id"]
-                product_discount = rows2[0]["product_discount"]
-                product_stock = rows2[0]["product_stock"]
-                product_expdate = rows2[0]["product_expdate"]
-                product_imageback = rows2[0]["product_imageback"]
-
-
-                sql = "select user_name from user where user_id = %s"
-                curs.execute(sql, (store_user_id))
-                rows2 = curs.fetchall()
-
-                user_name = rows2[0]["user_name"]
-
-                res['seller'].append(user_name)
-                res['product'].append(
+            if search_state:
+                res[idx][user_name].append(
                     {
-                        "user_name": user_name,
+                        # "user_name": user_name,
                         # "basket_id" : basket_id,
-                        "basket_count" : basket_count,
+                        "basket_count": basket_count,
                         # "store_user_id" : store_user_id,
-                        "product_name" : product_name,
-                        "product_price" : product_price,
-                        "product_discountprice" : product_discountprice,
+                        "product_name": product_name,
+                        "product_price": product_price,
+                        "product_discountprice": product_discountprice,
+                        # "product_imagefront" : product_imagefront,
+
+                        # +++ 추가
+                        "product_id": product_id,
+                        "store_user_id": store_user_id,
+                        "category_id": category_id,
+                        "product_discount": product_discount,
+                        "product_stock": product_stock,
+                        "product_expdate": product_expdate,
+                        # "product_imageback" : product_imageback,
+                    }
+                )
+
+            else:
+                res.append({user_name:[]})
+                res[-1][user_name].append(
+                    {
+                        # "user_name": user_name,
+                        # "basket_id" : basket_id,
+                        "basket_count": basket_count,
+                        # "store_user_id" : store_user_id,
+                        "product_name": product_name,
+                        "product_price": product_price,
+                        "product_discountprice": product_discountprice,
                         "product_imagefront" : product_imagefront,
 
                         # +++ 추가
-                        "product_id" : product_id,
-                        "store_user_id" : store_user_id,
-                        "category_id" : category_id,
-                        "product_discount" : product_discount,
-                        "product_stock" : product_stock,
-                        "product_expdate" : product_expdate,
+                        "product_id": product_id,
+                        "store_user_id": store_user_id,
+                        "category_id": category_id,
+                        "product_discount": product_discount,
+                        "product_stock": product_stock,
+                        "product_expdate": product_expdate,
                         "product_imageback" : product_imageback,
-
                     }
                 )
-            # 중복제거
-            res['seller'] = list(set(res['seller']))
 
-            # db 저장 / 연결 종료
-            db.commit()
-            db.close()
+        # db 저장 / 연결 종료
+        db.commit()
+        db.close()
 
-            return jsonify(res)
-            # return json.dumps(res, cls=CustomJSONEncoder)
+        return jsonify(res)
+        # return json.dumps(res, cls=CustomJSONEncoder)
 
-        except:
-            result = 'fail'
-            return jsonify(result=result)
+        # except:
+        #     result = 'fail'
+        #     return jsonify(result=result)
 
 
 
