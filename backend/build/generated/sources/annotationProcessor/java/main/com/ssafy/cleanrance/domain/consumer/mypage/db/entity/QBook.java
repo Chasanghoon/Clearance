@@ -34,6 +34,8 @@ public class QBook extends EntityPathBase<Book> {
 
     public final NumberPath<Integer> bookPrice = createNumber("bookPrice", Integer.class);
 
+    public final NumberPath<Integer> bookSet = createNumber("bookSet", Integer.class);
+
     public final NumberPath<Integer> bookStatus = createNumber("bookStatus", Integer.class);
 
     public final NumberPath<Integer> productId = createNumber("productId", Integer.class);

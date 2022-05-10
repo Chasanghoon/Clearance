@@ -202,7 +202,7 @@ function RegistrationProduct(props) {
 
     let navigate = useNavigate();
 
-    const test = (date) => {
+    const dateData = (date) => {
         setStartDate(date);
         onChangeProductExpDate(splitDate(date));
     }
@@ -260,18 +260,16 @@ function RegistrationProduct(props) {
                             {/* <Form.Label column >유통ㄴ기한</Form.Label> */}
                             {/* <Form.Control maxLength={50} placeholder="유통기한" value={productExpDate} onChange={onChangeProductExpDate} /> */}
                             <DatePicker
-                            
+                                selected={startDate}
                                 dateFormat="yyyy년 MM월 dd일 (eee)"
                                 customInput={<ExampleCustomInput />}
                                 locale={ko}
                                 showPopperArrow={false}
                                 popperPlacement="auto"
-
                                 // excludeDates={[new Date(), subDays(new Date(), 1),new Date("2022/05/18")]}
                                 minDate={new Date()}
-                                selected={startDate}
                                 // onChange={date => setStartDate(date)} />
-                                onChange={date => test(date)} />
+                                onChange={date => dateData(date)} />
 
                             {productExpDateError && <div className="invalid-input">유통기한을 입력하세요.</div>}
                         </Col>

@@ -24,7 +24,7 @@ app = Flask(__name__)
 # flask_restx
 api = Api(app)
 
-cors = CORS(app, resources={"/data/": {"origin": ""}})
+cors = CORS(app, resources={r"/data/*": {"origins": "*"}})
 
 
 @api.route('/data/basket/<string:user_id>')
@@ -112,6 +112,7 @@ class Basket(Resource):
 
                     }
                 )
+            # 중복제거
             res['seller'] = list(set(res['seller']))
 
             # db 저장 / 연결 종료
@@ -127,7 +128,7 @@ class Basket(Resource):
 
 
 
-basketAdd_fields = api.model('basket-add', {
+basketAdd_fields = api.model('basketAdd', {
     'user_id' : fields.String,
     'product_id' : fields.Integer,
     'basket_count' : fields.Integer,
@@ -150,7 +151,6 @@ class BasketAdd(Resource):
         )
 
         try:
-
             # request에서 data 받아오기
             data = request.get_json()
             user_id = data['user_id']
@@ -181,7 +181,7 @@ class BasketAdd(Resource):
             return jsonify(result=result)
 
 
-basketRemove_fields = api.model('basket-rem', {
+basketRemove_fields = api.model('basketRemove', {
     'user_id' : fields.String,
     'product_id' : fields.Integer,
 })
@@ -218,6 +218,7 @@ class BasketRemove(Resource):
 
             result = 'success'
             return jsonify(result=result)
+
         except:
             result = "fail"
             return jsonify(result=result)
@@ -269,7 +270,7 @@ class ReservationProgress(Resource):
             return jsonify(result=result)
 
 
-reservationAdd_fields = api.model('reservation-add', {
+reservationAdd_fields = api.model('reservationAdd', {
     'user_id' : fields.String,
     'store_user_id' : fields.String,
     'book_date' : fields.Date,
@@ -365,9 +366,9 @@ class ReservationCreate(Resource):
                 if new_product_stock < 0:
                     return jsonify("상품 {} 재고가 부족합니다.".format(product_id))
 
-                ####################################### 삭제? ################################################
+                # 상품 재고 0
                 elif new_product_stock == 0:
-                    print("이제 상품 재고 0")
+                    print("상품 재고 0")
 
                 sql = "update product set product_stock=%s where product_id=%s"
                 curs.execute(sql, (new_product_stock, product_id))
@@ -415,6 +416,8 @@ class ReservationComplete(Resource):
             # print(basket_ids)
             # [{'basket_id': 49}, {'basket_id': 50}]
 
+
+            first = True
             for i in range(len(basket_ids)):
                 basket_id = basket_ids[i]['basket_id']
 
@@ -439,42 +442,47 @@ class ReservationComplete(Resource):
                 product_discountprice = rows[0]['product_discountprice']
                 product_imagefront = rows[0]['product_imagefront']
 
-                # User Table
-                sql = "select user_name, user_address, user_phone from user where user_id=%s"
-                curs.execute(sql, (store_user_id))
-                rows = curs.fetchall()
-                user_name = rows[0]['user_name']
-                user_address = rows[0]['user_address']
-                user_phone = rows[0]['user_phone']
+                # seller 정보는 한번만 받아오기
+                if first:
+                    # User Table
+                    sql = "select user_name, user_address, user_phone, user_image from user where user_id=%s"
+                    curs.execute(sql, (store_user_id))
+                    rows = curs.fetchall()
+                    user_name = rows[0]['user_name']
+                    user_address = rows[0]['user_address']
+                    user_phone = rows[0]['user_phone']
+                    user_image = rows[0]['user_image']
 
-                # Location Table
-                sql = "select location_xpoint, location_ypoint from location where user_id=%s"
-                curs.execute(sql, (store_user_id))
-                rows = curs.fetchall()
-                if not rows:
-                    return jsonify("좌표데이터가 없습니다.")
-                location_xpoint = rows[0]['location_xpoint']
-                location_ypoint = rows[0]['location_ypoint']
+                    # Location Table
+                    sql = "select location_xpoint, location_ypoint from location where user_id=%s"
+                    curs.execute(sql, (store_user_id))
+                    rows = curs.fetchall()
+                    if not rows:
+                        return jsonify("좌표데이터가 없습니다.")
+                    location_xpoint = rows[0]['location_xpoint']
+                    location_ypoint = rows[0]['location_ypoint']
 
-                # # User, Location Table (join)
-                # sql = '''select I.user_name, I.user_address, I.user_phone, O.location_xpoint, O.location_ypoint
-                #          from user I
-                #          left outer join location O
-                #          on I.user_id = O.user_id
-                #          where I.user_id = %s'''
-                # curs.execute(sql, (store_user_id))
-                # rows = curs.fetchall()
-                # user_name = rows[0]['user_name']
-                # user_address = rows[0]['user_address']
-                # user_phone = rows[0]['user_phone']
-                # location_xpoint = rows[0]['location_xpoint']
-                # location_ypoint = rows[0]['location_ypoint']
+                    # # User, Location Table (join)
+                    # sql = '''select I.user_name, I.user_address, I.user_phone, O.location_xpoint, O.location_ypoint
+                    #          from user I
+                    #          left outer join location O
+                    #          on I.user_id = O.user_id
+                    #          where I.user_id = %s'''
+                    # curs.execute(sql, (store_user_id))
+                    # rows = curs.fetchall()
+                    # user_name = rows[0]['user_name']
+                    # user_address = rows[0]['user_address']
+                    # user_phone = rows[0]['user_phone']
+                    # location_xpoint = rows[0]['location_xpoint']
+                    # location_ypoint = rows[0]['location_ypoint']
 
-                # date, time encoder
-                encoder = CustomJSONEncoder()
-                encoder.encode({"book_date":book_date, "book_hour":book_hour})
-                book_date = str(book_date)
-                book_hour = str(book_hour)
+                    # date, time encoder
+                    encoder = CustomJSONEncoder()
+                    encoder.encode({"book_date":book_date, "book_hour":book_hour})
+                    book_date = str(book_date)
+                    book_hour = str(book_hour)
+
+                    first = False
 
                 res['product'].append(
                     {
@@ -491,6 +499,7 @@ class ReservationComplete(Resource):
                     "user_name": user_name,
                     "user_address": user_address,
                     "user_phone": user_phone,
+                    "user_image": user_image,
                     "location_xpoint": location_xpoint,
                     "location_ypoint": location_ypoint,
                     "book_date": book_date,
@@ -498,12 +507,222 @@ class ReservationComplete(Resource):
                 }
             )
 
+            # db 저장 / 연결 종료
+            db.commit()
+            db.close()
+
             return jsonify(res)
 
 
         except:
             result = 'fail'
             return jsonify(result=result)
+
+
+@api.route('/data/calender/all/<string:user_id>')
+class CalenderAll(Resource):
+    def get(self, user_id):
+        # db 연결
+        db = pymysql.connect(
+            host="k6e203.p.ssafy.io",
+            port=3306,
+            user="ssafy",
+            password="ssafy",
+            db='free_ssafy',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor,
+            init_command='SET NAMES UTF8'
+        )
+
+        res = {"info" : []}
+
+        try:
+            # db에서 data 받아오기
+            curs = db.cursor()
+            sql = "select book_set from book where user_id=%s"
+            curs.execute(sql, (user_id))
+            rows = curs.fetchall()
+
+            # book_set 값 배열
+            book_set_arr = []
+            for e in rows:
+                book_set_arr.append(e['book_set'])
+            book_set_arr = list(set(book_set_arr)) # 중복제거
+
+            # book Table
+            for book_set in book_set_arr:
+                temp = []
+                sql = "select * from book where book_set=%s"
+                curs.execute(sql, (book_set))
+                rows = curs.fetchall()
+                for i in range(len(rows)):
+                    product_id = rows[i]['product_id']
+                    store_user_id = rows[i]['store_user_id']
+                    basket_count = rows[i]['book_count']
+                    book_date = rows[i]['book_date']
+                    book_hour = rows[i]['book_hour']
+                    book_status = rows[i]['book_status']
+
+                    # date, time encoder
+                    encoder = CustomJSONEncoder()
+                    encoder.encode({"book_date": book_date, "book_hour": book_hour})
+                    book_date = str(book_date)
+                    book_hour = str(book_hour)
+
+                    # 상품 data
+                    sql = '''select product_name, product_price, product_discountprice, product_imagefront
+                             from product where product_id=%s'''
+                    curs.execute(sql, (product_id))
+                    rows2 = curs.fetchall()
+                    product_name = rows2[0]['product_name']
+                    product_price = rows2[0]['product_price']
+                    product_discountprice = rows2[0]['product_discountprice']
+                    product_imagefront = rows2[0]['product_imagefront']
+
+                    # 매장 이름
+                    sql = "select user_name from user where user_id=%s"
+                    curs.execute(sql, (store_user_id))
+                    rows2 = curs.fetchall()
+                    user_name = rows2[0]['user_name']
+
+                    temp.append({
+                        "book_set" : book_set,
+                        "book_date" : book_date,
+                        "book_hour" : book_hour,
+                        "user_name" : user_name,
+                        "product_name" : product_name,
+                        "product_imagefront" : product_imagefront,
+                        "product_price" : product_price,
+                        "product_discountprice" : product_discountprice,
+                        "basket_count" : basket_count,
+                    })
+                res['info'].append(temp)
+
+            # db 저장 / 연결 종료
+            db.commit()
+            db.close()
+
+            # 최신순 정렬
+            res['info'].sort(key=lambda x:(x[0]['book_date'], x[0]['book_hour']), reverse=True)
+            return jsonify(res)
+
+        except:
+            result = "fail"
+            return jsonify(result=result)
+
+
+@api.route('/data/calender/progress/<string:user_id>')
+class CalenderProgress(Resource):
+    def get(self, user_id):
+        return
+
+
+@api.route('/data/calender/complete/<string:user_id>')
+class CalenderComplete(Resource):
+    def get(self, user_id):
+        return
+
+
+@api.route('/data/calender-detail/all/<string:user_id>/<string:book_date>')
+class CalenderDetailAll(Resource):
+    def get(self, user_id, book_date):
+        # db 연결
+        db = pymysql.connect(
+            host="k6e203.p.ssafy.io",
+            port=3306,
+            user="ssafy",
+            password="ssafy",
+            db='free_ssafy',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor,
+            init_command='SET NAMES UTF8'
+        )
+
+        res = {"info": []}
+
+        try:
+            # db에서 data 받아오기
+            curs = db.cursor()
+            sql = "select book_set from book where user_id=%s and book_date=%s"
+            curs.execute(sql, (user_id, book_date))
+            rows = curs.fetchall()
+
+            # book_set 값 배열
+            book_set_arr = []
+            for e in rows:
+                book_set_arr.append(e['book_set'])
+            book_set_arr = list(set(book_set_arr))  # 중복제거
+
+            # book Table
+            for book_set in book_set_arr:
+                temp = []
+                sql = "select * from book where book_set=%s"
+                curs.execute(sql, (book_set))
+                rows = curs.fetchall()
+                for i in range(len(rows)):
+                    product_id = rows[i]['product_id']
+                    store_user_id = rows[i]['store_user_id']
+                    basket_count = rows[i]['book_count']
+                    book_hour = rows[i]['book_hour']
+                    book_status = rows[i]['book_status']
+
+                    # date, time encoder
+                    encoder = CustomJSONEncoder()
+                    encoder.encode({"book_date": book_date, "book_hour": book_hour})
+                    book_date = str(book_date)
+                    book_hour = str(book_hour)
+
+                    # 상품 data
+                    sql = '''select product_name, product_price, product_discountprice, product_imagefront
+                                     from product where product_id=%s'''
+                    curs.execute(sql, (product_id))
+                    rows2 = curs.fetchall()
+                    product_name = rows2[0]['product_name']
+                    product_price = rows2[0]['product_price']
+                    product_discountprice = rows2[0]['product_discountprice']
+                    product_imagefront = rows2[0]['product_imagefront']
+
+                    # 매장 이름
+                    sql = "select user_name from user where user_id=%s"
+                    curs.execute(sql, (store_user_id))
+                    rows2 = curs.fetchall()
+                    user_name = rows2[0]['user_name']
+
+                    temp.append({
+                        "book_set": book_set,
+                        "book_hour": book_hour,
+                        "user_name": user_name,
+                        "product_name": product_name,
+                        "product_imagefront" : product_imagefront,
+                        "product_price": product_price,
+                        "product_discountprice": product_discountprice,
+                        "basket_count": basket_count,
+                    })
+                res['info'].append(temp)
+
+            # db 저장 / 연결 종료
+            db.commit()
+            db.close()
+
+            # 최신순 정렬
+            res['info'].sort(key=lambda x:x[0]['book_hour'], reverse=True)
+            return jsonify(res)
+
+        except:
+            result = "fail"
+            return jsonify(result=result)
+
+
+@api.route('/data/calender-detail/progress/<string:user_id>/<string:book_date>')
+class CalenderDetailProgress(Resource):
+    def get(self, user_id, book_date):
+        return
+
+
+@api.route('/data/calender-detail/complete/<string:user_id>/<string:book_date>')
+class CalenderDetailComplete(Resource):
+    def get(self, user_id, book_date):
+        return
 
 
 if __name__ == "__main__":
