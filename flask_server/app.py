@@ -27,7 +27,6 @@ api = Api(app)
 cors = CORS(app, resources={r"/data/*": {"origins": "*"}})
 
 
-@api.route('/data/basket/<string:user_id>')
 class Basket(Resource):
     def get(self, user_id):
         # db 연결
