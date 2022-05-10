@@ -426,120 +426,120 @@ class ReservationComplete(Resource):
             cursorclass=pymysql.cursors.DictCursor,
             init_command='SET NAMES UTF8'
         )
-        try:
-            res = {"seller" : [], "product" : []}
 
-            # db에서 data 받아오기
-            curs = db.cursor()
+        res = {"seller" : [], "product" : []}
 
-            # book_set+
-            sql = "select basket_id from book where book_set = %s"
-            curs.execute(sql, (book_set))
-            basket_ids = curs.fetchall()
-            # print(basket_ids)
-            # [{'basket_id': 49}, {'basket_id': 50}]
+        # db에서 data 받아오기
+        curs = db.cursor()
+
+        # book_set+
+        sql = "select basket_id from book where book_set = %s"
+        curs.execute(sql, (book_set))
+        basket_ids = curs.fetchall()
+        # print(basket_ids)
+        # [{'basket_id': 49}, {'basket_id': 50}]
 
 
-            first = True
-            for i in range(len(basket_ids)):
-                basket_id = basket_ids[i]['basket_id']
+        first = True
+        for i in range(len(basket_ids)):
+            basket_id = basket_ids[i]['basket_id']
 
-                # Book Table
-                sql = "select * from book where basket_id = %s"
-                curs.execute(sql, (basket_id))
+            # Book Table
+            sql = "select * from book where basket_id = %s"
+            curs.execute(sql, (basket_id))
+            rows = curs.fetchall()
+            user_id = rows[0]['user_id']
+            product_id = rows[0]['product_id']
+            store_user_id = rows[0]['store_user_id']
+            book_price = rows[0]['book_price']
+            book_count = rows[0]['book_count']
+            book_date = rows[0]['book_date']
+            book_hour = rows[0]['book_hour']
+
+            # Product Table
+            sql = "select product_name, product_price, product_discountprice, product_imagefront from product where product_id=%s"
+            curs.execute(sql, (product_id))
+            rows = curs.fetchall()
+            product_name = rows[0]['product_name']
+            product_price = rows[0]['product_price']
+            product_discountprice = rows[0]['product_discountprice']
+            product_imagefront = rows[0]['product_imagefront']
+
+            # seller 정보는 한번만 받아오기
+            if first:
+                # User Table
+                sql = "select user_name, user_address, user_phone, user_image from user where user_id=%s"
+                curs.execute(sql, (store_user_id))
                 rows = curs.fetchall()
-                user_id = rows[0]['user_id']
-                product_id = rows[0]['product_id']
-                store_user_id = rows[0]['store_user_id']
-                book_price = rows[0]['book_price']
-                book_count = rows[0]['book_count']
-                book_date = rows[0]['book_date']
-                book_hour = rows[0]['book_hour']
+                user_name = rows[0]['user_name']
+                user_address = rows[0]['user_address']
+                user_phone = rows[0]['user_phone']
+                user_image = rows[0]['user_image']
 
-                # Product Table
-                sql = "select product_name, product_price, product_discountprice, product_imagefront from product where product_id=%s"
-                curs.execute(sql, (product_id))
+                # Location Table
+                sql = "select location_xpoint, location_ypoint from location where user_id=%s"
+                curs.execute(sql, (store_user_id))
                 rows = curs.fetchall()
-                product_name = rows[0]['product_name']
-                product_price = rows[0]['product_price']
-                product_discountprice = rows[0]['product_discountprice']
-                product_imagefront = rows[0]['product_imagefront']
+                if not rows:
+                    return jsonify("좌표데이터가 없습니다.")
+                location_xpoint = rows[0]['location_xpoint']
+                location_ypoint = rows[0]['location_ypoint']
 
-                # seller 정보는 한번만 받아오기
-                if first:
-                    # User Table
-                    sql = "select user_name, user_address, user_phone, user_image from user where user_id=%s"
-                    curs.execute(sql, (store_user_id))
-                    rows = curs.fetchall()
-                    user_name = rows[0]['user_name']
-                    user_address = rows[0]['user_address']
-                    user_phone = rows[0]['user_phone']
-                    user_image = rows[0]['user_image']
+                # # User, Location Table (join)
+                # sql = '''select I.user_name, I.user_address, I.user_phone, O.location_xpoint, O.location_ypoint
+                #          from user I
+                #          left outer join location O
+                #          on I.user_id = O.user_id
+                #          where I.user_id = %s'''
+                # curs.execute(sql, (store_user_id))
+                # rows = curs.fetchall()
+                # user_name = rows[0]['user_name']
+                # user_address = rows[0]['user_address']
+                # user_phone = rows[0]['user_phone']
+                # location_xpoint = rows[0]['location_xpoint']
+                # location_ypoint = rows[0]['location_ypoint']
 
-                    # Location Table
-                    sql = "select location_xpoint, location_ypoint from location where user_id=%s"
-                    curs.execute(sql, (store_user_id))
-                    rows = curs.fetchall()
-                    if not rows:
-                        return jsonify("좌표데이터가 없습니다.")
-                    location_xpoint = rows[0]['location_xpoint']
-                    location_ypoint = rows[0]['location_ypoint']
+                first = False
 
-                    # # User, Location Table (join)
-                    # sql = '''select I.user_name, I.user_address, I.user_phone, O.location_xpoint, O.location_ypoint
-                    #          from user I
-                    #          left outer join location O
-                    #          on I.user_id = O.user_id
-                    #          where I.user_id = %s'''
-                    # curs.execute(sql, (store_user_id))
-                    # rows = curs.fetchall()
-                    # user_name = rows[0]['user_name']
-                    # user_address = rows[0]['user_address']
-                    # user_phone = rows[0]['user_phone']
-                    # location_xpoint = rows[0]['location_xpoint']
-                    # location_ypoint = rows[0]['location_ypoint']
+            # date, time encoder
+            encoder = CustomJSONEncoder()
+            encoder.encode({"book_date": book_date, "book_hour": book_hour})
+            book_date = str(book_date)
+            book_hour = str(book_hour)
 
-                    # date, time encoder
-                    encoder = CustomJSONEncoder()
-                    encoder.encode({"book_date":book_date, "book_hour":book_hour})
-                    book_date = str(book_date)
-                    book_hour = str(book_hour)
-
-                    first = False
-
-                res['product'].append(
-                    {
-                        "product_imagefront" : product_imagefront,
-                        "product_name" : product_name,
-                        "product_price" : product_price,
-                        "product_discountprice" : product_discountprice,
-                        "book_count" : book_count,
-                        "book_price" : book_price,
-                    }
-                )
-            res['seller'].append(
+            res['product'].append(
                 {
-                    "user_name": user_name,
-                    "user_address": user_address,
-                    "user_phone": user_phone,
-                    "user_image": user_image,
-                    "location_xpoint": location_xpoint,
-                    "location_ypoint": location_ypoint,
-                    "book_date": book_date,
-                    "book_hour": book_hour,
+                    "product_imagefront" : product_imagefront,
+                    "product_name" : product_name,
+                    "product_price" : product_price,
+                    "product_discountprice" : product_discountprice,
+                    "book_count" : book_count,
+                    "book_price" : book_price,
                 }
             )
+        res['seller'].append(
+            {
+                "user_name": user_name,
+                "user_address": user_address,
+                "user_phone": user_phone,
+                "user_image": user_image,
+                "location_xpoint": location_xpoint,
+                "location_ypoint": location_ypoint,
+                "book_date": book_date,
+                "book_hour": book_hour,
+            }
+        )
 
-            # db 저장 / 연결 종료
-            db.commit()
-            db.close()
+        # db 저장 / 연결 종료
+        db.commit()
+        db.close()
 
-            return jsonify(res)
+        return jsonify(res)
 
 
-        except:
-            result = 'fail'
-            return jsonify(result=result)
+        # except:
+        #     result = 'fail'
+        #     return jsonify(result=result)
 
 
 @api.route('/data/calender/all/<string:user_id>')
