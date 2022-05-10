@@ -248,19 +248,19 @@ public class ProductServiceImpl implements ProductService{
             arr[i] = loc.get(i);
         }
         List<Product> list = new ArrayList<>();
-        if(storeId == null && categoryId == 20 && null == word){    //매장, 카테고리, 검색어 입력 안 한 경우
+        if(storeId.equals("") && categoryId == 20 && word.equals("")){    //매장, 카테고리, 검색어 입력 안 한 경우
             list = productRepositorySupport.findProduct(arr);
-        }else if(storeId != null && categoryId == 20 && null == word){ //매장만 선택 했을 경우
+        }else if(!storeId.equals("") && categoryId == 20 && word.equals("")){ //매장만 선택 했을 경우
             list = productRepositorySupport.findProductByStoreId(storeId);
-        }else if(storeId != null && categoryId != 20 && null == word){ //매장과 카테고리 선택했을 경우
+        }else if(!storeId.equals("") && categoryId != 20 && word.equals("")){ //매장과 카테고리 선택했을 경우
             list = productRepositorySupport.findProductByStoreIdAndCategoryId(storeId,categoryId);
-        }else if(storeId != null && categoryId == 20 && null != word){ //매장, 검색 했을 경우
+        }else if(!storeId.equals("") && categoryId == 20 && !word.equals("")){ //매장, 검색 했을 경우
             list = productRepositorySupport.findProductByStoreIdAndWord(storeId, word);
-        }else if(storeId == null && categoryId == 20 && null != word){ //검색했을 경우
+        }else if(storeId.equals("") && categoryId == 20 && !word.equals("")){ //검색했을 경우
             list = productRepositorySupport.findProductByWord(arr, word);
-        }else if(storeId == null && categoryId !=20 && null == word){ //카테고리 선택했을 경우
-             list = productRepositorySupport.findProductByCategoryId(arr, categoryId);
-        }else if(storeId == null & categoryId !=20 && null != word){ //카테고리와 검색 했을 경우
+        }else if(storeId.equals("") && categoryId !=20 && word.equals("")){ //카테고리 선택했을 경우
+            list = productRepositorySupport.findProductByCategoryId(arr, categoryId);
+        }else if(storeId.equals("")& categoryId !=20 && !word.equals("")){ //카테고리와 검색 했을 경우
             list =productRepositorySupport.findProductByCategoryIdAndWord(arr, categoryId, word);
         }else{                                                      //셋다 입력한 경우
             list= productRepositorySupport.findProductByStoreIdAndCategoryIdAndWord(storeId,categoryId,word);
