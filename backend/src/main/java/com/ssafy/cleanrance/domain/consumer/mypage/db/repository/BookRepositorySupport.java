@@ -10,7 +10,10 @@ import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.QBook;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.db.entity.QProduct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,4 +35,14 @@ public class BookRepositorySupport {
                 .leftJoin(qBook).on(qProduct.productId.eq(qBook.productId))
                 .where(qBook.bookSet.eq(bookSet)).fetch();
     }
+
+    public List<Book> findByBookSet(int book_set) {
+        return jpaQueryFactory.select(qBook).from(qBook)
+                .where(qBook.bookSet.eq(book_set)).fetch();
+    }
+
+//    public void BookSetModify(int bookId) {
+//        return jpaQueryFactory.update(qBook).set(qBook.bookStatus.equals(1))
+//                .where(qBook.bookSet.equals(bookId)).execute();
+//    }
 }

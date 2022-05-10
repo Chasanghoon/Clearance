@@ -7,7 +7,9 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.ssafy.cleanrance.domain.consumer.mypage.bean.ProductName;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
+import com.ssafy.cleanrance.domain.consumer.mypage.db.repository.BookRepository;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.repository.BookRepositorySupport;
+import com.ssafy.cleanrance.domain.consumer.mypage.request.BookSetUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -24,7 +26,13 @@ import java.util.List;
 public class ConsumerServiceImpl implements ConsumerService{
 
     @Autowired
+    BookRepository bookRepository;
+
+    @Autowired
     BookRepositorySupport bookRepositorySupport;
+
+    private static final int SUCCESS = 1;
+    private static final int FAIL = -1;
 
     @Override
     public List<Book> findBookByuserId(String userId) {
@@ -59,5 +67,27 @@ public class ConsumerServiceImpl implements ConsumerService{
     public List<ProductName> findBookByUserIdAndBookSetList(int bookSet) {
         List<ProductName> list = bookRepositorySupport.findBookByuserIdAndbookSet(bookSet);
         return list;
+    }
+
+    @Override
+    public List<Book> findByBookSet(int book_set) {
+        List<Book> book = bookRepositorySupport.findByBookSet(book_set);
+        return book;
+    }
+
+    @Override
+    public List<Book> updateBook(BookSetUpdatePutRequest bookSetUpdatePutRequest) {
+        List<Book> book = bookRepositorySupport.findByBookSet(bookSetUpdatePutRequest.getBook_set());
+        if (book.size() >= 0) {
+            for (Book b : book) {
+                int k = b.getProductId();
+                bookRepository.BookSetModify(k);
+            }
+        }
+//        Book book = bookRepositorySupport.findByBookSet(bookSetUpdatePutRequest.getBook_set());
+//        book.setBookStatus(bookSetUpdatePutRequest.getBook_status());
+//        bookRepository.save(book);
+//        return book;
+        return book;
     }
 }
