@@ -4,6 +4,7 @@ import com.querydsl.core.Tuple;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.db.entity.ProductCategory;
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
+import com.ssafy.cleanrance.domain.product.request.ProductStockUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.response.ProductFindStoreId;
 import org.springframework.data.domain.Page;
@@ -36,4 +37,6 @@ public interface ProductService {
     List<Product> findProductList(double ypoint, double xpoint, String storeId, int categoryId, String word);
     //매장별 상품 조회
     Page<Product> findProductByStoreId(String storeId, Pageable pageable);
+    //상품 수량 수정
+    Product updateCountProduct(ProductStockUpdatePutRequest productStockUpdatePutRequest);
 }

@@ -3,6 +3,7 @@ package com.ssafy.cleanrance.domain.consumer.mypage.service;
 import com.google.zxing.WriterException;
 import com.ssafy.cleanrance.domain.consumer.mypage.bean.ProductName;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
+import com.ssafy.cleanrance.domain.consumer.mypage.request.BookSetUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 
 import java.io.IOException;
@@ -20,4 +21,8 @@ public interface ConsumerService {
     String findBookByUserIdAndBookSet(int bookSet) throws IOException, WriterException;
 
     List<ProductName> findBookByUserIdAndBookSetList(int bookSet);
+    // 거래번호 조회
+    List<Book> findByBookSet(int book_set);
+    // 거래완료 수정
+    List<Book> updateBook(BookSetUpdatePutRequest bookSetUpdatePutRequest);
 }
