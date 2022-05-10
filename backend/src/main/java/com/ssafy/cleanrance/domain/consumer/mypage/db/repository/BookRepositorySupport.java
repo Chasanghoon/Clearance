@@ -30,7 +30,7 @@ public class BookRepositorySupport {
                 .where(qBook.userId.eq(userId)).fetch();
     }
     public List<ProductName> findBookByuserIdAndbookSet(int bookSet){
-        return jpaQueryFactory.select(Projections.constructor(ProductName.class, qProduct.productImagefront, qProduct.productName, qProduct.productStock, qProduct.productExpdate, qBook.bookStatus))
+        return jpaQueryFactory.select(Projections.constructor(ProductName.class, qProduct.productImagefront, qProduct.productName, qProduct.productStock, qProduct.productDiscountprice, qProduct.productExpdate, qBook.bookStatus))
                 .from(qProduct)
                 .leftJoin(qBook).on(qProduct.productId.eq(qBook.productId))
                 .where(qBook.bookSet.eq(bookSet).and(qBook.bookStatus.eq(0))).fetch();
