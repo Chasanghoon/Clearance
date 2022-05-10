@@ -236,21 +236,12 @@ function ReservationResult(props) {
     const [isOpen, setIsOpen] = useState(false);
 
     const [state, setState] = useState({
-        center: {
-            lat: 33.450701,
-            lng: 126.570667,
-        },
-        errMsg: null,
+        center: { lat: 33.450701, lng: 126.570667 },
         isLoading: true,
         isPanto: false,
     })
     const [marker, setMarker] = useState({
-        center: {
-            lat: 33.450701,
-            lng: 126.570667,
-        },
-        errMsg: null,
-        isLoading: true,
+        center: { lat: 33.450701, lng: 126.570667 }
     })
 
     useEffect(() => {
@@ -261,10 +252,11 @@ function ReservationResult(props) {
                     setState((prev) => ({
                         ...prev,
                         center: {
-                            lat: position.coords.latitude + 0.006, // 위도
+                            lat: position.coords.latitude, // 위도
                             lng: position.coords.longitude, // 경도
                         },
                         isLoading: false,
+                        isPanto: false
                     }))
                     setMarker((prev) => ({
                         ...prev,
@@ -272,31 +264,16 @@ function ReservationResult(props) {
                             lat: position.coords.latitude, // 위도
                             lng: position.coords.longitude, // 경도
                         },
-                        isLoading: false,
-                    }))
-                },
-                (err) => {
-                    setState((prev) => ({
-                        ...prev,
-                        errMsg: err.message,
-                        isLoading: false,
                     }))
                 }
             )
-        } else {
-            // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-            setState((prev) => ({
-                ...prev,
-                errMsg: "geolocation을 사용할수 없어요..",
-                isLoading: false,
-            }))
         }
         // ! axios get
         // ! 스토어 아이디 저스텐드에 저장해서 써야함.
         axios
             .get("http://127.0.0.1:5001/data/reservation-complete/2")
             .then((result) => {
-                console.log(result.data.seller[0]);
+                console.log(result.data.product);
                 setSellerName(result.data.seller[0].user_name);
                 setSellerImage(result.data.seller[0].user_image);
                 setSellerAddress(result.data.seller[0].user_address);
@@ -305,73 +282,48 @@ function ReservationResult(props) {
                 setSellerLng(result.data.seller[0].location_xpoint);
                 setReservationData(result.data.seller[0].book_date);
                 setReservationTime(result.data.seller[0].book_hour);
+                timeout();
             })
             .catch((e) => {
                 console.error("axios get 실패");
                 console.error(e)
             });
-    }, []);
+    }, [sellerLat]);
 
-
-    console.log("렛 = " + sellerLat);
-    console.log("네임 = " + sellerName);
-
-
+    function timeout() {
+        let time = setTimeout(() => {
+            test()
+        }, 1500);
+    }
 
     function test() {
-        setState({
-            center: { lat: 33.45058, lng: 126.574942 },
-            isPanto: true,
-        });
-        setMarker({
-            center: { lat: 33.45058, lng: 126.574942 },
-        });
 
+        if (sellerLat !== undefined) {
+            setState((prev) => ({
+                ...prev, center: { lat: sellerLat + 0.02, lng: sellerLng },
+                isLoading: false,
+                isPanto: true
+            }))
+            setMarker((prev) => ({
+                ...prev, center: { lat: sellerLat, lng: sellerLng },
+            }))
+        }
     }
-    const [points, setPoints] = useState([
-        { lat: 33.452278, lng: 126.567803 },
-        { lat: 33.452671, lng: 126.574792 },
-        { lat: 33.451744, lng: 126.572441 },
-        state.center
-    ])
-    const bounds = useMemo(() => {
-        const bounds = new kakao.maps.LatLngBounds();
-
-        points.forEach(point => {
-            bounds.extend(new kakao.maps.LatLng(point.lat, point.lng))
-        });
-        return bounds;
-    }, [points])
-    const [map, setMap] = useState()
     return (
         <div>
             <NavBar />
-            <button onClick={test}>지도 중심좌표 부드럽게 이동시키기</button>
-            <button onClick={() => { if (map) map.setBounds(bounds) }}
-            >
-                지도 범위 재설정 하기
-            </button>
             <h1>예약 완료</h1>
             <div>
                 <div style={{ backgroundColor: "#F5F5F5", margin: "10px 5% 0px 5%" }}>
                     <Map // 지도를 표시할 Container
                         id={`map`}
-                        // center={centerPosition}// 지도의 중심좌표
-                        center={
-                            // 지도의 중심좌표
-                            state.center
-                        }// 지도의 중심좌표
+                        center={state.center}
                         isPanto={state.isPanto}
                         style={{ width: "100%", height: "300px", }}
-                        level={6} // 지도의 확대 레벨
-                        onCreate={setMap}
-
+                        level={8} // 지도의 확대 레벨
                     >
-                        {points.map(point => <MapMarker key={`${point.lat}-${point.lng}`} position={point} />)}
-                        {/* <MapMarker position={markerPosition} onClick={() => setIsOpen(true)} /> */}
                         <MapMarker position={marker.center} onClick={() => setIsOpen(true)} />
                         {isOpen && (
-                            // <CustomOverlayMap position={markerPosition}>
                             <CustomOverlayMap position={marker.center}>
                                 <div className="wrap">
                                     <div className="info">
@@ -386,7 +338,6 @@ function ReservationResult(props) {
                             </CustomOverlayMap>
                         )}
                     </Map>
-
                 </div>
                 <div style={{ backgroundColor: "#F5F5F5", margin: "10px 5% 0px 5%" }}>
                     <Container>
