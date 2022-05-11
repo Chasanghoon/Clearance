@@ -147,6 +147,7 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepositorySupport.findById(productUpdatePutRequest.getProduct_id());
         product.setProductId(productUpdatePutRequest.getProduct_id());
         product.setCategoryId(productUpdatePutRequest.getCategory_id());
+        product.setProductName(productUpdatePutRequest.getProduct_name());
         product.setStoreUserId(productUpdatePutRequest.getStore_user_id());
         product.setProductPrice(productUpdatePutRequest.getProduct_price());
         product.setProductDiscount(productUpdatePutRequest.getProduct_discount());
