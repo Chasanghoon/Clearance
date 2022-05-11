@@ -284,6 +284,13 @@ public class ProductServiceImpl implements ProductService{
         return product;
     }
 
+    @Override
+    public List<Product> findStoreProductList(String storeId, String word) {
+        List<Product> list = new ArrayList<>();
+        list = productRepositorySupport.findProductByStoreIdAndWord(storeId, word);
+        return list;
+    }
+
     //십진수를 radian으로 변경
     private static double def2rad(double deg){
         return (deg * Math.PI /180.0);

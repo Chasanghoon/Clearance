@@ -39,4 +39,6 @@ public interface ProductService {
     Page<Product> findProductByStoreId(String storeId, Pageable pageable);
     //상품 수량 수정
     Product updateCountProduct(ProductStockUpdatePutRequest productStockUpdatePutRequest);
+    //매장별 상품 조회
+    List<Product> findStoreProductList(String storeId, String word);
 }
