@@ -120,7 +120,7 @@ public class ProductController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public Page<Product> listproduct(@RequestParam String storeId, @PageableDefault(page = 0, size = 50) Pageable pageable){
+    public Page<Product> listproduct(@RequestParam String storeId, @PageableDefault(page = 0) Pageable pageable){
         return productService.findProductByStoreId(storeId,pageable);
     }
 
