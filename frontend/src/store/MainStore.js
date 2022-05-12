@@ -2,8 +2,8 @@ import create from 'zustand'
 
 const useMainStore = create((set) => ({
     position: {
-        lat: 1,
-        lng: 12,
+        lat: null,
+        lng: null,
     },
     setPosition: (nlat,nlng) => {
         set(() => ({
@@ -24,7 +24,22 @@ const useMainStore = create((set) => ({
         set(() => ({
             nearProduct: data
         }))
-    }
+    },
+
+    category: null, // 선택된 카테고리(default : 선택된 카테고리가 없음)
+    setCategory: (data) => { 
+        set(() => ({
+            category: data // 선택된 하나의 카테고리로 변경
+        }))
+    },
+
+    categoryList: [],
+    setCategoryList: (data) => {
+        set(() => ({
+            categoryList: data
+        }))
+    },
+
 }))
 
 export default useMainStore;

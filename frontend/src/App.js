@@ -22,6 +22,7 @@ import UserMyPage from './components/myPage/user/UserMyPage';
 import UserProfile from './components/myPage/user/UserProfile';
 import BookingHistory from './components/myPage/user/BookingHistory';
 import UserCarbon from './components/myPage/user/UserCarbon';
+import Product from './components/product/Product';
 
 
 
@@ -56,7 +57,10 @@ function App() {
           
           
           <Route path="/login" element={<Login />} />
+          
+          {/* 상품 관련 페이지 */}
           <Route path="/basket" element={<Basket />} />
+          <Route path="/product" element={<Product/> } />
 
         </Routes>
       </BrowserRouter>

@@ -1,105 +1,105 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import { Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import useMainStore from "../../store/MainStore";
+import {Row, Col} from 'react-bootstrap'
 
 function SampleMap() {
 
   const cp = useMainStore(state => state.setPosition)
 
-  const nearStore = useMainStore(state => state.nearStore)
-  const ns = useMainStore(state => state.setNearStore)
-  const storePos = [];
+  const nearStore = useMainStore(state => state.nearStore) // 근처 점포
+  const ns = useMainStore(state => state.setNearStore) // 근처 점포 목록을 가져옴
+  const storePos = []; // 근처 점포 목록의 위치를 기억(마커 표시 목적)
 
-  const nearProduct = useMainStore(state => state.nearProduct)
-  const np = useMainStore(state => state.setNearProduct)
+  const nearProduct = useMainStore(state => state.nearProduct) // 근처 매점의 상품들
+  const np = useMainStore(state => state.setNearProduct) // 근처 매점들의 정보를 가져옴
+
+  const categoryList = useMainStore(state => state.categoryList) // 카테고리 값을 지정할 수 있음
+  const cl = useMainStore(state => state.setCategoryList) // 카테고리 목록을 가져옴
 
   const [isOpen, setIsOpen] = useState(false)
   const [state, setState] = useState({
     center: {
-      lat: 33.450701,
-      lng: 126.570667,
+      lat: null, // 위도
+      lng: null, // 경도
     },
     errMsg: null,
     isLoading: true,
-  })
-
-  const data = [
-    {
-      title: "카카오",
-      latlng: { lat: 33.450705, lng: 126.570677 },
-    },
-    {
-      title: "생태연못",
-      latlng: { lat: 33.450936, lng: 126.569477 },
-    },
-    {
-      title: "텃밭",
-      latlng: { lat: 33.450879, lng: 126.56994 },
-    },
-    {
-      title: "근린공원",
-      latlng: { lat: 33.451393, lng: 126.570738 },
-    },
-  ]
-
-  //데이터 받아오기! (geolocation으로 현재 위치를 받아옴 -> axios로 주변 매점 정보 가져옴 -> store에 해당 매점 데이터 저장
-  // store에 저장된 데이터를 이용해서 map에 마커를 띄움. 그리고 그 marker를 클릭하면 main에서 등록한 상품들을 출력)
+})
+  
+  const [categoryID, setCategoryId] = useState(20);
+  const changeCategoryId = (e) => {
+    if (e === categoryID) setCategoryId(20);
+    else setCategoryId(e)
+  }
 
 
+  const [storeID, setStoreId] = useState("");
+  const chStoreID = (e) => {
+    setStoreId(e);
+  }
+  const [word, setWord] = useState("");
+  const chWord = (e) => {
+    setWord(e);
+  }
+    
 
+  const callCategory = async () => { //카테고리 목록을 가져오는 변수
+        try {
+          const response = await axios.get(`http://localhost:8080/api/productcategory`)
+          console.log("카테고리 로드 성공")
+          
+          cl(response.data)
+        }
+        catch(err) {
+          console.log(err)
+        }
+  }
 
-  const EventMarkerContainer = ({ position, content }) => {
+  // Default 값을 넣어줘야 할듯...? 문희코치님께 여쭤보자!!!!(X) => 수정 완료.
+  const search = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/product/list?ypoint=35.1275983422866&xpoint=128.968358334702&storeId=${storeID}&categoryId=${categoryID}&word=${word}`)
+      np(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+    const getLocations = async () => { // 상품 정보를 가져오는 함수
+      try {
+        const response = await axios.get(`http://localhost:8080/api/mapProduct?ypoint=35.1275983422866&xpoint=128.968358334702`)
+        console.log("상품 정보 출력 성공")
+
+        ns(response.data[0]) // 주변 매장 점포 등록
+        np(response.data[1]) // 주변 매장의 데이터 등록
+      }
+      catch (err) {
+        console.log(err)
+      }
+    }
+
+    const EventMarkerContainer = ({ position, content }) => { // 주변 마커 출력을 위한 함수
     const map = useMap()
     const [isVisible, setIsVisible] = useState(false)
 
-
-    let roundMarkerLat = 0;
-    let roundMarkerLng = 0;
-    let roundStoreLat = 0;
-    let roundStoreLng = 0;
-    let storeName = "";
-
-    return (
-      <MapMarker
-        position={position} // 마커를 표시할 위치
-        image={{
-          src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
-          size: {
-            widht: 24,
-            height: 35
-          }, // 마커이미지의 크기입니다
-        }}
-        // @ts-ignore
-        onClick={
-          (marker) => {
-            // console.log(marker)
-            {
-              storePos.map((value, index) => {
-                // console.log(marker.getPosition().Ma);
-                // console.log(storePos[index].latlng.lat);
-                // console.log("==================================");
-                // console.log(marker.getPosition().La);
-                // console.log(storePos[index].latlng.lng);
-                // console.log("==================================");
-                roundMarkerLat = marker.getPosition().Ma.toFixed(10);
-                roundMarkerLng = marker.getPosition().La.toFixed(10);
-                roundStoreLat = storePos[index].latlng.lat.toFixed(10);
-                roundStoreLng = storePos[index].latlng.lng.toFixed(10);
-                console.log(roundMarkerLat);
-                console.log(roundStoreLat);
-                console.log(roundMarkerLng);
-                console.log(roundStoreLng);
-                console.error("======================");
-                if (roundMarkerLat === roundStoreLat && roundMarkerLng === roundStoreLng) {
-                  storeName = storePos[index].userId;
-                  console.warn("storeName = " + storeName);
-                }
-              }
-              )
-            }
-          }
-        }
+      return (
+        <MapMarker
+          position={position} // 마커를 표시할 위치
+          image={{
+            src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
+            size: {
+              widht: 24,
+              height: 35
+            }, // 마커이미지의 크기입니다
+          }}
+          // @ts-ignore
+          onClick={(marker) => {  // 점포 marker 클릭 시 나오는 이벤트 -> 해당 점포가 가지고 있는 상품만 출력
+            map.panTo(marker.getPosition())
+            console.log(marker)
+          }}
         onMouseOver={() => setIsVisible(true)}
         onMouseOut={() => setIsVisible(false)}
       >
@@ -107,12 +107,13 @@ function SampleMap() {
       </MapMarker>
     )
   }
-
-  useEffect(() => {
+// --------------------------------- useEffect 사용 --------------------------------- 
+  useEffect(() => { // geolocation을 활용하여 현재 위치를 가져오는 userEffect
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log("이전",state)
           setState((prev) => ({
             ...prev,
             center: {
@@ -120,28 +121,15 @@ function SampleMap() {
               lng: position.coords.longitude, // 경도
             },
             isLoading: false,
-
+            enableHighAccuracy: true,
           }))
           cp(state.center.lat, state.center.lng)
-
-          axios
-            .get(`http://localhost:8080/api/mapProduct?ypoint=35.1275983422866&xpoint=128.968358334702`)
-            .then((e) => {
-              console.log("axios 성공")
-              console.log(e.data[0]);
-              ns(e.data[0]);
-
-
-              np(e.data[1]);
-
-            })
-            .catch((e) => {
-              console.log(e.message)
-            })
-
-
-
-        },
+          
+          console.log("현재",state)
+          getLocations();
+          callCategory();
+          
+    },
         (err) => {
           setState((prev) => ({
             ...prev,
@@ -155,7 +143,6 @@ function SampleMap() {
           timeout: Infinity
         }
       )
-
     } else {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
@@ -166,9 +153,15 @@ function SampleMap() {
     }
   }, [])
 
+  useEffect(() => {
+  console.log("useEffect 작동")
+  console.log("categoryId :", categoryID, ", storeId : ",storeID, ", word : ", word)
+  
+  search();
+}, [categoryID,storeID,word])
 
-  console.log(nearStore)
-  console.log(nearProduct)
+// --------------------------------- useEffect 사용 종료 --------------------------------- 
+  
   for (let i = 0; i < nearStore.length; i++) {
     storePos.push({
       latlng: {
@@ -177,8 +170,33 @@ function SampleMap() {
       },
       userId: nearStore[i].userId,
     })
+
+    
   }
-  console.log(storePos);
+  
+  function Category() {
+      return (
+          <div>
+            {categoryList.map((value,index) => (
+              <button
+                key={index}
+                id={value.categoryId}
+                style={{
+                  borderRadius: "15px",
+                  fontSize:'15px'
+                }}
+                onClick={() => {
+                  changeCategoryId(value.categoryId)
+                  console.log(categoryID)
+                }}
+                // onClick={() => { clickCategory(value.categoryId) }} // 해당 카테고리의 상품만 가져오게 만들기 or 모든 상품을 가져오게 되돌리기
+              >{value.categoryName}</button>
+              
+            ))}
+    </div>)
+
+  }
+
   return (
     <>
       <Map // 지도를 표시할 Container
@@ -210,19 +228,31 @@ function SampleMap() {
             }
           >
             {/* MapMarker의 자식을 넣어줌으로 해당 자식이 InfoWindow로 만들어지게 합니다 */}
-            {/* 인포윈도우에 표출될 내용으로 HTML 문자열이나 React Component가 가능합니다 */}
-            {isOpen && <div style={{ padding: "5px", color: "#000" }}>Hello World!</div>}
-          </MapMarker>
-        )}
-        {storePos.map((value) => (
+        {/* 인포윈도우에 표출될 내용으로 HTML 문자열이나 React Component가 가능합니다 */}
+        {isOpen && <div style={{ padding: "5px", color: "#000" }}>Hello World!</div>}
+        </MapMarker>
+            )}
+        {storePos.map((value, index) => (
           <EventMarkerContainer
-            key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
+            // key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
+            key={value.userId}
+            // key={index}
             position={value.latlng}
-            onClick={console.log(value.latlng.lat, value.latlng.lng, value.userId)}
-          />
-        ))}
-
+        />
+            ))}
       </Map>
+      <Category></Category>
+      
+      <Container>
+        <Row>
+          <Col sm>
+            <input id="searchWord" style={{ backgroundColor: 'beige', width: '97%' }}></input>
+            <button id='search' onClick={() => {
+              setWord(document.getElementById("searchWord").value)
+            }} >검색</button>
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }
