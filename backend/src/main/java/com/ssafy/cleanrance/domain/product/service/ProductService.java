@@ -36,7 +36,7 @@ public interface ProductService {
     //입력값에 따른 상품 조회
     List<Product> findProductList(double ypoint, double xpoint, String storeId, int categoryId, String word);
     //매장별 상품 조회
-    Page<Product> findProductByStoreId(String storeId, Pageable pageable);
+    Page<Product> findProductByStoreId(String storeId, String word, Pageable pageable);
     //상품 수량 수정
     Product updateCountProduct(ProductStockUpdatePutRequest productStockUpdatePutRequest);
     //매장별 상품 조회

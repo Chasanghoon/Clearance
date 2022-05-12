@@ -15,6 +15,7 @@ import com.ssafy.cleanrance.global.util.ImageUtil;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -271,9 +272,15 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Page<Product> findProductByStoreId(String storeId, Pageable pageable) {
+    public Page<Product> findProductByStoreId(String storeId,String word, Pageable pageable) {
+        Page<Product> products;
 
-        return productRepository.findBystoreUserId(storeId, pageable);
+        if(word.equals("")){
+            products = productRepository.findBystoreUserId(storeId, pageable);
+        }else{
+            products = productRepository.findBystoreUserIdAndProductNameContains(storeId, word, pageable);
+        }
+        return products;
     }
 
     @Override
