@@ -102,14 +102,14 @@ const Product = () => {
       </Modal.Body>
       <Modal.Footer>
               <Button onClick={() => {
-                  navigate("/basket")
+                navigate("/basket")
         }}>장바구니로 이동</Button>
               <Button onClick={() => {
-                  navigate("/main")
+                navigate("/main")
         }}>계속 쇼핑하기</Button>
-      </Modal.Footer>
+    </Modal.Footer>
     </Modal>
-  );
+    );
 }
     
     const basketadd = async () => {
@@ -120,6 +120,7 @@ const Product = () => {
             "basket_count": basket_cnt // 예약할 상품 개수
             })
             console.log(response)
+            setModalShow(true)
             // alert("장바구니에 내용이 추가되었습니다.")
         } catch (error) {
             console.log(error)
@@ -168,7 +169,7 @@ const Product = () => {
                 <div>
                     <Button onClick={() => {
                         basketadd();
-                        setModalShow(true)
+                        
                     }}>장바구니 등록</Button>
                     <Link to="/main"><Button>돌아가기</Button></Link>
                 </div>

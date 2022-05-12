@@ -7,7 +7,10 @@ const ReservationStore = create((set) => ({
     // lat: "33.450701",
     // lng: "126.570667",
     setLat: (e) => set({lat: e}),      
-    setLng: (e) => set({lng: e}),      
+    setLng: (e) => set({ lng: e }), 
+    
+    storeId: "",
+    setStoreId: (e) => set({ storeId: e }),
 }))
 
 export default ReservationStore;
