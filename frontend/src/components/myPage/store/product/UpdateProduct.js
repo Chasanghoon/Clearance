@@ -115,7 +115,8 @@ function UpdateProduct(props) {
             .then(() => {
                 console.log("axios post 성공")
                 alert("상품수정 완료!");
-                navigate("/allProductManagement");
+                // navigate("/allProductManagement");
+                navigate(-1);
 
             })
             .catch((e) => {
