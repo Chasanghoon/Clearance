@@ -62,7 +62,7 @@ const NavBar = () => {
                         <br />
                         <Link to="/storeMyPage" style={{ color: 'black', textDecoration: 'none' }}>매장 마이페이지</Link>
                         <Link to="/userMyPage" style={{ color: 'black', textDecoration: 'none' }}>유저 마이페이지</Link>
-                        <Link to="/" style={{ color: 'black', textDecoration: 'none' }}>장바구니</Link>
+                        <Link to="/basket" style={{ color: 'black', textDecoration: 'none' }}>장바구니</Link>
                         <Link onClick={Logout} to="/" style={{ color: 'black', textDecoration: 'none' }}>로그아웃</Link>
                     </Nav>
                 </div>

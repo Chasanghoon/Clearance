@@ -61,7 +61,7 @@ function SampleMap() {
   // Default 값을 넣어줘야 할듯...? 문희코치님께 여쭤보자!!!!(X) => 수정 완료.
   const search = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/product/list?ypoint=35.1275983422866&xpoint=128.968358334702&storeId=${storeID}&categoryId=${categoryID}&word=${word}`)
+      const response = await axios.get(`http://localhost:8080/api/product/list?ypoint=${state.center.lat}&xpoint=${state.center.lng}&storeId=${storeID}&categoryId=${categoryID}&word=${word}`)
       np(response.data)
     } catch (error) {
       console.log(error)
@@ -70,8 +70,9 @@ function SampleMap() {
 
     const getLocations = async () => { // 상품 정보를 가져오는 함수
       try {
-        const response = await axios.get(`http://localhost:8080/api/mapProduct?ypoint=35.1275983422866&xpoint=128.968358334702`)
+        const response = await axios.get(`http://localhost:8080/api/mapProduct?ypoint=${state.center.lat}&xpoint=${state.center.lng}`)
         console.log("상품 정보 출력 성공")
+        console.log(response)
 
         ns(response.data[0]) // 주변 매장 점포 등록
         np(response.data[1]) // 주변 매장의 데이터 등록
@@ -101,7 +102,7 @@ function SampleMap() {
             console.log(marker)
           }}
         onMouseOver={() => setIsVisible(true)}
-        onMouseOut={() => setIsVisible(false)}
+          onMouseOut={() => setIsVisible(false)}
       >
         {isVisible && content}
       </MapMarker>
@@ -112,8 +113,7 @@ function SampleMap() {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log("이전",state)
+        (position) => { 
           setState((prev) => ({
             ...prev,
             center: {
@@ -124,11 +124,6 @@ function SampleMap() {
             enableHighAccuracy: true,
           }))
           cp(state.center.lat, state.center.lng)
-          
-          console.log("현재",state)
-          getLocations();
-          callCategory();
-          
     },
         (err) => {
           setState((prev) => ({
@@ -154,14 +149,17 @@ function SampleMap() {
   }, [])
 
   useEffect(() => {
+    if (state.center.lat !== null) {
   console.log("useEffect 작동")
-  console.log("categoryId :", categoryID, ", storeId : ",storeID, ", word : ", word)
-  
-  search();
-}, [categoryID,storeID,word])
+    console.log("categoryId :", categoryID, ", storeId : ", storeID, ", word : ", word)
+      getLocations();
+    
+      callCategory();
+      search();
+    }
+}, [categoryID,storeID,word,state.center.lat,state.center.lng])
 
 // --------------------------------- useEffect 사용 종료 --------------------------------- 
-  
   for (let i = 0; i < nearStore.length; i++) {
     storePos.push({
       latlng: {

@@ -8,7 +8,6 @@ import SignupStore from './components/register/SignupStore';
 import Reservation from './components/reservation/Reservation';
 import ReservationResult from './components/reservation/ReservationResult';
 import Start from './components/common/Start';
-import Footer from './components/common/Footer';
 import Basket from './components/product/Basket';
 import StoreMyPage from './components/myPage/store/StoreMyPage';
 import StoreProfile from './components/myPage/store/StoreProfile';

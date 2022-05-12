@@ -58,20 +58,8 @@ function Main(props) {
         {nearProduct.map((value) => (
           <div id="ProductItem" onClick={() => {console.log("이거", value)}}>
             <img alt="" src = {value.productImagefront}></img>
-            {value.productName}, 
-            {value.storeUserId}
+            {value.productName} // {value.storeUserId}
             <Link to="/product"><Button className='secondary' onClick={() => {
-              // setProductId(value.productId)
-              // setCategoryId(value.categoryId)
-              // setProductDiscount(value.productDiscount)
-              // setProductDiscountedPrice(value.productDiscountprice)
-              // setProductExpDate(value.productExpdate)
-              // setProductImgBack(value.productImageback)
-              // setProductImgFront(value.productImagefront)
-              // setProductName(value.productName)
-              // setProductPrice(value.productPrice)
-              // setProductStock(value.productStock)
-              // setStoreUserId(value.storeUserId)
               localStorage.setItem("product_id", value.productId)
               localStorage.setItem("category_id", value.categoryId)
               localStorage.setItem("product_discount",value.productDiscount)
