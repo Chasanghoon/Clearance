@@ -41,4 +41,6 @@ public interface ProductService {
     Product updateCountProduct(ProductStockUpdatePutRequest productStockUpdatePutRequest);
     //매장별 상품 조회
     List<Product> findStoreProductList(String storeId, String word);
+    //매장별 유효기간 조회(중복x)
+    List<String> findExpdateByUser(String storeuserId);
 }

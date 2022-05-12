@@ -291,6 +291,13 @@ public class ProductServiceImpl implements ProductService{
         return list;
     }
 
+    @Override
+    public List<String> findExpdateByUser(String storeuserId) {
+        List<String> list = new ArrayList<>();
+        list = productRepositorySupport.findProductByExpdate(storeuserId);
+        return list;
+    }
+
     //십진수를 radian으로 변경
     private static double def2rad(double deg){
         return (deg * Math.PI /180.0);
