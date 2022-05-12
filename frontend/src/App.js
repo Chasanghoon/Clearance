@@ -15,6 +15,7 @@ import StoreProfile from './components/myPage/store/StoreProfile';
 import ProductManagement from './components/myPage/store/product/ProductManagement';
 import AllProductManagement from './components/myPage/store/product/AllProductManagement';
 import RegistrationProduct from './components/myPage/store/product/RegistrationProduct';
+import UpdateProduct from './components/myPage/store/product/UpdateProduct';
 import CheckReservation from './components/myPage/store/CheckReservation';
 import StoreCarbon from './components/myPage/store/StoreCarbon';
 import UserMyPage from './components/myPage/user/UserMyPage';
@@ -42,6 +43,7 @@ function App() {
           <Route path="/productManagement" element={<ProductManagement />} />
           <Route path="/allProductManagement" element={<AllProductManagement />} />
           <Route path="/registrationProduct" element={<RegistrationProduct />} />
+          <Route path="/updateProduct" element={<UpdateProduct />} />
           <Route path="/checkReservation" element={<CheckReservation />} />
           <Route path="/storeCarbon" element={<StoreCarbon />} />
 

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import { Button, Container } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { addDays, subDays } from 'date-fns';
 
 function ProductManagement(props) {
     const [selectDate, setSelectDate] = useState();
@@ -38,6 +40,7 @@ function ProductManagement(props) {
                     locale={ko}
                     selected={selectDate}
                     onChange={(date) => setSelectDate(date)}
+                    highlightDates={[new Date("2022-05-18")]}
                     inline />
                     <Link to={"/allProductManagement"}><Button variant='warning'>전체 상품 관리</Button></Link>
                 

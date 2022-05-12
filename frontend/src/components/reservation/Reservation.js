@@ -11,6 +11,7 @@ import setMinutes from 'date-fns/setMinutes';
 import NavBar from '../common/NavBar';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 function Reservation(props) {
     const [startDate, setStartDate] = useState();
@@ -37,20 +38,16 @@ function Reservation(props) {
     const validation = () => {
         if (!saveData) setSaveDataError(true);
         if (!saveTime) setSaveTimeError(true);
-
-        if (saveData === undefined || saveTime === undefined) {
-            return true;
-        }
-
+        if (saveData === undefined || saveTime === undefined) return true;
         if (saveDataError || saveTimeError) return true;
         else return false;
     };
 
     useEffect(() => {
         // ! axios get
-        // ! 스토어 아이디 저스텐드에 저장해서 써야함.
+        // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         axios
-            .get("http://localhost:5001/data/reservation-progress/Srkdrhkddms")
+            .get("http://localhost:5001/data/reservation-progress/in1")
             .then((result) => {
                 setUserName(result.data[0].user_name);
                 setUserImage(result.data[0].user_image);
@@ -68,7 +65,7 @@ function Reservation(props) {
         if (validation()) return;
 
         // ! axios POST
-        // ! 스토어 아이디 저스텐드에 저장해서 써야함.
+        // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         console.log("axios post")
         axios
             .post("http://localhost:5001/data/reservation-add",
@@ -82,6 +79,7 @@ function Reservation(props) {
             .then((e) => {
                 console.log("axios post 성공")
                 alert("예약 완료!");
+                navigate("/reservationResult");
             })
             .catch((e) => {
                 console.error("axios post 실패");
@@ -97,7 +95,7 @@ function Reservation(props) {
         setStartTime(time);
         onChangeSaveTime(splitTime(time));
     }
-
+    let navigate = useNavigate();
     return (
         <div>
             <NavBar></NavBar>
