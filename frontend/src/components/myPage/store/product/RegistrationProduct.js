@@ -133,7 +133,8 @@ function RegistrationProduct(props) {
             .then(() => {
                 console.log("axios post 성공")
                 alert("상품등록 완료!");
-                navigate("/allProductManagement");
+                // navigate("/allProductManagement");
+                navigate(-1);
 
             })
             .catch((e) => {
