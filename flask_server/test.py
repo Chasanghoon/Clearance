@@ -5,6 +5,7 @@ from flask.json import JSONEncoder, jsonify
 import pymysql
 import datetime
 
+
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
 
@@ -94,7 +95,7 @@ class Basket(Resource):
                     res[idx][user_name].append(
                         {
                             # "user_name": user_name,
-                            # "basket_id" : basket_id,
+                            "basket_id" : basket_id,
                             "basket_count": basket_count,
                             # "store_user_id" : store_user_id,
                             "product_name": product_name,
@@ -118,7 +119,7 @@ class Basket(Resource):
                     res[-1][user_name].append(
                         {
                             # "user_name": user_name,
-                            # "basket_id" : basket_id,
+                            "basket_id" : basket_id,
                             "basket_count": basket_count,
                             # "store_user_id" : store_user_id,
                             "product_name": product_name,
@@ -205,8 +206,7 @@ class BasketAdd(Resource):
 
 
 basketRemove_fields = api.model('basketRemove', {
-    'user_id' : fields.String,
-    'product_id' : fields.Integer,
+    'basket_id' : fields.Integer,
 })
 
 @api.route('/data/basket-rem')
@@ -228,12 +228,13 @@ class BasketRemove(Resource):
         try:
             # request에서 data 받아오기
             data = request.get_json()
-            user_id = data['user_id']
-            product_id = data['product_id']
+            basket_id = data['basket_id']
+            # user_id = data['user_id']
+            # product_id = data['product_id']
 
             curs = db.cursor()
-            sql = "delete from basket where user_id = %s and product_id = %s"
-            curs.execute(sql, (user_id, product_id))
+            sql = "delete from basket where basket_id=%s"
+            curs.execute(sql, (basket_id))
 
             # db 저장 / 연결 종료
             db.commit()
@@ -618,6 +619,7 @@ class CalenderAll(Resource):
                         "product_price" : product_price,
                         "product_discountprice" : product_discountprice,
                         "basket_count" : basket_count,
+                        "book_status" : book_status,
                     })
                 res['info'].append(temp)
 
@@ -637,13 +639,228 @@ class CalenderAll(Resource):
 @api.route('/data/calender/progress/<string:user_id>')
 class CalenderProgress(Resource):
     def get(self, user_id):
-        return
+        # db 연결
+        db = pymysql.connect(
+            host="k6e203.p.ssafy.io",
+            port=3306,
+            user="ssafy",
+            password="ssafy",
+            db='free_ssafy',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor,
+            init_command='SET NAMES UTF8'
+        )
+
+        res = {"info": []}
+
+        try:
+            # db에서 data 받아오기
+            curs = db.cursor()
+            sql = "select book_set from book where user_id=%s and book_status=%s"
+            curs.execute(sql, (user_id, 0))
+            rows = curs.fetchall()
+
+            # book_set 값 배열
+            book_set_arr = []
+            for e in rows:
+                book_set_arr.append(e['book_set'])
+            book_set_arr = list(set(book_set_arr))  # 중복제거
+
+            # book Table
+            for book_set in book_set_arr:
+                temp = []
+                sql = "select * from book where book_set=%s"
+                curs.execute(sql, (book_set))
+                rows = curs.fetchall()
+                for i in range(len(rows)):
+                    product_id = rows[i]['product_id']
+                    store_user_id = rows[i]['store_user_id']
+                    basket_count = rows[i]['book_count']
+                    book_date = rows[i]['book_date']
+                    book_hour = rows[i]['book_hour']
+                    book_status = rows[i]['book_status']
+
+                    # date, time encoder
+                    encoder = CustomJSONEncoder()
+                    encoder.encode({"book_date": book_date, "book_hour": book_hour})
+                    book_date = str(book_date)
+                    book_hour = str(book_hour)
+
+                    # 상품 data
+                    sql = '''select product_name, product_price, product_discountprice, product_imagefront
+                                     from product where product_id=%s'''
+                    curs.execute(sql, (product_id))
+                    rows2 = curs.fetchall()
+                    product_name = rows2[0]['product_name']
+                    product_price = rows2[0]['product_price']
+                    product_discountprice = rows2[0]['product_discountprice']
+                    product_imagefront = rows2[0]['product_imagefront']
+
+                    # 매장 이름
+                    sql = "select user_name from user where user_id=%s"
+                    curs.execute(sql, (store_user_id))
+                    rows2 = curs.fetchall()
+                    user_name = rows2[0]['user_name']
+
+                    temp.append({
+                        "book_set": book_set,
+                        "book_date": book_date,
+                        "book_hour": book_hour,
+                        "user_name": user_name,
+                        "product_name": product_name,
+                        "product_imagefront" : product_imagefront,
+                        "product_price": product_price,
+                        "product_discountprice" : product_discountprice,
+                        "basket_count": basket_count,
+                        "book_status": book_status,
+                    })
+                res['info'].append(temp)
+
+            # db 저장 / 연결 종료
+            db.commit()
+            db.close()
+
+            # 최신순 정렬
+            res['info'].sort(key=lambda x: (x[0]['book_date'], x[0]['book_hour']), reverse=True)
+            return jsonify(res)
+
+        except:
+            result = "fail"
+            return jsonify(result=result)
 
 
 @api.route('/data/calender/complete/<string:user_id>')
 class CalenderComplete(Resource):
     def get(self, user_id):
-        return
+        # db 연결
+        db = pymysql.connect(
+            host="k6e203.p.ssafy.io",
+            port=3306,
+            user="ssafy",
+            password="ssafy",
+            db='free_ssafy',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor,
+            init_command='SET NAMES UTF8'
+        )
+
+        res = {"info": []}
+
+        try:
+            # db에서 data 받아오기
+            curs = db.cursor()
+            sql = "select book_set from book where user_id=%s and book_status=%s"
+            curs.execute(sql, (user_id, 1))
+            rows = curs.fetchall()
+
+            # book_set 값 배열
+            book_set_arr = []
+            for e in rows:
+                book_set_arr.append(e['book_set'])
+            book_set_arr = list(set(book_set_arr))  # 중복제거
+
+            # book Table
+            for book_set in book_set_arr:
+                temp = []
+                sql = "select * from book where book_set=%s"
+                curs.execute(sql, (book_set))
+                rows = curs.fetchall()
+                for i in range(len(rows)):
+                    product_id = rows[i]['product_id']
+                    store_user_id = rows[i]['store_user_id']
+                    basket_count = rows[i]['book_count']
+                    book_date = rows[i]['book_date']
+                    book_hour = rows[i]['book_hour']
+                    book_status = rows[i]['book_status']
+
+                    # date, time encoder
+                    encoder = CustomJSONEncoder()
+                    encoder.encode({"book_date": book_date, "book_hour": book_hour})
+                    book_date = str(book_date)
+                    book_hour = str(book_hour)
+
+                    # 상품 data
+                    sql = '''select product_name, product_price, product_discountprice, product_imagefront
+                                             from product where product_id=%s'''
+                    curs.execute(sql, (product_id))
+                    rows2 = curs.fetchall()
+                    product_name = rows2[0]['product_name']
+                    product_price = rows2[0]['product_price']
+                    product_discountprice = rows2[0]['product_discountprice']
+                    product_imagefront = rows2[0]['product_imagefront']
+
+                    # 매장 이름
+                    sql = "select user_name from user where user_id=%s"
+                    curs.execute(sql, (store_user_id))
+                    rows2 = curs.fetchall()
+                    user_name = rows2[0]['user_name']
+
+                    temp.append({
+                        "book_set": book_set,
+                        "book_date": book_date,
+                        "book_hour": book_hour,
+                        "user_name": user_name,
+                        "product_name": product_name,
+                        "product_imagefront" : product_imagefront,
+                        "product_price": product_price,
+                        "product_discountprice" : product_discountprice,
+                        "basket_count": basket_count,
+                        "book_status": book_status,
+                    })
+                res['info'].append(temp)
+
+            # db 저장 / 연결 종료
+            db.commit()
+            db.close()
+
+            # 최신순 정렬
+            res['info'].sort(key=lambda x: (x[0]['book_date'], x[0]['book_hour']), reverse=True)
+            return jsonify(res)
+
+        except:
+            result = "fail"
+            return jsonify(result=result)
+
+
+@api.route('/data/calender-detail/<string:user_id>')
+class CalenderDetail(Resource):
+    def get(self, user_id):
+        # db 연결
+        db = pymysql.connect(
+            host="k6e203.p.ssafy.io",
+            port=3306,
+            user="ssafy",
+            password="ssafy",
+            db='free_ssafy',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor,
+            init_command='SET NAMES UTF8'
+        )
+
+        res = []
+        try:
+            # db에서 data 받아오기
+            curs = db.cursor()
+            sql = "select distinct book_date from book where user_id=%s"
+            curs.execute(sql, (user_id))
+            rows = curs.fetchall()
+
+            for e in rows:
+                book_date = e['book_date']
+                # date, time encoder
+                encoder = CustomJSONEncoder()
+                encoder.encode({"book_date": book_date})
+                book_date = str(book_date)
+                res.append(book_date)
+
+            result = res
+            return jsonify(result=result)
+
+        except:
+            result = "fail"
+            return jsonify(result=result)
+
+
 
 
 @api.route('/data/calender-detail/all/<string:user_id>/<string:book_date>')
@@ -713,13 +930,15 @@ class CalenderDetailAll(Resource):
 
                     temp.append({
                         "book_set": book_set,
+                        "book_date": book_date,
                         "book_hour": book_hour,
                         "user_name": user_name,
                         "product_name": product_name,
-                        "product_imagefront" : product_imagefront,
+                        "product_imagefront": product_imagefront,
                         "product_price": product_price,
                         "product_discountprice": product_discountprice,
                         "basket_count": basket_count,
+                        "book_status": book_status,
                     })
                 res['info'].append(temp)
 
@@ -728,7 +947,7 @@ class CalenderDetailAll(Resource):
             db.close()
 
             # 최신순 정렬
-            res['info'].sort(key=lambda x:x[0]['book_hour'], reverse=True)
+            res['info'].sort(key=lambda x:(x[0]['book_date'], x[0]['book_hour']), reverse=True)
             return jsonify(res)
 
         except:
@@ -740,13 +959,185 @@ class CalenderDetailAll(Resource):
 @api.route('/data/calender-detail/progress/<string:user_id>/<string:book_date>')
 class CalenderDetailProgress(Resource):
     def get(self, user_id, book_date):
-        return
+        # db 연결
+        db = pymysql.connect(
+            host="k6e203.p.ssafy.io",
+            port=3306,
+            user="ssafy",
+            password="ssafy",
+            db='free_ssafy',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor,
+            init_command='SET NAMES UTF8'
+        )
+
+        res = {"info": []}
+
+        try:
+            # db에서 data 받아오기
+            curs = db.cursor()
+            sql = "select book_set from book where user_id=%s and book_date=%s and book_status=%s"
+            curs.execute(sql, (user_id, book_date, 0))
+            rows = curs.fetchall()
+
+            # book_set 값 배열
+            book_set_arr = []
+            for e in rows:
+                book_set_arr.append(e['book_set'])
+            book_set_arr = list(set(book_set_arr))  # 중복제거
+
+            # book Table
+            for book_set in book_set_arr:
+                temp = []
+                sql = "select * from book where book_set=%s"
+                curs.execute(sql, (book_set))
+                rows = curs.fetchall()
+                for i in range(len(rows)):
+                    product_id = rows[i]['product_id']
+                    store_user_id = rows[i]['store_user_id']
+                    basket_count = rows[i]['book_count']
+                    book_hour = rows[i]['book_hour']
+                    book_status = rows[i]['book_status']
+
+                    # date, time encoder
+                    encoder = CustomJSONEncoder()
+                    encoder.encode({"book_date": book_date, "book_hour": book_hour})
+                    book_date = str(book_date)
+                    book_hour = str(book_hour)
+
+                    # 상품 data
+                    sql = '''select product_name, product_price, product_discountprice, product_imagefront
+                                             from product where product_id=%s'''
+                    curs.execute(sql, (product_id))
+                    rows2 = curs.fetchall()
+                    product_name = rows2[0]['product_name']
+                    product_price = rows2[0]['product_price']
+                    product_discountprice = rows2[0]['product_discountprice']
+                    product_imagefront = rows2[0]['product_imagefront']
+
+                    # 매장 이름
+                    sql = "select user_name from user where user_id=%s"
+                    curs.execute(sql, (store_user_id))
+                    rows2 = curs.fetchall()
+                    user_name = rows2[0]['user_name']
+
+                    temp.append({
+                        "book_set": book_set,
+                        "book_date": book_date,
+                        "book_hour": book_hour,
+                        "user_name": user_name,
+                        "product_name": product_name,
+                        "product_imagefront": product_imagefront,
+                        "product_price": product_price,
+                        "product_discountprice": product_discountprice,
+                        "basket_count": basket_count,
+                        "book_status": book_status,
+                    })
+                res['info'].append(temp)
+
+            # db 저장 / 연결 종료
+            db.commit()
+            db.close()
+
+            # 최신순 정렬
+            res['info'].sort(key=lambda x: (x[0]['book_date'], x[0]['book_hour']), reverse=True)
+            return jsonify(res)
+
+        except:
+            result = "fail"
+            return jsonify(result=result)
 
 
 @api.route('/data/calender-detail/complete/<string:user_id>/<string:book_date>')
 class CalenderDetailComplete(Resource):
     def get(self, user_id, book_date):
-        return
+        # db 연결
+        db = pymysql.connect(
+            host="k6e203.p.ssafy.io",
+            port=3306,
+            user="ssafy",
+            password="ssafy",
+            db='free_ssafy',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor,
+            init_command='SET NAMES UTF8'
+        )
+
+        res = {"info": []}
+
+        try:
+            # db에서 data 받아오기
+            curs = db.cursor()
+            sql = "select book_set from book where user_id=%s and book_date=%s and book_status=%s"
+            curs.execute(sql, (user_id, book_date, 1))
+            rows = curs.fetchall()
+
+            # book_set 값 배열
+            book_set_arr = []
+            for e in rows:
+                book_set_arr.append(e['book_set'])
+            book_set_arr = list(set(book_set_arr))  # 중복제거
+
+            # book Table
+            for book_set in book_set_arr:
+                temp = []
+                sql = "select * from book where book_set=%s"
+                curs.execute(sql, (book_set))
+                rows = curs.fetchall()
+                for i in range(len(rows)):
+                    product_id = rows[i]['product_id']
+                    store_user_id = rows[i]['store_user_id']
+                    basket_count = rows[i]['book_count']
+                    book_hour = rows[i]['book_hour']
+                    book_status = rows[i]['book_status']
+
+                    # date, time encoder
+                    encoder = CustomJSONEncoder()
+                    encoder.encode({"book_date": book_date, "book_hour": book_hour})
+                    book_date = str(book_date)
+                    book_hour = str(book_hour)
+
+                    # 상품 data
+                    sql = '''select product_name, product_price, product_discountprice, product_imagefront
+                                                     from product where product_id=%s'''
+                    curs.execute(sql, (product_id))
+                    rows2 = curs.fetchall()
+                    product_name = rows2[0]['product_name']
+                    product_price = rows2[0]['product_price']
+                    product_discountprice = rows2[0]['product_discountprice']
+                    product_imagefront = rows2[0]['product_imagefront']
+
+                    # 매장 이름
+                    sql = "select user_name from user where user_id=%s"
+                    curs.execute(sql, (store_user_id))
+                    rows2 = curs.fetchall()
+                    user_name = rows2[0]['user_name']
+
+                    temp.append({
+                        "book_set": book_set,
+                        "book_date": book_date,
+                        "book_hour": book_hour,
+                        "user_name": user_name,
+                        "product_name": product_name,
+                        "product_imagefront": product_imagefront,
+                        "product_price": product_price,
+                        "product_discountprice": product_discountprice,
+                        "basket_count": basket_count,
+                        "book_status": book_status,
+                    })
+                res['info'].append(temp)
+
+            # db 저장 / 연결 종료
+            db.commit()
+            db.close()
+
+            # 최신순 정렬
+            res['info'].sort(key=lambda x: (x[0]['book_date'], x[0]['book_hour']), reverse=True)
+            return jsonify(res)
+
+        except:
+            result = "fail"
+            return jsonify(result=result)
 
 
 
