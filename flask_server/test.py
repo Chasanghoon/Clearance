@@ -5,6 +5,7 @@ from flask.json import JSONEncoder, jsonify
 import pymysql
 import datetime
 
+
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
 
@@ -94,7 +95,7 @@ class Basket(Resource):
                     res[idx][user_name].append(
                         {
                             # "user_name": user_name,
-                            # "basket_id" : basket_id,
+                            "basket_id" : basket_id,
                             "basket_count": basket_count,
                             # "store_user_id" : store_user_id,
                             "product_name": product_name,
@@ -118,7 +119,7 @@ class Basket(Resource):
                     res[-1][user_name].append(
                         {
                             # "user_name": user_name,
-                            # "basket_id" : basket_id,
+                            "basket_id" : basket_id,
                             "basket_count": basket_count,
                             # "store_user_id" : store_user_id,
                             "product_name": product_name,
@@ -205,8 +206,7 @@ class BasketAdd(Resource):
 
 
 basketRemove_fields = api.model('basketRemove', {
-    'user_id' : fields.String,
-    'product_id' : fields.Integer,
+    'basket_id' : fields.Integer,
 })
 
 @api.route('/data/basket-rem')
@@ -228,12 +228,13 @@ class BasketRemove(Resource):
         try:
             # request에서 data 받아오기
             data = request.get_json()
-            user_id = data['user_id']
-            product_id = data['product_id']
+            basket_id = data['basket_id']
+            # user_id = data['user_id']
+            # product_id = data['product_id']
 
             curs = db.cursor()
-            sql = "delete from basket where user_id = %s and product_id = %s"
-            curs.execute(sql, (user_id, product_id))
+            sql = "delete from basket where basket_id=%s"
+            curs.execute(sql, (basket_id))
 
             # db 저장 / 연결 종료
             db.commit()
