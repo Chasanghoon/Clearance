@@ -15,6 +15,7 @@ import com.ssafy.cleanrance.global.util.ImageUtil;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -147,6 +148,7 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepositorySupport.findById(productUpdatePutRequest.getProduct_id());
         product.setProductId(productUpdatePutRequest.getProduct_id());
         product.setCategoryId(productUpdatePutRequest.getCategory_id());
+        product.setProductName(productUpdatePutRequest.getProduct_name());
         product.setStoreUserId(productUpdatePutRequest.getStore_user_id());
         product.setProductPrice(productUpdatePutRequest.getProduct_price());
         product.setProductDiscount(productUpdatePutRequest.getProduct_discount());
@@ -270,9 +272,15 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Page<Product> findProductByStoreId(String storeId, Pageable pageable) {
+    public Page<Product> findProductByStoreId(String storeId,String word, Pageable pageable) {
+        Page<Product> products;
 
-        return productRepository.findBystoreUserId(storeId, pageable);
+        if(word.equals("")){
+            products = productRepository.findBystoreUserId(storeId, pageable);
+        }else{
+            products = productRepository.findBystoreUserIdAndProductNameContains(storeId, word, pageable);
+        }
+        return products;
     }
 
     @Override
@@ -281,6 +289,20 @@ public class ProductServiceImpl implements ProductService{
         product.setProductStock(productStockUpdatePutRequest.getProduct_stock());
         productRepository.save(product);
         return product;
+    }
+
+    @Override
+    public List<Product> findStoreProductList(String storeId, String word) {
+        List<Product> list = new ArrayList<>();
+        list = productRepositorySupport.findProductByStoreIdAndWord(storeId, word);
+        return list;
+    }
+
+    @Override
+    public List<String> findExpdateByUser(String storeuserId) {
+        List<String> list = new ArrayList<>();
+        list = productRepositorySupport.findProductByExpdate(storeuserId);
+        return list;
     }
 
     //십진수를 radian으로 변경

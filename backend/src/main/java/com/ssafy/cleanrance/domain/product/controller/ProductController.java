@@ -120,8 +120,8 @@ public class ProductController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public Page<Product> listproduct(@RequestParam String storeId, @PageableDefault(page = 0, size = 50) Pageable pageable){
-        return productService.findProductByStoreId(storeId,pageable);
+    public Page<Product> listproduct(@RequestParam String storeId,@RequestParam String word, @PageableDefault(page = 0) Pageable pageable){
+        return productService.findProductByStoreId(storeId,word,pageable);
     }
 
     @DeleteMapping("/product/remove")
@@ -165,6 +165,19 @@ public class ProductController {
         return ResponseEntity.status(200).body(list);
     }
 
+//    @GetMapping("/storeproduct/list")
+//    @ApiOperation(value = "매장별 상품 검색", notes = "<strong>매장 아이디와 검색어<strong>에 따라 매장 상품을 조회한다.<br/>")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "사용자 없음"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity<List<Product>> findStoreProductList(@RequestParam(required = false) String storeId, @RequestParam(required = false) String word){
+//        List<Product> list = productService.findStoreProductList(storeId, word);
+//        return ResponseEntity.status(200).body(list);
+//    }
+
     @GetMapping("/product/date")
     @ApiOperation(value = "매장별 상품 관리", notes = "매장 ID와 유효기간 입력 후 조회한다.")
     @ApiResponses({
@@ -175,6 +188,19 @@ public class ProductController {
     })
     public ResponseEntity<List<Product>> findBookByUser(@RequestParam String userId, @RequestParam String date){
         List<Product> list = productService.findProductByDate(userId, date);
+        return ResponseEntity.status(200).body(list);
+    }
+
+    @GetMapping("/product/distinctdate")
+    @ApiOperation(value = "매장별 유효기간 날짜 조회", notes = "매장 ID 입력 후 날짜를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<String>> findExpdateByUser(@RequestParam String storeuserId){
+        List<String> list = productService.findExpdateByUser(storeuserId);
         return ResponseEntity.status(200).body(list);
     }
 }

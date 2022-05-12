@@ -70,4 +70,9 @@ public class ProductRepositorySupport {
         return jpaQueryFactory.select(qProduct).from(qProduct)
                 .where(qProduct.storeUserId.in(arr).and(qProduct.categoryId.eq(categoryId).and(qProduct.productName.contains(word)))).fetch();
     }
+
+    public List<String> findProductByExpdate(String storeuserId) {
+        return jpaQueryFactory.select(qProduct.productExpdate).distinct().from(qProduct)
+                .where(qProduct.storeUserId.eq(storeuserId)).fetch();
+    }
 }

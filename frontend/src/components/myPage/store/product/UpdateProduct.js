@@ -10,20 +10,22 @@ import axios from 'axios';
 import userStore from '../../../../store/userStore';
 import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/esm/locale";
-import setHours from 'date-fns/setHours';
-import setMinutes from 'date-fns/setMinutes';
+import { useLocation } from 'react-router-dom';
 
-
-function RegistrationProduct(props) {
+function UpdateProduct(props) {
+    const location = useLocation();
+    const data = location.state.data;
+    console.log(data);
 
     const userId = userStore(state => state.userId);
 
-    const [productName, setProductName] = useState("");
-    const [productPrice, setProductPrice] = useState("");
-    const [productDiscount, setProductDiscount] = useState("");
-    const [productStock, setProductStock] = useState("");
-    const [productExpDate, setProductExpDate] = useState("");
-    const [categoryId, setCategoryId] = useState("");
+    const [productName, setProductName] = useState(data.productName);
+    const [productPrice, setProductPrice] = useState(data.productPrice);
+    const [productDiscount, setProductDiscount] = useState(data.productDiscount * 100);
+    const [productStock, setProductStock] = useState(data.productStock);
+    const [productExpDate, setProductExpDate] = useState(data.productExpdate);
+    const [checkProductChange, setCheckProductChange] = useState(false);
+    const [categoryId, setCategoryId] = useState(data.categoryId);
 
     const [productNameError, setProductNameErrorr] = useState(false);
     const [productPriceError, setProductPriceError] = useState(false);
@@ -59,6 +61,7 @@ function RegistrationProduct(props) {
     };
     const onChangeProductExpDate = (e) => {
         setProductExpDateError(false);
+        setCheckProductChange(true);
         setProductExpDate(e)
     };
     const onChangeCategoryId = (e) => {
@@ -79,52 +82,31 @@ function RegistrationProduct(props) {
     };
 
     const onSubmit = (e) => {
-        // console.log(productExpDate);
-        // console.log(categoryId);
+        console.warn("");
+        console.log(productExpDate);
+        console.log(categoryId);
+        console.log(checkProductChange);
 
         if (validation()) return;
-
-        // ! axios GET
-        // console.log("axios get")
-        // axios
-        //     .get("http://localhost:8080/api/user/?userId=테스트")
-        //     .then((result) => {
-        //         console.log(result);
-        //         console.log(result.data.userId);
-        //         alert("회원가입 완료!");
-        //     })
-        // .catch((e) => {
-        //     console.error("axios get 실패");
-        //     console.error(e)
-        // });
-
-        // ! axios POST
-        console.log("axios post")
-        console.log(categoryId);
-        console.log(productDiscount / 100);
+        if (!checkProductChange){
+            console.warn("안바뀜!");
+            setProductExpDate(notChangeDate(productExpDate));
+        } 
         console.log(productExpDate);
-        console.log(productName);
-        console.log(productPrice);
-        console.log(productStock);
-        console.log(userId);
-        const productRegisterRequest = {
-            category_id: categoryId,
-            product_discount: productDiscount / 100,
-            product_expDate: productExpDate,
-            product_name: productName,
-            product_price: productPrice,
-            product_stock: productStock,
-            store_user_id: userId
-        }
 
-        const formData = new FormData();
-        formData.append('productRegisterRequest', new Blob([JSON.stringify(productRegisterRequest)], { type: "application/json" }));
-        formData.append('backimage', backImage.back_image_file);
-        formData.append('frontimage', frontImage.front_image_file);
-
+        // ! axios PUT      
         axios
-            .post("http://localhost:8080/api/product/register",
-                formData
+            .put("http://localhost:8080/api/product/modify",
+                {
+                    category_id: categoryId,
+                    product_discount: productDiscount / 100,
+                    product_expDate: productExpDate,
+                    product_id: data.productId,
+                    product_name: productName,
+                    product_price: productPrice,
+                    product_stock: productStock,
+                    store_user_id: userId
+                }
                 ,
                 {
                     headers: { 'Content-Type': 'application/json' }
@@ -132,7 +114,7 @@ function RegistrationProduct(props) {
             )
             .then(() => {
                 console.log("axios post 성공")
-                alert("상품등록 완료!");
+                alert("상품수정 완료!");
                 // navigate("/allProductManagement");
                 navigate(-1);
 
@@ -142,70 +124,104 @@ function RegistrationProduct(props) {
                 console.error(e);
             });
     };
+    //     const productRegisterRequest = {
+    //         category_id: categoryId,
+    //         product_discount: productDiscount / 100,
+    //         product_expDate: productExpDate,
+    //         product_name: productName,
+    //         product_price: productPrice,
+    //         product_stock: productStock,
+    //         store_user_id: userId
+    //     }
+
+    //     const formData = new FormData();
+    //     formData.append('productRegisterRequest', new Blob([JSON.stringify(productRegisterRequest)], { type: "application/json" }));
+    //     formData.append('backimage', backImage.back_image_file);
+    //     formData.append('frontimage', frontImage.front_image_file);
+
+    //     axios
+    //         .post("http://localhost:8080/api/product/register",
+    //             formData
+    //             ,
+    //             {
+    //                 headers: { 'Content-Type': 'application/json' }
+    //             },
+    //         )
+    //         .then(() => {
+    //             console.log("axios post 성공")
+    //             alert("상품등록 완료!");
+    //             navigate("/allProductManagement");
+
+    //         })
+    //         .catch((e) => {
+    //             console.error("axios post 실패");
+    //             console.error(e);
+    //         });
+    // };
 
     const [frontImage, setFrontImage] = useState({
         front_image_file: "",
-        front_preview_URL: "img/default_image.png",
+        front_preview_URL: data.productImagefront,
     });
-    const [frontLoaded, setFrontLoaded] = useState(false);
+    // const [frontLoaded, setFrontLoaded] = useState(false);
 
-    const saveFrontImage = (e) => {
-        e.preventDefault();
-        const frontFileReader = new FileReader();
+    // const saveFrontImage = (e) => {
+    //     e.preventDefault();
+    //     const frontFileReader = new FileReader();
 
-        if (e.target.files[0]) {
-            setFrontLoaded("loading")
-            frontFileReader.readAsDataURL(e.target.files[0]);
-        }
-        frontFileReader.onload = () => {
-            setFrontImage(
-                {
-                    front_image_file: e.target.files[0],
-                    front_preview_URL: frontFileReader.result
-                }
-            )
-            setFrontLoaded(true);
-        }
-    }
-    const deleteFrontImage = () => {
-        setFrontImage({
-            front_image_file: "",
-            front_preview_URL: "img/default_image.png",
-        });
-        setFrontLoaded(false);
-    }
+    //     if (e.target.files[0]) {
+    //         setFrontLoaded("loading")
+    //         frontFileReader.readAsDataURL(e.target.files[0]);
+    //     }
+    //     frontFileReader.onload = () => {
+    //         setFrontImage(
+    //             {
+    //                 front_image_file: e.target.files[0],
+    //                 front_preview_URL: frontFileReader.result
+    //             }
+    //         )
+    //         setFrontLoaded(true);
+    //     }
+    // }
+    // const deleteFrontImage = () => {
+    //     setFrontImage({
+    //         front_image_file: "",
+    //         front_preview_URL: "img/default_image.png",
+    //     });
+    //     setFrontLoaded(false);
+    // }
 
     const [backImage, setBackImage] = useState({
         back_image_file: "",
-        back_preview_URL: "img/default_image.png",
+        back_preview_URL: data.productImageback,
     });
-    const [backLoaded, setBackLoaded] = useState(false);
+    // const [backLoaded, setBackLoaded] = useState(false);
 
-    const saveBackImage = (e) => {
-        e.preventDefault();
-        const backFileReader = new FileReader();
+    // const saveBackImage = (e) => {
+    //     e.preventDefault();
+    //     const backFileReader = new FileReader();
 
-        if (e.target.files[0]) {
-            setBackLoaded("loading")
-            backFileReader.readAsDataURL(e.target.files[0]);
-        }
-        backFileReader.onload = () => {
-            setBackImage(
-                {
-                    back_image_file: e.target.files[0],
-                    back_preview_URL: backFileReader.result
-                }
-            )
-            setBackLoaded(true);
-        }
-    }
-    const deleteBackImage = () => {
-        setBackImage({
-            back_image_file: "",
-            back_preview_URL: "img/default_image.png",
-        });
-        setBackLoaded(false);
-    }
+    //     if (e.target.files[0]) {
+    //         setBackLoaded("loading")
+    //         backFileReader.readAsDataURL(e.target.files[0]);
+    //     }
+    //     backFileReader.onload = () => {
+    //         setBackImage(
+    //             {
+    //                 back_image_file: e.target.files[0],
+    //                 back_preview_URL: backFileReader.result
+    //             }
+    //         )
+    //         setBackLoaded(true);
+    //     }
+    // }
+    // const deleteBackImage = () => {
+    //     setBackImage({
+    //         back_image_file: "",
+    //         back_preview_URL: "img/default_image.png",
+    //     });
+    //     setBackLoaded(false);
+    // }
 
     let navigate = useNavigate();
 
@@ -216,53 +232,67 @@ function RegistrationProduct(props) {
 
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
         // <Form.Control maxLength={50} placeholder="유통기한" value={productExpDate} onClick={onClick} onChange={onChangeProductExpDate} />
-        <Form.Control style={{backgroundColor:"white"}} maxLength={50} placeholder="유통기한" value={value} onClick={onClick} onChange={onChangeProductExpDate}  readOnly />
+        <Form.Control style={{ backgroundColor: "white", }} maxLength={50} placeholder={updateDate(data.productExpdate)} value={value} onClick={onClick} onChange={onChangeProductExpDate} readOnly />
         // <Form.Control maxLength={50} placeholder="유통기한" value={value} onClick={onClick} />
         // <Button onClick={onClick} ref={ref}>
         //   {value}
         // </Button>
-      ));
+        
+    ));
+
+    function changeDate() {
+        updateDate(data.productExpdate);
+    }
+
+
     return (
         <div>
             <Container className='mt-5'>
                 <Form>
                     <Form.Group as={Row} className="mb-3" controlId="formFile1" style={{ "textAlign": "center" }}>
+                    <div>상품 전면 이미지</div>
                         <div className='imageDiv'>
-                            {frontLoaded === false || frontLoaded === true ?
+                            <img className='imgFile' src={frontImage.front_preview_URL} alt="userImage" />
+                            {/* {frontLoaded === false || frontLoaded === true ?
                                 (<img className='imgFile' src={frontImage.front_preview_URL} alt="userImage" />) :
-                                (<Spinner animation="border" variant="warning" />)}
+                                (<Spinner animation="border" variant="warning" />)} */}
                         </div>
-                        <div>
+                        {/* <div>
                             <Button className='imageButton'><Form.Label>상품 이미지 선택</Form.Label></Button>
                             <Button className='imageButton' onClick={deleteFrontImage}>상품 이미지 삭제</Button>
                             <Form.Control type="file" accept="image/*" onChange={saveFrontImage} style={{ display: "none" }} />
-                        </div>
+                        </div> */}
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <div>상품명</div>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="상품명" value={productName} onChange={onChangeProductName} />
                             {productNameError && <div className="invalid-input">상품명을 입력해주세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <div>상품가격</div>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="상품가격" value={productPrice} onChange={onChangeProductPrice} />
                             {productPriceError && <div className="invalid-input">숫자로만 입력해주세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <div>할인율</div>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="할인율" value={productDiscount} onChange={onChangeProductDiscount} />
                             {productDiscountError && <div className="invalid-input">할인율을 숫자로만 입력해주세요. ( ex. 30% → 30 )</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <div>재고</div>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="재고" value={productStock} onChange={onChangeProductStock} />
                             {productStockeError && <div className="invalid-input">재고 수량을 숫자로만 입력해주세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3" >
+                    <div>유통기한</div>
                         <Col sm>
                             {/* <Form.Label column >유통ㄴ기한</Form.Label> */}
                             {/* <Form.Control maxLength={50} placeholder="유통기한" value={productExpDate} onChange={onChangeProductExpDate} /> */}
@@ -282,6 +312,7 @@ function RegistrationProduct(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <div>상품 분류</div>
                         <Col sm>
                             {/* <Form.Control maxLength={20} placeholder="카테고리" value={categoryId} onChange={onChangeCategoryId} /> */}
                             <Form.Select value={categoryId} onChange={onChangeCategoryId}>
@@ -306,20 +337,22 @@ function RegistrationProduct(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3" controlId="formFile2" style={{ "textAlign": "center" }}>
+                    <div>상품 후면 이미지</div>
                         <div className='imageDiv'>
-                            {backLoaded === false || backLoaded === true ?
+                            <img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />
+                            {/* {backLoaded === false || backLoaded === true ?
                                 (<img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />) :
-                                (<Spinner animation="border" variant="warning" />)}
+                                (<Spinner animation="border" variant="warning" />)} */}
                         </div>
-                        <div>
+                        {/* <div>
                             <Button className='imageButton'><Form.Label>상품 상세 이미지 선택</Form.Label></Button>
                             <Button className='imageButton' onClick={deleteBackImage}>상품 상세 이미지 삭제</Button>
                             <Form.Control type="file" accept="image/*" onChange={saveBackImage} style={{ display: "none" }} />
-                        </div>
+                        </div> */}
                     </Form.Group>
 
                     <div className="d-grid gap-1 mb-3">
-                        <Button variant="secondary" onClick={onSubmit}>상품 등록</Button>
+                        <Button variant="secondary" onClick={onSubmit}>상품 수정</Button>
                     </div>
                 </Form>
                 {/* <br />
@@ -328,7 +361,6 @@ function RegistrationProduct(props) {
         </div>
     );
 }
-
 function splitDate(date) {
 
     let year = '';
@@ -387,5 +419,48 @@ function splitDate(date) {
     let reDate = year + month + day
     return reDate;
 }
+function updateDate(date) {
+    let week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
+    let today = new Date(date).getDay();
 
-export default RegistrationProduct;
+    let year = '';
+    let month = '';
+    let day = '';
+    let dotw = week[today];
+
+    let str = date + '';
+    let str2 = dotw + '';
+
+    let split = str.split('-');
+    let split2 = str2.substring(0, 1);
+    console.log(str);
+    console.log(split[0]);
+    console.log(split[1]);
+    console.log(split[2]);
+    console.log(split2);
+
+    const reDate = split[0] + '년 ' + split[1] +'월 ' + split[2] + '일 (' + split2 + ')';
+    console.log(reDate);
+
+    return reDate;
+}
+function notChangeDate(date) {
+    console.error(date);
+    let year = '';
+    let month = '';
+    let day = '';
+
+
+    // let str = date + '';
+    // console.log(str);
+    let split = date.split('-');
+    year = split[0];
+    month = split[1];
+    day = split[2];
+
+    
+    let reDate = year + month + day
+    console.log(reDate);
+    return reDate;
+}
+export default UpdateProduct;

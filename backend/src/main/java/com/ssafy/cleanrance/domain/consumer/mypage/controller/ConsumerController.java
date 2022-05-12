@@ -26,21 +26,18 @@ public class ConsumerController {
     @Autowired
     ConsumerService consumerService;
 
-    private static final int SUCCESS = 1;
-    private static final int FAIL = -1;
-
-    @GetMapping("/book")
-    @ApiOperation(value = "회원 예약 내역 조회", notes = "회원 아이디로 예약정보를 조회후 응답한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<List<Book>> findBookByUser(@RequestParam String userId){
-        List<Book> list = consumerService.findBookByuserId(userId);
-        return ResponseEntity.status(200).body(list);
-    }
+//    @GetMapping("/book")
+//    @ApiOperation(value = "회원 예약 내역 조회", notes = "회원 아이디로 예약정보를 조회후 응답한다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "사용자 없음"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity<List<Book>> findBookByUser(@RequestParam String userId){
+//        List<Book> list = consumerService.findBookByuserId(userId);
+//        return ResponseEntity.status(200).body(list);
+//    }
 
 //    @GetMapping("/book/date")
 //    @ApiOperation(value = "회원의 날짜별 예약 내역 조회", notes = "회원 아이디와 날짜로 예약정보를 조회후 응답한다.")
@@ -92,13 +89,5 @@ public class ConsumerController {
     public ResponseEntity<? extends BaseResponseBody> modify(@RequestBody BookSetUpdatePutRequest bookSetUpdatePutRequest) {
         consumerService.updateBook(bookSetUpdatePutRequest);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-
-//        Book book1 = consumerService.findByBookSet(bookSetUpdatePutRequest.getBook_set());
-//        if(book1!=null){
-//            Book book = consumerService.updateBook(bookSetUpdatePutRequest);
-//            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-//        }else{
-//            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "ProductID doesn't exist"));
-//        }
     }
 }

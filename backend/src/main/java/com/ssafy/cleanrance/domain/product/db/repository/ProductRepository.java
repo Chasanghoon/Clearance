@@ -14,8 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    List<Product> findBystoreUserIdAndProductNameContaining(String storeUserId, String productName);
-
+    Page<Product> findBystoreUserIdAndProductNameContains(String storeId, String productName, Pageable pageable);
     Page<Product> findBystoreUserId(String storeId, Pageable pageable);
 
 //    @Query(value = "select product_imagefront, product_name, product_stock, product_expdate\n" +

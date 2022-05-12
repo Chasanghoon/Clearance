@@ -15,12 +15,14 @@ import StoreProfile from './components/myPage/store/StoreProfile';
 import ProductManagement from './components/myPage/store/product/ProductManagement';
 import AllProductManagement from './components/myPage/store/product/AllProductManagement';
 import RegistrationProduct from './components/myPage/store/product/RegistrationProduct';
+import UpdateProduct from './components/myPage/store/product/UpdateProduct';
 import CheckReservation from './components/myPage/store/CheckReservation';
 import StoreCarbon from './components/myPage/store/StoreCarbon';
 import UserMyPage from './components/myPage/user/UserMyPage';
 import UserProfile from './components/myPage/user/UserProfile';
 import BookingHistory from './components/myPage/user/BookingHistory';
 import UserCarbon from './components/myPage/user/UserCarbon';
+import Product from './components/product/Product';
 
 
 
@@ -42,6 +44,7 @@ function App() {
           <Route path="/productManagement" element={<ProductManagement />} />
           <Route path="/allProductManagement" element={<AllProductManagement />} />
           <Route path="/registrationProduct" element={<RegistrationProduct />} />
+          <Route path="/updateProduct" element={<UpdateProduct />} />
           <Route path="/checkReservation" element={<CheckReservation />} />
           <Route path="/storeCarbon" element={<StoreCarbon />} />
 
@@ -54,7 +57,10 @@ function App() {
           
           
           <Route path="/login" element={<Login />} />
+          
+          {/* 상품 관련 페이지 */}
           <Route path="/basket" element={<Basket />} />
+          <Route path="/product" element={<Product/> } />
 
         </Routes>
       </BrowserRouter>
