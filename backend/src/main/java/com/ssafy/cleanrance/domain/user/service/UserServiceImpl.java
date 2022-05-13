@@ -122,6 +122,7 @@ public class UserServiceImpl implements UserService {
         updateUser.ifPresent(selectUser -> {
             selectUser.setUserEmail(user.getUser_email());
             selectUser.setUserPhone(user.getUser_phone());
+            selectUser.setUserName(user.getUser_name());
             if(selectUser.getUserRole() == 2){
                 if(selectUser.getUserAddress() != user.getUser_address()){
                     Location loc = locationRepository.findByuserId(selectUser.getUserId());

@@ -84,7 +84,7 @@ public class UserController {
     }
 
     @PutMapping("/member")
-    @ApiOperation(value = "회원 본인 정보 수정", notes = "회원 정보(이메일,전화번호,주소)를 수정하여 저장한다.<br/>")
+    @ApiOperation(value = "회원 본인 정보 수정", notes = "회원 정보(이름,이메일,전화번호, 주소 수정)를 수정하여 저장한다.<br/>")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
