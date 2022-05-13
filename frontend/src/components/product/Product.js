@@ -67,6 +67,10 @@ const Product = () => {
     const basket_cnt = productStore(state => state.basket_cnt)
     const setBasketCnt = productStore(state => state.setBasketCnt)
     const [modalShow, setModalShow] = useState(false)
+
+    useEffect(() => {
+        setBasketCnt(1);
+    },[])
     let navigate = useNavigate();
         //
         // console.log(category_id)

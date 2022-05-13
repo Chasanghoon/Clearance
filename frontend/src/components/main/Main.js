@@ -15,7 +15,7 @@ function Main(props) {
   
 
   
-
+  const nearStore = useMainStore(state => state.nearStore);
   const nearProduct = useMainStore(state => state.nearProduct)
   const getNearProduct = useMainStore(state => state.setNearProduct)
 
@@ -43,6 +43,7 @@ function Main(props) {
   
   const setProductImgBack = productStore(state => state.setProductImgBack)
 
+
     return (
         <div>
             <NavBar></NavBar>
@@ -55,10 +56,13 @@ function Main(props) {
           
         </div>
         <div>{pos.lat}, {pos.lng}</div>
-        {nearProduct.map((value) => (
-          <div id="ProductItem" onClick={() => {console.log("이거", value)}}>
+        {nearStore.length > 0 ? nearStore.map((val) => (
+          <div>{val.userId}
+            {nearProduct.map((value) => (
+              <div id="ProductItem" onClick={() => {console.log("이거", value)}}>
             <img alt="" src = {value.productImagefront}></img>
-            {value.productName} // {value.storeUserId}
+              {value.productName} // {value.storeUserId}
+              
             <Link to="/product"><Button className='secondary' onClick={() => {
               localStorage.setItem("product_id", value.productId)
               localStorage.setItem("category_id", value.categoryId)
@@ -73,8 +77,34 @@ function Main(props) {
               localStorage.setItem("store_user_id", value.storeUserId)
             }}>상세 보기</Button></Link>
           </div>
-        ))}
-        </div>
+              
+          ))}
+          </div>
+          
+        )) : <div>Loading...</div>} 
+
+        {/* {nearProduct.length < 0 ? <div style={{ backgroundColor:"black"}}> loading... {nearProduct.length}</div> :
+          nearProduct.map((value) => (
+          <div id="ProductItem" onClick={() => {console.log("이거", value)}}>
+            <img alt="" src = {value.productImagefront}></img>
+              {value.productName} // {value.storeUserId}
+              
+            <Link to="/product"><Button className='secondary' onClick={() => {
+              localStorage.setItem("product_id", value.productId)
+              localStorage.setItem("category_id", value.categoryId)
+              localStorage.setItem("product_discount",value.productDiscount)
+              localStorage.setItem("product_discount_price", value.productDiscountprice)
+              localStorage.setItem("product_expdate", value.productExpdate)
+              localStorage.setItem("product_image_back", value.productImageback)
+              localStorage.setItem("product_image_front", value.productImagefront)
+              localStorage.setItem("product_name", value.productName)
+              localStorage.setItem("product_price", value.productPrice)
+              localStorage.setItem("product_stock", value.productStock)
+              localStorage.setItem("store_user_id", value.storeUserId)
+            }}>상세 보기</Button></Link>
+          </div>
+        ))} */}
+      </div>
     );
 }
 

@@ -11,6 +11,7 @@ function SampleMap() {
 
   const nearStore = useMainStore(state => state.nearStore) // 근처 점포
   const ns = useMainStore(state => state.setNearStore) // 근처 점포 목록을 가져옴
+  
   const storePos = []; // 근처 점포 목록의 위치를 기억(마커 표시 목적)
 
   const nearProduct = useMainStore(state => state.nearProduct) // 근처 매점의 상품들
@@ -62,13 +63,15 @@ function SampleMap() {
   const search = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/product/list?ypoint=${state.center.lat}&xpoint=${state.center.lng}&storeId=${storeID}&categoryId=${categoryID}&word=${word}`)
+      console.log(response)
       np(response.data)
     } catch (error) {
       console.log(error)
     }
   }
 
-    const getLocations = async () => { // 상품 정보를 가져오는 함수
+  const getLocations = async () => { // 상품 정보를 가져오는 함수
+      cp(state.center.lat, state.center.lng)
       try {
         const response = await axios.get(`http://localhost:8080/api/mapProduct?ypoint=${state.center.lat}&xpoint=${state.center.lng}`)
         console.log("상품 정보 출력 성공")
@@ -110,6 +113,7 @@ function SampleMap() {
   }
 // --------------------------------- useEffect 사용 --------------------------------- 
   useEffect(() => { // geolocation을 활용하여 현재 위치를 가져오는 userEffect
+    np([]);
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
@@ -123,10 +127,16 @@ function SampleMap() {
             isLoading: false,
             enableHighAccuracy: true,
           }))
+<<<<<<< HEAD
           cp(state.center.lat, state.center.lng)
           getLocations();
     
       callCategory();
+=======
+          
+          
+          callCategory();
+>>>>>>> de70c822c2c8e45e4a39c7db8aa14a98ca1fa8c6
     },
         (err) => {
           setState((prev) => ({
@@ -151,14 +161,22 @@ function SampleMap() {
     }
   }, [])
 
+    
   useEffect(() => {
     if (state.center.lat !== null) {
-  console.log("useEffect 작동")
+    console.log("useEffect 작동")
     console.log("categoryId :", categoryID, ", storeId : ", storeID, ", word : ", word)
       
       search();
     }
-}, [categoryID,storeID,word,state.center.lat,state.center.lng])
+  }, [categoryID, storeID, word])
+  
+  useEffect(() => {
+    if (state.center.lat !== null) {
+
+      getLocations();
+    }
+  },[state.center.lat,state.center.lng])
 
 // --------------------------------- useEffect 사용 종료 --------------------------------- 
   for (let i = 0; i < nearStore.length; i++) {
@@ -175,7 +193,8 @@ function SampleMap() {
   
   function Category() {
       return (
-          <div>
+        <div>
+          {console.log(categoryID)}
             {categoryList.map((value,index) => (
               <button
                 key={index}
@@ -186,13 +205,14 @@ function SampleMap() {
                 }}
                 onClick={() => {
                   changeCategoryId(value.categoryId)
-                  console.log(categoryID)
                 }}
                 // onClick={() => { clickCategory(value.categoryId) }} // 해당 카테고리의 상품만 가져오게 만들기 or 모든 상품을 가져오게 되돌리기
               >{value.categoryName}</button>
               
             ))}
-    </div>)
+      </div>)
+    
+   
 
   }
 
@@ -246,6 +266,7 @@ function SampleMap() {
         <Row>
           <Col sm>
             <input id="searchWord" style={{ backgroundColor: 'beige', width: '97%' }}></input>
+            현재 카테고리ID : {console.log(categoryID)}
             <button id='search' onClick={() => {
               setWord(document.getElementById("searchWord").value)
             }} >검색</button>
