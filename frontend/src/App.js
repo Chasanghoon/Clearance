@@ -22,6 +22,8 @@ import UserProfile from './components/myPage/user/UserProfile';
 import BookingHistory from './components/myPage/user/BookingHistory';
 import UserCarbon from './components/myPage/user/UserCarbon';
 import Product from './components/product/Product';
+import KakaoCounseling from './components/common/KakaoCounseling';
+
 
 
 
@@ -31,6 +33,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={ <Start /> } />
+          <Route path="/kakaoCounseling" element={ <KakaoCounseling /> } />
           <Route path="/main" element={<Main></Main>} />
           <Route path="/signupUser" element={<SignupUser />} />
           <Route path="/signupStore" element={<SignupStore />} />

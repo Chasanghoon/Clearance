@@ -6,12 +6,12 @@ import Col from 'react-bootstrap/Col';
 import { Spinner } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import userStore from '../../../store/userStore';
 import axios from 'axios';
 
 function UserProfile(props) {
-
+    
 
     const userId = userStore(state => state.userId);
     const userName = userStore(state => state.userName);

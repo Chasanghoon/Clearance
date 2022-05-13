@@ -11,6 +11,8 @@ import userStore from '../../store/userStore';
 
 function Login(props) {
 
+    const userRole = userStore(state => state.userRole);
+
     const setUserId = userStore(state => state.setUserId);
     const setUserRole = userStore(state => state.setUserRole);
     const setUserName = userStore(state => state.setUserName);
@@ -71,8 +73,12 @@ function Login(props) {
                 setUserAddress(result.data.userAddress);
                 setUserLicenseNum(result.data.userLicensenum);
                 setUserImage(result.data.userImage);
-                navigate("/main");
-
+                if(result.data.userRole === 2){
+                    navigate("/storeMyPage");
+                }
+                if(result.data.userRole === 3){
+                    navigate("/main");
+                }
             })
             .catch((e) => {
                 console.error("axios get 실패");

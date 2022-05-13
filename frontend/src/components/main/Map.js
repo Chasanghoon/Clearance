@@ -124,6 +124,9 @@ function SampleMap() {
             enableHighAccuracy: true,
           }))
           cp(state.center.lat, state.center.lng)
+          getLocations();
+    
+      callCategory();
     },
         (err) => {
           setState((prev) => ({
@@ -152,9 +155,7 @@ function SampleMap() {
     if (state.center.lat !== null) {
   console.log("useEffect 작동")
     console.log("categoryId :", categoryID, ", storeId : ", storeID, ", word : ", word)
-      getLocations();
-    
-      callCategory();
+      
       search();
     }
 }, [categoryID,storeID,word,state.center.lat,state.center.lng])

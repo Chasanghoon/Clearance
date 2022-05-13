@@ -115,7 +115,7 @@ const Basket = () => {
                     ))}
                     <Button onClick={() => {
                         console.log(Object.keys(value)[0])
-                        setStoreId(Object.keys(value)[0])
+                        setStoreId(Object.values(value)[0][0].store_user_id)
                         navigate("/reservation")
                     }}>예약 진행</Button>
                 </div>

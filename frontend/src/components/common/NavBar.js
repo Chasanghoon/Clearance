@@ -11,6 +11,7 @@ const NavBar = () => {
 
     const userId = userStore(state => state.userId);
     const userImage = userStore(state => state.userImage);
+    const userRole = userStore(state => state.userRole);
 
     const setUserId = userStore(state => state.setUserId);
     const setUserRole = userStore(state => state.setUserRole);
@@ -60,9 +61,16 @@ const NavBar = () => {
                         </div>
                         <span>{userId}</span>
                         <br />
-                        <Link to="/storeMyPage" style={{ color: 'black', textDecoration: 'none' }}>매장 마이페이지</Link>
-                        <Link to="/userMyPage" style={{ color: 'black', textDecoration: 'none' }}>유저 마이페이지</Link>
-                        <Link to="/basket" style={{ color: 'black', textDecoration: 'none' }}>장바구니</Link>
+                        {userRole === 2 ?
+                            <Link to="/storeMyPage" style={{ color: 'black', textDecoration: 'none' }}>매장 마이페이지</Link>
+                            :
+                            <>
+                                <Link to="/userMyPage" style={{ color: 'black', textDecoration: 'none' }}>유저 마이페이지</Link>
+                                <Link to="/basket" style={{ color: 'black', textDecoration: 'none' }}>장바구니</Link>
+                            </>
+                        }
+
+
                         <Link onClick={Logout} to="/" style={{ color: 'black', textDecoration: 'none' }}>로그아웃</Link>
                     </Nav>
                 </div>

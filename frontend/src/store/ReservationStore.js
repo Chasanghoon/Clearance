@@ -11,6 +11,8 @@ const ReservationStore = create((set) => ({
     
     storeId: "",
     setStoreId: (e) => set({ storeId: e }),
+    bookSet: "",
+    setBookSet: (e) => set({ bookSet: e }),
 }))
 
 export default ReservationStore;

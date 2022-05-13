@@ -11,7 +11,8 @@ import setMinutes from 'date-fns/setMinutes';
 import NavBar from '../common/NavBar';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import ReservationStore from '../../store/ReservationStore';
 
 function Reservation(props) {
     const [startDate, setStartDate] = useState();
@@ -22,6 +23,8 @@ function Reservation(props) {
     const [userImage, setUserImage] = useState();
     const [userPhone, setUserPhone] = useState();
     const [userAddress, setUserAddress] = useState();
+    const storeId = ReservationStore(state => state.storeId);
+    const setBookSet = ReservationStore(state => state.setBookSet);
 
     const [saveDataError, setSaveDataError] = useState(false);
     const [saveTimeError, setSaveTimeError] = useState(false);
@@ -44,11 +47,13 @@ function Reservation(props) {
     };
 
     useEffect(() => {
+        console.log(storeId);
         // ! axios get
         // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         axios
-            .get("http://localhost:5001/data/reservation-progress/in1")
+            .get(`http://localhost:5001/data/reservation-progress/${storeId}`)
             .then((result) => {
+                
                 setUserName(result.data[0].user_name);
                 setUserImage(result.data[0].user_image);
                 setUserPhone(result.data[0].user_phone);
@@ -68,15 +73,17 @@ function Reservation(props) {
         // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         console.log("axios post")
         axios
-            .post("http://localhost:5001/data/reservation-add",
+            .post(`http://localhost:5001/data/reservation-add`,
                 {
                     user_id: sessionStorage.getItem("id"),
-                    store_user_id: "Srkdrhkddms",
+                    store_user_id: storeId,
                     book_date: saveData,
                     book_hour: saveTime
                 },
             )
             .then((e) => {
+                setBookSet(e.data.book_set);
+                console.error(e.data.book_set);
                 console.log("axios post 성공")
                 alert("예약 완료!");
                 navigate("/reservationResult");
