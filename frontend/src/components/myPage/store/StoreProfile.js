@@ -12,7 +12,7 @@ import axios from 'axios';
 
 function StoreProfile(props) {
 
-    
+
     const userId = userStore(state => state.userId);
     const userName = userStore(state => state.userName);
     const userEmail = userStore(state => state.userEmail);
@@ -20,6 +20,7 @@ function StoreProfile(props) {
     const userAddress = userStore(state => state.userAddress);
     const userLicenseNum = userStore(state => state.userLicenseNum);
     const userImage = userStore(state => state.userImage);
+    const userRole = userStore(state => state.userRole);
 
     const setUserName = userStore(state => state.setUserName);
     const setUserEmail = userStore(state => state.setUserEmail);
@@ -60,7 +61,7 @@ function StoreProfile(props) {
         if (!userPhone) setPhoneError(true);
         if (!userAddress) setAddressError(true);
 
-        if (userNameError || emailError || phoneError || addressError ) return true;
+        if (userNameError || emailError || phoneError || addressError) return true;
         else return false;
     };
 
@@ -69,39 +70,33 @@ function StoreProfile(props) {
 
         // ! axios POST
         console.log("axios post")
-        const storeSignUpRequest = {
-            user_address: userAddress,
-            user_email: userEmail,
-            user_id: userId,
-            user_name: userName,
-            user_phone: userPhone,
-        }
-        // TODO : 백 리퀘스트바디 수정, 이미지 파일로 받아야함, storeSignUpRequest이거 써도 되나..?
-        // const formData = new FormData();
-        // formData.append('storeSignUpRequest', new Blob([JSON.stringify(storeSignUpRequest)], { type: "application/json" }));
-        // formData.append('file', image.image_file);
+        axios
+            .put("http://localhost:8080/api/member",
+                {
+                    user_address: userAddress,
+                    user_email: userEmail,
+                    user_id: userId,
+                    user_name: userName,
+                    user_phone: userPhone,
+                }
+                ,
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                },
+            )
+            .then(() => {
+                console.log("axios post 성공")
+                alert("회원정보 수정!");
+                navigate(-1);
 
-        // axios
-        //     .put("http://localhost:8080/api/member",
-        //         formData
-        //         ,
-        //         {
-        //             headers: { 'Content-Type': 'application/json' }
-        //         },
-        //     )
-        //     .then(() => {
-        //         console.log("axios post 성공")
-        //         alert("회원가입 완료!");
-        //         navigate("/login");
-
-        //     })
-        //     .catch((e) => {
-        //         console.error("axios post 실패");
-        //         console.error(e);
-        //     });
+            })
+            .catch((e) => {
+                console.error("axios post 실패");
+                console.error(e);
+            });
     };
 
-    
+
 
     const [loaded, setLoaded] = useState(false);
     const saveImage = (e) => {
@@ -128,16 +123,11 @@ function StoreProfile(props) {
         <div>
             <Container className='mt-5'>
                 <Form>
-                <Form.Group as={Row} className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
+                    <Form.Group as={Row} className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
                         <div className='imageDiv'>
                             {loaded === false || loaded === true ?
                                 (<img className='imgFile' src={userImage} alt="userImage" />) :
                                 (<Spinner animation="border" variant="warning" />)}
-                        </div>
-                        <div>
-                            <Button className='imageButton'><Form.Label>프로필 이미지 선택</Form.Label></Button>
-                            <Button className='imageButton' onClick={deleteImage}>프로필 이미지 삭제</Button>
-                            <Form.Control type="file" accept="image/*" onChange={saveImage} style={{ display: "none" }} />
                         </div>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
