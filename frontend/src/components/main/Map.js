@@ -127,16 +127,9 @@ function SampleMap() {
             isLoading: false,
             enableHighAccuracy: true,
           }))
-<<<<<<< HEAD
-          cp(state.center.lat, state.center.lng)
-          getLocations();
-    
-      callCategory();
-=======
           
           
           callCategory();
->>>>>>> de70c822c2c8e45e4a39c7db8aa14a98ca1fa8c6
     },
         (err) => {
           setState((prev) => ({

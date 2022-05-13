@@ -205,11 +205,8 @@ function splitDate(date) {
 
                         console.log(value)
                         console.log(Object.keys(value)[0])
-<<<<<<< HEAD
-=======
                         console.log(Object.values(value)[0])
                         console.log(expdate)
->>>>>>> de70c822c2c8e45e4a39c7db8aa14a98ca1fa8c6
                         setStoreId(Object.values(value)[0][0].store_user_id)
                         navigate("/reservation")
                     }}>예약 진행</Button>
