@@ -181,9 +181,13 @@
 <table>
     <tr>
         <td height="140px" align="center">
-            <img src="./image/강광은.jpg" height="150px" width="150px" /> <br><br> 👑 강광은 <br>(Front-End) <br></td>
+            <img src="./image/강광은.jpg" height="150px" width="150px" /> <br><br> 
+            👑 강광은 <br>(Front-End) <br>
+        </td>
         <td height="140px" align="center">
-            <img src="./image/김범주.jpg" height="150px" width="150px" /> <br><br> 🙂 김범주 <br>(Front-End) <br></td>
+            <img src="./image/김범주.jpg" height="150px" width="150px" /> <br><br> 
+            🙂 김범주 <br>(Front-End) <br>
+        </td>
         <td height="140px" align="center">
             <img src="./image/차상훈.jpg" height="150px" width="150px" /> <br><br> 😁 차상훈 <br>(Back-End) <br></td>
         <td height="140px" align="center">
@@ -196,8 +200,9 @@
         <td align="center">UI/UX<br/>React</td>
         <td align="center">REST API<br/>Database<br/>CI/CD</td>
         <td align="center">REST API<br/>Database<br/>Infra<br/></td>
-        <td align="center">REST API</td>
+        <td align="center">REST API<br/>React</td>
     </tr>
 </table>
 
 <br />
+
