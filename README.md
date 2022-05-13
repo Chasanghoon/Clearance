@@ -62,7 +62,6 @@
 |          | CSS3                    |                      | \-          |
 |          | JavaScript(ES6)         |                      |\-           |
 |          | React                   | React                | 17.0.2      |
-|          | React                   | Redux                | 7.2.6       |
 |          | React                   | Redux-thunk          | 2.4.1       |
 |          |                         | styled-components    | 5.3.3       |
 |          |                         | framer-motion        | 6.0.0       |
@@ -154,7 +153,7 @@
 | :-----------------------------: |
 | <img src="./image/cobons.png"/> |
 
-<div id="6"></div>
+<div id="5"></div>
 
 ## 👥 협업 관리 
 
@@ -168,41 +167,46 @@
 
 <br />
 
-<div id="9"></div>
+<div id="6"></div>
 
 ## 📋 산출물
 |  구분  |  링크  |
 | :--------------- | :---------------: |
-| 기획서 | [기획서 바로가기](/exce/프로젝트_계획서_부울경_E203.pdf) |
+| 기획서 | [기획서 바로가기](/exec/프로젝트_계획서_부울경_E203.pdf) |
 | 요구사항/API 정의서 | [요구사항 정의서 바로가기](https://docs.google.com/spreadsheets/d/11YK9m3-BMdoCCrjv6fx36IJgI-pvypHpYIhc1MlR5Oc/edit#gid=9810042) |
 | 플로우차트 | [플로우차트 바로가기](https://www.mindmeister.com/map/2253219011) |
 | 스토리보드 | [스토리보드 바로가기](https://www.figma.com/file/MPWOWxpHMV9bMNM4btjs3r/E203) |
 | ERD | [ERD 바로가기](https://www.erdcloud.com/team/jCG5JFqNeZTLtQGWN) |
-| 발표자료 | [발표자료 바로가기](/exce/발표자료.pdf) |
+| 발표자료 | [발표자료 바로가기](/exec/발표자료.pdf) |
 
 
+
+<div id="7"></div>
 
 ## 👪 개발 멤버 소개 
 
 <table>
     <tr>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="" width="140px" /> <br><br> 👑 강광은 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="" width="140px" /> <br><br> 🙂 김범주 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="" width="140px" /> <br><br> 😆 차상훈 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="" width="140px" /> <br><br> 😁 김윤지 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="" width="140px" /> <br><br> 🙄 박진성 <br>(Back-End) </a> <br></td>
-        </tr>
+        <td height="140px" align="center">
+            <img src="./image/강광은.jpg" height="150px" width="150px" /> <br><br> 👑 강광은 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center">
+            <img src="./image/김범주.jpg" height="150px" width="150px" /> <br><br> 🙂 김범주 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center">
+            <img src="./image/차상훈.jpg" height="150px" width="150px" /> <br><br> 😁 차상훈 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center">
+            <img src="./image/김윤지.jpg" height="150px" width="150px" /> <br><br> 🙄 김윤지 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center">
+            <img src="./image/박진성.JPG" height="150px" width="150px" /> <br><br> 😶 박진성 <br>(Back-End) </a> <br></td>
+    </tr>
     <tr>
         <td align="center">UI/UX<br/>React</td>
         <td align="center">UI/UX<br/>React</td>
         <td align="center">REST API<br/>Database<br/>CI/CD</td>
-        <td align="center">REST API<br/>Database<br/>Infra</td>
+        <td align="center">REST API<br/>Database<br/>Infra<br/></td>
         <td align="center">REST API</td>
     </tr>
 </table>
+
+
+<br />
 
