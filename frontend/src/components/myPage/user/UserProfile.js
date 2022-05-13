@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from 'react-bootstrap/Row';
@@ -11,7 +11,7 @@ import userStore from '../../../store/userStore';
 import axios from 'axios';
 
 function UserProfile(props) {
-    
+
 
     const userId = userStore(state => state.userId);
     const userName = userStore(state => state.userName);
@@ -68,36 +68,30 @@ function UserProfile(props) {
 
         // ! axios POST
         console.log("axios post")
-        const storeSignUpRequest = {
-            user_address: userAddress,
-            user_email: userEmail,
-            user_id: userId,
-            user_name: userName,
-            user_phone: userPhone,
-        }
-        // TODO : 백 리퀘스트바디 수정, 이미지 파일로 받아야함, storeSignUpRequest이거 써도 되나..?
-        // const formData = new FormData();
-        // formData.append('storeSignUpRequest', new Blob([JSON.stringify(storeSignUpRequest)], { type: "application/json" }));
-        // formData.append('file', image.image_file);
+        axios
+            .put("http://localhost:8080/api/member",
+                {
+                    user_address: userAddress,
+                    user_email: userEmail,
+                    user_id: userId,
+                    user_name: userName,
+                    user_phone: userPhone,
+                }
+                ,
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                },
+            )
+            .then(() => {
+                console.log("axios post 성공")
+                alert("회원가입 완료!");
+                navigate(-1);
 
-        // axios
-        //     .put("http://localhost:8080/api/member",
-        //         formData
-        //         ,
-        //         {
-        //             headers: { 'Content-Type': 'application/json' }
-        //         },
-        //     )
-        //     .then(() => {
-        //         console.log("axios post 성공")
-        //         alert("회원가입 완료!");
-        //         navigate("/login");
-
-        //     })
-        //     .catch((e) => {
-        //         console.error("axios post 실패");
-        //         console.error(e);
-        //     });
+            })
+            .catch((e) => {
+                console.error("axios post 실패");
+                console.error(e);
+            });
     };
 
 
@@ -134,11 +128,6 @@ function UserProfile(props) {
                             {loaded === false || loaded === true ?
                                 (<img className='imgFile' src={userImage} alt="userImage" />) :
                                 (<Spinner animation="border" variant="warning" />)}
-                        </div>
-                        <div>
-                            <Button className='imageButton'><Form.Label>프로필 이미지 선택</Form.Label></Button>
-                            <Button className='imageButton' onClick={deleteImage}>프로필 이미지 삭제</Button>
-                            <Form.Control type="file" accept="image/*" onChange={saveImage} style={{ display: "none" }} />
                         </div>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">

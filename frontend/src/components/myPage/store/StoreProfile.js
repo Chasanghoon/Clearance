@@ -73,14 +73,11 @@ function StoreProfile(props) {
         axios
             .put("http://localhost:8080/api/member",
                 {
-                    userAddress: userAddress,
-                    userEmail: userEmail,
-                    userId: userId,
-                    userImage: userImage,
-                    userLicensenum: userLicenseNum,
-                    userName: userName,
-                    userPhone: userPhone,
-                    userRole: userRole,
+                    user_address: userAddress,
+                    user_email: userEmail,
+                    user_id: userId,
+                    user_name: userName,
+                    user_phone: userPhone,
                 }
                 ,
                 {
