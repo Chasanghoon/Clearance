@@ -3,6 +3,7 @@ package com.ssafy.cleanrance.domain.user.controller;
 import com.ssafy.cleanrance.domain.user.db.entity.User;
 import com.ssafy.cleanrance.domain.user.request.AuthRequest;
 import com.ssafy.cleanrance.domain.user.request.StoreSignUpRequest;
+import com.ssafy.cleanrance.domain.user.request.UserPutRequest;
 import com.ssafy.cleanrance.domain.user.request.UserSignUpRequest;
 import com.ssafy.cleanrance.domain.user.service.UserService;
 import com.ssafy.cleanrance.global.util.JwtTokenUtil;
@@ -83,15 +84,14 @@ public class UserController {
     }
 
     @PutMapping("/member")
-    @ApiOperation(value = "회원 본인 정보 수정", notes = "회원 정보(비밀번호,이메일,전화번호,주소)를 수정하여 저장한다.<br/>" +
-            "<strong>userJoinDate빼주세요!!!넣으면 오류남!!!</strong>")
+    @ApiOperation(value = "회원 본인 정보 수정", notes = "회원 정보(이름,이메일,전화번호, 주소 수정)를 수정하여 저장한다.<br/>")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<Optional<User>> updateUser(@RequestBody User user){
+    public ResponseEntity<Optional<User>> updateUser(@RequestBody UserPutRequest user){
         Optional<User> update = Optional.ofNullable(userService.updateUser(user).orElse(null));
         if(null == update){
             throw new IllegalStateException("없는 아이디");
