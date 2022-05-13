@@ -5,6 +5,7 @@ import com.ssafy.cleanrance.domain.user.db.repository.LocationRepository;
 import com.ssafy.cleanrance.domain.user.db.repository.UserRepository;
 import com.ssafy.cleanrance.domain.user.db.repository.UserRepositorySupport;
 import com.ssafy.cleanrance.domain.user.request.StoreSignUpRequest;
+import com.ssafy.cleanrance.domain.user.request.UserPutRequest;
 import com.ssafy.cleanrance.domain.user.request.UserSignUpRequest;
 import com.ssafy.cleanrance.global.util.ImageUtil;
 import org.apache.commons.io.FileUtils;
@@ -30,7 +31,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service("userService")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     UserRepositorySupport userRepositorySupport;
     @Autowired
@@ -40,6 +41,7 @@ public class UserServiceImpl implements UserService{
     @Lazy
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Override
     public String createStore(StoreSignUpRequest storeSignUpRequest, MultipartFile image) throws IOException {
         User user = new User();
@@ -58,59 +60,23 @@ public class UserServiceImpl implements UserService{
         MultipartFile mfile = image;
         File file = ImageUtil.multipartFileToFile(mfile);
         byte[] byteArr = FileUtils.readFileToByteArray(file);
-        String base64 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
+        String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
         System.out.println(base64);
         //인코딩된 소스로 userImage 저장
         user.setUserImage(base64);
         //매장 주소로 위도 경도 찾기
-        String APIKey = "162a4b2b1191ced1dc56afc5f9bbde83";
-        String URL="http://dapi.kakao.com/v2/local/search/address.json?query=";
-        String jsonString = null;
-        String addr = user.getUserAddress();
-        try{
-            addr = URLEncoder.encode(storeSignUpRequest.getUser_address(),"UTF-8");
-            String juso = URL+addr;
-            URL url = new URL(juso);
-            URLConnection conn = url.openConnection();
-            conn.setRequestProperty("Authorization","KakaoAK "+APIKey);
-            //리턴 받은 json읽어오기
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            //String Buffer에 담기
-            StringBuffer docJson = new StringBuffer();
-            String line;
-            while((line = br.readLine()) != null){
-                docJson.append(line);
-            }
-            br.close();
-            //JSONObject로 변경
-            JSONObject jsonObject = new JSONObject(docJson.toString());
-            //documents와 meta 두개의 맵중에 x,y가 들어있는 documents가져오기
-            JSONArray jsonArray= (JSONArray) jsonObject.get("documents");
-            JSONObject tempObj = (JSONObject) jsonArray.get(0);
-            System.out.println("lat : " + tempObj.getDouble("y"));
-            System.out.println("lng : " + tempObj.getDouble("x"));
-            double y = tempObj.getDouble("y");
-            double x = tempObj.getDouble("x");
-            Location location = new Location();
-            location.setLocationXpoint(x);
-            location.setLocationYpoint(y);
-            location.setUserId(user.getUserId());
-            userRepository.save(user);
-            locationRepository.save(location);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Location loc = addressToLngLat(user.getUserAddress(), user.getUserId());
+        userRepository.save(user);
+        locationRepository.save(loc);
+
         return "OK";
     }
+
     @Override
     public String createUser(UserSignUpRequest userSignUpRequest, MultipartFile image) throws IOException {
         Optional<User> check = userRepository.findById(userSignUpRequest.getUser_id());
-        if(check.isPresent()) {
-           return "";
+        if (check.isPresent()) {
+            return "";
         }
         User user = new User();
         user.setUserId(userSignUpRequest.getUser_id());
@@ -128,13 +94,13 @@ public class UserServiceImpl implements UserService{
         //파일 크기 조정
         // read an image to BufferedImage for processing
         BufferedImage originImage = ImageIO.read(file);
-        int type = originImage.getType() ==0? BufferedImage.TYPE_INT_ARGB : originImage.getType();
+        int type = originImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originImage.getType();
         BufferedImage resizeImg = resizeImage(originImage, type);
         File resizeFile = new File("saved.png");
         ImageIO.write(resizeImg, "png", resizeFile);
         //end 파일 크기 조정
         byte[] byteArr = FileUtils.readFileToByteArray(resizeFile);
-        String base64 ="data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
+        String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
         System.out.println(base64);
         //인코딩된 소스로 userImage 저장
         user.setUserImage(base64);
@@ -150,14 +116,22 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public Optional<User> updateUser(User user) {
-        Optional<User> updateUser = userRepository.findById(user.getUserId());
-//       비밀번호,이메일,전화번호,주소
-        updateUser.ifPresent(selectUser ->{
-            selectUser.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
-            selectUser.setUserEmail(user.getUserEmail());
-            selectUser.setUserPhone(user.getUserPhone());
-            selectUser.setUserEmail(user.getUserEmail());
+    public Optional<User> updateUser(UserPutRequest user) {
+        Optional<User> updateUser = userRepository.findById(user.getUser_id());
+//       이름,이메일,전화번호, 주소 수정
+        updateUser.ifPresent(selectUser -> {
+            selectUser.setUserEmail(user.getUser_email());
+            selectUser.setUserPhone(user.getUser_phone());
+            if(selectUser.getUserRole() == 2){
+                if(selectUser.getUserAddress() != user.getUser_address()){
+                    Location loc = locationRepository.findByuserId(selectUser.getUserId());
+                    Location location = addressToLngLat(user.getUser_address(), selectUser.getUserId());
+                    loc.setLocationXpoint(location.getLocationXpoint());
+                    loc.setLocationYpoint(location.getLocationYpoint());
+                    locationRepository.save(loc);
+                }
+            }
+            selectUser.setUserAddress(user.getUser_address());
             userRepository.save(selectUser);
         });
         return updateUser;
@@ -170,10 +144,11 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(userId);
         return "OK";
     }
-    private BufferedImage resizeImage(BufferedImage origin, int type){
-        BufferedImage resizeImg = new BufferedImage(100,100, type);
+
+    private BufferedImage resizeImage(BufferedImage origin, int type) {
+        BufferedImage resizeImg = new BufferedImage(100, 100, type);
         Graphics2D graphics2D = resizeImg.createGraphics();
-        graphics2D.drawImage(origin, 0,0, 100,100, null);
+        graphics2D.drawImage(origin, 0, 0, 100, 100, null);
         graphics2D.dispose();
         graphics2D.setComposite(AlphaComposite.Src);
         //보간 관련
@@ -183,5 +158,49 @@ public class UserServiceImpl implements UserService{
         //안티엘리어싱 여부
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         return resizeImg;
+    }
+
+    private Location addressToLngLat(String address, String userId) {
+        //매장 주소로 위도 경도 찾기
+        String APIKey = "162a4b2b1191ced1dc56afc5f9bbde83";
+        String URL = "http://dapi.kakao.com/v2/local/search/address.json?query=";
+        String jsonString = null;
+        String addr = address;
+        Location location = new Location();
+        try {
+            addr = URLEncoder.encode(address, "UTF-8");
+            String juso = URL + addr;
+            URL url = new URL(juso);
+            URLConnection conn = url.openConnection();
+            conn.setRequestProperty("Authorization", "KakaoAK " + APIKey);
+            //리턴 받은 json읽어오기
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            //String Buffer에 담기
+            StringBuffer docJson = new StringBuffer();
+            String line;
+            while ((line = br.readLine()) != null) {
+                docJson.append(line);
+            }
+            br.close();
+            //JSONObject로 변경
+            JSONObject jsonObject = new JSONObject(docJson.toString());
+            //documents와 meta 두개의 맵중에 x,y가 들어있는 documents가져오기
+            JSONArray jsonArray = (JSONArray) jsonObject.get("documents");
+            JSONObject tempObj = (JSONObject) jsonArray.get(0);
+            System.out.println("lat : " + tempObj.getDouble("y"));
+            System.out.println("lng : " + tempObj.getDouble("x"));
+            double y = tempObj.getDouble("y");
+            double x = tempObj.getDouble("x");
+            location.setLocationXpoint(x);
+            location.setLocationYpoint(y);
+            location.setUserId(userId);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return location;
     }
 }
