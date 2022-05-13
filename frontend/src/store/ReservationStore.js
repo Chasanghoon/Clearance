@@ -11,6 +11,9 @@ const ReservationStore = create((set) => ({
     
     storeId: "",
     setStoreId: (e) => set({ storeId: e }),
+
+    expdate: "99999999", // 예약 시 받게 될 최소 유통기한(max값으로 설정)
+    setExpdate: (e) => set({expdate: e}),
 }))
 
 export default ReservationStore;
