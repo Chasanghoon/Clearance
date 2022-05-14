@@ -78,7 +78,14 @@ function SampleMap() {
         console.log(response)
 
         ns(response.data[0]) // 주변 매장 점포 등록
-        np(response.data[1]) // 주변 매장의 데이터 등록
+        if (response.data.length >= 2) {
+          for (let i = 1; i < response.data.length; i++) {
+            console.log(response.data[i])
+          // np(response.data[i])
+        }
+        }
+        
+        // np(response.data[1]) // 주변 매장의 데이터 등록
       }
       catch (err) {
         console.log(err)
@@ -168,6 +175,7 @@ function SampleMap() {
     if (state.center.lat !== null) {
 
       getLocations();
+      search();
     }
   },[state.center.lat,state.center.lng])
 

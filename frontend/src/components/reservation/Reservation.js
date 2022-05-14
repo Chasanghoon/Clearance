@@ -29,6 +29,8 @@ function Reservation(props) {
     const [saveDataError, setSaveDataError] = useState(false);
     const [saveTimeError, setSaveTimeError] = useState(false);
 
+    const expdate = ReservationStore(state => state.expdate)
+
     const onChangeSaveData = (e) => {
         setSaveDataError(false);
         setSaveData(e)
@@ -38,6 +40,7 @@ function Reservation(props) {
         setSaveTime(e)
     };
 
+    console.log("여기로 온 expdate : ", expdate)
     const validation = () => {
         if (!saveData) setSaveDataError(true);
         if (!saveTime) setSaveTimeError(true);

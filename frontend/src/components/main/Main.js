@@ -52,18 +52,19 @@ function Main(props) {
             <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
               <Map></Map>
             </div>
-            <div>
-          
-        </div>
+
         <div>{pos.lat}, {pos.lng}</div>
         {nearStore.length > 0 ? nearStore.map((val) => (
-          <div>{val.userId}
-            {nearProduct.map((value) => (
+          <div>
+            <div style={{
+              backgroundColor: "red"
+            }}>{val.userId}</div>
+            {nearProduct.filter(value => value.storeUserId === val.userId).map((value) => (
               <div id="ProductItem" onClick={() => {console.log("이거", value)}}>
             <img alt="" src = {value.productImagefront}></img>
               {value.productName} // {value.storeUserId}
               
-            <Link to="/product"><Button className='secondary' onClick={() => {
+                <div><Link to="/product"><Button className='secondary' onClick={() => {
               localStorage.setItem("product_id", value.productId)
               localStorage.setItem("category_id", value.categoryId)
               localStorage.setItem("product_discount",value.productDiscount)
@@ -75,7 +76,8 @@ function Main(props) {
               localStorage.setItem("product_price", value.productPrice)
               localStorage.setItem("product_stock", value.productStock)
               localStorage.setItem("store_user_id", value.storeUserId)
-            }}>상세 보기</Button></Link>
+            }}>상세 보기</Button></Link></div>
+            
           </div>
               
           ))}
