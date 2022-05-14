@@ -170,7 +170,9 @@ const Product = () => {
                     
                 </div>
 
-                <div>
+                <div style={{
+                    paddingTop: "10px"
+                }}>
                     <Button onClick={() => {
                         basketadd();
                         
