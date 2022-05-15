@@ -30,7 +30,7 @@ const Product = () => {
 
     const getInfo = async () => {
         try {
-        const response = await axios.get(`http://localhost:8080/api/product?productId=${product_id}`)
+        const response = await axios.get(`https://k6e203.p.ssafy.io:8443/api/product?productId=${product_id}`)
             console.log(response)
             setInfo((prev) => ({
                 ...prev,
