@@ -48,21 +48,21 @@ function SampleMap() {
 
 
   const callCategory = async () => { //카테고리 목록을 가져오는 변수
-    try {
-      const response = await axios.get(`http://localhost:8080/api/productcategory`)
-      console.log("카테고리 로드 성공")
-
-      cl(response.data)
-    }
-    catch (err) {
-      console.log(err)
-    }
+        try {
+          const response = await axios.get(`https://k6e203.p.ssafy.io:8443/api/productcategory`)
+          console.log("카테고리 로드 성공")
+          
+          cl(response.data)
+        }
+        catch(err) {
+          console.log(err)
+        }
   }
 
   // Default 값을 넣어줘야 할듯...? 문희코치님께 여쭤보자!!!!(X) => 수정 완료.
   const search = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/product/list?ypoint=${state.center.lat}&xpoint=${state.center.lng}&storeId=${storeID}&categoryId=${categoryID}&word=${word}`)
+      const response = await axios.get(`https://k6e203.p.ssafy.io:8443/api/product/list?ypoint=${state.center.lat}&xpoint=${state.center.lng}&storeId=${storeID}&categoryId=${categoryID}&word=${word}`)
       console.log(response)
       np(response.data)
     } catch (error) {
@@ -71,11 +71,11 @@ function SampleMap() {
   }
 
   const getLocations = async () => { // 상품 정보를 가져오는 함수
-    cp(state.center.lat, state.center.lng)
-    try {
-      const response = await axios.get(`http://localhost:8080/api/mapProduct?ypoint=${state.center.lat}&xpoint=${state.center.lng}`)
-      console.log("상품 정보 출력 성공")
-      console.log(response)
+      cp(state.center.lat, state.center.lng)
+      try {
+        const response = await axios.get(`https://k6e203.p.ssafy.io:8443/api/mapProduct?ypoint=${state.center.lat}&xpoint=${state.center.lng}`)
+        console.log("상품 정보 출력 성공")
+        console.log(response)
 
       ns(response.data[0]) // 주변 매장 점포 등록
       if (response.data.length >= 2) {
@@ -264,10 +264,10 @@ function SampleMap() {
 
           >
             {/* MapMarker의 자식을 넣어줌으로 해당 자식이 InfoWindow로 만들어지게 합니다 */}
-            {/* 인포윈도우에 표출될 내용으로 HTML 문자열이나 React Component가 가능합니다 */}
-            {isOpen && <div style={{ padding: "5px", color: "#000" }}>Hello World!</div>}
-          </MapMarker>
-        )}
+        {/* 인포윈도우에 표출될 내용으로 HTML 문자열이나 R  eact Component가 가능합니다 */}
+        {isOpen && <div style={{ padding: "5px", color: "#000" }}>Hello World!</div>}
+        </MapMarker>
+            )}
         {storePos.map((value, index) => (
           <EventMarkerContainer
             // key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
