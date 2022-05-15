@@ -23,6 +23,7 @@ import BookingHistory from './components/myPage/user/BookingHistory';
 import UserCarbon from './components/myPage/user/UserCarbon';
 import Product from './components/product/Product';
 import KakaoCounseling from './components/common/KakaoCounseling';
+import ReservationCheck from './components/myPage/store/ReservationCheck';
 
 
 
@@ -49,6 +50,7 @@ function App() {
           <Route path="/updateProduct" element={<UpdateProduct />} />
           <Route path="/checkReservation" element={<CheckReservation />} />
           <Route path="/storeCarbon" element={<StoreCarbon />} />
+          <Route path="/reservationCheck" element={<ReservationCheck />} />
 
           {/* 유저 마이페이지 */}
           <Route path="/userMyPage" element={<UserMyPage />} />

@@ -134,7 +134,6 @@ function splitDate(date) {
         default:
             break;
     }
-
     year = split[3];
     day = split[1];
 
