@@ -30,7 +30,7 @@ function AllProductManagement(props) {
         // ! axios get
         console.log("axios get")
         axios
-            .get(`http://localhost:8080/api/product/info?page=${page}&size=${size}&storeId=${sessionStorage.getItem("id")}&word=${word}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/product/info?page=${page}&size=${size}&storeId=${sessionStorage.getItem("id")}&word=${word}`)
             .then((result) => {
                 console.log(result.data);
 
@@ -49,7 +49,7 @@ function AllProductManagement(props) {
         // ! axios delete
         console.log("axios delete")
         axios
-            .delete("http://localhost:8080/api/product/remove",
+            .delete("https://k6e203.p.ssafy.io:8443/api/product/remove",
                 {
                     data: {
                         productId: modalProduct.productId

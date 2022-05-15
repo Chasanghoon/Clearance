@@ -77,7 +77,7 @@ function ReservationResult(props) {
         // ! axios get
         // ! 북셋 어디서 가져오지..?
         axios
-            .get(`http://127.0.0.1:5001/data/reservation-complete/${bookSet}`)
+            .get(`https://k6e203.p.ssafy.io:5001/data/reservation-complete/${bookSet}`)
             // .get("https://k6e203.p.ssafy.io:5000/data/reservation-complete/8")
             .then((result) => {
                 setSellerName(result.data.seller[0].user_name);

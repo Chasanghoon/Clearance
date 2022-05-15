@@ -7,12 +7,16 @@ import './ProductItem.css'
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import productStore from '../../store/productStore';
+import marketStore from '../../store/marketStore';
 
 
 function Main(props) {
 
   const pos = useMainStore(state => state.position)
+  const bs = marketStore(state => state.bookSet)
+  const setBS = marketStore(state => state.setBookSet)
   
+  console.log(bs)
 
   
   const nearStore = useMainStore(state => state.nearStore);
