@@ -123,7 +123,7 @@ function RegistrationProduct(props) {
         formData.append('frontimage', frontImage.front_image_file);
 
         axios
-            .post("http://localhost:8080/api/product/register",
+            .post("https://k6e203.p.ssafy.io:8443/api/product/register",
                 formData
                 ,
                 {

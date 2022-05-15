@@ -54,7 +54,7 @@ function Reservation(props) {
         // ! axios get
         // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         axios
-            .get(`http://localhost:5001/data/reservation-progress/${storeId}`)
+            .get(`https://k6e203.p.ssafy.io:5001/data/reservation-progress/${storeId}`)
             .then((result) => {
                 
                 setUserName(result.data[0].user_name);
@@ -76,7 +76,7 @@ function Reservation(props) {
         // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         console.log("axios post")
         axios
-            .post(`http://localhost:5001/data/reservation-add`,
+            .post(`https://k6e203.p.ssafy.io:5001/data/reservation-add`,
                 {
                     user_id: sessionStorage.getItem("id"),
                     store_user_id: storeId,

@@ -71,7 +71,7 @@ function StoreProfile(props) {
         // ! axios POST
         console.log("axios post")
         axios
-            .put("http://localhost:8080/api/member",
+            .put("https://k6e203.p.ssafy.io:8443/api/member",
                 {
                     user_address: userAddress,
                     user_email: userEmail,

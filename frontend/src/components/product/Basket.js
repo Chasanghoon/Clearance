@@ -1,15 +1,14 @@
 // 장바구니 관리 파일 (예상 url : /basket/{user})
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Tabs,Tab, Button } from "react-bootstrap";
+import {  Button } from "react-bootstrap";
 import "./Basket.css"
 import ReservationStore from "../../store/ReservationStore";
 import { useNavigate } from "react-router-dom";
-import { ca } from "date-fns/locale";
+
 
 const Basket = () => {
 
-    const storeId = ReservationStore(state => state.StoreId)
     const setStoreId = ReservationStore(state => state.setStoreId)
     const expdate = ReservationStore(state => state.expdate)
     const setExpdate = ReservationStore(state => state.setExpdate)
@@ -28,16 +27,16 @@ const Basket = () => {
             })
     }
 
-    function addProduct(newProduct) {
-        setProduct((prev) => {
-            return [...prev, newProduct];
-        })
-    }
+    // function addProduct(newProduct) {
+    //     setProduct((prev) => {
+    //         return [...prev, newProduct];
+    //     })
+    // }
     
     const CallBasket = async () => {
             console.log("callbasket 시작")
                 try {
-                    const response = await axios.get(`http://localhost:5001/data/basket/${sessionStorage.getItem('id')}`)
+                    const response = await axios.get(`https://k6e203.p.ssafy.io:5001/data/basket/${sessionStorage.getItem('id')}`)
                     setBasket(response)
                     console.log(response.data)
                     for (let i = 0; i < response.data.length; i++) {
@@ -55,24 +54,11 @@ const Basket = () => {
                     console.log(error)
             }
     }
-    
-    // const cancelStore = async (storeId) => {
-    //     try {
-    //         const response = await axios.delete(`http://localhost:5001/data/basket-rem`,
-    //             {
-    //                 basket_id: storeId,
-    //             }
-    //         )
-    //             console.log(response.storeId)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
 
     async function cancelStore(storeId) {
         console.log(storeId)
         try {
-            const response = await axios.delete(`http://localhost:5001/data/basket-rem`,
+            const response = await axios.delete(`https://k6e203.p.ssafy.io:5001/data/basket-rem`,
                 {
                     data: { "basket_id": storeId, },
                 })
@@ -80,6 +66,11 @@ const Basket = () => {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    // 장바구니 취소에 대해 얘기를 해봐야함...
+    async function cancelStoreAll(storeId) {
+
     }
 
 //Mon, 30 May 2022 00:00:00 GMT -> 2022/05/30 Mon 00:00:00
@@ -239,6 +230,7 @@ function splitDate(date) {
                         setExpdate(minExpdate)
                         navigate("/reservation")
                     }}>예약 진행</Button>
+                    <Button variant="danger" onClick={cancelStoreAll}>예약 취소</Button>
                 </div>
             )) :
                 <div>

@@ -38,7 +38,7 @@ function Login(props) {
         // ! axios POST
         console.log("axios post")
         axios
-            .post("http://localhost:8080/api/auth/login",
+            .post("https://k6e203.p.ssafy.io:8443/api/auth/login",
                 {
                     user_id: inputUserId,
                     user_password: inputPassword,
@@ -63,7 +63,7 @@ function Login(props) {
     function userData() {
         // ! axios get
         axios
-            .get(`http://localhost:8080/api/member?userId=${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
             .then((result) => {
                 setUserId(result.data.userId);
                 setUserRole(result.data.userRole);

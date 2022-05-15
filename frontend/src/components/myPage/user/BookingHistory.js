@@ -19,7 +19,7 @@ function BookingHistory(props) {
         console.log("axios get")
         axios
             // .get(`http://localhost:5001/data/calender/all/?storeId=${sessionStorage.getItem("id")}`)
-            .get(`http://localhost:5001/data/calender/all/${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:5001/data/calender/all/${sessionStorage.getItem("id")}`)
             .then((result) => {
                 console.log(result.data.info);
                 // setProduct(result.data.content);
