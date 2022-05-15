@@ -1,10 +1,11 @@
 #ProductItem {
     vertical-align: middle;
     width: auto;
-    height: 150px;
+    height: auto;
     border: 0.5px solid black;
     border-radius: 20px;
     margin-bottom: 10px;
+    padding: 15px;
 }
 
 .productName {
