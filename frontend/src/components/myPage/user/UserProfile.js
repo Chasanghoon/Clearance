@@ -1,35 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Spinner } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
+import NavBar from '../../common/NavBar';
 
 import { Navigate, useNavigate } from 'react-router-dom'
 import userStore from '../../../store/userStore';
 import axios from 'axios';
 
 function UserProfile(props) {
-
-    const userId = userStore(state => state.userId);
-    const userName = userStore(state => state.userName);
-    const userEmail = userStore(state => state.userEmail);
-    const userPhone = userStore(state => state.userPhone);
-    const userAddress = userStore(state => state.userAddress);
-    const userImage = userStore(state => state.userImage);
-
-    const setUserName = userStore(state => state.setUserName);
-    const setUserEmail = userStore(state => state.setUserEmail);
-    const setUserPhone = userStore(state => state.setUserPhone);
-    const setUserAddress = userStore(state => state.setUserAddress);
-    const setUserImage = userStore(state => state.setUserImage);
+    const [userId, setUserId] = useState("");
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userPhone, setUserPhone] = useState("");
+    const [userAddress, setUserAddress] = useState("");
+    const [userImage, setUserImage] = useState("");
     const [image, setImage] = useState("");
 
-    const [userNameError, setUserNameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [phoneError, setPhoneError] = useState(false);
-    const [addressError, setAddressError] = useState(false);
+    const [userNameError, setUserNameError] = useState();
+    const [emailError, setEmailError] = useState();
+    const [phoneError, setPhoneError] = useState();
+    const [addressError, setAddressError] = useState();
 
     const onChangeUserName = (e) => {
         setUserNameError(false);
@@ -43,6 +37,7 @@ function UserProfile(props) {
     };
     const onChangePhone = (e) => {
         const phoneRegex = /^[0-9]{3}[-]{1}[0-9]{3,4}[-]{1}[0-9]{4}$/;
+        
         if ((!e.target.value || (phoneRegex.test(e.target.value)))) setPhoneError(false);
         else setPhoneError(true);
         setUserPhone(e.target.value)
@@ -53,14 +48,34 @@ function UserProfile(props) {
     };
 
     const validation = () => {
+        console.log("userEmail = " + userEmail.length);
         if (!userName) setUserNameError(true);
         if (!userEmail) setEmailError(true);
         if (!userPhone) setPhoneError(true);
         if (!userAddress) setAddressError(true);
 
-        if (userNameError || emailError || phoneError || addressError) return true;
+        if (userName.length === 0 || userEmail.length === 0 || userPhone.length === 0 || userAddress.length === 0 || userNameError || emailError || phoneError || addressError) return true;
         else return false;
     };
+
+
+    useEffect(() => {
+        // ! axios get
+        axios
+            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
+            .then((result) => {
+                setUserId(result.data.userId);
+                setUserName(result.data.userName);
+                setUserEmail(result.data.userEmail);
+                setUserPhone(result.data.userPhone);
+                setUserAddress(result.data.userAddress);
+                setUserImage(result.data.userImage);
+            })
+            .catch((e) => {
+                console.error("axios get 실패");
+                console.error(e)
+            });
+        }, []);
 
     const onSubmit = (e) => {
         if (validation()) return;
@@ -68,7 +83,7 @@ function UserProfile(props) {
         // ! axios POST
         console.log("axios post")
         axios
-            .put("http://localhost:8080/api/member",
+            .put("https://k6e203.p.ssafy.io:8443/api/member",
                 {
                     user_address: userAddress,
                     user_email: userEmail,
@@ -83,7 +98,7 @@ function UserProfile(props) {
             )
             .then(() => {
                 console.log("axios post 성공")
-                alert("회원가입 완료!");
+                alert("회원수정 완료!");
                 navigate(-1);
 
             })
@@ -120,6 +135,7 @@ function UserProfile(props) {
 
     return (
         <div>
+            <NavBar></NavBar>
             <Container className='mt-5'>
                 <Form>
                     <Form.Group as={Row} className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>

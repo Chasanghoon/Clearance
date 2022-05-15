@@ -7,6 +7,7 @@ import "./Reservation.css";
 import axios from 'axios';
 import ReservationLoading from './ReservationLoading';
 import ReservationStore from '../../store/ReservationStore';
+import { useNavigate } from 'react-router-dom';
 
 
 const { kakao } = window;
@@ -77,7 +78,7 @@ function ReservationResult(props) {
         // ! axios get
         // ! 북셋 어디서 가져오지..?
         axios
-            .get(`http://127.0.0.1:5001/data/reservation-complete/${bookSet}`)
+            .get(`https://k6e203.p.ssafy.io:5001/data/reservation-complete/${bookSet}`)
             // .get("https://k6e203.p.ssafy.io:5000/data/reservation-complete/8")
             .then((result) => {
                 setSellerName(result.data.seller[0].user_name);
@@ -124,6 +125,10 @@ function ReservationResult(props) {
             }))
         }
     }
+    function done() {
+        navigate("/main");
+    }
+    let navigate = useNavigate();
     return (
         <div>
             {
@@ -241,7 +246,7 @@ function ReservationResult(props) {
                     </tbody>
                 </Table>
             </div>
-            <Button>확인 버튼</Button>
+            <Button onClick={done}>확인 버튼</Button>
         </div>
 
     );

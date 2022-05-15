@@ -6,6 +6,7 @@ import "./Basket.css"
 import ReservationStore from "../../store/ReservationStore";
 import { useNavigate } from "react-router-dom";
 import { ca } from "date-fns/locale";
+import NavBar from '../common/NavBar';
 
 const Basket = () => {
 
@@ -167,9 +168,8 @@ function splitDate(date) {
         console.log(Object.values(basket.data[0]))
     }
     return (
-        <div style={{
-            paddingTop:'10px'
-        }}>
+        <div>
+            <NavBar></NavBar>
             <h1>장바구니</h1>
 
             {(basket !== undefined && basket.data.length >0 ) ? basket.data.map((value) => (

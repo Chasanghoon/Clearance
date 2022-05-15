@@ -4,6 +4,7 @@ import { Button,Tabs,Tab,Modal } from "react-bootstrap";
 import productStore from "../../store/productStore";
 import "./Product.css";
 import { Link, useNavigate } from "react-router-dom";
+import NavBar from '../common/NavBar';
 
 // 상품을 클릭했을 때 나올 화면
 const Product = () => {
@@ -142,6 +143,7 @@ const Product = () => {
     console.log(info)
     return (
         <div>
+            <NavBar></NavBar>
             <div id="product" className="pb-2 pt-2">
                 <img alt="" src={info.productImagefront}></img>
 

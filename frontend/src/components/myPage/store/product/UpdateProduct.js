@@ -11,6 +11,7 @@ import userStore from '../../../../store/userStore';
 import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/esm/locale";
 import { useLocation } from 'react-router-dom';
+import NavBar from '../../../common/NavBar';
 
 function UpdateProduct(props) {
     const location = useLocation();
@@ -96,7 +97,7 @@ function UpdateProduct(props) {
 
         // ! axios PUT      
         axios
-            .put("http://localhost:8080/api/product/modify",
+            .put("https://k6e203.p.ssafy.io:8443/api/product/modify",
                 {
                     category_id: categoryId,
                     product_discount: productDiscount / 100,
@@ -247,6 +248,7 @@ function UpdateProduct(props) {
 
     return (
         <div>
+            <NavBar></NavBar>
             <Container className='mt-5'>
                 <Form>
                     <Form.Group as={Row} className="mb-3" controlId="formFile1" style={{ "textAlign": "center" }}>

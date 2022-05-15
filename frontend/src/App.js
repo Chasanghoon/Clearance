@@ -26,7 +26,6 @@ import KakaoCounseling from './components/common/KakaoCounseling';
 
 
 
-
 function App() {
   return (
     <div className='App'>

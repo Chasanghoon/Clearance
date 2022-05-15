@@ -4,6 +4,7 @@ import { Button, FormControl, InputGroup, ModalFooter, Pagination, Table } from 
 import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal'
 import UpdateProduct from './UpdateProduct';
+import NavBar from '../../../common/NavBar';
 
 function AllProductManagement(props) {
     const [product, setProduct] = useState();
@@ -30,13 +31,12 @@ function AllProductManagement(props) {
         // ! axios get
         console.log("axios get")
         axios
-            .get(`http://localhost:8080/api/product/info?page=${page}&size=${size}&storeId=${sessionStorage.getItem("id")}&word=${word}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/product/info?page=${page}&size=${size}&storeId=${sessionStorage.getItem("id")}&word=${word}`)
             .then((result) => {
                 console.log(result.data);
 
                 setProduct(result.data.content);
                 setTotalPage(result.data.totalPages);
-                setTotalPage(21);
             })
             .catch((e) => {
                 // console.error("axios get 실패");
@@ -49,7 +49,7 @@ function AllProductManagement(props) {
         // ! axios delete
         console.log("axios delete")
         axios
-            .delete("http://localhost:8080/api/product/remove",
+            .delete("https://k6e203.p.ssafy.io:8443/api/product/remove",
                 {
                     data: {
                         productId: modalProduct.productId
@@ -172,6 +172,7 @@ function AllProductManagement(props) {
 
     return (
         <div>
+            <NavBar></NavBar>
             전체 상품 관리
             <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
                 <Table style={{ width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all" }}>

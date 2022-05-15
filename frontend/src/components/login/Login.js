@@ -63,7 +63,7 @@ function Login(props) {
     function userData() {
         // ! axios get
         axios
-            .get(`http://localhost:8080/api/member?userId=${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
             .then((result) => {
                 setUserId(result.data.userId);
                 setUserRole(result.data.userRole);
@@ -73,6 +73,8 @@ function Login(props) {
                 setUserAddress(result.data.userAddress);
                 setUserLicenseNum(result.data.userLicensenum);
                 setUserImage(result.data.userImage);
+                sessionStorage.setItem("userImage", result.data.userImage);
+                sessionStorage.setItem("userName", result.data.userName);
                 if(result.data.userRole === 2){
                     navigate("/storeMyPage");
                 }

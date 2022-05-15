@@ -111,7 +111,7 @@ function UserCarbon() {
   const [idxArr, setIdxArr] = useState([]);
   const [totalSaveCarbon, setTotalSaveCarbon] = useState(0);
   // axios 데이터 받아오기
-  const URL = "http://localhost:8080/api/user/co?UserId=Urkdrhkddms";
+  const URL = `https://k6e203.p.ssafy.io:8443/api/user/co?UserId=${sessionStorage.getItem("id")}`;
   useEffect(() => {
     axios
       .get(URL)
