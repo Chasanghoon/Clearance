@@ -29,6 +29,8 @@ function Reservation(props) {
     const [saveDataError, setSaveDataError] = useState(false);
     const [saveTimeError, setSaveTimeError] = useState(false);
 
+    const expdate = ReservationStore(state => state.expdate)
+
     const onChangeSaveData = (e) => {
         setSaveDataError(false);
         setSaveData(e)
@@ -38,6 +40,7 @@ function Reservation(props) {
         setSaveTime(e)
     };
 
+    console.log("여기로 온 expdate : ", expdate)
     const validation = () => {
         if (!saveData) setSaveDataError(true);
         if (!saveTime) setSaveTimeError(true);
@@ -48,10 +51,11 @@ function Reservation(props) {
 
     useEffect(() => {
         console.log(storeId);
+        splitDate2(expdate);
         // ! axios get
         // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         axios
-            .get(`http://localhost:5001/data/reservation-progress/${storeId}`)
+            .get(`https://k6e203.p.ssafy.io:5001/data/reservation-progress/${storeId}`)
             .then((result) => {
                 
                 setUserName(result.data[0].user_name);
@@ -73,7 +77,7 @@ function Reservation(props) {
         // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         console.log("axios post")
         axios
-            .post(`http://localhost:5001/data/reservation-add`,
+            .post(`https://k6e203.p.ssafy.io:5001/data/reservation-add`,
                 {
                     user_id: sessionStorage.getItem("id"),
                     store_user_id: storeId,
@@ -135,7 +139,8 @@ function Reservation(props) {
                                     showPopperArrow={false}
                                     // excludeDates={[new Date(), subDays(new Date(), 1),new Date("2022/05/18")]}
                                     minDate={new Date()}
-                                    maxDate={new Date("2022/05/18")}
+                                    // maxDate={new Date("2022/05/18")}
+                                    maxDate={new Date(splitDate2(expdate))}
                                     // onChange={date => setStartDate(date)} />
                                     onChange={date => dateData(date)} />
 
@@ -207,6 +212,24 @@ function splitTime(time) {
     let reTime = split[4];
 
     return reTime;
+}
+function splitDate2(date) {
+
+    let year = '';
+    let month = '';
+    let day = '';
+    let str = date + '';
+    
+    year = str.substring(0,4);
+    console.log('year: ', year);
+    month = str.substring(4,6);
+    console.log('month: ', month);
+    day = str.substring(6,8);
+    console.log('day: ', day);
+
+    
+    let reDate = year + "-" + month + "-" + day
+    return reDate;
 }
 
 export default Reservation;

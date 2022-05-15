@@ -5,6 +5,8 @@ import { Tabs,Tab, Button } from "react-bootstrap";
 import "./Basket.css"
 import ReservationStore from "../../store/ReservationStore";
 import { useNavigate } from "react-router-dom";
+import { ca } from "date-fns/locale";
+import NavBar from '../common/NavBar';
 
 const Basket = () => {
 
@@ -17,6 +19,8 @@ const Basket = () => {
     const [seller, setSeller] = useState([]);
     const [product, setProduct] = useState([]);
     const [basket, setBasket] = useState();
+
+    let minExpdate = 99999999
 
     function addSeller(newProduct) {
         setSeller((prev) => {
@@ -31,7 +35,8 @@ const Basket = () => {
         })
     }
     
-        const CallBasket = async () => {
+    const CallBasket = async () => {
+            console.log("callbasket 시작")
                 try {
                     const response = await axios.get(`http://localhost:5001/data/basket/${sessionStorage.getItem('id')}`)
                     setBasket(response)
@@ -50,7 +55,33 @@ const Basket = () => {
                 } catch (error) {
                     console.log(error)
             }
+    }
+    
+    // const cancelStore = async (storeId) => {
+    //     try {
+    //         const response = await axios.delete(`http://localhost:5001/data/basket-rem`,
+    //             {
+    //                 basket_id: storeId,
+    //             }
+    //         )
+    //             console.log(response.storeId)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
+    async function cancelStore(storeId) {
+        console.log(storeId)
+        try {
+            const response = await axios.delete(`http://localhost:5001/data/basket-rem`,
+                {
+                    data: { "basket_id": storeId, },
+                })
+            console.log(response)
+        } catch (error) {
+            console.log(error)
         }
+    }
 
 //Mon, 30 May 2022 00:00:00 GMT -> 2022/05/30 Mon 00:00:00
 function splitDate(date) {
@@ -123,30 +154,25 @@ function splitDate(date) {
         setExpdate(99999999)
         CallBasket();
     },[])
-    
+
     if (seller.length > 0) {
         console.log(seller)
     }
     if (product.length > 0) {
         console.log(product)
     }
-    if (basket !== undefined) {
+    if (basket !== undefined && basket.length > 0) {
         console.log(basket)
         console.log(basket.data)
         console.log(basket.data[0])
         console.log(Object.values(basket.data[0]))
     }
     return (
-        <div style={{
-            paddingTop:'10px'
-        }}>
+        <div>
+            <NavBar></NavBar>
             <h1>장바구니</h1>
-            {/* {console.log(seller)} */}
-            {/* {seller.length > 1 ? console.log("아무것도 없어요")
-            :seller.map((value) => (
-                { value }
-             ))} */}
-            {basket !== undefined ? basket.data.map((value) => (
+
+            {(basket !== undefined && basket.data.length >0 ) ? basket.data.map((value) => (
                 
                 <div>
                     {console.log(Object.values(value)[0])}
@@ -172,7 +198,11 @@ function splitDate(date) {
                                 }}> {p.product_name} </span>
                                 <span > {p.product_stock} </span>
                                 <span style={{paddingRight:"5%"}}>{ (p.product_discountprice * p.basket_count).toLocaleString }원</span>
-                                <Button>취소</Button>
+                                <Button variant="danger" onClick={() => {
+                                    console.log(p.basket_id)
+                                    cancelStore(p.basket_id)
+                                    window.location.reload();
+                                }}>취소</Button>
                             </div>
                             <div className="summary">
                                 <div>상품명 : {p.product_name}</div>
@@ -189,17 +219,16 @@ function splitDate(date) {
                     <Button onClick={() => {
                         for (let i = 0; i < Object.values(value)[0].length; i++) {
                             const element = splitDate2(splitDate(Object.values(value)[0][i].product_expdate));
-                            console.log(element);
-                            console.log(expdate);
-                            if (expdate > element) {
-                                console.log("이거")
-                                setExpdate(element)
+                            console.log("element : ",element);
+                            console.log("expdate : ",minExpdate);
+                            if (minExpdate > element) {
+                                console.log(element,"가 ",minExpdate,"보다 빠름")
+                                minExpdate = element
                                 console.log(expdate)
                             }
-                            else {
-                                console.log("요거")
-                                setExpdate(expdate)
-                                console.log(expdate)
+                            else if(minExpdate <= element){
+                                console.log(minExpdate,"가 ",element,"보다 빠름")
+                                console.log(minExpdate)
                             }
                         }
 
@@ -208,11 +237,23 @@ function splitDate(date) {
                         console.log(Object.values(value)[0])
                         console.log(expdate)
                         setStoreId(Object.values(value)[0][0].store_user_id)
+                        setExpdate(minExpdate)
                         navigate("/reservation")
                     }}>예약 진행</Button>
                 </div>
-                
-            )) : console.log("basket이 없어요")}
+            )) :
+                <div>
+                    <div>
+                            장바구니에 남은 자료가 없습니다.
+                    </div>
+                    <div>
+                        
+                    </div>
+                    </div>
+            }
+            <Button variant="danger" onClick={() => {
+                            navigate("/main")
+                        }}>돌아가기</Button>
         </div>
     )
 }

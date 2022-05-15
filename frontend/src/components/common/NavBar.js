@@ -57,9 +57,9 @@ const NavBar = () => {
                 <div className="navPosition ">
                     <Nav className="flex-column">
                         <div className='imageDiv'>
-                            <img className='imgFile' src={userImage} alt="userImage" />)
+                            <img className='imgFile' src={sessionStorage.getItem("userImage")} alt="userImage" />)
                         </div>
-                        <span>{userId}</span>
+                        <span>{sessionStorage.getItem("userName")}</span>
                         <br />
                         {userRole === 2 ?
                             <Link to="/storeMyPage" style={{ color: 'black', textDecoration: 'none' }}>매장 마이페이지</Link>

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal'
 import { addDays, subDays } from 'date-fns';
 import { Tab } from 'bootstrap';
+import NavBar from '../../../common/NavBar';
 
 function ProductManagement(props) {
     const [highlight, setHighlight] = useState();
@@ -27,7 +28,7 @@ function ProductManagement(props) {
         // ! axios get
         console.log("axios get")
         axios
-            .get(`http://localhost:8080/api/product/distinctdate?storeuserId=${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/product/distinctdate?storeuserId=${sessionStorage.getItem("id")}`)
             // .get(`http://localhost:8080/api/product/distinctdate?storeuserId=in1`)
             .then((result) => {
                 setHighlight(result.data);
@@ -42,7 +43,7 @@ function ProductManagement(props) {
         console.log("axios get")
         console.log("searchDay = " + searchDay);
         axios
-            .get(`http://localhost:8080/api/product/date?userId=${sessionStorage.getItem("id")}&date=${searchDay}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/product/date?userId=${sessionStorage.getItem("id")}&date=${searchDay}`)
             // .get(`http://localhost:8080/api/product/date?userId=in1&date=${searchDay}`)
             .then((result) => {
                 console.log(result.data);
@@ -60,7 +61,7 @@ function ProductManagement(props) {
         // ! axios delete
         console.log("axios delete")
         axios
-            .delete("http://localhost:8080/api/product/remove",
+            .delete("https://k6e203.p.ssafy.io:8443/api/product/remove",
                 {
                     data: {
                         productId: modalProduct.productId
@@ -127,6 +128,7 @@ function ProductManagement(props) {
     }
     return (
         <div>
+            <NavBar></NavBar>
             <Container>
                 productManagement
 

@@ -12,6 +12,7 @@ import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/esm/locale";
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
+import NavBar from '../../../common/NavBar';
 
 
 function RegistrationProduct(props) {
@@ -123,7 +124,7 @@ function RegistrationProduct(props) {
         formData.append('frontimage', frontImage.front_image_file);
 
         axios
-            .post("http://localhost:8080/api/product/register",
+            .post("https://k6e203.p.ssafy.io:8443/api/product/register",
                 formData
                 ,
                 {
@@ -224,6 +225,7 @@ function RegistrationProduct(props) {
       ));
     return (
         <div>
+            <NavBar></NavBar>
             <Container className='mt-5'>
                 <Form>
                     <Form.Group as={Row} className="mb-3" controlId="formFile1" style={{ "textAlign": "center" }}>
