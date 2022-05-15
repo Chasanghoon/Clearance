@@ -12,7 +12,6 @@ import axios from 'axios';
 
 function UserProfile(props) {
 
-
     const userId = userStore(state => state.userId);
     const userName = userStore(state => state.userName);
     const userEmail = userStore(state => state.userEmail);
