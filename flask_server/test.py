@@ -225,33 +225,84 @@ class BasketRemove(Resource):
             init_command='SET NAMES UTF8'
         )
 
-        # try:
-        # request에서 data 받아오기
-        data = request.get_json()
-        basket_id = data['basket_id']
-        # user_id = data['user_id']
-        # product_id = data['product_id']
+        try:
+            # request에서 data 받아오기
+            data = request.get_json()
+            basket_id = data['basket_id']
+            # user_id = data['user_id']
+            # product_id = data['product_id']
 
-        curs = db.cursor()
-        sql = "set foreign_key_checks = %s;"
-        curs.execute(sql, (0))
+            curs = db.cursor()
+            sql = "set foreign_key_checks = %s;"
+            curs.execute(sql, (0))
 
-        sql = "delete from basket where basket_id=%s"
-        curs.execute(sql, (basket_id))
+            sql = "delete from basket where basket_id=%s"
+            curs.execute(sql, (basket_id))
 
-        sql = "set foreign_key_checks = %s;"
-        curs.execute(sql, (1))
+            sql = "set foreign_key_checks = %s;"
+            curs.execute(sql, (1))
 
-        # db 저장 / 연결 종료
-        db.commit()
-        db.close()
+            # db 저장 / 연결 종료
+            db.commit()
+            db.close()
 
-        result = 'success'
-        return jsonify(result=result)
+            result = 'success'
+            return jsonify(result=result)
 
-        # except:
-        #     result = "fail"
-        #     return jsonify(result=result)
+        except:
+            result = "fail"
+            return jsonify(result=result)
+
+
+
+basketRemoveAll_fields = api.model('basketRemoveAll', {
+    'user_id' : fields.String,
+    'store_user_id' : fields.String,
+})
+
+
+@api.route('/data/basket-rem/all')
+class BasketRemoveAll(Resource):
+    @api.expect(basketRemoveAll_fields)
+    def delete(self):
+        # db 연결
+        db = pymysql.connect(
+            host="k6e203.p.ssafy.io",
+            port=3306,
+            user="ssafy",
+            password="ssafy",
+            db='free_ssafy',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor,
+            init_command='SET NAMES UTF8'
+        )
+
+        try:
+            # request에서 data 받아오기
+            data = request.get_json()
+            user_id = data['user_id']
+            store_user_id = data['store_user_id']
+
+            curs = db.cursor()
+            sql = "set foreign_key_checks = %s;"
+            curs.execute(sql, (0))
+
+            sql = "delete from basket where user_id=%s and store_user_id=%s and basket_bookcheck=%s"
+            curs.execute(sql, (user_id, store_user_id, 0))
+
+            sql = "set foreign_key_checks = %s;"
+            curs.execute(sql, (1))
+
+            # db 저장 / 연결 종료
+            db.commit()
+            db.close()
+
+            result = 'success'
+            return jsonify(result=result)
+
+        except:
+            result = "fail"
+            return jsonify(result=result)
 
 
 @api.route('/data/reservation-progress/<string:store_user_id>')
