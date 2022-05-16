@@ -5,213 +5,126 @@ import { ResponsivePie } from "@nivo/pie";
 import Brightness1Icon from "@mui/icons-material/Brightness1";
 
 function Chart(props) {
-  return (
-    <div style={{ height: 400 }}>
-      <ResponsivePie
-        data={props.data}
-        margin={{ top: 10, right: 40, bottom: 20, left: 40 }}
-        startAngle={0}
-        endAngle={360}
-        innerRadius={0.55}
-        padAngle={1}
-        cornerRadius={3}
-        activeOuterRadiusOffset={8}
-        colors={{ scheme: "set3" }}
-        borderWidth={1}
-        borderColor={{
-          from: "color",
-          modifiers: [["darker", "0.5"]],
-        }}
-        enableArcLabels={true} // data value 표시
-        enableArcLinkLabels={false} // data id 표시
-        arcLabelsSkipAngle={1.1} // data value skip angle
-        arcLinkLabelsSkipAngle={5} // data id skip angle
-        arcLinkLabelsTextColor="#333333"
-        arcLinkLabelsThickness={2}
-        arcLinkLabelsColor={{ from: "color" }}
-        arcLabelsTextColor={{
-          from: "color",
-          modifiers: [["darker", 2]],
-        }}
-      />
-    </div>
-  );
+  if (props.height !== 0) {
+    return (
+      <div style={{ height: props.height }}>
+        <ResponsivePie
+          data={props.data}
+          margin={{ top: 10, right: 40, bottom: 20, left: 40 }}
+          startAngle={0}
+          endAngle={360}
+          innerRadius={0.55}
+          padAngle={1}
+          cornerRadius={3}
+          activeOuterRadiusOffset={8}
+          colors={{ scheme: "set3" }}
+          borderWidth={1}
+          borderColor={{
+            from: "color",
+            modifiers: [["darker", "0.5"]],
+          }}
+          enableArcLabels={true} // data value 표시
+          enableArcLinkLabels={false} // data id 표시
+          arcLabelsSkipAngle={props.skipAngle} // data value skip angle
+          arcLinkLabelsSkipAngle={5} // data id skip angle
+          arcLinkLabelsTextColor="#333333"
+          arcLinkLabelsThickness={2}
+          arcLinkLabelsColor={{ from: "color" }}
+          arcLabelsTextColor={{
+            from: "color",
+            modifiers: [["darker", 2]],
+          }}
+        />
+      </div>
+    );
+  } else if (props.height === 0) {
+    return (
+      <div>
+        <h2>구매한 제품이 없습니다!!!</h2>
+      </div>
+    );
+  }
 }
 
-function Category() {
+function Category(props) {
+  const [colorArr, setColorArr] = useState([
+    "#8dd3c7",
+    "#ffffb3",
+    "#bebada",
+    "#fb8072",
+    "#80b1d3",
+    "#fdb462",
+    "#b3de69",
+    "#fccde5",
+    "#d9d9d9",
+    "#bc80bd",
+    "#ccebc5",
+    "ffed6f",
+    //색 반복
+    "#8dd3c7",
+    "#ffffb3",
+    "#bebada",
+  ]);
+
+  const [dataId, setDataId] = useState([
+    "과일",
+    "채소",
+    "잡곡/견과",
+    "정육/계란류",
+    "수산물/건해산",
+    "유제품/유아식",
+    "냉장/냉동식",
+    "밀키트/반찬",
+    "생수/주류",
+    "원두/차",
+    "면류/즉석식품",
+    "장류/양념/오일",
+    "과자/빙과/떡",
+    "베이커리/샐러드",
+    "건강식품",
+  ]);
+  let content = [];
+  for (let i = 0; i < props.idxArr.length; i++) {
+    content.push(
+      <>
+        <Brightness1Icon style={{ color: colorArr[props.idxArr[i]] }} />
+        <span>{dataId[props.idxArr[i]]}</span>
+      </>
+    );
+  }
+  console.log(content);
   // Chart category 표시 (material UI)
-  return (
-    <div>
-      <div>
-        <Brightness1Icon
-          style={{ color: "rgb(118, 177, 166)" }}
-        ></Brightness1Icon>
-        <span>과일 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(213, 213, 150)" }}
-        ></Brightness1Icon>
-        <span>채소 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(159, 156, 182)" }}
-        ></Brightness1Icon>
-        <span>잡곡/견과 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(210, 107, 95)" }}
-        ></Brightness1Icon>
-        <span>정육/계란류 </span>
-      </div>
-      <div>
-        <Brightness1Icon
-          style={{ color: "rgb(107, 148, 177)" }}
-        ></Brightness1Icon>
-        <span>수산물/건해산 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(212, 151, 82)" }}
-        ></Brightness1Icon>
-        <span>유제품/유아식 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(150, 186, 88)" }}
-        ></Brightness1Icon>
-        <span>냉장/냉동식 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(211, 172, 192)" }}
-        ></Brightness1Icon>
-        <span>반찬 </span>
-      </div>
-      <div>
-        <Brightness1Icon
-          style={{ color: "rgb(182, 182, 182)" }}
-        ></Brightness1Icon>
-        <span>생수/주류 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(157, 107, 158)" }}
-        ></Brightness1Icon>
-        <span>원두/차 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(171, 197, 165)" }}
-        ></Brightness1Icon>
-        <span>냉장/냉동식 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(213, 198, 93)" }}
-        ></Brightness1Icon>
-        <span>장류/양념/오일 </span>
-      </div>
-      <div>
-        <Brightness1Icon
-          style={{ color: "rgb(118, 177, 166)" }}
-        ></Brightness1Icon>
-        <span>과자/빙과/떡 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(213, 213, 150)" }}
-        ></Brightness1Icon>
-        <span>베이커리/샐러드 </span>
-        <Brightness1Icon
-          style={{ color: "rgb(159, 156, 182)" }}
-        ></Brightness1Icon>
-        <span>건강식품 </span>
-      </div>
-      <p></p>
-    </div>
-  );
+  return <div>{content}</div>;
 }
 
 function UserCarbon() {
-  const [data, setData] = useState([
-    {
-      id: "과일",
-      label: "과일",
-      value: 0,
-      color: "hsl(31, 70%, 50%)",
-    },
-    {
-      id: "채소",
-      label: "채소",
-      value: 0,
-      color: "hsl(132, 70%, 50%)",
-    },
-    {
-      id: "잡곡/견과",
-      label: "잡곡/견과",
-      value: 0,
-      color: "hsl(143, 70%, 50%)",
-    },
-    {
-      id: "정육/계란류",
-      label: "정육/계란류",
-      value: 0,
-      color: "hsl(121, 70%, 50%)",
-    },
-    {
-      id: "수산물/건해산",
-      label: "수산물/건해산",
-      value: 0,
-      color: "hsl(233, 70%, 50%)",
-    },
-    {
-      id: "유제품/유아식",
-      label: "유제품/유아식",
-      value: 0,
-      color: "hsl(55, 70%, 50%)",
-    },
-    {
-      id: "냉장/냉동식",
-      label: "냉장/냉동식",
-      value: 0,
-      color: "hsl(150, 70%, 50%)",
-    },
-    {
-      id: "밀키트/반찬",
-      label: "밀키트/반찬",
-      value: 0,
-      color: "hsl(211, 70%, 50%)",
-    },
-    {
-      id: "생수/주류",
-      label: "생수/주류",
-      value: 0,
-      color: "hsl(88, 70%, 50%)",
-    },
-    {
-      id: "원두/차",
-      label: "원두/차",
-      value: 0,
-      color: "hsl(187, 70%, 50%)",
-    },
-    {
-      id: "면류/즉석식품",
-      label: "면류/즉석식품",
-      value: 0,
-      color: "hsl(99, 70%, 50%)",
-    },
-    {
-      id: "장류/양념/오일",
-      label: "장류/양념/오일",
-      value: 0,
-      color: "hsl(61, 70%, 50%)",
-    },
-    {
-      id: "과자/빙과/떡",
-      label: "과자/빙과/떡",
-      value: 0,
-      color: "hsl(10, 70%, 50%)",
-    },
-    {
-      id: "베이커리/샐러드",
-      label: "베이커리/샐러드",
-      value: 0,
-      color: "hsl(150, 70%, 50%)",
-    },
-    {
-      id: "건강식품",
-      label: "건강식품",
-      value: 0,
-      color: "hsl(222, 70%, 50%)",
-    },
+  const [data, setData] = useState([]);
+  const [skipAngle, setSkipAngle] = useState(1.1);
+  const [height, setHeight] = useState(400);
+  const [dataId, setDataId] = useState([
+    "과일",
+    "채소",
+    "잡곡/견과",
+    "정육/계란류",
+    "수산물/건해산",
+    "유제품/유아식",
+    "냉장/냉동식",
+    "밀키트/반찬",
+    "생수/주류",
+    "원두/차",
+    "면류/즉석식품",
+    "장류/양념/오일",
+    "과자/빙과/떡",
+    "베이커리/샐러드",
+    "건강식품",
   ]);
-
+  const [idxArr, setIdxArr] = useState([]);
   const [totalSaveCarbon, setTotalSaveCarbon] = useState(0);
+  // console.log(sessionStorage.getItem("id"));
+  const userId = sessionStorage.getItem("id");
   // axios 데이터 받아오기
-  const URL = "http://localhost:8080/api/user/co?UserId=Urkdrhkddms";
+  // const URL = `http://localhost:8080/api/user/co?UserId=${userId}`;
+  const URL = `https://k6e203.p.ssafy.io:8443/api/user/co?UserId=${userId}`;
   useEffect(() => {
     axios
       .get(URL)
@@ -219,13 +132,34 @@ function UserCarbon() {
         console.log(result.data);
 
         let temp = 0;
-        const newData = [...data];
+        const newData = [];
+        const newIdxArr = [];
         for (let i = 0; i < 15; i++) {
-          newData[i].value = result.data[i];
-          temp += result.data[i];
+          if (result.data[i] === 0) {
+            continue;
+          } else if (result.data[i] !== 0) {
+            newData.push({
+              id: dataId[i],
+              label: dataId[i],
+              value: result.data[i],
+            });
+            newIdxArr.push(i);
+            temp += result.data[i];
+          }
         }
-        console.log(temp);
+        // console.log(newData);
+        if (newData.length === 0) {
+          newData.push({
+            id: "No items",
+            label: "No items",
+            value: 0.000000000000001,
+          });
+          setSkipAngle(10000);
+          setHeight(0);
+        }
+        // console.log(temp);
         setData(newData);
+        setIdxArr(newIdxArr);
         setTotalSaveCarbon(temp);
       })
       .catch((e) => {
@@ -238,8 +172,8 @@ function UserCarbon() {
       <NavBar />
       <h1>탄소발자국</h1>
       <h1>May 2022</h1>
-      <Chart data={data}></Chart>
-      <Category></Category>
+      <Chart data={data} skipAngle={skipAngle} height={height}></Chart>
+      <Category idxArr={idxArr}></Category>
       <h1>Total Save Carbon : {totalSaveCarbon}</h1>
     </div>
   );
