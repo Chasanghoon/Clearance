@@ -12,4 +12,5 @@ public class ProductName {
     private int productDiscountprice;
     private String productExpdate;
     private int bookStatus;
+    private int basketCount;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from 'react-bootstrap/Row';
@@ -9,23 +9,17 @@ import { InputGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import userStore from '../../../store/userStore';
 import axios from 'axios';
+import NavBar from '../../common/NavBar';
 
 function StoreProfile(props) {
 
-    
-    const userId = userStore(state => state.userId);
-    const userName = userStore(state => state.userName);
-    const userEmail = userStore(state => state.userEmail);
-    const userPhone = userStore(state => state.userPhone);
-    const userAddress = userStore(state => state.userAddress);
-    const userLicenseNum = userStore(state => state.userLicenseNum);
-    const userImage = userStore(state => state.userImage);
-
-    const setUserName = userStore(state => state.setUserName);
-    const setUserEmail = userStore(state => state.setUserEmail);
-    const setUserPhone = userStore(state => state.setUserPhone);
-    const setUserAddress = userStore(state => state.setUserAddress);
-    const setUserImage = userStore(state => state.setUserImage);
+    const [userId, setUserId] = useState("");
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userPhone, setUserPhone] = useState("");
+    const [userAddress, setUserAddress] = useState("");
+    const [userImage, setUserImage] = useState("");
+    const [userLicenseNum, setUserLicenseNum] = useState("");
     const [image, setImage] = useState("");
 
     const [userNameError, setUserNameError] = useState(false);
@@ -60,48 +54,62 @@ function StoreProfile(props) {
         if (!userPhone) setPhoneError(true);
         if (!userAddress) setAddressError(true);
 
-        if (userNameError || emailError || phoneError || addressError ) return true;
+        if (userName.length === 0 || userEmail.length === 0 || userPhone.length === 0 || userAddress.length === 0 || userNameError || emailError || phoneError || addressError) return true;
         else return false;
     };
+
+    useEffect(() => {
+        // ! axios get
+        axios
+            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
+            .then((result) => {
+                console.log(result);
+                setUserId(result.data.userId);
+                setUserName(result.data.userName);
+                setUserEmail(result.data.userEmail);
+                setUserPhone(result.data.userPhone);
+                setUserAddress(result.data.userAddress);
+                setUserLicenseNum(result.data.userLicensenum);
+                setUserImage(result.data.userImage);
+            })
+            .catch((e) => {
+                console.error("axios get 실패");
+                console.error(e)
+            });
+        }, []);
 
     const onSubmit = (e) => {
         if (validation()) return;
 
         // ! axios POST
         console.log("axios post")
-        const storeSignUpRequest = {
-            user_address: userAddress,
-            user_email: userEmail,
-            user_id: userId,
-            user_name: userName,
-            user_phone: userPhone,
-        }
-        // TODO : 백 리퀘스트바디 수정, 이미지 파일로 받아야함, storeSignUpRequest이거 써도 되나..?
-        // const formData = new FormData();
-        // formData.append('storeSignUpRequest', new Blob([JSON.stringify(storeSignUpRequest)], { type: "application/json" }));
-        // formData.append('file', image.image_file);
+        axios
+            .put("https://k6e203.p.ssafy.io:8443/api/member",
+                {
+                    user_address: userAddress,
+                    user_email: userEmail,
+                    user_id: userId,
+                    user_name: userName,
+                    user_phone: userPhone,
+                }
+                ,
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                },
+            )
+            .then(() => {
+                console.log("axios post 성공")
+                alert("회원정보 수정!");
+                navigate(-1);
 
-        // axios
-        //     .put("http://localhost:8080/api/member",
-        //         formData
-        //         ,
-        //         {
-        //             headers: { 'Content-Type': 'application/json' }
-        //         },
-        //     )
-        //     .then(() => {
-        //         console.log("axios post 성공")
-        //         alert("회원가입 완료!");
-        //         navigate("/login");
-
-        //     })
-        //     .catch((e) => {
-        //         console.error("axios post 실패");
-        //         console.error(e);
-        //     });
+            })
+            .catch((e) => {
+                console.error("axios post 실패");
+                console.error(e);
+            });
     };
 
-    
+
 
     const [loaded, setLoaded] = useState(false);
     const saveImage = (e) => {
@@ -126,18 +134,14 @@ function StoreProfile(props) {
     let navigate = useNavigate();
     return (
         <div>
+            <NavBar></NavBar>
             <Container className='mt-5'>
                 <Form>
-                <Form.Group as={Row} className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
+                    <Form.Group as={Row} className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
                         <div className='imageDiv'>
                             {loaded === false || loaded === true ?
                                 (<img className='imgFile' src={userImage} alt="userImage" />) :
                                 (<Spinner animation="border" variant="warning" />)}
-                        </div>
-                        <div>
-                            <Button className='imageButton'><Form.Label>프로필 이미지 선택</Form.Label></Button>
-                            <Button className='imageButton' onClick={deleteImage}>프로필 이미지 삭제</Button>
-                            <Form.Control type="file" accept="image/*" onChange={saveImage} style={{ display: "none" }} />
                         </div>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">

@@ -4,6 +4,7 @@ import { Button,Tabs,Tab,Modal } from "react-bootstrap";
 import productStore from "../../store/productStore";
 import "./Product.css";
 import { Link, useNavigate } from "react-router-dom";
+import NavBar from '../common/NavBar';
 
 // 상품을 클릭했을 때 나올 화면
 const Product = () => {
@@ -29,7 +30,7 @@ const Product = () => {
 
     const getInfo = async () => {
         try {
-        const response = await axios.get(`http://localhost:8080/api/product?productId=${product_id}`)
+        const response = await axios.get(`https://k6e203.p.ssafy.io:8443/api/product?productId=${product_id}`)
             console.log(response)
             setInfo((prev) => ({
                 ...prev,
@@ -67,6 +68,10 @@ const Product = () => {
     const basket_cnt = productStore(state => state.basket_cnt)
     const setBasketCnt = productStore(state => state.setBasketCnt)
     const [modalShow, setModalShow] = useState(false)
+
+    useEffect(() => {
+        setBasketCnt(1);
+    },[])
     let navigate = useNavigate();
         //
         // console.log(category_id)
@@ -102,24 +107,25 @@ const Product = () => {
       </Modal.Body>
       <Modal.Footer>
               <Button onClick={() => {
-                  navigate("/basket")
+                navigate("/basket")
         }}>장바구니로 이동</Button>
               <Button onClick={() => {
-                  navigate("/main")
+                navigate("/main")
         }}>계속 쇼핑하기</Button>
-      </Modal.Footer>
+    </Modal.Footer>
     </Modal>
-  );
+    );
 }
     
     const basketadd = async () => {
         try {
-            const response = await axios.post(`http://localhost:5001/data/basket-add`, {
+            const response = await axios.post(`https://k6e203.p.ssafy.io:5001/data/basket-add`, {
             "user_id": sessionStorage.getItem("id"),
             "product_id": product_id,
             "basket_count": basket_cnt // 예약할 상품 개수
             })
             console.log(response)
+            setModalShow(true)
             // alert("장바구니에 내용이 추가되었습니다.")
         } catch (error) {
             console.log(error)
@@ -137,6 +143,7 @@ const Product = () => {
     console.log(info)
     return (
         <div>
+            <NavBar></NavBar>
             <div id="product" className="pb-2 pt-2">
                 <img alt="" src={info.productImagefront}></img>
 
@@ -165,10 +172,12 @@ const Product = () => {
                     
                 </div>
 
-                <div>
+                <div style={{
+                    paddingTop: "10px"
+                }}>
                     <Button onClick={() => {
                         basketadd();
-                        setModalShow(true)
+                        
                     }}>장바구니 등록</Button>
                     <Link to="/main"><Button>돌아가기</Button></Link>
                 </div>

@@ -11,6 +11,8 @@ import userStore from '../../store/userStore';
 
 function Login(props) {
 
+    const userRole = userStore(state => state.userRole);
+
     const setUserId = userStore(state => state.setUserId);
     const setUserRole = userStore(state => state.setUserRole);
     const setUserName = userStore(state => state.setUserName);
@@ -36,7 +38,7 @@ function Login(props) {
         // ! axios POST
         console.log("axios post")
         axios
-            .post("http://localhost:8080/api/auth/login",
+            .post("https://k6e203.p.ssafy.io:8443/api/auth/login",
                 {
                     user_id: inputUserId,
                     user_password: inputPassword,
@@ -61,7 +63,7 @@ function Login(props) {
     function userData() {
         // ! axios get
         axios
-            .get(`http://localhost:8080/api/member?userId=${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
             .then((result) => {
                 setUserId(result.data.userId);
                 setUserRole(result.data.userRole);
@@ -71,8 +73,14 @@ function Login(props) {
                 setUserAddress(result.data.userAddress);
                 setUserLicenseNum(result.data.userLicensenum);
                 setUserImage(result.data.userImage);
-                navigate("/main");
-
+                sessionStorage.setItem("userImage", result.data.userImage);
+                sessionStorage.setItem("userName", result.data.userName);
+                if(result.data.userRole === 2){
+                    navigate("/storeMyPage");
+                }
+                if(result.data.userRole === 3){
+                    navigate("/main");
+                }
             })
             .catch((e) => {
                 console.error("axios get 실패");
