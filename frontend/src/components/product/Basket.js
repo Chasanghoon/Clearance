@@ -1,7 +1,7 @@
 // 장바구니 관리 파일 (예상 url : /basket/{user})
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {  Button } from "react-bootstrap";
+import {  Button, Table } from "react-bootstrap";
 import "./Basket.css"
 import ReservationStore from "../../store/ReservationStore";
 import { useNavigate } from "react-router-dom";
@@ -175,22 +175,41 @@ function splitDate(date) {
             <h1>장바구니</h1>
 
             {(basket !== undefined && basket.data.length >0 ) ? basket.data.map((value) => (
-                
                 <div>
                     {console.log(Object.values(value)[0])}
                     <div className="store">
                         {Object.keys(value)}
                     </div>
-                    <div align="left">
-                        <span className="content" style={{
-                            paddingRight: "15%",
-                            paddingLeft: "10%",
-                        }}>상품</span>
-                        <span className="content">상품명</span>
-                        <span className="content">수량</span>
-                        <span className="content">가격</span>
-                    </div>
-                    {Object.values(value)[0].map((p) => (
+                    <Table>
+                        <colgroup>
+                            <col width="35%" />
+                            <col width="35%" />
+                            <col width="15%" />
+                            <col width="25%" />
+                        </colgroup>
+                        <thead>
+                            <tr style={{ borderTop: "hidden" }}>
+                                <th>상품</th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>가격</th>
+                            </tr>
+                        </thead>
+                    </Table>
+                    
+                    {Object.values(value)[0].map((p, index) => { 
+                        return (
+                            <tbody key={index} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
+                                <tr>
+                                    <td>sdfgsdfg</td>
+                                    <td>sdfgsdfg</td>
+                                    <td>sdfgsdfg</td>
+                                </tr>
+                            </tbody>
+                        )
+                    })}
+
+                    {Object.values(value)[0].map((p,index) => (
                         <div>
                             <div className="product" align="left">
                                 <img alt="" src={p.product_imagefront} className="productImage"></img>
