@@ -6,6 +6,7 @@ import com.querydsl.core.types.dsl.Coalesce;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.cleanrance.domain.consumer.mypage.bean.ProductName;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.Book;
+import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.QBasket;
 import com.ssafy.cleanrance.domain.consumer.mypage.db.entity.QBook;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.db.entity.QProduct;
@@ -25,14 +26,17 @@ public class BookRepositorySupport {
 
     QProduct qProduct = QProduct.product;
 
+    QBasket qBasket = QBasket.basket;
+
     public List<Book> findBookByuserId(String userId){
         return jpaQueryFactory.select(qBook).from(qBook)
                 .where(qBook.userId.eq(userId)).fetch();
     }
     public List<ProductName> findBookByuserIdAndbookSet(int bookSet){
-        return jpaQueryFactory.select(Projections.constructor(ProductName.class, qProduct.productImagefront, qProduct.productName, qProduct.productStock, qProduct.productDiscountprice, qProduct.productExpdate, qBook.bookStatus))
+        return jpaQueryFactory.select(Projections.constructor(ProductName.class, qProduct.productImagefront, qProduct.productName, qProduct.productStock, qProduct.productDiscountprice, qProduct.productExpdate, qBook.bookStatus, qBasket.basketCount))
                 .from(qProduct)
                 .leftJoin(qBook).on(qProduct.productId.eq(qBook.productId))
+                .leftJoin(qBasket).on(qBasket.basketId.eq(qBook.basketId))
                 .where(qBook.bookSet.eq(bookSet).and(qBook.bookStatus.eq(0))).fetch();
     }
 
