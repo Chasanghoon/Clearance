@@ -52,7 +52,7 @@ const Basket = () => {
                         }
                     }
                 } catch (error) {
-                    console.log(error)
+                    console.error(error)
             }
     }
 
@@ -65,13 +65,25 @@ const Basket = () => {
                 })
             console.log(response)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
     // 장바구니 취소에 대해 얘기를 해봐야함...
-    async function cancelStoreAll(storeId) {
-
+    async function cancelStoreAll(userId,storeId) {
+        try {
+            const response = await axios.delete(`https://k6e203.p.ssafy.io:5001/data/basket-rem/all`, {
+                
+                data: {
+                    "user_id": userId,
+                    "store_user_id": storeId
+                }
+            })
+            console.log(response)
+            window.location.reload();
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 //Mon, 30 May 2022 00:00:00 GMT -> 2022/05/30 Mon 00:00:00
@@ -230,7 +242,11 @@ function splitDate(date) {
                         setExpdate(minExpdate)
                         navigate("/reservation")
                     }}>예약 진행</Button>
-                    <Button variant="danger" onClick={cancelStoreAll}>예약 취소</Button>
+                    <Button variant="danger" onClick={() => {
+                        cancelStoreAll(sessionStorage.getItem("id"), Object.values(value)[0][0].store_user_id)
+                        // console.log(Object.values(value)[0][0].store_user_id)
+                        
+                    }}>해당 점포의 예약 취소</Button>
                 </div>
             )) :
                 <div>
