@@ -129,6 +129,8 @@ function SampleMap() {
                 console.error("======================");
                 if (roundMarkerLat === roundStoreLat && roundMarkerLng === roundStoreLng) {
                   storeName = storePos[index].userId;
+                  console.log(storePos[index])
+                  chStoreID(storeName)
                   console.warn("storeName = " + storeName);
                 }
               }
@@ -283,10 +285,12 @@ function SampleMap() {
         <Row>
           <Col sm>
             <input id="searchWord" style={{ backgroundColor: 'beige', width: '97%' }}></input>
-            현재 카테고리ID : {console.log(categoryID)}
+            <div>현재 카테고리ID : {categoryID}</div>
             <button id='search' onClick={() => {
               setWord(document.getElementById("searchWord").value)
             }} >검색</button>
+            <button onClick={() =>
+            setStoreId("")}>장소 초기화</button>
           </Col>
         </Row>
       </Container>
