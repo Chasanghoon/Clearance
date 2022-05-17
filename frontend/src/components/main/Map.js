@@ -216,10 +216,10 @@ function SampleMap() {
   for (let i = 0; i < nearStore.length; i++) {
     storePos.push({
       latlng: {
-        lat: nearStore[i].locationYpoint,
-        lng: nearStore[i].locationXpoint,
+        lat: nearStore[i].location_ypoint,
+        lng: nearStore[i].location_xpoint,
       },
-      userId: nearStore[i].userId,
+      userId: nearStore[i].user_id,
     })
 
 
@@ -270,6 +270,8 @@ function SampleMap() {
   let roundStoreLat = 0;
   let roundStoreLng = 0;
   let storeName = "";
+  console.log(storePos)
+  console.log(nearStore)
   return (
     <div style={{
       backgroundColor: "white",
@@ -297,7 +299,7 @@ function SampleMap() {
         {storePos.map((value, index) => (
           <EventMarkerContainer
             // key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
-            key={value.userId}
+            key={value.user_id}
             // key={index}
             position={value.latlng}
           />

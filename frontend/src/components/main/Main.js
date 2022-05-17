@@ -28,7 +28,7 @@ function Main() {
   const nearStore = useMainStore(state => state.nearStore);
   const nearProduct = useMainStore(state => state.nearProduct)
 
-    return (
+    return ( 
         <div>
             <NavBar></NavBar>
             <h1>메인페이지</h1>
@@ -40,14 +40,14 @@ function Main() {
         {/* <div>{pos.lat}, {pos.lng}</div> */}
         {nearProduct.length > 0 ? nearStore.map((val) => (
           <div>
-            {console.log(val)}
+
             <div style={{
               color: "white",
               fontSize:"18px",
               backgroundColor:"#FFC812",
               borderRadius:"30px",
-            }}>{val.userId}</div>
-            {nearProduct.filter(value => value.storeUserId === val.userId).map((value) => (
+            }}>{val.user_name}</div>
+            {nearProduct.filter(value => value.storeUserId === val.user_id).map((value) => (
               <div className="ProductItem" onClick={() => { console.log("이거", value) }}>
                 <div style={{
                   textAlign:"left"
