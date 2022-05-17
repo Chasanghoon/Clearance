@@ -1,10 +1,13 @@
 package com.ssafy.cleanrance.domain.user.service;
 
+import com.querydsl.core.Tuple;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySupport;
 import com.ssafy.cleanrance.domain.user.db.entity.Location;
 import com.ssafy.cleanrance.domain.user.db.repository.LocationRepository;
 
+import com.ssafy.cleanrance.domain.user.db.repository.LocationRepositorySupport;
+import com.ssafy.cleanrance.domain.user.bean.LocationFind;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +20,16 @@ public class LocationServiceImpl implements LocationService{
     LocationRepository locationRepository;
     @Autowired
     ProductRepositorySupport productRepositorySupport;
+    @Autowired
+    LocationRepositorySupport locationRepositorySupport;
     @Override
-    public List<Location> findLoc(double ypoint, double xpoint) {
-        List<Location> loc = locationRepository.findAll();
-        List<Location> list = new ArrayList<>();
+    public List<LocationFind> findLoc(double ypoint, double xpoint) {
+        List<LocationFind> loc = locationRepositorySupport.findList();
+        List<LocationFind> list = new ArrayList<>();
         int num = 2000;
-        for (Location l: loc) {
-            double x = l.getLocationXpoint();
-            double y = l.getLocationYpoint();
+        for (LocationFind l: loc) {
+            double x = l.getLocation_xpoint();
+            double y = l.getLocation_ypoint();
             double theta = x- xpoint;
             double dist = Math.sin(def2rad(y)) * Math.sin(def2rad(ypoint)) + Math.cos(def2rad(y)) * Math.cos(def2rad(ypoint)) * Math.cos(def2rad(theta));
             dist = Math.acos(dist);
@@ -43,12 +48,12 @@ public class LocationServiceImpl implements LocationService{
 
     @Override
     public List<Object> findLocAndProduct(double ypoint, double xpoint) {
-        List<Location> loc = locationRepository.findAll();
-        List<Location> list = new ArrayList<>();
+        List<LocationFind> loc = locationRepositorySupport.findList();
+        List<LocationFind> list = new ArrayList<>();
         int num = 2000;
-        for (Location l: loc) {
-            double x = l.getLocationXpoint();
-            double y = l.getLocationYpoint();
+        for (LocationFind l: loc) {
+            double x = l.getLocation_xpoint();
+            double y = l.getLocation_ypoint();
             double theta = x- xpoint;
             double dist = Math.sin(def2rad(y)) * Math.sin(def2rad(ypoint)) + Math.cos(def2rad(y)) * Math.cos(def2rad(ypoint)) * Math.cos(def2rad(theta));
             dist = Math.acos(dist);
@@ -65,8 +70,8 @@ public class LocationServiceImpl implements LocationService{
         List<Object> obj = new ArrayList<>();
         obj.add(list);
 //        List<List<Product>> productList = new ArrayList<>();
-        for (Location loca: list) {
-            List<Product> products= productRepositorySupport.findProductByStoreId(loca.getUserId());
+        for (LocationFind loca: list) {
+            List<Product> products= productRepositorySupport.findProductByStoreId(loca.getUser_id());
             obj.add(products);
         }
         return obj;

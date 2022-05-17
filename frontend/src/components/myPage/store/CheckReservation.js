@@ -30,7 +30,7 @@ function CheckReservation() {
                 <div className='product'>
                     <img alt='' src={value.productImagefront}></img>
                     <div>상품명 : {value.productName}</div>
-                    <div>수량 : {value.productStock}</div>
+                    <div>수량 : {value.basketCount}</div>
                     <div>가격 : {value.productDiscountprice * value.productDiscountprice}</div>
                 </div>
                 

@@ -76,37 +76,45 @@ function UserCarbon() {
 }
 
 function Chart(props) {
-  return (
-    <div style={{ height: 400 }}>
-      <ResponsivePie
-        data={props.data}
-        margin={{ top: 10, right: 40, bottom: 20, left: 40 }}
-        startAngle={0}
-        endAngle={360}
-        innerRadius={0.55}
-        padAngle={1}
-        cornerRadius={3}
-        activeOuterRadiusOffset={8}
-        colors={{ scheme: "set3" }}
-        borderWidth={1}
-        borderColor={{
-          from: "color",
-          modifiers: [["darker", "0.5"]],
-        }}
-        enableArcLabels={true} // data value 표시
-        enableArcLinkLabels={false} // data id 표시
-        arcLabelsSkipAngle={1.1} // data value skip angle
-        arcLinkLabelsSkipAngle={5} // data id skip angle
-        arcLinkLabelsTextColor="#333333"
-        arcLinkLabelsThickness={2}
-        arcLinkLabelsColor={{ from: "color" }}
-        arcLabelsTextColor={{
-          from: "color",
-          modifiers: [["darker", 2]],
-        }}
-      />
-    </div>
-  );
+  if (props.height !== 0) {
+    return (
+      <div style={{ height: props.height }}>
+        <ResponsivePie
+          data={props.data}
+          margin={{ top: 10, right: 40, bottom: 20, left: 40 }}
+          startAngle={0}
+          endAngle={360}
+          innerRadius={0.55}
+          padAngle={1}
+          cornerRadius={3}
+          activeOuterRadiusOffset={8}
+          colors={{ scheme: "set3" }}
+          borderWidth={1}
+          borderColor={{
+            from: "color",
+            modifiers: [["darker", "0.5"]],
+          }}
+          enableArcLabels={true} // data value 표시
+          enableArcLinkLabels={false} // data id 표시
+          arcLabelsSkipAngle={props.skipAngle} // data value skip angle
+          arcLinkLabelsSkipAngle={5} // data id skip angle
+          arcLinkLabelsTextColor="#333333"
+          arcLinkLabelsThickness={2}
+          arcLinkLabelsColor={{ from: "color" }}
+          arcLabelsTextColor={{
+            from: "color",
+            modifiers: [["darker", 2]],
+          }}
+        />
+      </div>
+    );
+  } else if (props.height === 0) {
+    return (
+      <div>
+        <h2>구매한 제품이 없습니다!!!</h2>
+      </div>
+    );
+  }
 }
 
 function Category(props) {

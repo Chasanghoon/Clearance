@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import useMainStore from "../../store/MainStore";
 import { Row, Col } from 'react-bootstrap'
@@ -34,6 +34,11 @@ function SampleMap() {
   const changeCategoryId = (e) => {
     if (e === categoryID) setCategoryId(20);
     else setCategoryId(e)
+  }
+  const [categoryName, setCategoryName] = useState("없음");
+  const changeCategoryName = (e) => {
+    if (e === categoryName) setCategoryName("없음")
+    else setCategoryName(e)
   }
 
 
@@ -110,6 +115,7 @@ function SampleMap() {
         onClick={
           (marker) => {
             // console.log(marker)
+            map.panTo(marker.getPosition())
             {
               storePos.map((value, index) => {
                 // console.log(marker.getPosition().Ma);
@@ -129,6 +135,8 @@ function SampleMap() {
                 console.error("======================");
                 if (roundMarkerLat === roundStoreLat && roundMarkerLng === roundStoreLng) {
                   storeName = storePos[index].userId;
+                  console.log(storePos[index])
+                  chStoreID(storeName)
                   console.warn("storeName = " + storeName);
                 }
               }
@@ -219,22 +227,38 @@ function SampleMap() {
 
   function Category() {
     return (
-      <div>
+      <div className="MainCategory" style={{
+        marginTop: "15px",
+        padding: "10px 10px 10px 10px",
+        border: "4px solid #FFC812",
+        borderRadius: "30px",
+      }}>
         {console.log(categoryID)}
         {categoryList.map((value, index) => (
+          // 012 345 678 91011 121314
+          
+          <>
+            
           <button
             key={index}
             id={value.categoryId}
             style={{
               borderRadius: "15px",
-              fontSize: '15px'
+              fontSize: '15px',
+              border: "0.1px solid black",
+              backgroundColor:"beige"
             }}
             onClick={() => {
+              changeCategoryName(value.categoryName)
               changeCategoryId(value.categoryId)
             }}
           // onClick={() => { clickCategory(value.categoryId) }} // 해당 카테고리의 상품만 가져오게 만들기 or 모든 상품을 가져오게 되돌리기
-          >{value.categoryName}</button>
-
+            >{value.categoryName}</button>
+            <hr style={{
+              display: (index > 0 && (index+1) % 3 === 0) ? "block" : "none",
+              margin:"0px 0px 0px 0px"
+            }}></hr>
+        </>
         ))}
       </div>)
 
@@ -247,13 +271,16 @@ function SampleMap() {
   let roundStoreLng = 0;
   let storeName = "";
   return (
-    <>
+    <div style={{
+      backgroundColor: "white",
+      
+    }}>
       <Map // 지도를 표시할 Container
         center={state.center}
         style={{
           // 지도의 크기
           width: "auto",
-          height: "450px",
+          height: "300px",
         }}
         level={7} // 지도의 확대 레벨
       >
@@ -265,7 +292,6 @@ function SampleMap() {
           >
             {/* MapMarker의 자식을 넣어줌으로 해당 자식이 InfoWindow로 만들어지게 합니다 */}
         {/* 인포윈도우에 표출될 내용으로 HTML 문자열이나 R  eact Component가 가능합니다 */}
-        {isOpen && <div style={{ padding: "5px", color: "#000" }}>Hello World!</div>}
         </MapMarker>
             )}
         {storePos.map((value, index) => (
@@ -282,15 +308,25 @@ function SampleMap() {
       <Container>
         <Row>
           <Col sm>
-            <input id="searchWord" style={{ backgroundColor: 'beige', width: '97%' }}></input>
-            현재 카테고리ID : {console.log(categoryID)}
-            <button id='search' onClick={() => {
+            <div>현재 카테고리ID : {categoryName}</div>
+            <input id="searchWord" style={{
+              backgroundColor: 'beige', width: '97%', marginTop: "10px",
+              borderRadius: "30px",
+              border:"0.2px solid black"
+            }}></input>
+            
+              <Button id='search' variant="warning" onClick={() => {
               setWord(document.getElementById("searchWord").value)
-            }} >검색</button>
+            }} >검색</Button>
+            
+            
+            <Button onClick={() =>
+              setStoreId("")} >장소 초기화</Button>
+            
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   )
 }
 
