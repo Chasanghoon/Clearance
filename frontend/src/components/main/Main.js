@@ -8,9 +8,13 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import productStore from '../../store/productStore';
 import marketStore from '../../store/marketStore';
+import NavStore from '../../store/NavStore';
 
 
 function Main(props) {
+
+  const setNavHeader = NavStore(state => state.setNavHeader);
+  setNavHeader('\u00A0');
 
   const pos = useMainStore(state => state.position)
   const bs = marketStore(state => state.bookSet)
