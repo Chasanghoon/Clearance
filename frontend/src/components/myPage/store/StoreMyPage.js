@@ -10,9 +10,9 @@ function StoreMyPage(props) {
             <h1>마이페이지</h1>
             <Link to="../storeProfile"><Button variant="success"> 프로필 </Button></Link>
             <Link to="../productManagement"><Button variant="success"> 상품관리 </Button></Link>
-            <Link to="../checkReservation"><Button variant="success"> 예약 확인 </Button></Link>
+            <Link to="../QrCheck"><Button variant="success"> Qr 확인 </Button></Link>
             <Link to="../storeCarbon"><Button variant="success"> 탄소 발자국 </Button></Link>
-
+            
             
 
             

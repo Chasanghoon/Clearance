@@ -9,12 +9,16 @@ import { ko } from "date-fns/esm/locale";
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 import NavBar from '../common/NavBar';
-import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ReservationStore from '../../store/ReservationStore';
+import NavStore from '../../store/NavStore';
 
 function Reservation(props) {
+
+    const setNavHeader = NavStore(state => state.setNavHeader);
+    setNavHeader("예약 진행");
+
     const [startDate, setStartDate] = useState();
     const [startTime, setStartTime] = useState();
     const [saveData, setSaveData] = useState();
@@ -108,7 +112,7 @@ function Reservation(props) {
     }
     let navigate = useNavigate();
     return (
-        <div>
+        <div className='reservation'>
             <NavBar></NavBar>
             <div style={{ margin: "20px 20px 20px 20px" }}>
                 <Card>
