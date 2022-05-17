@@ -5,37 +5,45 @@ import { ResponsivePie } from "@nivo/pie";
 import Brightness1Icon from "@mui/icons-material/Brightness1";
 
 function Chart(props) {
-  return (
-    <div style={{ height: 400 }}>
-      <ResponsivePie
-        data={props.data}
-        margin={{ top: 10, right: 40, bottom: 20, left: 40 }}
-        startAngle={0}
-        endAngle={360}
-        innerRadius={0.55}
-        padAngle={1}
-        cornerRadius={3}
-        activeOuterRadiusOffset={8}
-        colors={{ scheme: "set3" }}
-        borderWidth={1}
-        borderColor={{
-          from: "color",
-          modifiers: [["darker", "0.5"]],
-        }}
-        enableArcLabels={true} // data value 표시
-        enableArcLinkLabels={false} // data id 표시
-        arcLabelsSkipAngle={1.1} // data value skip angle
-        arcLinkLabelsSkipAngle={5} // data id skip angle
-        arcLinkLabelsTextColor="#333333"
-        arcLinkLabelsThickness={2}
-        arcLinkLabelsColor={{ from: "color" }}
-        arcLabelsTextColor={{
-          from: "color",
-          modifiers: [["darker", 2]],
-        }}
-      />
-    </div>
-  );
+  if (props.height !== 0) {
+    return (
+      <div style={{ height: props.height }}>
+        <ResponsivePie
+          data={props.data}
+          margin={{ top: 10, right: 40, bottom: 20, left: 40 }}
+          startAngle={0}
+          endAngle={360}
+          innerRadius={0.55}
+          padAngle={1}
+          cornerRadius={3}
+          activeOuterRadiusOffset={8}
+          colors={{ scheme: "set3" }}
+          borderWidth={1}
+          borderColor={{
+            from: "color",
+            modifiers: [["darker", "0.5"]],
+          }}
+          enableArcLabels={true} // data value 표시
+          enableArcLinkLabels={false} // data id 표시
+          arcLabelsSkipAngle={props.skipAngle} // data value skip angle
+          arcLinkLabelsSkipAngle={5} // data id skip angle
+          arcLinkLabelsTextColor="#333333"
+          arcLinkLabelsThickness={2}
+          arcLinkLabelsColor={{ from: "color" }}
+          arcLabelsTextColor={{
+            from: "color",
+            modifiers: [["darker", 2]],
+          }}
+        />
+      </div>
+    );
+  } else if (props.height === 0) {
+    return (
+      <div>
+        <h2>구매한 제품이 없습니다!!!</h2>
+      </div>
+    );
+  }
 }
 
 function Category(props) {
@@ -91,6 +99,8 @@ function Category(props) {
 
 function UserCarbon() {
   const [data, setData] = useState([]);
+  const [skipAngle, setSkipAngle] = useState(1.1);
+  const [height, setHeight] = useState(400);
   const [dataId, setDataId] = useState([
     "과일",
     "채소",
@@ -110,13 +120,16 @@ function UserCarbon() {
   ]);
   const [idxArr, setIdxArr] = useState([]);
   const [totalSaveCarbon, setTotalSaveCarbon] = useState(0);
+  // console.log(sessionStorage.getItem("id"));
+  const userId = sessionStorage.getItem("id");
   // axios 데이터 받아오기
-  const URL = `https://k6e203.p.ssafy.io:8443/api/user/co?UserId=${sessionStorage.getItem("id")}`;
+  // const URL = `http://localhost:8080/api/user/co?UserId=${userId}`;
+  const URL = `https://k6e203.p.ssafy.io:8443/api/user/co?UserId=${userId}`;
   useEffect(() => {
     axios
       .get(URL)
       .then((result) => {
-        // console.log(result.data);
+        console.log(result.data);
 
         let temp = 0;
         const newData = [];
@@ -134,6 +147,16 @@ function UserCarbon() {
             temp += result.data[i];
           }
         }
+        // console.log(newData);
+        if (newData.length === 0) {
+          newData.push({
+            id: "No items",
+            label: "No items",
+            value: 0.000000000000001,
+          });
+          setSkipAngle(10000);
+          setHeight(0);
+        }
         // console.log(temp);
         setData(newData);
         setIdxArr(newIdxArr);
@@ -149,7 +172,7 @@ function UserCarbon() {
       <NavBar />
       <h1>탄소발자국</h1>
       <h1>May 2022</h1>
-      <Chart data={data}></Chart>
+      <Chart data={data} skipAngle={skipAngle} height={height}></Chart>
       <Category idxArr={idxArr}></Category>
       <h1>Total Save Carbon : {totalSaveCarbon}</h1>
     </div>

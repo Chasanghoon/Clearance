@@ -1,5 +1,6 @@
 package com.ssafy.cleanrance.domain.user.controller;
 
+import com.ssafy.cleanrance.domain.user.bean.LocationFind;
 import com.ssafy.cleanrance.domain.user.db.entity.Location;
 import com.ssafy.cleanrance.domain.user.service.LocationService;
 import io.swagger.annotations.Api;
@@ -29,8 +30,8 @@ public class LocationrController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<Location>> findLocation(@RequestParam double ypoint,@RequestParam double xpoint){
-        List<Location> list = locationService.findLoc(ypoint, xpoint);
+    public ResponseEntity<List<LocationFind>> findLocation(@RequestParam double ypoint, @RequestParam double xpoint){
+        List<LocationFind> list = locationService.findLoc(ypoint, xpoint);
         return ResponseEntity.status(200).body(list);
     }
 

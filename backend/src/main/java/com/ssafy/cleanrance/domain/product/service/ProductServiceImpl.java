@@ -205,9 +205,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     private BufferedImage resizeImg(BufferedImage origin, int type){
-        BufferedImage resizeImg = new BufferedImage(100,100, type);
+        BufferedImage resizeImg = new BufferedImage(300,300, type);
         Graphics2D graphics2D = resizeImg.createGraphics();
-        graphics2D.drawImage(origin, 0,0, 100,100, null);
+        graphics2D.drawImage(origin, 0,0, 300,300, null);
         graphics2D.dispose();
         graphics2D.setComposite(AlphaComposite.Src);
         //보간 관련
