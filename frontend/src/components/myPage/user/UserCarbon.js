@@ -3,6 +3,77 @@ import axios from "axios";
 import NavBar from "../../common/NavBar";
 import { ResponsivePie } from "@nivo/pie";
 import Brightness1Icon from "@mui/icons-material/Brightness1";
+import NavStore from '../../../store/NavStore';
+
+function UserCarbon() {
+
+  const setNavHeader = NavStore(state => state.setNavHeader);
+    setNavHeader("탄소발자국");
+
+  const [data, setData] = useState([]);
+  const [dataId, setDataId] = useState([
+    "과일",
+    "채소",
+    "잡곡/견과",
+    "정육/계란류",
+    "수산물/건해산",
+    "유제품/유아식",
+    "냉장/냉동식",
+    "밀키트/반찬",
+    "생수/주류",
+    "원두/차",
+    "면류/즉석식품",
+    "장류/양념/오일",
+    "과자/빙과/떡",
+    "베이커리/샐러드",
+    "건강식품",
+  ]);
+  const [idxArr, setIdxArr] = useState([]);
+  const [totalSaveCarbon, setTotalSaveCarbon] = useState(0);
+  // axios 데이터 받아오기
+  const URL = `https://k6e203.p.ssafy.io:8443/api/user/co?UserId=${sessionStorage.getItem("id")}`;
+  useEffect(() => {
+    axios
+      .get(URL)
+      .then((result) => {
+        // console.log(result.data);
+
+        let temp = 0;
+        const newData = [];
+        const newIdxArr = [];
+        for (let i = 0; i < 15; i++) {
+          if (result.data[i] === 0) {
+            continue;
+          } else if (result.data[i] !== 0) {
+            newData.push({
+              id: dataId[i],
+              label: dataId[i],
+              value: result.data[i],
+            });
+            newIdxArr.push(i);
+            temp += result.data[i];
+          }
+        }
+        // console.log(temp);
+        setData(newData);
+        setIdxArr(newIdxArr);
+        setTotalSaveCarbon(temp);
+      })
+      .catch((e) => {
+        console.log("error");
+      });
+  }, []);
+
+  return (
+    <div className="userCarbon">
+      <NavBar />
+      <h1>May 2022</h1>
+      <Chart data={data}></Chart>
+      <Category idxArr={idxArr}></Category>
+      <h1>Total Save Carbon : {totalSaveCarbon}</h1>
+    </div>
+  );
+}
 
 function Chart(props) {
   return (
@@ -87,73 +158,6 @@ function Category(props) {
   console.log(content);
   // Chart category 표시 (material UI)
   return <div>{content}</div>;
-}
-
-function UserCarbon() {
-  const [data, setData] = useState([]);
-  const [dataId, setDataId] = useState([
-    "과일",
-    "채소",
-    "잡곡/견과",
-    "정육/계란류",
-    "수산물/건해산",
-    "유제품/유아식",
-    "냉장/냉동식",
-    "밀키트/반찬",
-    "생수/주류",
-    "원두/차",
-    "면류/즉석식품",
-    "장류/양념/오일",
-    "과자/빙과/떡",
-    "베이커리/샐러드",
-    "건강식품",
-  ]);
-  const [idxArr, setIdxArr] = useState([]);
-  const [totalSaveCarbon, setTotalSaveCarbon] = useState(0);
-  // axios 데이터 받아오기
-  const URL = `https://k6e203.p.ssafy.io:8443/api/user/co?UserId=${sessionStorage.getItem("id")}`;
-  useEffect(() => {
-    axios
-      .get(URL)
-      .then((result) => {
-        // console.log(result.data);
-
-        let temp = 0;
-        const newData = [];
-        const newIdxArr = [];
-        for (let i = 0; i < 15; i++) {
-          if (result.data[i] === 0) {
-            continue;
-          } else if (result.data[i] !== 0) {
-            newData.push({
-              id: dataId[i],
-              label: dataId[i],
-              value: result.data[i],
-            });
-            newIdxArr.push(i);
-            temp += result.data[i];
-          }
-        }
-        // console.log(temp);
-        setData(newData);
-        setIdxArr(newIdxArr);
-        setTotalSaveCarbon(temp);
-      })
-      .catch((e) => {
-        console.log("error");
-      });
-  }, []);
-
-  return (
-    <div>
-      <NavBar />
-      <h1>탄소발자국</h1>
-      <h1>May 2022</h1>
-      <Chart data={data}></Chart>
-      <Category idxArr={idxArr}></Category>
-      <h1>Total Save Carbon : {totalSaveCarbon}</h1>
-    </div>
-  );
 }
 
 export default UserCarbon;

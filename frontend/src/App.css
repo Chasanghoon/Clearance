@@ -1,11 +1,583 @@
+/* ! App.js */
 @font-face {
     font-family: "LeeSeoyun";
     font-weight: 50;
     src: url("./asset/fonts/LeeSeoyun.ttf");
 }
- 
-  
 .App{
       text-align: center;
       font-family: "LeeSeoyun";
+      height: 100vh;
+      overflow:auto; 
+      /* background-color: #fafafa; */
+      background-color: #a2a2ee;
 }
+/* ! ================================================ */
+/* ! ==================== Start ==================== */
+/* ! ================================================ */
+.Start .title{
+    margin-top: 20%;
+    padding-bottom: 20%;
+    
+}
+.Start .title h1{
+    
+    font-size: 400%;
+    font-weight: bold;
+    color: linear-gradient(120deg, #f6d365 0%, #fda085 100%);;
+    /* color: #FFC812; */
+    color: #fda085;
+    text-shadow: 2px 2px 3px rgb(148, 148, 148)
+}
+.Start .startBtnGroup{
+padding-top: 40%;
+}
+.Start .loginBtn{
+    margin: 20px 0 0 0;
+    width: 100%;
+    height: 8vh;
+    font-size: x-large;
+}
+.Start .registerBtn{
+    margin: 20px 0 0 0;
+    width: 100%;
+    height: 8vh;
+    font-size: x-large;
+}
+
+/* ! ================================================ */
+/* ! ==================== Navbar ==================== */
+/* ! ================================================ */
+.NavBar{
+    z-index: 2;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    overflow: auto;
+    /* background-color: #000; */
+}
+.NavBar .navHeader{
+    color: rgba(0, 0, 0, 1);
+    font-size: 30px;
+    font-weight: bold;
+    /* margin: auto; */
+}
+.NavBar .navLink{
+    color: black;
+    text-decoration: none;
+}
+
+.NavBar .hide-menu{
+width: 376px;
+height: 100%;
+position: absolute;
+left: -1000px;
+}
+.NavBar .navPosition{
+    /* padding-top: 5%; */
+    left: 50%;
+    position: relative;
+    width: 50%;
+    height: 100vh;
+    z-index: 2;
+    background-color: rgba(255, 200, 18, 0.9);
+}
+.NavBar .navRow{
+    background-color: rgba(255, 200, 18, 0.9);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 65px;
+    /* opacity: 0.7; */
+    /* background-color: rgba(221, 210, 57, 0.3); */
+}
+.NavBar .imageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    /* background-color: #FFC812; */
+}
+.NavBar .imageDiv2 {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.NavBar .imgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.NavBar .myPageButtonimage {
+    border-radius: 50%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.NavBar .myPageButtonImageFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.signupUser .imageButton {
+    text-align: center;
+    padding: 10px 10px;
+    margin: 10px 5px 10px 5px;
+    width: 150px;
+    height: 50px;
+}
+/* ! ================================================ */
+/* ! ================ signupUser ================ */
+/* ! ================================================ */
+.signupUser {
+    padding-bottom: 20%;
+}
+.signupUser .label {
+    font-weight: 900;
+    padding-left: 5%;
+    float: left;
+    margin-bottom: 1%;
+}
+.signupUser .imageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    /* background-color: #FFC812; */
+}
+.signupUser .imageDiv2 {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.signupUser .imgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.signupUser .myPageButtonimage {
+    border-radius: 50%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.signupUser .myPageButtonImageFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.signupUser .imageButton {
+    text-align: center;
+    padding: 10px 10px;
+    margin: 10px 5px 10px 5px;
+    width: 150px;
+    height: 50px;
+}
+.signupUser .invalid-input{
+    color: red;
+    font-size: medium;
+}
+.signupUser .submitBtn{
+    height: 60px;
+}
+
+/* ! ================================================ */
+/* ! ================ signupStore ================ */
+/* ! ================================================ */
+.signupStore {
+    padding-bottom: 20%;
+}
+.signupStore .label {
+    font-weight: 900;
+    padding-left: 5%;
+    float: left;
+    margin-bottom: 1%;
+}
+.signupStore .imageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    /* background-color: #FFC812; */
+}
+.signupStore .imageDiv2 {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.signupStore .imgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.signupStore .myPageButtonimage {
+    border-radius: 50%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.signupStore .myPageButtonImageFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.signupStore .imageButton {
+    text-align: center;
+    padding: 10px 10px;
+    margin: 10px 5px 10px 5px;
+    width: 150px;
+    height: 50px;
+}
+.signupStore .invalid-input{
+    color: red;
+    font-size: medium;
+}
+.signupStore .submitBtn{
+    height: 60px;
+}
+/* ! ================================================ */
+/* ! ================ reservation ================ */
+/* ! ================================================ */
+.reservation {
+    /* margin-top: 60px; */
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+/* ! ================================================ */
+/* ! ================ reservationResult ================ */
+/* ! ================================================ */
+.reservationResult {
+    /* margin-top: 60px; */
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+/* ! ================================================ */
+/* ! ================ UserMyPage ================ */
+/* ! ================================================ */
+.userMyPage {
+    /* margin-top: 60px; */
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+.userMyPage .rowBtn1 {
+    margin: 15% 0 5% 0;
+    /* height: 100vh; */
+}
+.userMyPage .rowBtn2 {
+    margin: 5% 0 5% 0;
+    /* height: 100vh; */
+}
+.userMyPage .rowBtn3 {
+    margin: 5% 0 5% 0;
+    /* height: 100vh; */
+}
+.userMyPage .userMyPageBtn {
+    /* margin-top: 10%; */
+    background-color: #ffffff;
+    color: black;
+    border: hidden;
+    border-radius: 30px;
+    box-shadow: 3px 3px 3px #b4b3b3;
+    width: 90%;
+    height: 20vh;
+}
+.userMyPage .userMyPageBtn2 {
+    /* margin-top: 10%; */
+    background-color: #fdc54b;
+    border: hidden;
+    border-radius: 30px;
+    box-shadow: 3px 3px 3px #b4b3b3;
+    width: 90%;
+    height: 20vh;
+}
+
+
+/* ! ================================================ */
+/* ! ================== userProfile ================== */
+/* ! ================================================ */
+.userProfile {
+    padding-top: 65px;
+    padding-bottom: 20%;
+    
+}
+.userProfile .label {
+    font-weight: 900;
+    padding-left: 5%;
+    float: left;
+    margin-bottom: 1%;
+}
+.userProfile .invalid-input{
+    color: red;
+    font-size: medium;
+}
+.userProfile .submit {
+    height: 60px;
+    margin: 5% 0 5% 0;
+}
+.userProfile .imageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    /* background-color: #FFC812; */
+}
+.userProfile .imageDiv2 {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.userProfile .imgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.userProfile .myPageButtonimage {
+    border-radius: 50%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.userProfile .myPageButtonImageFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.userProfile .imageButton {
+    text-align: center;
+    padding: 10px 10px;
+    margin: 10px 5px 10px 5px;
+    width: 150px;
+    height: 50px;
+}
+
+
+/* ! ================================================ */
+/* ! ================ bookingHistory ================ */
+/* ! ================================================ */
+.bookingHistory {
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+.bookingHistory .under{
+    background-color: #FEEEED;
+    margin-top: 10px;
+    padding: 20px 0 0 0;
+    border-radius: 10px;
+}
+.bookingHistory .NoUnder{
+    margin: 0 0 30px 0;
+    font-size: 30px;
+    font-weight: bold;
+}
+.bookingHistory .tableDiv {
+/* background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%); */
+background-color: #fff;
+border: 2px solid black;
+border-radius: 15%;
+margin: 10px 5% 10px 5%;
+}
+.bookingHistory .btnDiv {
+    margin-top: 50px;
+    }
+.bookingHistory Table{
+    width: 85%;
+    table-layout: fixed;
+    font-size: 15px;
+    word-break: break-all;
+    margin: 10px auto 10% auto;
+    /* margin-left:auto; 
+    margin-right:auto; */
+}
+.bookingHistory .tr {
+    border-top: hidden;
+    border-bottom: hidden;
+}
+.bookingHistory .div {
+    border-top: hidden;
+    /* border: 1px solid #b4b3b3; */
+    box-shadow: 2px 2px 2px #b4b3b3;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    padding: 10px 10px 10px 10px;
+    font-size: 90%;
+}
+.bookingHistory .thName {
+    text-align: center;
+    font-size: 20px;
+    border: 3px solid #fdc54b;
+    /* box-shadow: 3px 3px 3px #b4b3b3; */
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+
+    
+}
+.bookingHistory .thDate {
+    /* display:inline-block; */
+    text-align: right;
+    font-size: small;
+    font-weight: lighter;
+    margin: 5px 0 5px 0;
+    /* color: #aeaeae; */
+    /* border: 1px solid black; */
+    /* border-radius: 20px; */
+    /* padding: 5px 10px 5px 10px; */
+}
+.bookingHistory .QrBtn {
+    width: 90%;
+    background-color: #b4b3b3;
+    border: 0px;
+    margin-top: 5%;
+}
+.qrCodeHeader {
+    border-bottom: #ffffff;
+    
+}
+.qrCodeBody {
+    margin: 0 0 10% 0;
+    text-align: center;
+    
+}
+.qrCodeBody .img{
+    width: 100%;
+    
+}
+/* ! ================================================ */
+/* ! ================== userCarbon ================== */
+/* ! ================================================ */
+.userCarbon {
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+/* ! ================================================ */
+/* ! ================== DatePicker ================== */
+/* ! ================================================ */
+.react-datepicker {
+    font-family: "LeeSeoyun" !important;
+    font-size: 0.9rem !important;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #aeaeae;
+    border-radius: 0.3rem;
+    display: inline-block;
+    position: relative;
+    margin-top: 40px !important;
+  }
+
+
+  .react-datepicker__header {
+    text-align: center;
+    background-color: #fda085 !important;
+    /* background-color: #fdcc72 !important; */
+    border-bottom: 1px solid #aeaeae;
+    border-top-left-radius: 0.3rem;
+    padding: 8px 0;
+    position: relative;
+  }
+.react-datepicker__year-read-view--down-arrow,
+.react-datepicker__month-read-view--down-arrow,
+.react-datepicker__month-year-read-view--down-arrow, .react-datepicker__navigation-icon::before {
+  border-color: rgb(255, 255, 255) !important;
+  border-style: solid;
+  border-width: 3px 3px 0 0;
+  content: "";
+  display: block;
+  height: 9px;
+  position: absolute;
+  top: 11px !important;
+  width: 9px;
+}
+.react-datepicker__day--highlighted,
+.react-datepicker__month-text--highlighted,
+.react-datepicker__quarter-text--highlighted,
+.react-datepicker__year-text--highlighted {
+    border-radius: 50% !important;
+  background-color: #99e29f !important;
+  color: #fff;
+}
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+  border-radius: 50% !important;
+  background-color: #fdc54b !important;
+  color: #fff;
+}
+
+.react-datepicker__day--outside-month{
+    color: rgb(224, 222, 222) !important;
+}
+
+
+
+
+

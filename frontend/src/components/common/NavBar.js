@@ -4,10 +4,13 @@ import { Col, Container, NavLink, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
-import "./NavBar.css";
 import userStore from "../../store/userStore";
+import NavStore from "../../store/NavStore";
+import Fade from "react-reveal/Fade";
 
 const NavBar = () => {
+
+    const navHeader = NavStore(state => state.navHeader);
 
     const userId = userStore(state => state.userId);
     const userImage = userStore(state => state.userImage);
@@ -42,17 +45,18 @@ const NavBar = () => {
         setUserImage("img/default_image.png");
     };
     return (
-        <div className="test">
+
+        <div className="NavBar">
             <Container>
                 <Row className="navRow">
                     <Col>
-                        <Link to="/main" style={{ color: 'black', textDecoration: 'none' }}>Clearance</Link>
+                        <Link className="navLink" to="/main">Clearance</Link>
                     </Col>
-                    <Col xs={6}></Col>
+                    <Col xs={6}><div className="navHeader">{navHeader}</div></Col>
                     <Col><Button onClick={toggleMenu}>네브바</Button></Col>
                 </Row>
             </Container>
-
+            <Fade right when={isOpen}>
             <div className={isOpen ? "show-menu" : "hide-menu"}>
                 <div className="navPosition ">
                     <Nav className="flex-column">
@@ -69,12 +73,11 @@ const NavBar = () => {
                                 <Link to="/basket" style={{ color: 'black', textDecoration: 'none' }}>장바구니</Link>
                             </>
                         }
-
-
                         <Link onClick={Logout} to="/" style={{ color: 'black', textDecoration: 'none' }}>로그아웃</Link>
                     </Nav>
                 </div>
             </div>
+          </Fade>
         </div>
     )
 }

@@ -8,10 +8,15 @@ import axios from 'axios';
 import ReservationLoading from './ReservationLoading';
 import ReservationStore from '../../store/ReservationStore';
 import { useNavigate } from 'react-router-dom';
+import NavStore from '../../store/NavStore';
 
 
 const { kakao } = window;
 function ReservationResult(props) {
+
+    const setNavHeader = NavStore(state => state.setNavHeader);
+    setNavHeader("예약 완료");
+
     let [loading, setLoading] = useState(true);
 
     const bookSet = ReservationStore(state => state.bookSet);
@@ -130,12 +135,11 @@ function ReservationResult(props) {
     }
     let navigate = useNavigate();
     return (
-        <div>
+        <div className='reservationResult'>
             {
                 loading ? <ReservationLoading /> : null
             }
             <NavBar />
-            <h1>예약 완료</h1>
             <div>
                 <div style={{ backgroundColor: "#F5F5F5", margin: "10px 5% 0px 5%" }}>
                     <Map // 지도를 표시할 Container
