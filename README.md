@@ -142,7 +142,7 @@
 
 |                                                                     QR코드                                                                     |
 | :--------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./image/QRCODE.JPG" height="400px"/> <img src="./image/QRcode2.png" height="400px"/> <img src="./image/QRcode3.png" height="400px"/> |
+| <img src="./image/QRcode.JPG" height="400px"/> <img src="./image/storeQR.JPG" height="400px"/> <img src="./image/storeOK.JPG" height="400px"/> |
 
 ### 탄소 발자국
 
