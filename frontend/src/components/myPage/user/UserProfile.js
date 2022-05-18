@@ -6,12 +6,16 @@ import Col from 'react-bootstrap/Col';
 import { Spinner } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import NavBar from '../../common/NavBar';
-
+import NavStore from '../../../store/NavStore';
 import { Navigate, useNavigate } from 'react-router-dom'
 import userStore from '../../../store/userStore';
 import axios from 'axios';
 
 function UserProfile(props) {
+
+    const setNavHeader = NavStore(state => state.setNavHeader);
+    
+
     const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
@@ -37,7 +41,7 @@ function UserProfile(props) {
     };
     const onChangePhone = (e) => {
         const phoneRegex = /^[0-9]{3}[-]{1}[0-9]{3,4}[-]{1}[0-9]{4}$/;
-        
+
         if ((!e.target.value || (phoneRegex.test(e.target.value)))) setPhoneError(false);
         else setPhoneError(true);
         setUserPhone(e.target.value)
@@ -60,6 +64,7 @@ function UserProfile(props) {
 
 
     useEffect(() => {
+        setNavHeader("프로필");
         // ! axios get
         axios
             .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
@@ -75,7 +80,7 @@ function UserProfile(props) {
                 console.error("axios get 실패");
                 console.error(e)
             });
-        }, []);
+    }, []);
 
     const onSubmit = (e) => {
         if (validation()) return;
@@ -134,11 +139,11 @@ function UserProfile(props) {
     let navigate = useNavigate();
 
     return (
-        <div>
+        <div className='userProfile'>
             <NavBar></NavBar>
-            <Container className='mt-5'>
+            <Container className='mt-5 mb-5'>
                 <Form>
-                    <Form.Group as={Row} className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
+                    <Form.Group as={Row} className="mb-5" controlId="formFile">
                         <div className='imageDiv'>
                             {loaded === false || loaded === true ?
                                 (<img className='imgFile' src={userImage} alt="userImage" />) :
@@ -146,29 +151,44 @@ function UserProfile(props) {
                         </div>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>아이디</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="아이디" value={userId} disabled readOnly />
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>이름(닉네임)</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="이름" value={userName} onChange={onChangeUserName} />
                             {userNameError && <div className="invalid-input">입력되지 않았습니다.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>이메일</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={50} type="input" placeholder="이메일" value={userEmail} onChange={onChangeEmail} />
                             {emailError && <div className="invalid-input">올바른 이메일 형식을 입력하세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>휴대전화</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="연락처" value={userPhone} onChange={onChangePhone} />
-                            {phoneError && <div className="invalid-input">올바른 전화번호를 입력하세요.</div>}
+                            {phoneError && <div className="invalid-input">올바른 전화번호를 입력하세요. (012-3456-7890)</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>주소</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="주소" value={userAddress} onChange={onChangeAddress} />
                             {addressError && <div className="invalid-input">주소를 입력해주세요. <br /> 부산 사하구 하신중앙로 2 이런 형식으로 넣어야함...</div>}
@@ -176,7 +196,7 @@ function UserProfile(props) {
                     </Form.Group>
 
                     <div className="d-grid gap-1 mb-3">
-                        <Button variant="secondary" onClick={onSubmit}>회원 정보 수정</Button>
+                        <Button className='submit' variant="secondary" onClick={onSubmit}>회원 정보 수정</Button>
                     </div>
                 </Form>
                 {/* <br />

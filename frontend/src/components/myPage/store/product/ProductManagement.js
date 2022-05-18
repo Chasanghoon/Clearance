@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
-import { Button, Container, Table, ModalFooter, FormControl } from 'react-bootstrap';
+import { Button, Container, Table, ModalFooter, FormControl, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal'
-import { addDays, subDays } from 'date-fns';
-import { Tab } from 'bootstrap';
 import NavBar from '../../../common/NavBar';
+import NavStore from '../../../../store/NavStore';
+import Fade from "react-reveal/Fade";
 
 function ProductManagement(props) {
+    const setNavHeader = NavStore(state => state.setNavHeader);
+
+
     const [highlight, setHighlight] = useState();
     const [selectDate, setSelectDate] = useState(new Date());
     const [searchDay, setSearchDay] = useState(splitDate(selectDate));
@@ -25,6 +27,7 @@ function ProductManagement(props) {
 
 
     useEffect(() => {
+        setNavHeader("상품 관리");
         // ! axios get
         console.log("axios get")
         axios
@@ -92,22 +95,61 @@ function ProductManagement(props) {
                     <Modal
                         {...props}
                         // size="lg"
-                        aria-labelledby="contained-modal-title-vcenter"
+                        // aria-labelledby="contained-modal-title-vcenter"
                         centered
                     >
-                        <Modal.Header closeButton>
-                            <Modal.Title>{modalProduct.productName}</Modal.Title>
+                        <Modal.Header closeButton className='pmModalHeader'>
+                            <Modal.Title></Modal.Title>
                         </Modal.Header>
-                        <Modal.Body>
-                            {/* {modalProduct.productName} */}
-                            sd
+                        <Modal.Body className='pmModalBody'>
+
+                            <Container>
+                                <Row>
+                                    <Col>
+                                        <img className='img' src={modalProduct.productImagefront} alt=''></img><br />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={1}></Col>
+                                    <Col className='nameCol' xs={5}>상품 명</Col>
+                                    <Col className='dataCol' xs={6}>{modalProduct.productName}</Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={1}></Col>
+                                    <Col className='nameCol' xs={5}>원가</Col>
+                                    <Col className='dataCol' xs={6}>{modalProduct.productPrice}</Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={1}></Col>
+                                    <Col className='nameCol' xs={5}>할인 율</Col>
+                                    <Col className='dataCol' xs={6}>{modalProduct.productDiscount}</Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={1}></Col>
+                                    <Col className='nameCol' xs={5}>할인가</Col>
+                                    <Col className='dataCol' xs={6}>{modalProduct.productDiscountprice}</Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={1}></Col>
+                                    <Col className='nameCol' xs={5}>재고</Col>
+                                    <Col className='dataCol' xs={6}>{modalProduct.productStock}</Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={1}></Col>
+                                    <Col className='nameCol' l xs={5}>유통기한</Col>
+                                    <Col className='dataCol' xs={6}>{modalProduct.productExpdate}</Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={1}></Col>
+                                    <Col className='nameCol' l xs={5}>카테고리</Col>
+                                    <Col className='dataCol' xs={6}>{changeCategory(modalProduct.categoryId)}</Col>
+                                </Row>
+                                <div className='pmModalBtnGroup'>
+                                    <Link to="../updateProduct" state={{ data: modalProduct }}><Button className='pmModalUpdateBtn'> 수정 </Button></Link>
+                                    <Button className='pmModalDeleteBtn' onClick={deleteProduct}> 삭제 </Button>
+                                </div>
+                            </Container>
                         </Modal.Body>
-                        <ModalFooter>
-                            <div style={{ textAlign: "center" }}>
-                                <Link to="../updateProduct" state={{ data: modalProduct }}><Button variant="success"> 수정 </Button></Link>
-                                <Button variant="danger" onClick={deleteProduct}> 삭제 </Button>
-                            </div>
-                        </ModalFooter>
                     </Modal>
                     : null}
             </>
@@ -127,48 +169,49 @@ function ProductManagement(props) {
         setSearchDay(splitDate(date));
     }
     return (
-        <div>
+        <div className='productManagement'>
             <NavBar></NavBar>
             <Container>
-                productManagement
-
-                <DatePicker
-                    locale={ko}
-                    selected={selectDate}
-                    onChange={(date) => setDate(date)}
-                    highlightDates={highlightArray}
-                    inline />
-                <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
+                <Fade>
+                    <DatePicker
+                        locale={ko}
+                        selected={selectDate}
+                        onChange={(date) => setDate(date)}
+                        highlightDates={highlightArray}
+                        inline />
+                </Fade>
+                <Link to={"/allProductManagement"}><Button className='pmAllBtn' variant='warning'>전체 상품 관리</Button></Link>
+                <div>
                     {product !== undefined && product.length > 0 ?
-                        <Table style={{ width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all" }}>
+                        <Table>
                             <colgroup>
-                                <col width="35%" />
-                                <col width="35%" />
-                                <col width="15%" />
                                 <col width="25%" />
+                                <col width="40%" />
+                                <col width="15%" />
+                                <col width="20%" />
                             </colgroup>
-                            <thead>
-                                <tr style={{ borderTop: "hidden" }}>
-                                    <th>상품</th>
-                                    <th>상품명</th>
-                                    <th>수량</th>
-                                    <th>가격</th>
+                            <thead className='pmThead'>
+                                <tr>
+                                    <th className='pmTh'>상품</th>
+                                    <th className='pmTh'>상품명</th>
+                                    <th className='pmTh'>재고</th>
+                                    <th className='pmTh'>가격</th>
                                 </tr>
                             </thead>
                             {product !== undefined ?
                                 product.map((data, index) => {
                                     return (
-                                        <tbody key={index} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
-                                            <tr onClick={() => modalControl(data)}>
-                                                <td>
-                                                    <div className='imageDiv2'>
-                                                        <img className='imgFile' src={data.productImagefront} alt="userImage" />)
-                                                    </div>
-                                                </td>
-                                                <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.productName}</td>
-                                                <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.bookStock}</td>
-                                                <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.productDiscountprice}원</td>
-                                            </tr>
+                                        <tbody key={index} className='pmTbody'>
+                                            <Fade>
+                                                <tr onClick={() => modalControl(data)}>
+                                                    <td className='pmTd pmImageDiv'>
+                                                        <img className='pmImgFile' src={data.productImagefront} alt="userImage" />
+                                                    </td>
+                                                    <td className='pmTd' >{data.productName}</td>
+                                                    <td className='pmTd' >{data.productStock}</td>
+                                                    <td className='pmTd' >{data.productDiscountprice}원</td>
+                                                </tr>
+                                            </Fade>
                                         </tbody>
                                     )
                                 })
@@ -181,9 +224,8 @@ function ProductManagement(props) {
                         </Table>
                         :
                         null}
-
                 </div>
-                <Link to={"/allProductManagement"}><Button variant='warning'>전체 상품 관리</Button></Link>
+
             </Container>
         </div>
     );
@@ -245,5 +287,58 @@ function splitDate(date) {
 
     let reDate = year + "-" + month + "-" + day
     return reDate;
+}
+function changeCategory(data) {
+    let reCategory = ""
+    switch (data) {
+        case 0:
+            reCategory = "과일";
+            break;
+        case 1:
+            reCategory = "채소";
+            break;
+        case 2:
+            reCategory = "쌀/잡곡/견과";
+            break;
+        case 3:
+            reCategory = "정육/계란류";
+            break;
+        case 4:
+            reCategory = "수산물/건해산";
+            break;
+        case 5:
+            reCategory = "우유/유제품/유아식";
+            break;
+        case 6:
+            reCategory = "냉장/냉동/간편식";
+            break;
+        case 7:
+            reCategory = "밀키트/김치/반찬";
+            break;
+        case 8:
+            reCategory = "생수/음료/주류";
+            break;
+        case 9:
+            reCategory = "커피/원두/차";
+            break;
+        case 10:
+            reCategory = "라면/면류/즉석식품/통조림";
+            break;
+        case 11:
+            reCategory = "장류/양념/가루/오일";
+            break;
+        case 12:
+            reCategory = "과자/시리얼/빙과/떡";
+            break;
+        case 13:
+            reCategory = "베이커리/잼/샐러드";
+            break;
+        case 14:
+            reCategory = "건강식품";
+            break;
+        default:
+            break;
+    }
+    return reCategory;
 }
 export default ProductManagement;

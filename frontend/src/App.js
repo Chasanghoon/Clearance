@@ -1,5 +1,6 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/login/Login';
 import Main from './components/main/Main';
@@ -24,6 +25,9 @@ import UserCarbon from './components/myPage/user/UserCarbon';
 import Product from './components/product/Product';
 import KakaoCounseling from './components/common/KakaoCounseling';
 import QrCheck from './components/myPage/store/QrCheck';
+import NavBar from './components/common/NavBar';
+// import Topbutton from './components/Topbutton';
+
 
 
 
@@ -31,6 +35,7 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
+      
         <Routes>
           <Route path="/" element={ <Start /> } />
           <Route path="/kakaoCounseling" element={ <KakaoCounseling /> } />
@@ -67,7 +72,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
-      {/* <Footer></Footer> */}
+      
     </div>
   );
 }

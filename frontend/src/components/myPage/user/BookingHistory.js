@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/esm/locale";
 import { Button, Container, Table, ModalFooter, FormControl, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NavBar from '../../common/NavBar';
+import DatePicker from 'react-datepicker';
+import NavStore from '../../../store/NavStore';
+import Fade from "react-reveal/Fade";
+
 
 function BookingHistory(props) {
+
+    const setNavHeader = NavStore(state => state.setNavHeader);
+    setNavHeader("예약 내역");
+
     const [highlight, setHighlight] = useState();
     const [selectDate, setSelectDate] = useState(new Date());
     const [searchDay, setSearchDay] = useState(splitDate(selectDate));
@@ -135,7 +142,7 @@ function BookingHistory(props) {
     }
 
     function MyVerticallyCenteredModal(props) {
-        // console.log("모달 : " + JSON.stringify(modalProduct));
+        console.log("모달 : " + JSON.stringify(modalProduct));
         return (
             <>
                 {modalProduct !== undefined ?
@@ -146,11 +153,14 @@ function BookingHistory(props) {
                         centered
                     >
                         <Modal.Header closeButton>
-                            <Modal.Title>{modalProduct.product_name}</Modal.Title>
+                            {/* <Modal.Title>{modalProduct.product_name}</Modal.Title> */}
                         </Modal.Header>
-                        <Modal.Body>
-                            {/* {modalProduct.productName} */}
-                            sd
+                        <Modal.Body closeButton>
+                            <img src={modalProduct.product_imagefront} alt=''></img><br />
+                            {modalProduct.product_name}<br />
+                            원가 : {modalProduct.product_price}<br />
+                            할인가격 : {modalProduct.product_discountprice}<br />
+                            {modalProduct.product_price}<br />
                         </Modal.Body>
                     </Modal>
                     : null}
@@ -166,14 +176,14 @@ function BookingHistory(props) {
                     <Modal
                         {...props}
                         // size="lg"
-                        aria-labelledby="contained-modal-title-vcenter"
+                        // aria-labelledby="contained-modal-title-vcenter"
                         centered
                     >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Qr코드</Modal.Title>
+                        <Modal.Header closeButton className='qrCodeHeader' >
+                            {/* <Modal.Title>Qr코드</Modal.Title> */}
                         </Modal.Header>
-                        <Modal.Body>
-                            <img src={modalQrData} alt=''></img>
+                        <Modal.Body className='qrCodeBody'>
+                            <img className='img' src={modalQrData} alt=''></img><br />
                         </Modal.Body>
                     </Modal>
                     : null}
@@ -199,86 +209,112 @@ function BookingHistory(props) {
     }
 
     return (
-        <div>
+        <div className='bookingHistory'>
             <NavBar></NavBar>
-            <h1>BookingHistory</h1>
-
             <Container>
-                productManagement!
+                <Fade>
+                    <DatePicker
+                        locale={ko}
+                        // fixedHeight
+                        selected={selectDate}
+                        onChange={(date) => setDate(date)}
+                        highlightDates={highlightArray}
+                        inline />
+                </Fade>
 
-                <DatePicker
-                    locale={ko}
-                    selected={selectDate}
-                    onChange={(date) => setDate(date)}
-                    highlightDates={highlightArray}
-                    inline />
-                <Button onClick={changeAll} variant={checkAll === true ? 'warning' : 'light'}>전체</Button>
-                <Button onClick={changeProgress} variant={checkProgress === true ? 'warning' : 'light'}>거래 진행 중</Button>
-                <Button onClick={changeComplete} variant={checkComplete === true ? 'warning' : 'light'}>거래 완료</Button>
-
-
-                <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
-                    <Table style={{ width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all" }}>
-                        <colgroup>
-                            <col width="35%" />
-                            <col width="35%" />
-                            <col width="15%" />
-                            <col width="25%" />
-                        </colgroup>
-                        {product !== undefined ?
+                <div className='btnDiv'>
+                    <Button onClick={changeAll} variant={checkAll === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>전체</Button>
+                    <Button onClick={changeProgress} variant={checkProgress === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>거래 진행 중</Button>
+                    <Button onClick={changeComplete} variant={checkComplete === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>거래 완료</Button>
+                </div>
+                
+                <Table className='bookTable'>
+                    <Fade>
+                        {product !== undefined && product.length > 0 ?
                             product.map((data, index) => {
                                 console.log("product[" + index + "] = " + JSON.stringify(data[0].user_name));
                                 // console.log("product[" + index + "] = " + product[index].product_name);
                                 return (
                                     <>
-                                        <thead>
-                                            <tr>{data[0].user_name}</tr>
-                                            <tr style={{ borderTop: "hidden" }}>
-                                                <th>상품</th>
-                                                <th>상품명</th>
-                                                <th>수량</th>
-                                                <th>가격</th>
+                                        <div className='bookDiv'>
+                                            <colgroup>
+                                                <col width="25%" />
+                                                <col width="35%" />
+                                                <col width="15%" />
+                                                <col width="35%" />
+                                            </colgroup>
+
+                                            <thead>
+                                                {index % 2 === 0 ?
+                                                    <tr className='trHead'>
+                                                        <th colSpan={"4"}><div className='thName'>- {data[0].user_name} -</div></th>
+                                                    </tr>
+                                                    :
+                                                    <tr className='trHead2'>
+                                                        <th colSpan={"4"}><div className='thName'>- {data[0].user_name} -</div></th>
+                                                    </tr>}
+
+                                                <tr>
+                                                    <th className='thDate' colSpan={"4"}><div >{changeDate(data[0].book_date)} {changeTime(data[0].book_hour)}</div></th>
+                                                </tr>
+                                                <tr>
+                                                    <th className='bookTh'>상품</th>
+                                                    <th className='bookTh'>상품명</th>
+                                                    <th className='bookTh'>수량</th>
+                                                    <th className='bookTh'>가격</th>
+                                                </tr>
+                                            </thead>
+                                            {data.map((d, i) => {
+                                                console.warn(d);
+                                                return (
+                                                    <>
+                                                        <tbody key={i} className='bookTbody'>
+                                                            {/* <tr onClick={() => modalControl(d)}> */}
+                                                            <tr>
+                                                                <td className='bookTd'>
+                                                                    <span className='bookImageDiv'>
+                                                                        <img className='bookImgFile' src={d.product_imagefront} alt="userImage" />
+                                                                    </span>
+                                                                </td>
+                                                                <td className='bookTd' >{d.product_name}</td>
+                                                                <td className='bookTd'>{d.basket_count}</td>
+                                                                <td className='bookTd'>{d.product_discountprice}원</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </>
+                                                )
+                                            })}
+
+                                            <tr>
+                                                <td className='bookQrTd' colSpan={"4"}>
+                                                    {/* {console.log("[index][0].book_status ========= " ,[index][0].book_status)}
+
+                                                    {product[index][0].book_status === 0  ?
+                                                    <Button className='QrBtn' onClick={() => createQrCode(data[index].book_set)}>Qr코드</Button>
+                                                    : null} */}
+                                                    {data[0].book_status === 0 ?
+                                                        <Button className='QrBtn' onClick={() => createQrCode(data[0].book_set)}>Qr코드</Button>
+                                                        : null}
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        {data.map((d, i) => {
-                                            console.warn(d);
-                                            return (
-                                                <>
-                                                    <tbody key={i} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
-                                                        <tr onClick={() => modalControl(d)}>
-                                                            <td>
-                                                                <div className='imageDiv2'>
-                                                                    <img className='imgFile' src={d.product_imagefront} alt="userImage" />)
-                                                                </div>
-                                                            </td>
-                                                            <td style={{ textAlign: "center", verticalAlign: "middle" }} >{d.product_name}</td>
-                                                            <td style={{ textAlign: "center", verticalAlign: "middle" }} >{d.basket_count}</td>
-                                                            <td style={{ textAlign: "center", verticalAlign: "middle" }} >{d.product_discountprice}원</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </>
-
-                                            )
-
-                                        })}
-                                        {product[index][0].book_status === 0 ?
-                                            <Button onClick={() => createQrCode(data[index].book_set)}>Qr코드</Button>
-                                            : null}
+                                        </div>
                                     </>
                                 )
                             })
-                            : null}
+                            :
+                            <div className='NoUnder'>
+                                예약 내역이 없습니다.
+                            </div>}
                         <MyVerticallyCenteredModal
                             show={modalShow}
                             onHide={() => setModalShow(false)}
                         />
-
-                    </Table>
-                </div>
+                    </Fade>
+                </Table>
                 <ModalQr
-                            show={modalQrShow}
-                            onHide={() => setModalQrShow(false)}
-                        />
+                    show={modalQrShow}
+                    onHide={() => setModalQrShow(false)}
+                />
             </Container>
 
         </div>
@@ -341,6 +377,31 @@ function splitDate(date) {
 
     let reDate = year + "-" + month + "-" + day
     return reDate;
+}
+function changeDate(date) {
+    console.error(date);
+    let year = '';
+    let month = '';
+    let day = '';
+
+
+    // let str = date + '';
+    // console.log(str);
+    let split = date.split('-');
+    year = split[0];
+    month = split[1];
+    day = split[2];
+
+
+    let reDate = year + '년 ' + month + '월 ' + day + '일'
+    console.log(reDate);
+    return reDate;
+}
+function changeTime(date) {
+    let str = date + '';
+    let split = str.substring(0, 5);
+
+    return split;
 }
 
 

@@ -1,14 +1,18 @@
 // 장바구니 관리 파일 (예상 url : /basket/{user})
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {  Button } from "react-bootstrap";
+import {  Button, Table } from "react-bootstrap";
 import "./Basket.css"
 import ReservationStore from "../../store/ReservationStore";
 import { useNavigate } from "react-router-dom";
 import { ca } from "date-fns/locale";
 import NavBar from '../common/NavBar';
+import NavStore from "../../store/NavStore";
 
 const Basket = () => {
+
+    const setNavHeader = NavStore(state => state.setNavHeader);
+    setNavHeader("장바구니");
 
     const setStoreId = ReservationStore(state => state.setStoreId)
     const expdate = ReservationStore(state => state.expdate)
@@ -20,6 +24,14 @@ const Basket = () => {
     const [basket, setBasket] = useState();
 
     let minExpdate = 99999999
+    let basketCount = 0;
+    let amountprice = 0;
+    let amountDiscount = 0;
+    let amountDiscountedPrice = 0;
+
+    function addBasketCount(basketCnt) {
+      return basketCount += basketCnt 
+    }
 
     function addSeller(newProduct) {
         setSeller((prev) => {
@@ -170,27 +182,72 @@ function splitDate(date) {
         console.log(Object.values(basket.data[0]))
     }
     return (
-        <div>
+        <div className="Basket" style={{
+            backgroundColor: "white",
+            margin: "10px 10px 10px 10px",
+            boxShadow:"3px 3px 3px #b4b3b3"
+        }}>
             <NavBar></NavBar>
-            <h1>장바구니</h1>
 
-            {(basket !== undefined && basket.data.length >0 ) ? basket.data.map((value) => (
-                
-                <div>
+            {(basket !== undefined && basket.data.length > 0) ? basket.data.map((value,idx) => (
+                basketCount = 0,
+                amountprice = 0,
+                amountDiscount = 0,
+                amountDiscountedPrice=0,
+                            
+                <div key={idx}>
                     {console.log(Object.values(value)[0])}
                     <div className="store">
                         {Object.keys(value)}
                     </div>
-                    <div align="left">
-                        <span className="content" style={{
-                            paddingRight: "15%",
-                            paddingLeft: "10%",
-                        }}>상품</span>
-                        <span className="content">상품명</span>
-                        <span className="content">수량</span>
-                        <span className="content">가격</span>
-                    </div>
-                    {Object.values(value)[0].map((p) => (
+                    <Table>
+                        <colgroup>
+                            <col width="25%" />
+                            <col width="35%" />
+                            <col width="15%" />
+                            <col width="20%" />
+                            <col width="5%" />
+                        </colgroup>
+                        <thead>
+                            <tr style={{ borderTop: "hidden" }}>
+                                <th>상품</th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>가격</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                    
+                    {Object.values(value)[0].map((p, index) => {
+                        return (
+                            basketCount += p.basket_count,
+                            amountprice += (p.product_price*p.basket_count),
+                            amountDiscount += ( (p.product_price*p.basket_count) - (p.product_discountprice*p.basket_count)),
+                            amountDiscountedPrice += (p.product_discountprice*p.basket_count),
+                            <tbody key={index} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
+                                <tr>
+                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} ><img alt="" src={p.product_imagefront}/></td>
+                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.product_name}</td>
+                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.basket_count}</td>
+                                    
+                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} >{(p.product_discountprice*p.basket_count).toLocaleString()}</td>
+                                    <td style={{ textAlign: "center", verticalAlign: "middle" }}><button style={{
+                                        borderRadius: "30px",
+                                        border: "none",
+                                        backgroundColor: "red",
+                                        color: "white"
+                                    }} onClick={() => {
+                                        cancelStore(p.basket_id)
+                                        window.location.reload();
+                                    }
+                                    }>취소</button></td>
+                                </tr>
+                            </tbody>
+                        )
+                    })}
+                        </Table>
+                    {/* {Object.values(value)[0].map((p,index) => (
                         <div>
                             <div className="product" align="left">
                                 <img alt="" src={p.product_imagefront} className="productImage"></img>
@@ -217,36 +274,76 @@ function splitDate(date) {
                                 <div>총 할인 가격 : {(p.product_discountprice*p.basket_count).toLocaleString()}원</div>
                             </div>
                         </div>
-                    ))}
-                    <Button onClick={() => {
-                        for (let i = 0; i < Object.values(value)[0].length; i++) {
-                            const element = splitDate2(splitDate(Object.values(value)[0][i].product_expdate));
-                            console.log("element : ",element);
-                            console.log("expdate : ",minExpdate);
-                            if (minExpdate > element) {
-                                console.log(element,"가 ",minExpdate,"보다 빠름")
-                                minExpdate = element
-                                console.log(expdate)
+                    ))} */}
+{/* 예약 상품 수 총합, 금액 총합, 할인가 총합, 할인된 가격 총합 구해줘야 함! */}
+                    <Table style={{
+                        margin: "0px auto",
+                        marginBottom: "30px",
+                        width: "80%"
+                    }}>
+                        <colgroup>
+                            <col width="50%" />
+                            <col width="50%" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td>예약 상품 수</td>
+                                <td>{basketCount.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <td>상품 금액</td>
+                                    <td>{ amountprice.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <td>할인 금액</td>
+                                    <td>{amountDiscount.toLocaleString()}<span style={{
+                                        color: "red",
+                                        fontSize: "80%",
+                                        verticalAlign:'10%'
+                                    }}>({-(amountDiscount/amountprice).toFixed(3) * 100}%)</span></td>
+                            </tr>
+                            <tr>
+                                <td>총 예약 금액</td>
+                                    <td>{ amountDiscountedPrice.toLocaleString()}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                    <div style={{
+                        margin: "10px auto",
+                        marginBottom: "30px",
+                    }}>
+                        <Button variant="warning" onClick={() => {
+                            for (let i = 0; i < Object.values(value)[0].length; i++) {
+                                const element = splitDate2(splitDate(Object.values(value)[0][i].product_expdate));
+                                console.log("element : ",element);
+                                console.log("expdate : ",minExpdate);
+                                if (minExpdate > element) {
+                                    console.log(element,"가 ",minExpdate,"보다 빠름")
+                                    minExpdate = element
+                                    console.log(expdate)
+                                }
+                                else if(minExpdate <= element){
+                                    console.log(minExpdate,"가 ",element,"보다 빠름")
+                                    console.log(minExpdate)
+                                }
                             }
-                            else if(minExpdate <= element){
-                                console.log(minExpdate,"가 ",element,"보다 빠름")
-                                console.log(minExpdate)
-                            }
-                        }
 
-                        console.log(value)
-                        console.log(Object.keys(value)[0])
-                        console.log(Object.values(value)[0])
-                        console.log(expdate)
-                        setStoreId(Object.values(value)[0][0].store_user_id)
-                        setExpdate(minExpdate)
-                        navigate("/reservation")
-                    }}>예약 진행</Button>
-                    <Button variant="danger" onClick={() => {
-                        cancelStoreAll(sessionStorage.getItem("id"), Object.values(value)[0][0].store_user_id)
-                        // console.log(Object.values(value)[0][0].store_user_id)
-                        
-                    }}>해당 점포의 예약 취소</Button>
+                            console.log(value)
+                            console.log(Object.keys(value)[0])
+                            console.log(Object.values(value)[0])
+                            console.log(expdate)
+                            setStoreId(Object.values(value)[0][0].store_user_id)
+                            setExpdate(minExpdate)
+                            navigate("/reservation")
+                        }}>예약</Button>
+                        <Button variant="secondary" style={{
+                            marginLeft: "5px"
+                        }} onClick={() => {
+                            cancelStoreAll(sessionStorage.getItem("id"), Object.values(value)[0][0].store_user_id)
+                            // console.log(Object.values(value)[0][0].store_user_id)
+                            
+                                }}>해당 점포의 목록 제거</Button>
+                    </div>
                 </div>
             )) :
                 <div>
@@ -258,7 +355,13 @@ function splitDate(date) {
                     </div>
                     </div>
             }
-            <Button variant="danger" onClick={() => {
+            <hr width="90%" style={{
+                marginTop: "10px",
+                margin: "0px auto",
+            }}/>
+            <Button style={{
+                margin: "15px 15px 15px 15px"
+            }} variant="danger" onClick={() => {
                             navigate("/main")
                         }}>돌아가기</Button>
         </div>

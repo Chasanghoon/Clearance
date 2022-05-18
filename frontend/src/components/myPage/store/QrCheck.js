@@ -38,14 +38,13 @@ function QrCheck() {
     }
     let navigate = useNavigate();
     return (
-        <div>
-            sdf
+      <div style={{ margin: " 50% auto" }}>
+        <div style={{fontSize:"20px"}}> 아래 카메라에 QR코드를 인식시켜주세요!</div>
             <QrReader
                 delay={300}
                 facingMode={"environment"}
                 onError={handleError}
                 onScan={handleScan}
-                style={{ width: '100%' }}
             />
             <p>{state.result}</p>
         </div>

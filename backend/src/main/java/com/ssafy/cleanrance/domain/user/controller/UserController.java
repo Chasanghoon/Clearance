@@ -61,7 +61,7 @@ public class UserController {
     })
     public ResponseEntity signupUser(
             @RequestPart UserSignUpRequest userSignUpRequest,
-            @RequestPart(value = "file") MultipartFile image) throws IOException {
+            @RequestPart(value = "file",required = false) MultipartFile image) throws IOException {
         String str = userService.createUser(userSignUpRequest, image);
         if("OK".equals(str)){
             return new ResponseEntity(HttpStatus.OK);

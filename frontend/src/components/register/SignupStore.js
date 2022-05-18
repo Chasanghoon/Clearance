@@ -8,7 +8,6 @@ import Container from 'react-bootstrap/Container';
 import { InputGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import './Signup.css';
 
 function SignupStore() {
 
@@ -38,7 +37,7 @@ function SignupStore() {
         setUserId(e.target.value);
     };
     const onChangePassword = (e) => {
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
         if ((!e.target.value || (passwordRegex.test(e.target.value)))) setPasswordError(false);
         else setPasswordError(true);
 
@@ -88,7 +87,8 @@ function SignupStore() {
         if (!address) setAddressError(true);
         if (!licenseNum) setLicenseNumError(true);
 
-        if (userIdError || passwordError || confirmPasswordError || userNameError || emailError || phoneError || addressError || licenseNumError || licenseNumCheck) return true;
+        if (userId.length === 0 || password.length === 0 || confirmPassword.length === 0 || userName.length === 0 || email.length === 0 || phone.length === 0 || address.length === 0 || licenseNum.length === 0 || 
+            userIdError || passwordError || confirmPasswordError || userNameError || emailError || phoneError || addressError || licenseNumError || licenseNumCheck) return true;
         else return false;
     };
 
@@ -97,27 +97,27 @@ function SignupStore() {
 
         axios
             .post("https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=2LlEyKxqr1YfX0CBc7emYGAsWH2IYBHaW3%2FaUCe68sdkVkrNRiRCjvdwbGZ3Z4MqvbUQTa%2BgMx0sxGXW%2F4fsrA%3D%3D",
-            {
-                "b_no": [
-                    `${licenseNum}`
-                ]
-            })
-            .then((e)=>{
+                {
+                    "b_no": [
+                        `${licenseNum}`
+                    ]
+                })
+            .then((e) => {
                 console.log("사업자 등록번호 확인 성공");
                 console.log(e);
                 console.log(e.data.data[0].b_no);
                 console.log(e.data.data[0].tax_type);
                 const checkTaxType = "국세청에 등록되지 않은 사업자등록번호입니다.";
-                if(e.data.data[0].tax_type !== checkTaxType){
+                if (e.data.data[0].tax_type !== checkTaxType) {
                     console.log("정상 처리.");
                     setLicenseNumCheck(false);
-                }else{
+                } else {
                     console.log("오류 처리");
                     setLicenseNumError(false);
                     setLicenseNumCheck(true);
                 }
             })
-            .catch((e)=>{
+            .catch((e) => {
                 console.log("사업자 등록번호 확인 실패");
                 console.log(e);
             })
@@ -181,7 +181,7 @@ function SignupStore() {
     const [image, setImage] = useState({
         image_file: "",
         preview_URL: "img/default_image.png",
-        
+
     });
 
     const [loaded, setLoaded] = useState(false);
@@ -216,66 +216,12 @@ function SignupStore() {
     let navigate = useNavigate();
 
     return (
-        <div>
+        <div className='signupStore'>
             <div className='title'>
                 <h1>Clearance</h1>
             </div>
             <Container className='mt-5'>
                 <Form>
-                    <Form.Group as={Row} className="mb-3">
-                        <Col sm>
-                            <Form.Control maxLength={20} placeholder="아이디" value={userId} onChange={onChangeUserId} />
-                            {userIdError && <div className="invalid-input">ID는 영문 대소문자와 숫자 4~12자리로 입력해야합니다.</div>}
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                        <Col sm>
-                            <Form.Control maxLength={20} type="password" placeholder="비밀번호" value={password} onChange={onChangePassword} />
-                            {passwordError && <div className="invalid-input">문자와 숫자를 하나 이상 포함하고 8자 이상이어야야 합니다.</div>}
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                        <Col sm>
-                            <Form.Control maxLength={20} type="password" placeholder="비밀번호 재확인" value={confirmPassword} onChange={onChangeConfirmPassword} />
-                            {confirmPasswordError && <div className="invalid-input">암호가 일치하지 않습니다.</div>}
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                        <Col sm>
-                            <Form.Control maxLength={20} placeholder="이름" value={userName} onChange={onChangeUserName} />
-                            {userNameError && <div className="invalid-input">입력되지 않았습니다.</div>}
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                        <Col sm>
-                            <Form.Control maxLength={50} type="input" placeholder="이메일" value={email} onChange={onChangeEmail} />
-                            {emailError && <div className="invalid-input">올바른 이메일 형식을 입력하세요.</div>}
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                        <Col sm>
-                            <Form.Control maxLength={20} placeholder="연락처" value={phone} onChange={onChangePhone} />
-                            {phoneError && <div className="invalid-input">올바른 전화번호를 입력하세요.</div>}
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                        <Col sm>
-                            <Form.Control maxLength={20} placeholder="주소" value={address} onChange={onChangeAddress} />
-                            {addressError && <div className="invalid-input">주소를 입력해주세요. <br /> 부산 사하구 하신중앙로 2 이런 형식으로 넣어야함...</div>}
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                        {/* <Form.Control maxLength={20} placeholder="사업자 등록 번호" value={licenseNum} onChange={onChangeLicenseNum} />
-                        {licenseNumError && <div className="invalid-input">올바른 사업자 등록 번호를 입력하세요.</div>}
-                        <Button>사업자 등록 번호 확인</Button> */}
-                        <Col>
-                            <InputGroup>
-                                <Form.Control maxLength={20} placeholder="사업자 등록 번호" value={licenseNum} onChange={onChangeLicenseNum} />
-                                <Button onClick={checkLicenseNum}>사업자 등록 번호 확인</Button>
-                            </InputGroup>
-                            {(licenseNumError|| licenseNumCheck) && <div className="invalid-input">올바른 사업자 등록 번호 10자리를 숫자만 입력하세요.</div>}
-                        </Col>
-                    </Form.Group>
                     <Form.Group as={Row} className="mb-3" controlId="formFile" style={{ "textAlign": "center" }}>
                         <div className='imageDiv'>
                             {loaded === false || loaded === true ?
@@ -288,8 +234,83 @@ function SignupStore() {
                             <Form.Control type="file" accept="image/*" onChange={saveImage} style={{ display: "none" }} />
                         </div>
                     </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>아이디</Row>
+                        </Col>
+                        <Col sm>
+                            <Form.Control maxLength={20} placeholder="아이디" value={userId} onChange={onChangeUserId} />
+                            {userIdError && <div className="invalid-input">ID는 영문 대소문자와 숫자 4~12자리로 입력해야합니다.</div>}
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>비밀번호</Row>
+                        </Col>
+                        <Col sm>
+                            <Form.Control maxLength={20} type="password" placeholder="비밀번호" value={password} onChange={onChangePassword} />
+                            {passwordError && <div className="invalid-input">문자, 숫자, 특수문자를 하나 이상 포함하며<br /> 8자 이상이어야 합니다.</div>}
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>비밀번호 재확인</Row>
+                        </Col>
+                        <Col sm>
+                            <Form.Control maxLength={20} type="password" placeholder="비밀번호 재확인" value={confirmPassword} onChange={onChangeConfirmPassword} />
+                            {confirmPasswordError && <div className="invalid-input">암호가 일치하지 않습니다.</div>}
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>매장 이름</Row>
+                        </Col>
+                        <Col sm>
+                            <Form.Control maxLength={20} placeholder="매장 이름" value={userName} onChange={onChangeUserName} />
+                            {userNameError && <div className="invalid-input">입력되지 않았습니다.</div>}
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>이메일</Row>
+                        </Col>
+                        <Col sm>
+                            <Form.Control maxLength={50} type="input" placeholder="이메일" value={email} onChange={onChangeEmail} />
+                            {emailError && <div className="invalid-input">올바른 이메일 형식을 입력하세요.</div>}
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>휴대전화</Row>
+                        </Col>
+                        <Col sm>
+                            <Form.Control maxLength={20} placeholder="연락처" value={phone} onChange={onChangePhone} />
+                            {phoneError && <div className="invalid-input">올바른 전화번호를 입력하세요.</div>}
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>매장 주소</Row>
+                        </Col>
+                        <Col sm>
+                            <Form.Control maxLength={20} placeholder="주소" value={address} onChange={onChangeAddress} />
+                            {addressError && <div className="invalid-input">올바른 주소를 입력해주세요.</div>}
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>사업자 등록 번호</Row>
+                        </Col>
+                        <Col sm>
+                            <InputGroup>
+                                <Form.Control maxLength={20} placeholder="사업자 등록 번호" value={licenseNum} onChange={onChangeLicenseNum} />
+                                <Button onClick={checkLicenseNum}>사업자 등록 번호 확인</Button>
+                            </InputGroup>
+                            {(licenseNumError || licenseNumCheck) && <div className="invalid-input">올바른 사업자 등록 번호 10자리를 숫자만 입력하세요.</div>}
+                        </Col>
+                    </Form.Group>
                     <div className="d-grid gap-1 mb-3">
-                        <Button variant="secondary" onClick={onSubmit}>Sign Up</Button>
+                        <Button className='submitBtn' variant="secondary" onClick={onSubmit}>Sign Up</Button>
                     </div>
                 </Form>
                 {/* <br />
