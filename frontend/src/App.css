@@ -9,16 +9,21 @@
       font-family: "LeeSeoyun";
       height: 100vh;
       overflow:auto; 
-      /* background-color: #fafafa; */
-      background-color: #a2a2ee;
+      background-color: #f6f6f6;
+      /* background-color: #a2a2ee; */
 }
 /* ! ================================================ */
 /* ! ==================== Start ==================== */
 /* ! ================================================ */
 .Start .title{
     margin-top: 20%;
-    padding-bottom: 20%;
-    
+    /* padding-bottom: 20%; */
+}
+.Start .loseImg{
+    /* width: 500px;
+    height: 400px; */
+    width: 390px;
+    height: 312px;
 }
 .Start .title h1{
     
@@ -29,8 +34,18 @@
     color: #fda085;
     text-shadow: 2px 2px 3px rgb(148, 148, 148)
 }
+.Start .title2 h1{
+    
+    font-size: 400%;
+    font-weight: bold;
+    color: linear-gradient(120deg, #f6d365 0%, #fda085 100%);;
+    /* color: #FFC812; */
+    color: #fda085;
+    text-shadow: 2px 2px 3px rgb(148, 148, 148)
+}
 .Start .startBtnGroup{
-padding-top: 40%;
+padding-top: 10%;
+padding-bottom: 40%;
 }
 .Start .loginBtn{
     margin: 20px 0 0 0;
@@ -44,108 +59,67 @@ padding-top: 40%;
     height: 8vh;
     font-size: x-large;
 }
-
-/* ! ================================================ */
-/* ! ==================== Navbar ==================== */
-/* ! ================================================ */
-.NavBar{
-    z-index: 2;
-    position: fixed;
+.startModalBody{
+    padding: 20% 5% 20% 5%;
+}
+.Start .registerUserBtn{
+    margin: 20px 0 0 0;
     width: 100%;
-    top: 0;
-    overflow: auto;
-    /* background-color: #000; */
+    height: 8vh;
+    font-size: x-large;
+    border: hidden;
+    background-color: #FFC812;
 }
-.NavBar .navHeader{
-    color: rgba(0, 0, 0, 1);
-    font-size: 30px;
+.Start .registerStoreBtn{
+    margin: 20px 0 0 0;
+    width: 100%;
+    height: 8vh;
+    font-size: x-large;
+    border: hidden;
+    background-color: #ff9012;
+}
+/* ! ================================================ */
+/* ! ==================== login ==================== */
+/* ! ================================================ */
+.login .title{
+    margin-top: 30%;
+    padding-bottom: 20%;
+}
+.login .title h1{
+    font-size: 400%;
     font-weight: bold;
-    /* margin: auto; */
+    color: linear-gradient(120deg, #f6d365 0%, #fda085 100%);;
+    /* color: #FFC812; */
+    color: #fda085;
+    text-shadow: 2px 2px 3px rgb(148, 148, 148)
 }
-.NavBar .navLink{
-    color: black;
-    text-decoration: none;
+.login .form {
+    margin-top: 45%;
+    margin-bottom: 30%;
 }
-
-.NavBar .hide-menu{
-width: 376px;
-height: 100%;
-position: absolute;
-left: -1000px;
-}
-.NavBar .navPosition{
-    /* padding-top: 5%; */
-    left: 50%;
-    position: relative;
-    width: 50%;
-    height: 100vh;
-    z-index: 2;
-    background-color: rgba(255, 200, 18, 0.9);
-}
-.NavBar .navRow{
-    background-color: rgba(255, 200, 18, 0.9);
-    padding-top: 10px;
-    padding-bottom: 10px;
-    height: 65px;
-    /* opacity: 0.7; */
-    /* background-color: rgba(221, 210, 57, 0.3); */
-}
-.NavBar .imageDiv {
-    border-radius: 20%;
-    position: relative;
-    margin:0 auto;
-    overflow: hidden;
-    width: 200px;
-    height: 200px;
-    /* background-color: #FFC812; */
-}
-.NavBar .imageDiv2 {
-    border-radius: 20%;
-    position: relative;
-    margin:0 auto;
-    overflow: hidden;
-    width: 80px;
-    height: 80px;
-    /* background-color: #FFC812; */
-}
-.NavBar .imgFile {
-    position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.NavBar .myPageButtonimage {
-    border-radius: 50%;
-    position: relative;
-    margin:0 auto;
-    overflow: hidden;
-    width: 80px;
-    height: 80px;
-    /* background-color: #FFC812; */
-}
-.NavBar .myPageButtonImageFile {
-    position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.signupUser .imageButton {
+.login .text{
     text-align: center;
-    padding: 10px 10px;
-    margin: 10px 5px 10px 5px;
-    width: 150px;
-    height: 50px;
+}
+.login .button{
+    background-color: #FFC812;
+    height: 8vh;
+    border: none;
+    font-size: x-large;
 }
 /* ! ================================================ */
 /* ! ================ signupUser ================ */
 /* ! ================================================ */
 .signupUser {
+    margin-top: 20%;
     padding-bottom: 20%;
+}
+.signupUser .title h1{
+    font-size: 400%;
+    font-weight: bold;
+    color: linear-gradient(120deg, #f6d365 0%, #fda085 100%);;
+    /* color: #FFC812; */
+    color: #fda085;
+    text-shadow: 2px 2px 3px rgb(148, 148, 148)
 }
 .signupUser .label {
     font-weight: 900;
@@ -216,7 +190,16 @@ left: -1000px;
 /* ! ================ signupStore ================ */
 /* ! ================================================ */
 .signupStore {
+    margin-top: 20%;
     padding-bottom: 20%;
+}
+.signupStore .title h1{
+    font-size: 400%;
+    font-weight: bold;
+    color: linear-gradient(120deg, #f6d365 0%, #fda085 100%);;
+    /* color: #FFC812; */
+    color: #fda085;
+    text-shadow: 2px 2px 3px rgb(148, 148, 148)
 }
 .signupStore .label {
     font-weight: 900;
@@ -283,6 +266,140 @@ left: -1000px;
     height: 60px;
 }
 /* ! ================================================ */
+/* ! ==================== Navbar ==================== */
+/* ! ================================================ */
+.NavBar{
+    z-index: 2;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    overflow: auto;
+    /* background-color: #000; */
+}
+.NavBar .logo{
+    /* color: rgba(0, 0, 0, 1); */
+    color: #ff9633;
+    font-size: 20px;
+    font-weight: bold;
+    /* float: left; */
+    text-align: center;
+    /* margin: auto; */
+    /* margin: auto; */
+}
+.NavBar .navHeader{
+    color: rgba(0, 0, 0, 1);
+    font-size: 30px;
+    font-weight: bold;
+    /* margin: auto; */
+}
+.NavBar .navLink{
+    color: black;
+    text-decoration: none;
+}
+
+.NavBar .hide-menu{
+width: 376px;
+height: 100%;
+position: absolute;
+left: -1000px;
+}
+.NavBar .navPosition{
+    /* padding-top: 5%; */
+    left: 50%;
+    position: relative;
+    width: 50%;
+    height: 100vh;
+    z-index: 2;
+    /* background-color: rgba(255, 200, 18, 0.9); */
+    background-color: rgba(255, 255, 255, 0.9); 
+}
+.NavBar .navRow{
+    /* background-color: rgba(255, 200, 18, 0.9);  */
+    background-color: rgba(255, 255, 255, 0.9); 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 65px;
+    /* opacity: 0.7; */
+    /* background-color: rgba(221, 210, 57, 0.3); */
+}
+.NavBar .imageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    /* background-color: #FFC812; */
+}
+.NavBar .imageDiv2 {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    /* text-align: right; */
+    float: right;
+    width: 25px;
+    height: 25px;
+    /* background-color: #FFC812; */
+}
+.NavBar .imgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.NavBar .myPageButtonimage {
+    border-radius: 50%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.NavBar .myPageButtonImageFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.signupUser .imageButton {
+    text-align: center;
+    padding: 10px 10px;
+    margin: 10px 5px 10px 5px;
+    width: 150px;
+    height: 50px;
+}
+/* ! ================================================ */
+/* ! ==================== main ==================== */
+/* ! ================================================ */
+.main {
+    margin-top: 20%;
+    padding-bottom: 20%;
+}
+
+/* ! ================================================ */
+/* ! ==================== product ==================== */
+/* ! ================================================ */
+.product {
+    margin-top: 20%;
+    padding-bottom: 20%;
+}
+
+/* ! ================================================ */
+/* ! ==================== basket ==================== */
+/* ! ================================================ */
+.basket {
+    margin-top: 20%;
+    padding-bottom: 20%;
+}
+
+/* ! ================================================ */
 /* ! ================ reservation ================ */
 /* ! ================================================ */
 .reservation {
@@ -298,44 +415,133 @@ left: -1000px;
     padding-top: 65px;
     padding-bottom: 20%;
 }
+.reservationResult .reservationResultImageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    /* background-color: #FFC812; */
+}
+.reservationResult .reservationResultImgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.reservationResult .reservationTableHeader {
+    border-bottom: hidden;
+    background-color: #a2a2ee;
+}
+.reservationResult .reservationTableBody {
+    border-bottom: hidden;
+}
+.reservationResult .reservationTableStoreName {
+    border-bottom: hidden;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* .reservationResult .reservationTableHeader {
+    padding: 10% 5% 10% 5%;
+    background-color: #a2a2ee;
+} */
+.wrap {
+    
+    position: absolute;
+    left: 0;
+    bottom: 40px;
+    width: 288px;
+    height: 180px;
+    margin-left: -130px;
+    text-align: left;
+    /* overflow: hidden; */
+    font-size: 14px;
+    line-height: 1.5;
+}
+.wrap .info {
+    width: 286px;
+    height: 160px;
+    border-radius: 20px;
+    border-bottom: 2px solid #ccc;
+    border-right: 2px solid #ccc;
+    overflow: hidden;
+    background: #fff;
+}
+.info .close {
+    position: absolute;
+    top: 10px;right: 15px;
+    color: #888;width: 17px;
+    height: 17px;
+    background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+}
+.info .close:hover {
+    cursor: pointer;
+}
 /* ! ================================================ */
-/* ! ================ UserMyPage ================ */
+/* ! ================ userMyPage ================ */
 /* ! ================================================ */
 .userMyPage {
     /* margin-top: 60px; */
-    padding-top: 65px;
+    padding-top: 40px;
     padding-bottom: 20%;
 }
 .userMyPage .rowBtn1 {
-    margin: 15% 0 5% 0;
+    margin: 10% 0 3% 0;
     /* height: 100vh; */
 }
 .userMyPage .rowBtn2 {
-    margin: 5% 0 5% 0;
-    /* height: 100vh; */
-}
-.userMyPage .rowBtn3 {
-    margin: 5% 0 5% 0;
+    margin: 0 0 3% 0;
     /* height: 100vh; */
 }
 .userMyPage .userMyPageBtn {
     /* margin-top: 10%; */
     background-color: #ffffff;
     color: black;
+    /* color: #ff9633; */
     border: hidden;
     border-radius: 30px;
     box-shadow: 3px 3px 3px #b4b3b3;
     width: 90%;
-    height: 20vh;
+    height: 25vh;
+    /* text-align: right;
+    padding-right: 70px; */
 }
 .userMyPage .userMyPageBtn2 {
     /* margin-top: 10%; */
-    background-color: #fdc54b;
+    background-color: #ff9633;
     border: hidden;
     border-radius: 30px;
     box-shadow: 3px 3px 3px #b4b3b3;
     width: 90%;
-    height: 20vh;
+    height: 25vh;
+    /* text-align: left;
+    padding-left: 70px; */
+}
+.userMyPage .userBtnTitle {
+    /* font-weight: bold; */
+    margin-top: 5px;
+    font-size: large;
+    color: #000;
+}
+.userMyPage .userBtnTitle2 {
+    /* font-weight: bold; */
+    margin-top: 5px;
+    font-size: large;
+    color: rgb(255, 255, 255);
+}
+.userMyPage .userBtnBody {
+    font-size: small;
+    color: #888;
+}
+.userMyPage .userBtnBody2 {
+    font-size: small;
+    color: rgb(255, 255, 255);
 }
 
 
@@ -368,15 +574,6 @@ left: -1000px;
     overflow: hidden;
     width: 200px;
     height: 200px;
-    /* background-color: #FFC812; */
-}
-.userProfile .imageDiv2 {
-    border-radius: 20%;
-    position: relative;
-    margin:0 auto;
-    overflow: hidden;
-    width: 80px;
-    height: 80px;
     /* background-color: #FFC812; */
 }
 .userProfile .imgFile {
@@ -421,70 +618,101 @@ left: -1000px;
     padding-top: 65px;
     padding-bottom: 20%;
 }
-.bookingHistory .under{
-    background-color: #FEEEED;
-    margin-top: 10px;
-    padding: 20px 0 0 0;
-    border-radius: 10px;
-}
-.bookingHistory .NoUnder{
-    margin: 0 0 30px 0;
-    font-size: 30px;
-    font-weight: bold;
-}
-.bookingHistory .tableDiv {
-/* background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%); */
-background-color: #fff;
-border: 2px solid black;
-border-radius: 15%;
-margin: 10px 5% 10px 5%;
-}
 .bookingHistory .btnDiv {
     margin-top: 50px;
-    }
-.bookingHistory Table{
-    width: 85%;
+}
+.bookingHistory .bookTable{
+    width: 95%;
     table-layout: fixed;
     font-size: 15px;
     word-break: break-all;
     margin: 10px auto 10% auto;
-    /* margin-left:auto; 
-    margin-right:auto; */
 }
-.bookingHistory .tr {
-    border-top: hidden;
-    border-bottom: hidden;
-}
-.bookingHistory .div {
+.bookingHistory .bookDiv {
     border-top: hidden;
     /* border: 1px solid #b4b3b3; */
     box-shadow: 2px 2px 2px #b4b3b3;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     margin-bottom: 30px;
-    padding: 10px 10px 10px 10px;
-    font-size: 90%;
+    /* padding: 0 0 0 10px; */
+    /* font-size: 90%; */
+    overflow: hidden;
+}
+.bookingHistory .bookTh {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #b4b3b3;
+}
+.bookingHistory .bookTd {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+.bookingHistory .bookQrTd {
+    border-top: hidden;
+    border-bottom: hidden;
+    padding-bottom: 20px;
+}
+
+.bookingHistory .trHead {
+    border-top: hidden;
+    border-bottom: hidden;
+    background-color: #23cc88;
+}
+.bookingHistory .trHead2 {
+    border-top: hidden;
+    border-bottom: hidden;
+    background-color: #ffd701;
 }
 .bookingHistory .thName {
+    margin-top: 5px;
+    margin-bottom: 5px;
     text-align: center;
-    font-size: 20px;
-    border: 3px solid #fdc54b;
-    /* box-shadow: 3px 3px 3px #b4b3b3; */
-    border-radius: 20px;
+    font-size: 25px;
+    color: #FFF;
     padding: 5px 10px 5px 10px;
-
-    
 }
 .bookingHistory .thDate {
     /* display:inline-block; */
     text-align: right;
     font-size: small;
     font-weight: lighter;
-    margin: 5px 0 5px 0;
+    border-bottom: hidden;
+    /* margin: 5px 7px 5px 0; */
     /* color: #aeaeae; */
     /* border: 1px solid black; */
     /* border-radius: 20px; */
-    /* padding: 5px 10px 5px 10px; */
+    padding: 10px 10px 10px 10px;
+}
+.bookingHistory .bookTbody {
+    /* borderBottomWidth: "2px", borderColor: "#F5F5F5" */
+    border-bottom-width: 2px;
+    border-color: #f5f5f5;
+    /* border-bottom: hidden; */
+}
+.bookingHistory .bookImageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    /* text-align: right; */
+    float: right;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.bookingHistory .bookImgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bookingHistory .table>:not(:first-child) {
+    /* border-top: 2px solid currentColor; */
+    border-top: hidden;
 }
 .bookingHistory .QrBtn {
     width: 90%;
@@ -513,11 +741,326 @@ margin: 10px 5% 10px 5%;
     padding-bottom: 20%;
 }
 /* ! ================================================ */
+/* ! ================ storeMyPage ================ */
+/* ! ================================================ */
+.storeMyPage {
+    /* margin-top: 60px; */
+    padding-top: 40px;
+    padding-bottom: 20%;
+}
+.storeMyPage .rowBtn1 {
+    margin: 10% 0 3% 0;
+    /* height: 100vh; */
+}
+.storeMyPage .rowBtn2 {
+    margin: 0 0 3% 0;
+    /* height: 100vh; */
+}
+.storeMyPage .storeMyPageBtn {
+    /* margin-top: 10%; */
+    background-color: #ffffff;
+    color: black;
+    /* color: #ff9633; */
+    border: hidden;
+    border-radius: 30px;
+    box-shadow: 3px 3px 3px #b4b3b3;
+    width: 90%;
+    height: 18vh;
+    /* text-align: right;
+    padding-right: 70px; */
+}
+.storeMyPage .storeMyPageBtn2 {
+    /* margin-top: 10%; */
+    background-color: #ff9633;
+    border: hidden;
+    border-radius: 30px;
+    box-shadow: 3px 3px 3px #b4b3b3;
+    width: 90%;
+    height: 18vh;
+    /* text-align: left;
+    padding-left: 70px; */
+}
+.storeMyPage .storeBtnTitle {
+    /* font-weight: bold; */
+    margin-top: 5px;
+    font-size: large;
+    color: #000;
+}
+.storeMyPage .storeBtnTitle2 {
+    /* font-weight: bold; */
+    margin-top: 5px;
+    font-size: large;
+    color: rgb(255, 255, 255);
+}
+.storeMyPage .storeBtnBody {
+    font-size: small;
+    color: #888;
+}
+.storeMyPage .storeBtnBody2 {
+    font-size: small;
+    color: rgb(255, 255, 255);
+}
+/* ! ================================================ */
+/* ! ================== storeProfile ================== */
+/* ! ================================================ */
+.storeProfile {
+    padding-top: 65px;
+    padding-bottom: 20%;
+    
+}
+.storeProfile .label {
+    font-weight: 900;
+    padding-left: 5%;
+    float: left;
+    margin-bottom: 1%;
+}
+.storeProfile .invalid-input{
+    color: red;
+    font-size: medium;
+}
+.storeProfile .submit {
+    height: 60px;
+    margin: 5% 0 5% 0;
+}
+.storeProfile .imageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    /* background-color: #FFC812; */
+}
+.storeProfile .imgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.storeProfile .myPageButtonimage {
+    border-radius: 50%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+.storeProfile .myPageButtonImageFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.storeProfile .imageButton {
+    text-align: center;
+    padding: 10px 10px;
+    margin: 10px 5px 10px 5px;
+    width: 150px;
+    height: 50px;
+}
+/* ! ================================================ */
+/* ! ================ productManagement ================ */
+/* ! ================================================ */
+.productManagement {
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+.productManagement .pmAllBtn{
+    margin-top: 50px;
+}
+.productManagement .pmImageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    float: right;
+    width: 80px;
+    height: 80px;
+    border-bottom: hidden;
+}
+.productManagement .pmImgFile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  
+}
+.productManagement Table{
+    border-radius: 20px;
+    width: 95%;
+    table-layout: fixed;
+    font-size: 15px;
+    word-break: break-all;
+    margin: 10px auto 10% auto;
+    border-collapse: collapse;
+    background-color: #FFF;
+    overflow: hidden;
+    box-shadow: 2px 2px 2px #b4b3b3;
+}
+.productManagement .pmDiv {
+    border-top: hidden;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    padding: 10px 10px 10px 10px;
+    font-size: 90%;
+    overflow: hidden;
+}
+.productManagement .pmThead {
+    /* border-bottom-width: 2px;
+    border-color: #3f3a3a; */
+    border-top: hidden;
+    border-bottom: hidden;
+    background-color: #22cc88;
+    color: #fff;
+    font-size: large;
+    font-weight: bold;
+    width: 100%;
+}
+.productManagement .pmTh {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.productManagement .pmTd {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px 10px 10px 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* border: 3px solid #000; */
+}
+
+.productManagement .pmTbody {
+    border-bottom-width: 2px;
+    border-color: #f5f5f5;
+}
+.pmModalHeader {
+    border-bottom: #ffffff;
+    
+}
+.pmModalBody {
+    font-family: "LeeSeoyun";
+    margin: 0 0 10% 0;
+    text-align: center;
+}
+.pmModalBody .nameCol{
+    font-weight: bold;
+}
+.pmModalBody .dataCol{
+text-align: left;
+}
+.pmModalBody .img{
+    width: 70%;
+}
+.pmModalBody .pmModalBtnGroup{
+    margin: 30px 0 0 0;
+}
+.pmModalBody .pmModalUpdateBtn{
+    margin: 0 20px 0 20px;
+    width: 25vw;
+    height: 40px;
+}
+.pmModalBody .pmModalDeleteBtn{
+    margin: 0 20px 0 20px;
+    width: 25vw;
+    height: 40px;
+}
+/* ! ================================================ */
+/* ! ================ allProductManagement ================ */
+/* ! ================================================ */
+.allProductManagement {
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+.allProductManagement .apmDiv{
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px rgb(150, 150, 150);
+    margin: 10px 5% 10px 5%;
+}
+.allProductManagement .apmTableThead{
+    width: 100%;
+    table-layout: "fixed";
+    font-size: 15px;
+    word-break: break-all;
+}
+.allProductManagement .apmTableThead{
+    border-block-width: 2px;
+    border-color: rgb(100, 100, 100);
+}
+.allProductManagement .apmTableTbody{
+    border-block-width: 2px;
+    border-color: #f5f5f5;
+    border-top: 1px solid #000;
+    border-bottom: hidden;
+}
+.allProductManagement .apmTableTr{
+    border-top: hidden;
+}
+.allProductManagement .c{
+    text-align: center;
+    vertical-align: middle;
+}
+.allProductManagement .apmImageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    /* background-color: #FFC812; */
+}
+.allProductManagement .apmImgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.allProductManagement .apmInputGroup{
+    margin: 0 10% 10px 10%;
+}
+.allProductManagement .apmRegister{
+    margin: 10px 5% 10px 5%;
+}
+.allProductManagement .apmRegister Button{
+    width: 30%;
+    float: right;
+    border-radius: 30px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 1px rgb(150, 150, 150);
+}
+.allProductManagement .pagination{
+    width: 100%;
+    justify-content: center;
+}
+/* ! ================================================ */
+/* ! ================ updateProduct ================ */
+/* ! ================================================ */
+.updateProduct {
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+.updateProduct .label {
+    font-weight: 900;
+    padding-left: 5%;
+    float: left;
+    margin-bottom: 1%;
+}
+/* ! ================================================ */
 /* ! ================== DatePicker ================== */
 /* ! ================================================ */
 .react-datepicker {
     font-family: "LeeSeoyun" !important;
-    font-size: 0.9rem !important;
+    font-size: 1rem !important;
     background-color: #fff;
     color: #000;
     border: 1px solid #aeaeae;
@@ -525,17 +1068,20 @@ margin: 10px 5% 10px 5%;
     display: inline-block;
     position: relative;
     margin-top: 40px !important;
+    width: 300px !important;
+    height: 300px !important;
   }
 
 
   .react-datepicker__header {
     text-align: center;
-    background-color: #fda085 !important;
+    background-color: #22cc88 !important;
     /* background-color: #fdcc72 !important; */
     border-bottom: 1px solid #aeaeae;
     border-top-left-radius: 0.3rem;
     padding: 8px 0;
     position: relative;
+    width: 300px !important;
   }
 .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow,
@@ -550,12 +1096,30 @@ margin: 10px 5% 10px 5%;
   top: 11px !important;
   width: 9px;
 }
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  margin-top: 0;
+  color: rgb(0, 0, 0);
+  font-weight: bolder !important;
+  font-size: 1.2rem;
+}
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: #000;
+  display: inline-block;
+  width: 2.2rem;
+  line-height: 2.2rem;
+  text-align: center;
+  margin: 0.166rem;
+}
 .react-datepicker__day--highlighted,
 .react-datepicker__month-text--highlighted,
 .react-datepicker__quarter-text--highlighted,
 .react-datepicker__year-text--highlighted {
     border-radius: 50% !important;
-  background-color: #99e29f !important;
+  background-color: #FFD700 !important;
   color: #fff;
 }
 .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range,
@@ -569,12 +1133,14 @@ margin: 10px 5% 10px 5%;
 .react-datepicker__year-text--in-selecting-range,
 .react-datepicker__year-text--in-range {
   border-radius: 50% !important;
-  background-color: #fdc54b !important;
+  background-color: #22cc88 !important;
+  /* background-color: #2E8B57 !important; */
   color: #fff;
 }
 
 .react-datepicker__day--outside-month{
     color: rgb(224, 222, 222) !important;
+    /* width: 300px !important; */
 }
 
 

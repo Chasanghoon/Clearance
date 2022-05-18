@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -110,6 +110,13 @@ function Reservation(props) {
         setStartTime(time);
         onChangeSaveTime(splitTime(time));
     }
+    
+    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+        <Form.Control style={{backgroundColor:"white"}} maxLength={50} placeholder="예약 날짜" value={value} onClick={onClick} onChange={onChangeSaveData}  readOnly />
+      ));
+      const ExampleCustomInput2 = forwardRef(({ value, onClick }, ref) => (
+        <Form.Control style={{backgroundColor:"white"}} maxLength={50} placeholder="예약 시간" value={value} onClick={onClick} onChange={onChangeSaveTime}  readOnly />
+      ));
     let navigate = useNavigate();
     return (
         <div className='reservation'>
@@ -139,13 +146,12 @@ function Reservation(props) {
                                 <DatePicker
                                     selected={startDate}
                                     dateFormat="yyyy년 MM월 dd일 (eee)"
+                                    customInput={<ExampleCustomInput />}
                                     locale={ko}
                                     showPopperArrow={false}
-                                    // excludeDates={[new Date(), subDays(new Date(), 1),new Date("2022/05/18")]}
+                                    popperPlacement="auto"
                                     minDate={new Date()}
-                                    // maxDate={new Date("2022/05/18")}
                                     maxDate={new Date(splitDate2(expdate))}
-                                    // onChange={date => setStartDate(date)} />
                                     onChange={date => dateData(date)} />
 
                                 {saveDataError && <div className="invalid-input">예약 날짜를 선택하세요.</div>}
@@ -156,10 +162,12 @@ function Reservation(props) {
                             <Col><DatePicker
                                 selected={startTime}
                                 dateFormat="h시 mm 분 aa"
+                                customInput={<ExampleCustomInput2 />}
                                 locale={ko}
                                 showTimeSelect
                                 showTimeSelectOnly
                                 showPopperArrow={false}
+                                popperPlacement="auto"
                                 timeIntervals={30}
                                 minTime={setHours(setMinutes(new Date(), 0), 9)}
                                 maxTime={setHours(setMinutes(new Date(), 0), 22)}

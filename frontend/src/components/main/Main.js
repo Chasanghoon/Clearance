@@ -29,10 +29,8 @@ function Main() {
   const nearProduct = useMainStore(state => state.nearProduct)
 
     return (
-        <div>
+        <div className='main'>
             <NavBar></NavBar>
-            <h1>메인페이지</h1>
-            
             <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
               <Map></Map>
             </div>
@@ -46,8 +44,8 @@ function Main() {
               fontSize:"18px",
               backgroundColor:"#FFC812",
               borderRadius:"30px",
-            }}>{val.userId}</div>
-            {nearProduct.filter(value => value.storeUserId === val.userId).map((value) => (
+            }}>{val.user_name}</div>
+            {nearProduct.filter(value => value.storeUserId === val.user_id).map((value) => (
               <div className="ProductItem" onClick={() => { console.log("이거", value) }}>
                 <div style={{
                   textAlign:"left"

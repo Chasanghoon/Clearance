@@ -7,8 +7,12 @@ import ReservationStore from "../../store/ReservationStore";
 import { useNavigate } from "react-router-dom";
 import { ca } from "date-fns/locale";
 import NavBar from '../common/NavBar';
+import NavStore from "../../store/NavStore";
 
 const Basket = () => {
+
+    const setNavHeader = NavStore(state => state.setNavHeader);
+    setNavHeader("장바구니");
 
     const setStoreId = ReservationStore(state => state.setStoreId)
     const expdate = ReservationStore(state => state.expdate)
@@ -174,9 +178,8 @@ function splitDate(date) {
         console.log(Object.values(basket.data[0]))
     }
     return (
-        <div>
+        <div className="basket">
             <NavBar></NavBar>
-            <h1>장바구니</h1>
 
             {(basket !== undefined && basket.data.length > 0) ? basket.data.map((value) => (
                 <div>

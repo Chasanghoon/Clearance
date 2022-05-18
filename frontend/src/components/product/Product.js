@@ -5,9 +5,13 @@ import productStore from "../../store/productStore";
 import "./Product.css";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from '../common/NavBar';
+import NavStore from "../../store/NavStore";
 
 // 상품을 클릭했을 때 나올 화면
 const Product = () => {
+
+    const setNavHeader = NavStore(state => state.setNavHeader);
+    setNavHeader("제품 상세");
 
     //새로고침 할 때마다 수량이 갱신되어야 함! => 매 새로고침마다 axios를 통해서 db에 있는 데이터를 사용해야 함!
     const product_id = localStorage.getItem("product_id")
@@ -142,7 +146,8 @@ const Product = () => {
     // -> zustans(x) -> localstorage(x) -> axios(o)
     console.log(info)
     return (
-        <div style={{backgroundColor:"#f5f6f9"}}>
+        // <div style={{backgroundColor:"#f5f6f9"}}>
+        <div className="product">
             <NavBar></NavBar>
             <div id="product" className="pb-2 pt-2">
                 <div style={{

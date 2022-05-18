@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button, FormControl, InputGroup, ModalFooter, Pagination, Table } from 'react-bootstrap';
+import { Button, Col, FormControl, InputGroup, ModalFooter, Pagination, Row, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal'
 import UpdateProduct from './UpdateProduct';
 import NavBar from '../../../common/NavBar';
+import NavStore from '../../../../store/NavStore';
 
 function AllProductManagement(props) {
+    const setNavHeader = NavStore(state => state.setNavHeader);
+
     const [product, setProduct] = useState();
     const [modalProduct, setModalProduct] = useState();
     const [deleteCheck, setDelectCheck] = useState(false);
@@ -27,6 +30,7 @@ function AllProductManagement(props) {
     console.log(sessionStorage.getItem("id"));
     console.error(checkWord);
     useEffect(() => {
+        setNavHeader("전체 상품 관리");
         console.log("실행샐행!!!!!!!!!!!!!!")
         // ! axios get
         console.log("axios get")
@@ -42,7 +46,7 @@ function AllProductManagement(props) {
                 // console.error("axios get 실패");
                 console.error(e)
             });
-    }, [deleteCheck,checkWord, page]);
+    }, [deleteCheck, checkWord, page]);
 
     function deleteProduct() {
         console.log(modalProduct.productId);
@@ -103,32 +107,32 @@ function AllProductManagement(props) {
         );
     }
 
-    
+
 
     function plus() {
 
-        if ((firstPage + 5) <= totalPage){
+        if ((firstPage + 5) <= totalPage) {
             setFirstPage(firstPage + 5);
             setPage(firstPage + 5)
-            
-        } 
+
+        }
         if ((lastPage + 5) <= totalPage) setLastPage(lastPage + 5);
         else setLastPage(totalPage);
         changePagination();
-        
+
     }
     function minus() {
         if ((firstPage - 5) >= 1) setFirstPage(firstPage - 5);
         if ((firstPage == 1)) setFirstPage(1);
-        if ((lastPage - 5) >= 5){
+        if ((lastPage - 5) >= 5) {
             setLastPage(lastPage - 5);
             setPage(lastPage - 5)
-        } 
+        }
 
-        if (lastPage == totalPage){
+        if (lastPage == totalPage) {
             setLastPage(firstPage - 1);
             setPage(lastPage - 1)
-        } 
+        }
 
         console.error("firstPage = " + firstPage);
         changePagination();
@@ -171,38 +175,45 @@ function AllProductManagement(props) {
 
 
     return (
-        <div>
+        <div className='allProductManagement'>
             <NavBar></NavBar>
-            전체 상품 관리
-            <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
-                <Table style={{ width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all" }}>
+            <Row>
+                <Col>
+                <div className='apmRegister'>
+                <Link to={"/registrationProduct"}><Button variant='warning'>상품 등록</Button></Link>
+            </div>
+                </Col>
+            </Row>
+            
+            <div className='apmDiv'>
+                <Table className='apmTable'>
                     <colgroup>
-                        <col width="35%" />
-                        <col width="35%" />
-                        <col width="15%" />
-                        <col width="25%" />
+                        <col width="20%" />
+                        <col width="40%" />
+                        <col width="12%" />
+                        <col width="28%" />
                     </colgroup>
-                    <thead>
-                        <tr style={{ borderTop: "hidden" }}>
+                    <thead className='apmTableThead'>
+                        <tr className='apmTableTr'>
                             <th>상품</th>
                             <th>상품명</th>
-                            <th>수량</th>
+                            <th>재고</th>
                             <th>가격</th>
                         </tr>
                     </thead>
                     {product !== undefined ?
                         product.map((data, index) => {
                             return (
-                                <tbody key={index} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
+                                <tbody key={index} className='apmTableTbody'>
                                     <tr onClick={() => modalControl(data)}>
                                         <td>
-                                            <div className='imageDiv2'>
-                                                <img className='imgFile' src={data.productImagefront} alt="userImage" />)
+                                            <div className='apmImageDiv'>
+                                                <img className='apmImgFile' src={data.productImagefront} alt="userImage" />)
                                             </div>
                                         </td>
-                                        <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.productName}</td>
-                                        <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.bookStock}</td>
-                                        <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.productDiscountprice}원</td>
+                                        <td className='apmTableTd' >{data.productName}</td>
+                                        <td className='apmTableTd' >{data.productStock}</td>
+                                        <td className='apmTableTd' >{data.productDiscountprice}원</td>
                                     </tr>
                                 </tbody>
                             )
@@ -216,30 +227,30 @@ function AllProductManagement(props) {
                 </Table>
             </div>
             <div>
-                <InputGroup className="mb-3">
+                <Row>
+                    <Col>
+                    </Col>
+                    <Col style={{ textAlign: 'center' }}>
+                        <Pagination>
+                            <Pagination.Prev onClick={minus} />
+                            {showItems}
+                            <Pagination.Next onClick={plus} />
+                        </Pagination>
+                    </Col>
+                    <Col>
+                    </Col>
+                </Row>
+            </div>
+            <div className='apmInputGroup'>
+                <InputGroup>
                     <FormControl
                         placeholder=""
-                        onChange={(e)=>setWord(e.target.value)}
-                        // aria-label="Recipient's username"
-                        // aria-describedby="basic-addon2"
+                        onChange={(e) => setWord(e.target.value)}
                     />
-                    <Button variant="outline-secondary" id="button-addon2" onClick={()=>setCheckWord(!checkWord)}>
+                    <Button variant="outline-secondary" id="button-addon2" onClick={() => setCheckWord(!checkWord)}>
                         Button
                     </Button>
-                </InputGroup>
-                <div>
-                    <Pagination>
-                        {/* <Pagination.First /> */}
-                        <Pagination.Prev onClick={minus} />
-                        {
-                            showItems
-                        }
-                        <Pagination.Next onClick={plus} />
-                        {/* <Pagination.Last /> */}
-                    </Pagination>
-                    <br />
-                </div>
-                <Link to={"/registrationProduct"}><Button variant='warning'>등록</Button></Link>
+                </InputGroup >
             </div>
         </div>
     );
