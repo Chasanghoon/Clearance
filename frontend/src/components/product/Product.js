@@ -146,12 +146,7 @@ const Product = () => {
     // -> zustans(x) -> localstorage(x) -> axios(o)
     console.log(info)
     return (
-<<<<<<< HEAD
-        // <div style={{backgroundColor:"#f5f6f9"}}>
-        <div className="product">
-=======
         <div>
->>>>>>> 5b4d60cc2c4b21faecd4d1b976b174a8c6fbab01
             <NavBar></NavBar>
             <div id="product" className="pb-2 pt-2">
                 <div style={{
