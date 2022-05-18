@@ -184,8 +184,8 @@ const Product = () => {
                 </Table>
                 <div>
                     <img alt="" src="img/left_arrow.png" style={{
-                        width: "10%",
-                        height:"10%"
+                        width: "8%",
+                        height:"8%"
                     }} onClick={() => {
                         if (basket_cnt > 1)
                             setBasketCnt(basket_cnt-1)
@@ -194,11 +194,11 @@ const Product = () => {
                         paddingLeft: "3%",
                         paddingRight: "3%",
                         fontSize: "30px",
-                        verticalAlign:"bottom"
+                        verticalAlign:"middle"
                     }}>개수 : {basket_cnt} </span>
                     <img alt="" src="img/right_arrow.png" style={{
-                        width: "10%",
-                        height:"10%"
+                        width: "8%",
+                        height:"8%"
                     }} onClick={() => {
                         if(basket_cnt < info.productStock)
                         setBasketCnt(basket_cnt+1)

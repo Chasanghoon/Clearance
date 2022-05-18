@@ -95,7 +95,7 @@ function Main() {
                       <td style={{
                         textDecoration: "line-through",
                         verticalAlign:"middle",
-                      }}>{(value.productPrice).toLocaleString()}</td>
+                      }}>{(value.productPrice).toLocaleString()}원</td>
                     </tr>
                     <tr>
                       <td style={{
@@ -103,7 +103,7 @@ function Main() {
                       }}>할인가</td>
                       <td style={{
                         fontSize: "150%"
-                      }}>{(value.productDiscountprice).toLocaleString()}</td>
+                      }}>{(value.productDiscountprice).toLocaleString()}원</td>
                     </tr>
                   </tbody>
                 </Table>

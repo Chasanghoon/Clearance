@@ -37,8 +37,8 @@ function QrCheck() {
         console.error(err)
     }
     let navigate = useNavigate();
-    return (
-      <div style={{ margin: " 50% auto" }}>
+  return (
+      <div className='QrCheck' style={{ margin: " 30% auto" }}>
         <div style={{fontSize:"20px"}}> 아래 카메라에 QR코드를 인식시켜주세요!</div>
             <QrReader
                 delay={300}
