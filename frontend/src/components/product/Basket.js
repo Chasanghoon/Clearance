@@ -225,7 +225,7 @@ function splitDate(date) {
                             amountDiscountedPrice += (p.product_discountprice*p.basket_count),
                             <tbody key={index} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
                                 <tr>
-                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} ><img alt="" src={p.product_imagefront}/></td>
+                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} ><img width="120%" alt="" src={p.product_imagefront}/></td>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.product_name}</td>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.basket_count}</td>
                                     

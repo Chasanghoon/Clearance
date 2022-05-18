@@ -71,7 +71,7 @@ function Main() {
                   <span style={{
                     color: "red",
                     
-                  }}>~{value.productExpdate}</span>
+                  }}>{value.productExpdate}</span>
                   <span style={{
                     borderRadius: "0px",
                     float:"right"

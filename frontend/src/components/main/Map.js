@@ -24,8 +24,8 @@ function SampleMap() {
   const [isOpen, setIsOpen] = useState(0)
   const [state, setState] = useState({
             center: {
-              lat: null, // 위도
-              lng: null, // 경도
+              lat: 35.0814208, // 위도
+              lng: 128.9650176, // 경도
             },
     errMsg: null,
     isLoading: true,
@@ -117,7 +117,7 @@ function SampleMap() {
             // console.log(marker)
             
             {
-              // map.panTo(marker.getPosition())
+              map.panTo(marker.getPosition())
               storePos.map((value, index) => {
                 roundMarkerLat = marker.getPosition().Ma.toFixed(10);
                 roundMarkerLng = marker.getPosition().La.toFixed(10);
