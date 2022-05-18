@@ -183,9 +183,7 @@ function splitDate(date) {
     }
     return (
         <div className="Basket" style={{
-            backgroundColor: "white",
-            margin: "10px 10px 10px 10px",
-            boxShadow:"3px 3px 3px #b4b3b3"
+            
         }}>
             <NavBar></NavBar>
 
@@ -231,7 +229,7 @@ function splitDate(date) {
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.product_name}</td>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.basket_count}</td>
                                     
-                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} >{(p.product_discountprice*p.basket_count).toLocaleString()}</td>
+                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} >{(p.product_discountprice*p.basket_count).toLocaleString()}원</td>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }}><button style={{
                                         borderRadius: "30px",
                                         border: "none",
@@ -247,34 +245,6 @@ function splitDate(date) {
                         )
                     })}
                         </Table>
-                    {/* {Object.values(value)[0].map((p,index) => (
-                        <div>
-                            <div className="product" align="left">
-                                <img alt="" src={p.product_imagefront} className="productImage"></img>
-                                
-                                <span style={{
-                                    width: ""
-                                }}> {p.product_name} </span>
-                                <span > {p.product_stock} </span>
-                                <span style={{paddingRight:"5%"}}>{ (p.product_discountprice * p.basket_count).toLocaleString }원</span>
-                                <Button variant="danger" onClick={() => {
-                                    console.log(p.basket_id)
-                                    cancelStore(p.basket_id)
-                                    window.location.reload();
-                                }}>취소</Button>
-                            </div>
-                            <div className="summary">
-                                <div>상품명 : {p.product_name}</div>
-                                <div>개당 가격 : {p.product_price.toLocaleString()}원</div>
-                                <div>구매 수량 : {p.basket_count}개</div>
-                                <div>구매 원가 : {(p.product_price * p.basket_count).toLocaleString()}원</div>
-                                <div>유통기한 : {splitDate(p.product_expdate)}</div>
-                                
-                                <div>상품 할인 : {(p.product_price * (1-p.product_discount) * p.basket_count).toLocaleString()}원</div>
-                                <div>총 할인 가격 : {(p.product_discountprice*p.basket_count).toLocaleString()}원</div>
-                            </div>
-                        </div>
-                    ))} */}
 {/* 예약 상품 수 총합, 금액 총합, 할인가 총합, 할인된 가격 총합 구해줘야 함! */}
                     <Table style={{
                         margin: "0px auto",
@@ -291,12 +261,12 @@ function splitDate(date) {
                                 <td>{basketCount.toLocaleString()}</td>
                             </tr>
                             <tr>
-                                <td>상품 금액</td>
-                                    <td>{ amountprice.toLocaleString()}</td>
+                                <td>상품 원가</td>
+                                    <td>{ amountprice.toLocaleString()}원</td>
                             </tr>
                             <tr>
                                 <td>할인 금액</td>
-                                    <td>{amountDiscount.toLocaleString()}<span style={{
+                                    <td>{amountDiscount.toLocaleString()}원<span style={{
                                         color: "red",
                                         fontSize: "80%",
                                         verticalAlign:'10%'
@@ -304,7 +274,7 @@ function splitDate(date) {
                             </tr>
                             <tr>
                                 <td>총 예약 금액</td>
-                                    <td>{ amountDiscountedPrice.toLocaleString()}</td>
+                                    <td>{ amountDiscountedPrice.toLocaleString()}원</td>
                             </tr>
                         </tbody>
                     </Table>
@@ -350,10 +320,7 @@ function splitDate(date) {
                     <div>
                             장바구니에 남은 자료가 없습니다.
                     </div>
-                    <div>
-                        
-                    </div>
-                    </div>
+                </div>
             }
             <hr width="90%" style={{
                 marginTop: "10px",

@@ -58,6 +58,7 @@ function CheckReservation() {
                     <Table style={{
                         backgroundColor: "white",
                         boxShadow: "2px 2px 2px #bbbbbb",
+                        borderRadius:"30px"
                     }}>
                         <colgroup>
                             <col width="25%" />
@@ -65,7 +66,7 @@ function CheckReservation() {
                             <col width="15%" />
                             <col width="25%" />
                         </colgroup>
-                        <thead>
+                        <thead style={{border:"0px solid black"}}>
                             <tr>
                                 <th>상품</th>
                                 <th>상품명</th>
@@ -96,6 +97,14 @@ function CheckReservation() {
                             // window.location.reload();
                     }}
                     >거래 완료</Button>
+                    <Button variant='secondary' style={{
+                        position:'fixed',
+                        bottom: "5%",
+                        left: "20%",
+                        right:"20%"
+                    }} onClick={() => {
+                        navigate("/storeMyPage")
+                    }}>돌아가기</Button>
                     </div>
                     : <div> Loading....</div>}
                 

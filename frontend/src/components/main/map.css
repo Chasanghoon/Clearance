@@ -4,3 +4,9 @@
     border:0.1px;
     
 }
+
+.product {
+    border: 3px solid black;
+    margin: 10px 10px 10px 10px;
+    box-shadow: 2px 2px 2px #bbbbbb;
+}
