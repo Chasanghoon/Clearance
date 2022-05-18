@@ -159,7 +159,7 @@ function SignupStore() {
         formData.append('file', image.image_file);
 
         axios
-            .post("https://k6e203.p.ssafy.io:8443/api/signup/store",
+            .post("http://localhost:8080/api/signup/store",
                 formData
                 ,
                 {
@@ -173,6 +173,7 @@ function SignupStore() {
 
             })
             .catch((e) => {
+                console.log(e.response.data);
                 console.error("axios post 실패");
                 console.error(e);
             });

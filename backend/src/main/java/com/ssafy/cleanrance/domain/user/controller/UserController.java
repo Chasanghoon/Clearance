@@ -31,6 +31,7 @@ public class UserController {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
+
     @PostMapping(value = "/signup/store",consumes = {"multipart/form-data"})
     @ApiOperation(value = "매장 회원가입", notes = "매장 회원가입을 진행한다.")
     @ApiResponses({
