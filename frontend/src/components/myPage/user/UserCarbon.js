@@ -5,6 +5,7 @@ import { ResponsivePie } from "@nivo/pie";
 import Brightness1Icon from "@mui/icons-material/Brightness1";
 import NavStore from '../../../store/NavStore';
 import { id } from "date-fns/locale";
+import { Row,Col } from "react-bootstrap";
 
 function UserCarbon() {
 
@@ -70,7 +71,9 @@ function UserCarbon() {
       <NavBar />
       <Chart data={data}></Chart>
       <Category idxArr={idxArr}></Category>
-      <h1>Total Save Carbon : {totalSaveCarbon}</h1>
+      <br />
+      <h1>Clearance를 사용하면서</h1>
+      <h1>{(totalSaveCarbon / 6.6).toFixed(2)}그루 만큼의 나무를 심었습니다!</h1>
     </div>
   );
 }
@@ -91,7 +94,7 @@ function Chart(props) {
           // sortByValue={true}
           activeOuterRadiusOffset={8}
           colors={{ scheme: "set3" }}
-          borderWidth={1}
+          borderWidth={0}
           borderColor={{
             from: "color",
             modifiers: [["darker", "2"]],
@@ -157,21 +160,31 @@ function Category(props) {
     "베이커리/샐러드",
     "건강식품",
   ]);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9d9dabd54025cc47fca32fec1dccd1dc54c804f6
 
   let content = [];
   for (let i = 0; i < props.idxArr.length; i++) {
     content.push(
-      <>
-        <Brightness1Icon style={{ color: colorArr[props.idxArr[i]] }} />
-        <span>{dataId[props.idxArr[i]]}</span>
-      </>
+        <span>
+          <Brightness1Icon style={{ color: colorArr[props.idxArr[i]] }} />
+            {dataId[props.idxArr[i]]}
+            {(i > 0 && i % 3 ===0) ? <br />: " "}
+        </span>
+      
     );
   }
   console.log(content);
   // Chart category 표시 (material UI)
   return (
     <div>
+<<<<<<< HEAD
       {content}
+=======
+        {content}
+>>>>>>> 9d9dabd54025cc47fca32fec1dccd1dc54c804f6
     </div>
   )
 }

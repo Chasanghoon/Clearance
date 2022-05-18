@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, FormControl, InputGroup } from "react-bootstrap";
 import { Map, MapMarker, useMap, CustomOverlayMap } from "react-kakao-maps-sdk";
 import useMainStore from "../../store/MainStore";
 import { Row, Col } from 'react-bootstrap'
@@ -313,7 +313,7 @@ function SampleMap() {
           width: "auto",
           height: "300px",
         }}
-        level={7} // 지도의 확대 레벨
+        level={6} // 지도의 확대 레벨
       >
         {!state.isLoading && (
           <MapMarker position={state.center} // 본인의 위치를 보여주는 마커
@@ -350,7 +350,25 @@ function SampleMap() {
       <Container>
         <Row>
           <Col sm>
-            <input id="searchWord" style={{
+
+            <InputGroup style={{ marginTop: "10px"}}>
+              <FormControl
+                id="searchWord2"
+                        placeholder=""
+                        // onChange={(e) => setWord(e.target.value)}
+                    />
+              <Button variant="outline-secondary" id="button-addon2" onClick={() => {
+                  setWord(document.getElementById("searchWord2").value)
+                    }}>
+                        검색
+                    </Button>
+              <Button variant="outline-secondary" id="button-addon2" onClick={() => {
+                  setStoreId("")
+                    }}>
+                        점포 초기화
+                    </Button>
+            </InputGroup >
+            {/* <input id="searchWord" style={{
               backgroundColor: 'beige', width: '97%', marginTop: "10px",
               borderRadius: "30px",
               border:"0.2px solid black"
@@ -360,12 +378,12 @@ function SampleMap() {
                 marginTop:"10px"
               }} variant="warning" onClick={() => {
               setWord(document.getElementById("searchWord").value)
-            }} >검색</Button>
+              }} >검색</Button> */}
             
-            <div style={{ margin: "10px auto"}}>
+            {/* <div style={{ margin: "10px auto"}}>
             <Button variant="secondary" onClick={() =>
                 setStoreId("")} >점포 초기화</Button>
-            </div>
+            </div> */}
           </Col>
         </Row>
       </Container>
