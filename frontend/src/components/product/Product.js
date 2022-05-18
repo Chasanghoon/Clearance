@@ -225,13 +225,13 @@ const Product = () => {
                     </Tab>
                     <Tab eventKey="이용안내" title="이용안내">
                         <div className="information">- 본 서비스는 Clearance 입니다.</div>
-                        <div className="information">1. Clearance에서 예약 후 지정하신 일자,
-                            시간에 선택하신 해당 매장으로 방문하셔서 상품을 수령하는 서비스 입니다.</div>
-                        <div className="information">2. 판매 마감 24시간 이전에는 예약 취소가 불가하며,
+                        <div className="information"><br/>1. Clearance에서 예약 후 지정하신 일자,
+                            시간에<br/> 선택하신 해당 매장으로 방문하셔서 상품을 수령하는 서비스입니다.</div>
+                        <div className="information"><br/>2. 판매 마감 24시간 이전에는 예약 취소가 불가하며,
                             폐기 시간 이후 매장 방문 시 예약하신 상품을 수령하실 수 없으니
                             지정하신 시간에 방문 부탁드립니다.</div>
-                        <div className="information">3. 매장 방문하셔서 마이페이지에 등록된 QR코드를 매장 근무자에게 보여주시기 바랍니다.</div>
-                        <div className="information">4. 매장 별 영업시간/휴무일이 상이하니, 수령 전 꼭 사전 확인 부탁드립니다.</div>
+                        <div className="information"><br/>3. 매장 방문하셔서 마이페이지에 등록된 QR코드를 <br/>매장 근무자에게 보여주시기 바랍니다.</div>
+                        <div className="information"><br/>4. 매장 별 영업시간/휴무일이 상이하니, 수령 전 꼭 <br/>사전 확인 부탁드립니다.</div>
                         <br/>
                         <div className="information">- 고객센터 문의 : 1234-5678</div>
                             <div className="information">[운영시간 : 평일, 주말, 공휴일 (10:00 ~ 19:00)</div>

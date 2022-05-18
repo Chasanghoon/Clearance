@@ -351,19 +351,19 @@ function SampleMap() {
         <Row>
           <Col sm>
 
-             <InputGroup style={{ marginTop: "10px"}}>
+            <InputGroup style={{ marginTop: "10px"}}>
               <FormControl
                 id="searchWord2"
                         placeholder=""
                         // onChange={(e) => setWord(e.target.value)}
                     />
               <Button variant="outline-secondary" id="button-addon2" onClick={() => {
-                 setWord(document.getElementById("searchWord2").value)
+                  setWord(document.getElementById("searchWord2").value)
                     }}>
                         검색
                     </Button>
               <Button variant="outline-secondary" id="button-addon2" onClick={() => {
-                 setStoreId("")
+                  setStoreId("")
                     }}>
                         점포 초기화
                     </Button>
