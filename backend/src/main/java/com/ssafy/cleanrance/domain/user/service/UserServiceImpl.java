@@ -58,13 +58,15 @@ public class UserServiceImpl implements UserService {
         user.setUserLicensenum(storeSignUpRequest.getUser_licensenum());
         //이미지 Base64 인코딩 소스로 변환
         MultipartFile mfile = image;
-        File file = ImageUtil.multipartFileToFile(mfile);
-        byte[] byteArr = FileUtils.readFileToByteArray(file);
-        String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
-        System.out.println(base64);
-        //인코딩된 소스로 userImage 저장
-        user.setUserImage(base64);
-        //매장 주소로 위도 경도 찾기
+        if(!mfile.isEmpty()){
+            File file = ImageUtil.multipartFileToFile(mfile);
+            byte[] byteArr = FileUtils.readFileToByteArray(file);
+            String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
+            System.out.println(base64);
+            //인코딩된 소스로 userImage 저장
+            user.setUserImage(base64);
+            //매장 주소로 위도 경도 찾기
+        }
         Location loc = addressToLngLat(user.getUserAddress(), user.getUserId());
         userRepository.save(user);
         locationRepository.save(loc);
@@ -88,22 +90,25 @@ public class UserServiceImpl implements UserService {
         user.setUserAddress(userSignUpRequest.getUser_address());
         LocalDateTime time = LocalDateTime.now();
         user.setUserJoindate(time);
-        //이미지 Base64 인코딩 소스로 변환
-        MultipartFile mfile = image;
-        File file = ImageUtil.multipartFileToFile(mfile);
-        //파일 크기 조정
-        // read an image to BufferedImage for processing
-        BufferedImage originImage = ImageIO.read(file);
-        int type = originImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originImage.getType();
-        BufferedImage resizeImg = resizeImage(originImage, type);
-        File resizeFile = new File("saved.png");
-        ImageIO.write(resizeImg, "png", resizeFile);
-        //end 파일 크기 조정
-        byte[] byteArr = FileUtils.readFileToByteArray(resizeFile);
-        String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
-        System.out.println(base64);
-        //인코딩된 소스로 userImage 저장
-        user.setUserImage(base64);
+            //이미지 Base64 인코딩 소스로 변환
+            MultipartFile mfile = image;
+        //File null인 경우
+        if(!mfile.isEmpty()){
+            File file = ImageUtil.multipartFileToFile(mfile);
+            //파일 크기 조정
+            // read an image to BufferedImage for processing
+            BufferedImage originImage = ImageIO.read(file);
+            int type = originImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originImage.getType();
+            BufferedImage resizeImg = resizeImage(originImage, type);
+            File resizeFile = new File("saved.png");
+            ImageIO.write(resizeImg, "png", resizeFile);
+            //end 파일 크기 조정
+            byte[] byteArr = FileUtils.readFileToByteArray(resizeFile);
+            String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
+            System.out.println(base64);
+            //인코딩된 소스로 userImage 저장
+            user.setUserImage(base64);
+        }
         userRepository.save(user);
         return "OK";
     }

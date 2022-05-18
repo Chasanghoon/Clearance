@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavBar from '../common/NavBar';
 import Map from "./Map";
 
 import useMainStore from '../../store/MainStore';
-import './ProductItem.css'
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import marketStore from '../../store/marketStore';
 import NavStore from '../../store/NavStore';
 import { Table } from 'react-bootstrap';
+import '../../App.css'
+import Topbutton from '../Topbutton';
+
 
 
 function Main() {
@@ -28,25 +30,54 @@ function Main() {
   const nearStore = useMainStore(state => state.nearStore);
   const nearProduct = useMainStore(state => state.nearProduct)
 
+<<<<<<< HEAD
     return (
         <div className='main'>
+=======
+
+
+
+
+//--------------------------- top 버튼
+  const scrollToTop = () => {
+    console.log(document.getElementById('rootmains'))
+    document.getElementById('root').scrollTo(0, 0);
+  };
+  
+  // 왜 안됨?
+  const moveToTop = () => {
+    window.scrollTo(0,1000)
+  }
+    return ( 
+        <div id='rootmains' className='main'>
+>>>>>>> 5b4d60cc2c4b21faecd4d1b976b174a8c6fbab01
             <NavBar></NavBar>
             <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
               <Map></Map>
             </div>
 
         {/* <div>{pos.lat}, {pos.lng}</div> */}
-        {nearProduct.length > 0 ? nearStore.map((val) => (
-          <div>
-            {console.log(val)}
+        {nearProduct.length > 0 ? nearStore.map((val,idx) => (
+          <div key={idx}>
+
             <div style={{
               color: "white",
+<<<<<<< HEAD
               fontSize:"18px",
               backgroundColor:"#FFC812",
               borderRadius:"30px",
             }}>{val.user_name}</div>
             {nearProduct.filter(value => value.storeUserId === val.user_id).map((value) => (
               <div className="ProductItem" onClick={() => { console.log("이거", value) }}>
+=======
+              fontSize:"150%",
+              backgroundColor:"#22cc88",
+              borderRadius: "30px",
+              margin:"6% 3% 1% 3%"
+            }}>{val.user_name}</div>
+            {nearProduct.filter(value => value.storeUserId === val.user_id).map((value,index) => (
+              <div key={index} className="ProductItem" onClick={() => { console.log("이거", value) }}>
+>>>>>>> 5b4d60cc2c4b21faecd4d1b976b174a8c6fbab01
                 <div style={{
                   textAlign:"left"
                 }}>
@@ -66,14 +97,14 @@ function Main() {
                   height:"50%",
                 }}
                   alt="" src={value.productImagefront}></img>
-                <div style={{fontSize:"20px"}}>{value.productName}</div>
+                <div style={{fontSize:"150%"}}>{value.productName}</div>
                 
                 <Table>
                   <tbody>
                     <tr>
                       <td style={{
                         color: "red",
-                        fontSize:"24px"
+                        fontSize:"150%"
                       }}>-{value.productDiscount*100}%</td>
                       <td style={{
                         textDecoration: "line-through",
@@ -82,16 +113,16 @@ function Main() {
                     </tr>
                     <tr>
                       <td style={{
-                        fontSize: "24px"
+                        fontSize: "150%"
                       }}>할인가</td>
                       <td style={{
-                        fontSize: "24px"
+                        fontSize: "150%"
                       }}>{(value.productDiscountprice).toLocaleString()}</td>
                     </tr>
                   </tbody>
                 </Table>
               
-                <div><Link to="/product"><Button variant='warning' onClick={() => {
+                <div><Link to="/product"><Button style={{fontSize:"130%"}} variant='success' onClick={() => {
               localStorage.setItem("product_id", value.productId)
               localStorage.setItem("category_id", value.categoryId)
               localStorage.setItem("product_discount",value.productDiscount)
@@ -111,6 +142,12 @@ function Main() {
           </div>
           
         )) : <div>Loading...</div>} 
+        
+          {/* <img className='TOPImg' alt='' src='img/top_arrow.png'></img> */}
+      
+        <button onClick={() => {
+        }}>위로가기</button>
+        <Topbutton></Topbutton>
       </div>
     );
 }

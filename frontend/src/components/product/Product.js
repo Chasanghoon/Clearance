@@ -146,13 +146,17 @@ const Product = () => {
     // -> zustans(x) -> localstorage(x) -> axios(o)
     console.log(info)
     return (
+<<<<<<< HEAD
         // <div style={{backgroundColor:"#f5f6f9"}}>
         <div className="product">
+=======
+        <div>
+>>>>>>> 5b4d60cc2c4b21faecd4d1b976b174a8c6fbab01
             <NavBar></NavBar>
             <div id="product" className="pb-2 pt-2">
                 <div style={{
-                    position: "initial",
-                    marginTop:"5%"
+                    position: "sticky",
+                    marginTop:"15%"
                 }}>
                     <span style={{
                         float: "left",
@@ -184,21 +188,26 @@ const Product = () => {
                     </tbody>
                 </Table>
                 <div>
-                    <Button onClick={() => {
+                    <img alt="" src="img/left_arrow.png" style={{
+                        width: "10%",
+                        height:"10%"
+                    }} onClick={() => {
                         if (basket_cnt > 1)
                             setBasketCnt(basket_cnt-1)
-                    }}> ◀ </Button>
+                    }} />
                     <span style={{
                         paddingLeft: "3%",
                         paddingRight: "3%",
                         fontSize: "30px",
                         verticalAlign:"bottom"
                     }}>개수 : {basket_cnt} </span>
-                    
-                    <Button onClick={() => {
+                    <img alt="" src="img/right_arrow.png" style={{
+                        width: "10%",
+                        height:"10%"
+                    }} onClick={() => {
                         if(basket_cnt < info.productStock)
                         setBasketCnt(basket_cnt+1)
-                    }}> ▶ </Button>
+                    }}/>
                     
                     
                 </div>
@@ -206,7 +215,7 @@ const Product = () => {
                 <div style={{
                     paddingTop: "10px"
                 }}>
-                    <Button variant="warning" onClick={() => {
+                    <Button variant="success" onClick={() => {
                         basketadd();
                         
                     }}>장바구니 등록</Button>

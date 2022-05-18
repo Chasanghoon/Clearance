@@ -4,13 +4,12 @@
 }
 
 .store {
-    border: 5px solid black;
+    border: 5px solid #22cc88;
     border-radius: 30px;
+    margin: 10px 10px 10px 10px;
 }
 
-.product {
-    border: 3px solid black;
-}
+
 
 .content {
     padding: 5%;

@@ -25,6 +25,10 @@ const Basket = () => {
 
     let minExpdate = 99999999
     let basketCount = 0;
+    let amountprice = 0;
+    let amountDiscount = 0;
+    let amountDiscountedPrice = 0;
+
     function addBasketCount(basketCnt) {
       return basketCount += basketCnt 
     }
@@ -178,11 +182,24 @@ function splitDate(date) {
         console.log(Object.values(basket.data[0]))
     }
     return (
+<<<<<<< HEAD
         <div className="basket">
+=======
+        <div className="Basket" style={{
+            backgroundColor: "white",
+            margin: "10px 10px 10px 10px",
+            boxShadow:"3px 3px 3px #b4b3b3"
+        }}>
+>>>>>>> 5b4d60cc2c4b21faecd4d1b976b174a8c6fbab01
             <NavBar></NavBar>
 
-            {(basket !== undefined && basket.data.length > 0) ? basket.data.map((value) => (
-                <div>
+            {(basket !== undefined && basket.data.length > 0) ? basket.data.map((value,idx) => (
+                basketCount = 0,
+                amountprice = 0,
+                amountDiscount = 0,
+                amountDiscountedPrice=0,
+                            
+                <div key={idx}>
                     {console.log(Object.values(value)[0])}
                     <div className="store">
                         {Object.keys(value)}
@@ -208,13 +225,16 @@ function splitDate(date) {
                     
                     {Object.values(value)[0].map((p, index) => {
                         return (
-                            basketCount = 0,
+                            basketCount += p.basket_count,
+                            amountprice += (p.product_price*p.basket_count),
+                            amountDiscount += ( (p.product_price*p.basket_count) - (p.product_discountprice*p.basket_count)),
+                            amountDiscountedPrice += (p.product_discountprice*p.basket_count),
                             <tbody key={index} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
                                 <tr>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} ><img alt="" src={p.product_imagefront}/></td>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.product_name}</td>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.basket_count}</td>
-                                    {() => basketCount = 10000}
+                                    
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} >{(p.product_discountprice*p.basket_count).toLocaleString()}</td>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }}><button style={{
                                         borderRadius: "30px",
@@ -272,19 +292,23 @@ function splitDate(date) {
                         <tbody>
                             <tr>
                                 <td>예약 상품 수</td>
-                                <td>sdfg</td>
+                                <td>{basketCount.toLocaleString()}</td>
                             </tr>
                             <tr>
                                 <td>상품 금액</td>
-                                <td>{basketCount }</td>
+                                    <td>{ amountprice.toLocaleString()}</td>
                             </tr>
                             <tr>
-                                <td>상품 할인</td>
-                                <td>sdfg</td>
+                                <td>할인 금액</td>
+                                    <td>{amountDiscount.toLocaleString()}<span style={{
+                                        color: "red",
+                                        fontSize: "80%",
+                                        verticalAlign:'10%'
+                                    }}>({-(amountDiscount/amountprice).toFixed(3) * 100}%)</span></td>
                             </tr>
                             <tr>
                                 <td>총 예약 금액</td>
-                                <td>sdfg</td>
+                                    <td>{ amountDiscountedPrice.toLocaleString()}</td>
                             </tr>
                         </tbody>
                     </Table>
@@ -340,7 +364,7 @@ function splitDate(date) {
                 margin: "0px auto",
             }}/>
             <Button style={{
-                marginTop: "15px"
+                margin: "15px 15px 15px 15px"
             }} variant="danger" onClick={() => {
                             navigate("/main")
                         }}>돌아가기</Button>
