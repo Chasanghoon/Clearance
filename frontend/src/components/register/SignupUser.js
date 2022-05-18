@@ -130,6 +130,7 @@ function SignupUser() {
 
             })
             .catch((e) => {
+                alert(e.response.data);
                 console.error("axios post 실패");
                 console.error(e);
             });

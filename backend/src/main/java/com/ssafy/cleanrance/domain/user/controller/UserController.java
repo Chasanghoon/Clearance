@@ -31,6 +31,7 @@ public class UserController {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
+
     @PostMapping(value = "/signup/store",consumes = {"multipart/form-data"})
     @ApiOperation(value = "매장 회원가입", notes = "매장 회원가입을 진행한다.")
     @ApiResponses({
@@ -40,7 +41,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity signupStore(
-            @RequestPart StoreSignUpRequest storeSignUpRequest,
+            @RequestPart(value = "storeSignUpRequest") StoreSignUpRequest storeSignUpRequest,
             @RequestPart(value = "file", required = false) MultipartFile image) throws IOException {
         String str =userService.createStore(storeSignUpRequest,image);
         if("OK".equals(str)){

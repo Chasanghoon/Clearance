@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +46,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String createStore(StoreSignUpRequest storeSignUpRequest, MultipartFile image) throws IOException {
+        Optional<User> check = userRepository.findById(storeSignUpRequest.getUser_id());
+        check.ifPresent(checkUser -> {
+            throw  new IllegalStateException("이미 존재하는 회원입니다.");
+        });
         User user = new User();
         user.setUserId(storeSignUpRequest.getUser_id());
         user.setUserName(storeSignUpRequest.getUser_name());
@@ -57,16 +63,21 @@ public class UserServiceImpl implements UserService {
         user.setUserJoindate(time);
         user.setUserLicensenum(storeSignUpRequest.getUser_licensenum());
         //이미지 Base64 인코딩 소스로 변환
-        MultipartFile mfile = image;
-        if(!mfile.isEmpty()){
+        if(image != null){
+            MultipartFile mfile = image;
             File file = ImageUtil.multipartFileToFile(mfile);
             byte[] byteArr = FileUtils.readFileToByteArray(file);
             String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
             System.out.println(base64);
             //인코딩된 소스로 userImage 저장
             user.setUserImage(base64);
-            //매장 주소로 위도 경도 찾기
+        }else{
+            File defaultStore = new File("src\\main\\resources\\img\\default_store.png");
+            byte[] byteArr = FileUtils.readFileToByteArray(defaultStore);
+            String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
+            user.setUserImage(base64);
         }
+        //매장 주소로 위도 경도 찾기
         Location loc = addressToLngLat(user.getUserAddress(), user.getUserId());
         userRepository.save(user);
         locationRepository.save(loc);
@@ -77,9 +88,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String createUser(UserSignUpRequest userSignUpRequest, MultipartFile image) throws IOException {
         Optional<User> check = userRepository.findById(userSignUpRequest.getUser_id());
-        if (check.isPresent()) {
-            return "";
-        }
+        check.ifPresent(checkUser -> {
+            throw  new IllegalStateException("이미 존재하는 회원입니다.");
+        });
         User user = new User();
         user.setUserId(userSignUpRequest.getUser_id());
         user.setUserRole(3);
@@ -90,10 +101,9 @@ public class UserServiceImpl implements UserService {
         user.setUserAddress(userSignUpRequest.getUser_address());
         LocalDateTime time = LocalDateTime.now();
         user.setUserJoindate(time);
+        if(image != null){
             //이미지 Base64 인코딩 소스로 변환
             MultipartFile mfile = image;
-        //File null인 경우
-        if(!mfile.isEmpty()){
             File file = ImageUtil.multipartFileToFile(mfile);
             //파일 크기 조정
             // read an image to BufferedImage for processing
@@ -107,6 +117,11 @@ public class UserServiceImpl implements UserService {
             String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
             System.out.println(base64);
             //인코딩된 소스로 userImage 저장
+            user.setUserImage(base64);
+        }else{
+            File defaultStore = new File("src\\main\\resources\\img\\default_user.png");
+            byte[] byteArr = FileUtils.readFileToByteArray(defaultStore);
+            String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArr);
             user.setUserImage(base64);
         }
         userRepository.save(user);
