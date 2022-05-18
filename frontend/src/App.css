@@ -9,8 +9,8 @@
       font-family: "LeeSeoyun";
       height: 100vh;
       overflow:auto; 
-      /* background-color: #fafafa; */
-      background-color: #a2a2ee;
+      background-color: #f5f5f6;
+      /* background-color: #a2a2ee; */
 }
 /* ! ================================================ */
 /* ! ==================== Start ==================== */
@@ -577,7 +577,74 @@ margin: 10px 5% 10px 5%;
     color: rgb(224, 222, 222) !important;
 }
 
+/* ! ================================================ */
+/* ! ==================== map ==================== */
+/* ! ================================================ */
+
+
+.MainCategory {
+    box-Shadow: 3px 3px 3px #b4b3b3;
+    margin-Top: 15px;
+    padding: 10px 10px 10px 10px;
+
+    border-radius:30px;
+}
 
 
 
+/* ! ================================================ */
+/* ! ===================== main ===================== */
+/* ! ================================================ */
 
+.main {
+    margin-top: 20%;
+    padding-bottom: 20%;
+}
+
+.main .ProductItem {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px #bbbbbb;
+    height: auto;
+    margin: 5% 5% 5% 5%;
+    padding: 15px;
+    vertical-align: middle;
+    width: auto;
+}
+
+/* ! ================================================ */
+/* ! ==================== TopButton ================= */
+/* ! ================================================ */
+
+.TOPDiv {
+    border-radius: 20%;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    /* background-color: #FFC812; */
+}
+
+.TOPImg {
+    
+    position: fixed;
+    bottom: 3%;
+    right: 6%;
+    font-size: 120%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-Shadow: 3px 3px 3px #b4b3b3;
+}
+
+.TOPImg.active {
+    z-index: 10;
+    opacity: 1;
+}
+
+.TOPImg:hover,
+.TOPImg:focus,
+.TOPImg:active {
+    outline: 0 none;
+}
