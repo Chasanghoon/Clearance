@@ -99,56 +99,48 @@ function ProductManagement(props) {
                         centered
                     >
                         <Modal.Header closeButton className='pmModalHeader'>
-                            <Modal.Title></Modal.Title>
+                            <Modal.Title className='pmModalTitle'>상품 상세 정보</Modal.Title>
                         </Modal.Header>
                         <Modal.Body className='pmModalBody'>
-
-                            <Container>
-                                <Row>
-                                    <Col>
-                                        <img className='img' src={modalProduct.productImagefront} alt=''></img><br />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={1}></Col>
-                                    <Col className='nameCol' xs={5}>상품 명</Col>
-                                    <Col className='dataCol' xs={6}>{modalProduct.productName}</Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={1}></Col>
-                                    <Col className='nameCol' xs={5}>원가</Col>
-                                    <Col className='dataCol' xs={6}>{modalProduct.productPrice}</Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={1}></Col>
-                                    <Col className='nameCol' xs={5}>할인 율</Col>
-                                    <Col className='dataCol' xs={6}>{modalProduct.productDiscount}</Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={1}></Col>
-                                    <Col className='nameCol' xs={5}>할인가</Col>
-                                    <Col className='dataCol' xs={6}>{modalProduct.productDiscountprice}</Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={1}></Col>
-                                    <Col className='nameCol' xs={5}>재고</Col>
-                                    <Col className='dataCol' xs={6}>{modalProduct.productStock}</Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={1}></Col>
-                                    <Col className='nameCol' l xs={5}>유통기한</Col>
-                                    <Col className='dataCol' xs={6}>{modalProduct.productExpdate}</Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={1}></Col>
-                                    <Col className='nameCol' l xs={5}>카테고리</Col>
-                                    <Col className='dataCol' xs={6}>{changeCategory(modalProduct.categoryId)}</Col>
-                                </Row>
-                                <div className='pmModalBtnGroup'>
-                                    <Link to="../updateProduct" state={{ data: modalProduct }}><Button className='pmModalUpdateBtn'> 수정 </Button></Link>
-                                    <Button className='pmModalDeleteBtn' onClick={deleteProduct}> 삭제 </Button>
-                                </div>
-                            </Container>
+                            <Table>
+                                <tbody>
+                                    <tr style={{borderBottom:"hidden"}}>
+                                        <td colSpan={2}><img className='img' src={modalProduct.productImagefront} alt=''></img></td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>상품 명</td>
+                                        <td>{modalProduct.productName}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>원가</td>
+                                        <td>{modalProduct.productPrice}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>할인 율</td>
+                                        <td>{modalProduct.productDiscount * 100}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>할인가</td>
+                                        <td>{modalProduct.productDiscountprice}원</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>재고</td>
+                                        <td>{modalProduct.productStock}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>유통기한</td>
+                                        <td>{modalProduct.productExpdate}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>카테고리</td>
+                                        <td>{changeCategory(modalProduct.categoryId)}</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                            <div className='pmModalBtnGroup'>
+                                <Link to="../updateProduct" state={{ data: modalProduct }}><Button className='pmModalUpdateBtn'> 수정 </Button></Link>
+                                <Button className='pmModalDeleteBtn' onClick={deleteProduct}> 삭제 </Button>
+                            </div>
                         </Modal.Body>
                     </Modal>
                     : null}

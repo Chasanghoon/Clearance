@@ -942,22 +942,29 @@ left: -1000px;
     border-color: #f5f5f5;
 }
 .pmModalHeader {
+    font-family: "LeeSeoyun";
     border-bottom: #ffffff;
-    
+    background-color: #a2a2ee;
+}
+
+.pmModalHeader .pmModalTitle {
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: bolder;
 }
 .pmModalBody {
     font-family: "LeeSeoyun";
-    margin: 0 0 10% 0;
     text-align: center;
 }
-.pmModalBody .nameCol{
+.pmModalBody .nameTd{
     font-weight: bold;
 }
 .pmModalBody .dataCol{
 text-align: left;
 }
 .pmModalBody .img{
-    width: 70%;
+    border-radius: 20px;
+    width: 60%;
 }
 .pmModalBody .pmModalBtnGroup{
     margin: 30px 0 0 0;
@@ -1042,6 +1049,23 @@ text-align: left;
     width: 100%;
     justify-content: center;
 }
+
+.allProductManagement .page-item:not(:first-child) .page-link {
+    color: #000;
+}
+.allProductManagement .page-item.active .page-link {
+    background-color: #176a49;
+    border-color: #176a49;
+    color: #fff;
+}
+.allProductManagement .page-item:first-child .page-link {
+    /* margin: 0 5px 0 5px; */
+    color: #000;
+}
+.allProductManagement .page-item:last-child .page-link {
+    /* margin: 0 5px 0 5px; */
+    color: #000
+}
 /* ! ================================================ */
 /* ! ================ updateProduct ================ */
 /* ! ================================================ */
@@ -1054,6 +1078,13 @@ text-align: left;
     padding-left: 5%;
     float: left;
     margin-bottom: 1%;
+}
+/* ! ================================================ */
+/* ! ================ checkReservation ================ */
+/* ! ================================================ */
+.checkReservation {
+    padding-top: 65px;
+    padding-bottom: 20%;
 }
 /* ! ================================================ */
 /* ! ================== DatePicker ================== */

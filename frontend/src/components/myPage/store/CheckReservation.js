@@ -4,9 +4,13 @@ import "./CheckReservation.css"
 import { Button,Table } from 'react-bootstrap';
 import { Navigate, useNavigate } from 'react-router-dom';
 import NavBar from '../../common/NavBar';
+import NavStore from "../../../store/NavStore";
 
 
 function CheckReservation() {
+
+    const setNavHeader = NavStore(state => state.setNavHeader);
+    
 
     // const [data, setData] = useState()
     const [books, setBooks] = useState()
@@ -44,13 +48,14 @@ function CheckReservation() {
         }
     }
     useEffect(() => {
+        setNavHeader("예약 확인");
         CallResvationInfo();
     },[])
     
     // console.log(bookData)
     console.log(books)
     return (
-        <>
+        <div className='checkReservation'>
             
             <NavBar></NavBar>
             {books !== undefined ?
@@ -99,7 +104,7 @@ function CheckReservation() {
                     </div>
                     : <div> Loading....</div>}
                 
-            </>
+            </div>
     );
 }
 

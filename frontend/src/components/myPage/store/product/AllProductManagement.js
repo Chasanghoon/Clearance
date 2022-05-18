@@ -40,7 +40,8 @@ function AllProductManagement(props) {
                 console.log(result.data);
 
                 setProduct(result.data.content);
-                setTotalPage(result.data.totalPages);
+                // setTotalPage(result.data.totalPages);
+                setTotalPage(24);
             })
             .catch((e) => {
                 // console.error("axios get 실패");
@@ -248,7 +249,7 @@ function AllProductManagement(props) {
                         onChange={(e) => setWord(e.target.value)}
                     />
                     <Button variant="outline-secondary" id="button-addon2" onClick={() => setCheckWord(!checkWord)}>
-                        Button
+                        검색
                     </Button>
                 </InputGroup >
             </div>

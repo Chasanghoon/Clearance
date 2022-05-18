@@ -157,16 +157,6 @@ function Category(props) {
     "베이커리/샐러드",
     "건강식품",
   ]);
-  var result = [];
-  for(let i=0; i<props.idxArr.length; i+=3){
-    result.push(
-      <>
-      <Brightness1Icon style={{ color: colorArr[props.idxArr.slice(i, i+3)] }} />
-      <span>{dataId[props.idxArr.slice(i, i+3)]}</span>
-      </>
-      );
-  } 
-  console.log(result);
 
   let content = [];
   for (let i = 0; i < props.idxArr.length; i++) {
@@ -181,10 +171,6 @@ function Category(props) {
   // Chart category 표시 (material UI)
   return (
     <div>
-      {result[2]}
-      <br/>
-      <br/>
-      <br/>
       {content}
     </div>
   )
