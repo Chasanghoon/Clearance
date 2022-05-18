@@ -181,19 +181,25 @@
 <table>
     <tr>
         <td height="140px" align="center">
-            <img src="./image/강광은.jpg" height="150px" width="150px" /> <br><br> 
-            👑 강광은 <br>(Front-End) <br>
+            <img src="./image/eon.jpg" height="150px" width="150px" /> <br/><br/> 
+            👑 강광은 <br>(Front-End) <br/>
         </td>
         <td height="140px" align="center">
-            <img src="./image/김범주.jpg" height="150px" width="150px" /> <br><br> 
-            🙂 김범주 <br>(Front-End) <br>
+            <img src="./image/bum.jpg" height="150px" width="150px" /> <br/><br/> 
+            🙂 김범주 <br>(Front-End) <br/>
         </td>
         <td height="140px" align="center">
-            <img src="./image/차상훈.jpg" height="150px" width="150px" /> <br><br> 😁 차상훈 <br>(Back-End) <br></td>
+            <img src="./image/sang.jpg" height="150px" width="150px" /> <br/><br/> 
+            😁 차상훈 <br>(Back-End) <br/>
+        </td>
         <td height="140px" align="center">
-            <img src="./image/김윤지.jpg" height="150px" width="150px" /> <br><br> 🙄 김윤지 <br>(Back-End) <br></td>
+            <img src="./image/kim.jpg" height="150px" width="150px" /> <br><br> 
+            🙄 김윤지 <br/> (Back-End) <br/>
+        </td>
         <td height="140px" align="center">
-            <img src="./image/박진성.JPG" height="150px" width="150px" /> <br><br> 😶 박진성 <br>(Back-End) <br></td>
+            <img src="./image/jin.JPG" height="150px" width="150px" /> <br/><br/> 
+            😶 박진성 <br>(Back-End) <br>
+        </td>
     </tr>
     <tr>
         <td align="center">UI/UX<br/>React</td>
@@ -205,4 +211,3 @@
 </table>
 
 <br />
-
