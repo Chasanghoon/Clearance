@@ -46,7 +46,6 @@ const NavBar = () => {
     };
     console.log("네브바에서 확인하는 세션 유저 롤 = ", sessionStorage.getItem("userRole"))
     return (
-
         <div className="NavBar">
             <Container>
                 <Row className="navRow">
