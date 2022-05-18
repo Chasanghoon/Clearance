@@ -182,15 +182,11 @@ function splitDate(date) {
         console.log(Object.values(basket.data[0]))
     }
     return (
-<<<<<<< HEAD
-        <div className="basket">
-=======
         <div className="Basket" style={{
             backgroundColor: "white",
             margin: "10px 10px 10px 10px",
             boxShadow:"3px 3px 3px #b4b3b3"
         }}>
->>>>>>> 5b4d60cc2c4b21faecd4d1b976b174a8c6fbab01
             <NavBar></NavBar>
 
             {(basket !== undefined && basket.data.length > 0) ? basket.data.map((value,idx) => (

@@ -175,7 +175,7 @@ function StoreProfile(props) {
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
                         <Col >
-                            <Row sm className='label'>매장 휴대전화</Row>
+                            <Row sm className='label'>휴대전화</Row>
                         </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="매장 휴대전화" value={userPhone} onChange={onChangePhone} />
