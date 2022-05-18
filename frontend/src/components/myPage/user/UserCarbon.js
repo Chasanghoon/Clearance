@@ -38,8 +38,6 @@ function UserCarbon() {
     axios
       .get(URL)
       .then((result) => {
-        // console.log(result.data);
-
         let temp = 0;
         const newData = [];
         const newIdxArr = [];
@@ -56,7 +54,6 @@ function UserCarbon() {
             temp += result.data[i];
           }
         }
-        // console.log(temp);
         setData(newData);
         setIdxArr(newIdxArr);
         setTotalSaveCarbon(temp);
@@ -102,7 +99,6 @@ function Chart(props) {
           enableArcLabels={false} // data value 표시
           enableArcLinkLabels={false} // data id 표시
           arcLabelsSkipAngle={props.skipAngle} // data value skip angle
-          // arcLabelsRadiusOffset={1.2}  // ! 내가 추가함
           arcLinkLabelsSkipAngle={5} // data id skip angle
           arcLinkLabelsTextColor="#333333"
           arcLinkLabelsThickness={2}
@@ -160,11 +156,8 @@ function Category(props) {
     "베이커리/샐러드",
     "건강식품",
   ]);
-<<<<<<< HEAD
-=======
 
->>>>>>> 9d9dabd54025cc47fca32fec1dccd1dc54c804f6
-
+  
   let content = [];
   for (let i = 0; i < props.idxArr.length; i++) {
     content.push(
@@ -180,11 +173,7 @@ function Category(props) {
   // Chart category 표시 (material UI)
   return (
     <div>
-<<<<<<< HEAD
-      {content}
-=======
         {content}
->>>>>>> 9d9dabd54025cc47fca32fec1dccd1dc54c804f6
     </div>
   )
 }
