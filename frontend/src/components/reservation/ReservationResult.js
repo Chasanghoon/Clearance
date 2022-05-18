@@ -3,7 +3,6 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table'
 import NavBar from '../common/NavBar';
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
-import "./Reservation.css";
 import axios from 'axios';
 import ReservationLoading from './ReservationLoading';
 import ReservationStore from '../../store/ReservationStore';
@@ -31,7 +30,7 @@ function ReservationResult(props) {
     const [reservationTime, setReservationTime] = useState();
 
     const [product, setProduct] = useState();
-    
+
 
     let totalReservation = 0;
     let totalProductPrice = 0;
@@ -87,7 +86,7 @@ function ReservationResult(props) {
             // .get("https://k6e203.p.ssafy.io:5000/data/reservation-complete/8")
             .then((result) => {
                 setSellerName(result.data.seller[0].user_name);
-                
+
                 setSellerImage(result.data.seller[0].user_image);
                 setSellerAddress(result.data.seller[0].user_address);
                 console.log('result.data.seller[0].user_address: ', result.data.seller[0].user_address);
@@ -121,7 +120,7 @@ function ReservationResult(props) {
 
         if (sellerLat !== undefined) {
             setState((prev) => ({
-                ...prev, center: { lat: sellerLat + 0.02, lng: sellerLng },
+                ...prev, center: { lat: sellerLat + 0.03, lng: sellerLng + 0.005},
                 isLoading: false,
                 isPanto: true
             }))
@@ -149,17 +148,65 @@ function ReservationResult(props) {
                         style={{ width: "100%", height: "300px", }}
                         level={8} // 지도의 확대 레벨
                     >
-                        <MapMarker position={marker.center} onClick={() => setIsOpen(true)} />
+                        <MapMarker 
+                        position={marker.center} 
+                        image={{
+                            src: "img/shop.png", // 마커이미지의 주소입니다
+                            size: {
+                              widht: 36,
+                              height: 53
+                            }, // 마커이미지의 크기입니다
+                          }}
+                        onClick={() => setIsOpen(true)} />
                         {isOpen && (
                             <CustomOverlayMap position={marker.center}>
                                 <div className="wrap">
                                     <div className="info">
                                         <div className="close" onClick={() => setIsOpen(false)} title="닫기"></div>
                                         <div>
-                                            <img src={sellerImage} alt="img"></img>
-                                            <p>{sellerName}</p>
+                                            <Table className='reservationTable'>
+                                                <thead className='reservationTableHeader'>
+                                                    <tr>
+                                                        <td>
+                                                            {'\u00A0'}
+                                                        </td>
+                                                        <td>
+                                                            {'\u00A0'}
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className='reservationTableBody'>
+                                                    <tr>
+                                                        <td rowSpan={3}>
+                                                            <div className='reservationResultImageDiv'>
+                                                                <img className='reservationResultImgFile' src={sellerImage} alt="img"></img>
+                                                            </div>
+                                                        </td>
+                                                        <td className='reservationTableStoreName'>{sellerName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{sellerAddress}<br/>{sellerPhone}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </Table>
+                                            {/* <Container>
+                                                <Row>
+                                                    <Col>
+                                                        <div className='reservationResultImageDiv'>
+                                                            <img className='reservationResultImgFile' src={sellerImage} alt="img"></img>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>{sellerName}</Col>
+                                                    <Col>{sellerAddress}</Col>
+                                                    <Col>{sellerPhone}</Col>
+                                                </Row>
+                                            </Container> */}
+
+                                            {/* <p>{sellerName}</p>
                                             <p>{sellerAddress}</p>
-                                            <p>{sellerPhone}</p>
+                                            <p>{sellerPhone}</p> */}
                                         </div>
                                     </div>
                                 </div>
@@ -204,7 +251,7 @@ function ReservationResult(props) {
                                         <tr >
                                             <td>
                                                 <div className='imageDiv2'>
-                                                    <img className='imgFile' src={data.product_imagefront} alt="userImage" />)
+                                                    <img className='imgFile' src={data.product_imagefront} alt="userImage" />
                                                 </div>
                                             </td>
                                             <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.product_name}</td>

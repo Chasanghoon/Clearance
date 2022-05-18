@@ -12,14 +12,39 @@ function UserMyPage(props) {
     return (
         <div className='userMyPage'>
             <NavBar></NavBar>
-            <Row >
-                <Col className='rowBtn1'><Link to="../userProfile"><Button className='userMyPageBtn'> 프로필 </Button></Link></Col>
+            <Row>
+                <Col className='rowBtn1'>
+                    <Link to="../userProfile">
+                        <Button className='userMyPageBtn2'>
+                            <img src="img/user_profile.png" height="60" width="60" />
+                            <div className='userBtnTitle2'>프로필</div>
+                            <div className='userBtnBody2'>매장 정보 조회/변경</div>
+
+                        </Button>
+                    </Link>
+                </Col>
             </Row>
-            <Row >
-                <Col className='rowBtn2'><Link to="../bookingHistory"><Button className='userMyPageBtn2'> 예약 내역 </Button></Link></Col>
+            <Row>
+                <Col className='rowBtn2'>
+                    <Link to="../bookingHistory">
+                        <Button className='userMyPageBtn'>
+                            <img src="img/user_calendar.png" height="60" width="60" />
+                            <div className='userBtnTitle'>예약 내역</div>
+                            <div className='userBtnBody'>상품 등록 및 관리</div>
+                        </Button>
+                    </Link>
+                </Col>
             </Row>
-            <Row >
-                <Col className='rowBtn3'><Link to="../userCarbon"><Button className='userMyPageBtn'> 탄소 발자국 </Button></Link></Col>
+            <Row>
+                <Col className='rowBtn2' >
+                    <Link to="../userCarbon">
+                        <Button className='userMyPageBtn2'>
+                            <img src="img/user_foot.png" height="60" width="60" />
+                            <div className='userBtnTitle2'>탄소 발자국</div>
+                            <div className='userBtnBody2'>환경을 위한 한걸음</div>
+                        </Button>
+                    </Link>
+                </Col>
             </Row>
         </div>
     );

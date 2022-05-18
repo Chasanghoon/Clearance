@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useEffect } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from 'react-bootstrap/Row';
@@ -12,8 +12,11 @@ import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/esm/locale";
 import { useLocation } from 'react-router-dom';
 import NavBar from '../../../common/NavBar';
+import NavStore from '../../../../store/NavStore';
 
 function UpdateProduct(props) {
+    const setNavHeader = NavStore(state => state.setNavHeader);
+
     const location = useLocation();
     const data = location.state.data;
     console.log(data);
@@ -78,9 +81,14 @@ function UpdateProduct(props) {
         if (!productExpDate) setProductExpDateError(true);
         if (!categoryId) setCategoryIdError(true);
 
-        if (productNameError || productPriceError || productDiscountError || productStockeError || productExpDateError || categoryIdError) return true;
+        if (productName.length === 0 || productPrice.length === 0 || productDiscount.length === 0 || productStock.length === 0 || productExpDate.length === 0 || categoryId.length === 0 || 
+            productNameError || productPriceError || productDiscountError || productStockeError || productExpDateError || categoryIdError) return true;
         else return false;
     };
+
+    useEffect(() => {
+        setNavHeader("상품 수정");
+    }, []);
 
     const onSubmit = (e) => {
         console.warn("");
@@ -89,10 +97,10 @@ function UpdateProduct(props) {
         console.log(checkProductChange);
 
         if (validation()) return;
-        if (!checkProductChange){
+        if (!checkProductChange) {
             console.warn("안바뀜!");
             setProductExpDate(notChangeDate(productExpDate));
-        } 
+        }
         console.log(productExpDate);
 
         // ! axios PUT      
@@ -238,7 +246,7 @@ function UpdateProduct(props) {
         // <Button onClick={onClick} ref={ref}>
         //   {value}
         // </Button>
-        
+
     ));
 
     function changeDate() {
@@ -247,12 +255,11 @@ function UpdateProduct(props) {
 
 
     return (
-        <div>
+        <div className='updateProduct'>
             <NavBar></NavBar>
             <Container className='mt-5'>
                 <Form>
                     <Form.Group as={Row} className="mb-3" controlId="formFile1" style={{ "textAlign": "center" }}>
-                    <div>상품 전면 이미지</div>
                         <div className='imageDiv'>
                             <img className='imgFile' src={frontImage.front_preview_URL} alt="userImage" />
                             {/* {frontLoaded === false || frontLoaded === true ?
@@ -265,36 +272,62 @@ function UpdateProduct(props) {
                             <Form.Control type="file" accept="image/*" onChange={saveFrontImage} style={{ display: "none" }} />
                         </div> */}
                     </Form.Group>
+                    <Form.Group as={Row} className="mb-3" controlId="formFile2" style={{ "textAlign": "center" }}>
+                        {/* <Col >
+                            <Row sm className='label'>상품 상세 이미지</Row>
+                        </Col> */}
+                        <div className='imageDiv'>
+                            <img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />
+                            {/* {backLoaded === false || backLoaded === true ?
+                                (<img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />) :
+                                (<Spinner animation="border" variant="warning" />)} */}
+                        </div>
+                        {/* <div>
+                            <Button className='imageButton'><Form.Label>상품 상세 이미지 선택</Form.Label></Button>
+                            <Button className='imageButton' onClick={deleteBackImage}>상품 상세 이미지 삭제</Button>
+                            <Form.Control type="file" accept="image/*" onChange={saveBackImage} style={{ display: "none" }} />
+                        </div> */}
+                    </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <div>상품명</div>
+                        <Col >
+                            <Row sm className='label'>상품명</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="상품명" value={productName} onChange={onChangeProductName} />
                             {productNameError && <div className="invalid-input">상품명을 입력해주세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <div>상품가격</div>
+                        <Col >
+                            <Row sm className='label'>상품가격</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="상품가격" value={productPrice} onChange={onChangeProductPrice} />
                             {productPriceError && <div className="invalid-input">숫자로만 입력해주세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <div>할인율</div>
+                        <Col >
+                            <Row sm className='label'>할인율</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="할인율" value={productDiscount} onChange={onChangeProductDiscount} />
                             {productDiscountError && <div className="invalid-input">할인율을 숫자로만 입력해주세요. ( ex. 30% → 30 )</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <div>재고</div>
+                        <Col >
+                            <Row sm className='label'>재고</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="재고" value={productStock} onChange={onChangeProductStock} />
                             {productStockeError && <div className="invalid-input">재고 수량을 숫자로만 입력해주세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3" >
-                    <div>유통기한</div>
+                        <Col >
+                            <Row sm className='label'>유통기한</Row>
+                        </Col>
                         <Col sm>
                             {/* <Form.Label column >유통ㄴ기한</Form.Label> */}
                             {/* <Form.Control maxLength={50} placeholder="유통기한" value={productExpDate} onChange={onChangeProductExpDate} /> */}
@@ -314,7 +347,9 @@ function UpdateProduct(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <div>상품 분류</div>
+                        <Col >
+                            <Row sm className='label'>카테고리</Row>
+                        </Col>
                         <Col sm>
                             {/* <Form.Control maxLength={20} placeholder="카테고리" value={categoryId} onChange={onChangeCategoryId} /> */}
                             <Form.Select value={categoryId} onChange={onChangeCategoryId}>
@@ -338,20 +373,7 @@ function UpdateProduct(props) {
                             {categoryIdError && <div className="invalid-input">카테고리를 선택해 주세요.</div>}
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="formFile2" style={{ "textAlign": "center" }}>
-                    <div>상품 후면 이미지</div>
-                        <div className='imageDiv'>
-                            <img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />
-                            {/* {backLoaded === false || backLoaded === true ?
-                                (<img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />) :
-                                (<Spinner animation="border" variant="warning" />)} */}
-                        </div>
-                        {/* <div>
-                            <Button className='imageButton'><Form.Label>상품 상세 이미지 선택</Form.Label></Button>
-                            <Button className='imageButton' onClick={deleteBackImage}>상품 상세 이미지 삭제</Button>
-                            <Form.Control type="file" accept="image/*" onChange={saveBackImage} style={{ display: "none" }} />
-                        </div> */}
-                    </Form.Group>
+                    
 
                     <div className="d-grid gap-1 mb-3">
                         <Button variant="secondary" onClick={onSubmit}>상품 수정</Button>
@@ -441,7 +463,7 @@ function updateDate(date) {
     console.log(split[2]);
     console.log(split2);
 
-    const reDate = split[0] + '년 ' + split[1] +'월 ' + split[2] + '일 (' + split2 + ')';
+    const reDate = split[0] + '년 ' + split[1] + '월 ' + split[2] + '일 (' + split2 + ')';
     console.log(reDate);
 
     return reDate;
@@ -460,7 +482,7 @@ function notChangeDate(date) {
     month = split[1];
     day = split[2];
 
-    
+
     let reDate = year + month + day
     console.log(reDate);
     return reDate;

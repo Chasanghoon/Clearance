@@ -10,8 +10,11 @@ import { useNavigate } from 'react-router-dom'
 import userStore from '../../../store/userStore';
 import axios from 'axios';
 import NavBar from '../../common/NavBar';
+import NavStore from '../../../store/NavStore';
 
 function StoreProfile(props) {
+    const setNavHeader = NavStore(state => state.setNavHeader);
+    setNavHeader("프로필");
 
     const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
@@ -76,7 +79,7 @@ function StoreProfile(props) {
                 console.error("axios get 실패");
                 console.error(e)
             });
-        }, []);
+    }, []);
 
     const onSubmit = (e) => {
         if (validation()) return;
@@ -133,7 +136,7 @@ function StoreProfile(props) {
 
     let navigate = useNavigate();
     return (
-        <div>
+        <div className='storeProfile'>
             <NavBar></NavBar>
             <Container className='mt-5'>
                 <Form>
@@ -145,43 +148,61 @@ function StoreProfile(props) {
                         </div>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>아이디</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="아이디" value={userId} disabled readOnly />
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>매장 이름</Row>
+                        </Col>
                         <Col sm>
-                            <Form.Control maxLength={20} placeholder="이름" value={userName} onChange={onChangeUserName} />
+                            <Form.Control maxLength={20} placeholder="매장 이름" value={userName} onChange={onChangeUserName} />
                             {userNameError && <div className="invalid-input">입력되지 않았습니다.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>이메일</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={50} type="input" placeholder="이메일" value={userEmail} onChange={onChangeEmail} />
                             {emailError && <div className="invalid-input">올바른 이메일 형식을 입력하세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>매장 휴대전화</Row>
+                        </Col>
                         <Col sm>
-                            <Form.Control maxLength={20} placeholder="연락처" value={userPhone} onChange={onChangePhone} />
-                            {phoneError && <div className="invalid-input">올바른 전화번호를 입력하세요.</div>}
+                            <Form.Control maxLength={20} placeholder="매장 휴대전화" value={userPhone} onChange={onChangePhone} />
+                            {phoneError && <div className="invalid-input">올바른 전화번호를 입력하세요. (012-3456-7890)</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                        <Col >
+                            <Row sm className='label'>매장 주소</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="주소" value={userAddress} onChange={onChangeAddress} />
                             {addressError && <div className="invalid-input">주소를 입력해주세요. <br /> 부산 사하구 하신중앙로 2 이런 형식으로 넣어야함...</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                        <Col>
+                        <Col >
+                            <Row sm className='label'>사업자 등록 번호</Row>
+                        </Col>
+                        <Col sm>
                             <InputGroup>
                                 <Form.Control maxLength={20} placeholder="사업자 등록 번호" value={userLicenseNum} disabled readOnly />
                             </InputGroup>
                         </Col>
                     </Form.Group>
                     <div className="d-grid gap-1 mb-3">
-                        <Button variant="secondary" onClick={onSubmit}>회원 정보 수정</Button>
+                        <Button className='submit' variant="secondary" onClick={onSubmit}>회원 정보 수정</Button>
                     </div>
                 </Form>
             </Container>

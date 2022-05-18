@@ -216,10 +216,10 @@ function SampleMap() {
   for (let i = 0; i < nearStore.length; i++) {
     storePos.push({
       latlng: {
-        lat: nearStore[i].locationYpoint,
-        lng: nearStore[i].locationXpoint,
+        lat: nearStore[i].location_ypoint,
+        lng: nearStore[i].location_xpoint,
       },
-      userId: nearStore[i].userId,
+      userId: nearStore[i].user_id,
     })
 
 

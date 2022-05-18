@@ -6,14 +6,14 @@ import { Link } from 'react-router-dom';
 import NavBar from '../../common/NavBar';
 import DatePicker from 'react-datepicker';
 import NavStore from '../../../store/NavStore';
-import Flip from "react-reveal/Fade";
+import Fade from "react-reveal/Fade";
 
 
 function BookingHistory(props) {
 
     const setNavHeader = NavStore(state => state.setNavHeader);
     setNavHeader("예약 내역");
-    
+
     const [highlight, setHighlight] = useState();
     const [selectDate, setSelectDate] = useState(new Date());
     const [searchDay, setSearchDay] = useState(splitDate(selectDate));
@@ -178,13 +178,12 @@ function BookingHistory(props) {
                         // size="lg"
                         // aria-labelledby="contained-modal-title-vcenter"
                         centered
-                        className='qrCodeModal'
                     >
                         <Modal.Header closeButton className='qrCodeHeader' >
                             {/* <Modal.Title>Qr코드</Modal.Title> */}
                         </Modal.Header>
-                        <Modal.Body className='qrCodeBody' closeButton>
-                            <img className='img' src={modalQrData} alt=''></img><br/>
+                        <Modal.Body className='qrCodeBody'>
+                            <img className='img' src={modalQrData} alt=''></img><br />
                         </Modal.Body>
                     </Modal>
                     : null}
@@ -213,7 +212,7 @@ function BookingHistory(props) {
         <div className='bookingHistory'>
             <NavBar></NavBar>
             <Container>
-                <Flip>
+                <Fade>
                     <DatePicker
                         locale={ko}
                         // fixedHeight
@@ -221,25 +220,23 @@ function BookingHistory(props) {
                         onChange={(date) => setDate(date)}
                         highlightDates={highlightArray}
                         inline />
-                </Flip>
+                </Fade>
 
                 <div className='btnDiv'>
                     <Button onClick={changeAll} variant={checkAll === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>전체</Button>
                     <Button onClick={changeProgress} variant={checkProgress === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>거래 진행 중</Button>
                     <Button onClick={changeComplete} variant={checkComplete === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>거래 완료</Button>
                 </div>
-                <div className='under'>
-
-                    <Table>
-
+                
+                <Table className='bookTable'>
+                    <Fade>
                         {product !== undefined && product.length > 0 ?
                             product.map((data, index) => {
                                 console.log("product[" + index + "] = " + JSON.stringify(data[0].user_name));
                                 // console.log("product[" + index + "] = " + product[index].product_name);
                                 return (
                                     <>
-                                    <Flip>
-                                        <div className='div'>
+                                        <div className='bookDiv'>
                                             <colgroup>
                                                 <col width="25%" />
                                                 <col width="35%" />
@@ -248,34 +245,40 @@ function BookingHistory(props) {
                                             </colgroup>
 
                                             <thead>
-                                                <tr className='tr'>
-                                                    <th colSpan={"4"}><div className='thName'>{data[0].user_name}</div></th>
-                                                </tr>
-                                                <tr className='tr'>
-                                                    <th colSpan={"4"}><div className='thDate'>{changeDate(data[0].book_date)} {changeTime(data[0].book_hour)}</div></th>
+                                                {index % 2 === 0 ?
+                                                    <tr className='trHead'>
+                                                        <th colSpan={"4"}><div className='thName'>- {data[0].user_name} -</div></th>
+                                                    </tr>
+                                                    :
+                                                    <tr className='trHead2'>
+                                                        <th colSpan={"4"}><div className='thName'>- {data[0].user_name} -</div></th>
+                                                    </tr>}
+
+                                                <tr>
+                                                    <th className='thDate' colSpan={"4"}><div >{changeDate(data[0].book_date)} {changeTime(data[0].book_hour)}</div></th>
                                                 </tr>
                                                 <tr>
-                                                    <th>상품</th>
-                                                    <th>상품명</th>
-                                                    <th>수량</th>
-                                                    <th>가격</th>
+                                                    <th className='bookTh'>상품</th>
+                                                    <th className='bookTh'>상품명</th>
+                                                    <th className='bookTh'>수량</th>
+                                                    <th className='bookTh'>가격</th>
                                                 </tr>
                                             </thead>
                                             {data.map((d, i) => {
                                                 console.warn(d);
                                                 return (
                                                     <>
-                                                        <tbody key={i} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
+                                                        <tbody key={i} className='bookTbody'>
                                                             {/* <tr onClick={() => modalControl(d)}> */}
                                                             <tr>
-                                                                <td>
-                                                                    <div className='imageDiv2'>
-                                                                        <img className='imgFile' src={d.product_imagefront} alt="userImage" />
-                                                                    </div>
+                                                                <td className='bookTd'>
+                                                                    <span className='bookImageDiv'>
+                                                                        <img className='bookImgFile' src={d.product_imagefront} alt="userImage" />
+                                                                    </span>
                                                                 </td>
-                                                                <td style={{ textAlign: "center", verticalAlign: "middle" }} >{d.product_name}</td>
-                                                                <td style={{ textAlign: "center", verticalAlign: "middle" }} >{d.basket_count}</td>
-                                                                <td style={{ textAlign: "center", verticalAlign: "middle" }} >{d.product_discountprice}원</td>
+                                                                <td className='bookTd' >{d.product_name}</td>
+                                                                <td className='bookTd'>{d.basket_count}</td>
+                                                                <td className='bookTd'>{d.product_discountprice}원</td>
                                                             </tr>
                                                         </tbody>
                                                     </>
@@ -283,12 +286,18 @@ function BookingHistory(props) {
                                             })}
 
                                             <tr>
-                                                <td className='tr' colSpan={"4"}>{product[index][0].book_status === 0 ?
+                                                <td className='bookQrTd' colSpan={"4"}>
+                                                    {/* {console.log("[index][0].book_status ========= " ,[index][0].book_status)}
+
+                                                    {product[index][0].book_status === 0  ?
                                                     <Button className='QrBtn' onClick={() => createQrCode(data[index].book_set)}>Qr코드</Button>
-                                                    : null}</td>
+                                                    : null} */}
+                                                    {data[0].book_status === 0 ?
+                                                        <Button className='QrBtn' onClick={() => createQrCode(data[0].book_set)}>Qr코드</Button>
+                                                        : null}
+                                                </td>
                                             </tr>
                                         </div>
-                                        </Flip>
                                     </>
                                 )
                             })
@@ -300,9 +309,8 @@ function BookingHistory(props) {
                             show={modalShow}
                             onHide={() => setModalShow(false)}
                         />
-
-                    </Table>
-                </div>
+                    </Fade>
+                </Table>
                 <ModalQr
                     show={modalQrShow}
                     onHide={() => setModalQrShow(false)}

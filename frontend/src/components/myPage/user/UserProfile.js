@@ -14,7 +14,7 @@ import axios from 'axios';
 function UserProfile(props) {
 
     const setNavHeader = NavStore(state => state.setNavHeader);
-    setNavHeader("프로필");
+    
 
     const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
@@ -64,6 +64,7 @@ function UserProfile(props) {
 
 
     useEffect(() => {
+        setNavHeader("프로필");
         // ! axios get
         axios
             .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
@@ -158,7 +159,7 @@ function UserProfile(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <Col >
+                        <Col >
                             <Row sm className='label'>이름(닉네임)</Row>
                         </Col>
                         <Col sm>
@@ -167,7 +168,7 @@ function UserProfile(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <Col >
+                        <Col >
                             <Row sm className='label'>이메일</Row>
                         </Col>
                         <Col sm>
@@ -176,7 +177,7 @@ function UserProfile(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <Col >
+                        <Col >
                             <Row sm className='label'>휴대전화</Row>
                         </Col>
                         <Col sm>
@@ -185,7 +186,7 @@ function UserProfile(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <Col >
+                        <Col >
                             <Row sm className='label'>주소</Row>
                         </Col>
                         <Col sm>

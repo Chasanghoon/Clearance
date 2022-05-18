@@ -216,12 +216,7 @@ function RegistrationProduct(props) {
     }
 
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-        // <Form.Control maxLength={50} placeholder="유통기한" value={productExpDate} onClick={onClick} onChange={onChangeProductExpDate} />
         <Form.Control style={{backgroundColor:"white"}} maxLength={50} placeholder="유통기한" value={value} onClick={onClick} onChange={onChangeProductExpDate}  readOnly />
-        // <Form.Control maxLength={50} placeholder="유통기한" value={value} onClick={onClick} />
-        // <Button onClick={onClick} ref={ref}>
-        //   {value}
-        // </Button>
       ));
     return (
         <div>
@@ -275,9 +270,7 @@ function RegistrationProduct(props) {
                                 locale={ko}
                                 showPopperArrow={false}
                                 popperPlacement="auto"
-                                // excludeDates={[new Date(), subDays(new Date(), 1),new Date("2022/05/18")]}
                                 minDate={new Date()}
-                                // onChange={date => setStartDate(date)} />
                                 onChange={date => dateData(date)} />
 
                             {productExpDateError && <div className="invalid-input">유통기한을 입력하세요.</div>}

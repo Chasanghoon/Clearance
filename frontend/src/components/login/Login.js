@@ -6,7 +6,6 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import './Login.css';
 import userStore from '../../store/userStore';
 
 function Login(props) {
@@ -75,6 +74,7 @@ function Login(props) {
                 setUserImage(result.data.userImage);
                 sessionStorage.setItem("userImage", result.data.userImage);
                 sessionStorage.setItem("userName", result.data.userName);
+                sessionStorage.setItem("userRole", result.data.userRole);
                 if(result.data.userRole === 2){
                     navigate("/storeMyPage");
                 }
@@ -90,7 +90,7 @@ function Login(props) {
     let navigate = useNavigate();
 
     return (
-        <div>
+        <div className='login'>
             <div className='title'>
                 <h1>Clearance</h1>
             </div>
@@ -108,7 +108,7 @@ function Login(props) {
                     </Form.Group>
 
                     <div className="d-grid gap-1 mb-3">
-                        <Button className='button' onClick={onSubmit}>Login</Button>
+                        <Button className='button' onClick={onSubmit}>로그인</Button>
                     </div>
                 </Form>
             </Container>
