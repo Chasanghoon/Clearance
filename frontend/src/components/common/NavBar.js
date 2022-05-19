@@ -79,9 +79,9 @@ const NavBar = () => {
                                     <Link to="/storeMyPage"><Button className="nbBtn">마이페이지</Button></Link>
                                 }
                                 <Link onClick={Logout} to="/"><Button className="nbBtn3">로그아웃</Button></Link>
-                                <div className="kakao">
+                                {/* <div className="kakao">
                                     <KakaoCounseling />
-                                </div>
+                                </div> */}
                             </Nav>
                         </div>
                     </div>

@@ -102,7 +102,7 @@ const Product = () => {
       centered
     >
           <Modal.Header closeButton style={{
-              backgroundColor: "#22cc88",
+              backgroundColor: "#176a49",
               color:"white"
       }}>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -118,7 +118,13 @@ const Product = () => {
           <Modal.Footer style={{
           float:"initial"
       }}>
-              <Button onClick={() => {
+              <Button
+              style={{
+                backgroundColor: "#FFC812",
+                borderColor:"#FFC812",
+                color:"white"
+        }}
+               onClick={() => {
                 navigate("/basket")
         }}>장바구니로 이동</Button>
               <Button variant="secondary" onClick={() => {
@@ -220,12 +226,12 @@ const Product = () => {
                     paddingTop: "10px"
                 }}>
                     <Button style={{
-                        backgroundColor:"#22cc88"
+                        backgroundColor:"#176a49", borderColor:"#176a49"
                     }} onClick={() => {
                         basketadd();
                         
                     }}>장바구니 등록</Button>
-                    <Link to="/main"><Button variant="secondary" style={{marginLeft:"10px"}}>돌아가기</Button></Link>
+                    <Link to="/main"><Button variant="secondary" style={{marginLeft:"10px", backgroundColor:"#6e4422", borderColor:"#6e4422"}}>돌아가기</Button></Link>
                 </div>
                 
                 <Tabs style={{

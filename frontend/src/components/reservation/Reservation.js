@@ -178,7 +178,7 @@ function Reservation(props) {
                             </Col>
                         </Form.Group>
                     </Form>
-                    <Button onClick={submit}>예약하기</Button>
+                    <Button className='rvBtn' onClick={submit}>예약하기</Button>
                 </div>
             </div>
         </div>
