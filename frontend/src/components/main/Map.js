@@ -719,7 +719,7 @@ function SampleMap() {
   // console.log(nearStore)
   return (
     <div className="map" style={{
-      backgroundColor: "#f5f5f6",
+      backgroundColor: "#edf3f9",
       paddingBottom: "10px",
     }}>
       <Map // 지도를 표시할 Container
@@ -843,7 +843,7 @@ function SampleMap() {
                 placeholder=""
               // onChange={(e) => setWord(e.target.value)}
               />
-              <Button variant="outline-secondary" id="button-addon2" onClick={() => {
+              <Button variant="outline-success" id="button-addon2" onClick={() => {
                 setWord(document.getElementById("searchWord2").value)
               }}>
                 검색
