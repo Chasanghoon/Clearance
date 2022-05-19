@@ -41,7 +41,7 @@ function QrCheck() {
   return (
     <div className='QrCheck'>
       <div className='qrDiv'>
-        <div style={{ fontSize: "20px" }}> 아래 카메라에 QR코드를 인식시켜주세요!</div>
+        <div style={{  fontSize: "20px" }}> 아래 카메라에 QR코드를 인식시켜주세요!</div>
         <QrReader
           delay={300}
           facingMode={"environment"}
