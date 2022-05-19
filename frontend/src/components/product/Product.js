@@ -124,7 +124,7 @@ const Product = () => {
     const basketadd = async () => {
         try {
             const response = await axios.post(`https://k6e203.p.ssafy.io:5001/data/basket-add`, {
-            "user_id": sessionStorage.getItem("id"),
+            "user_id": localStorage.getItem("id"),
             "product_id": product_id,
             "basket_count": basket_cnt // 예약할 상품 개수
             })

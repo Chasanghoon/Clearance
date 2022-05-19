@@ -274,7 +274,16 @@ padding-bottom: 40%;
     width: 100%;
     top: 0;
     overflow: auto;
+    z-index: 5;
     /* background-color: #000; */
+}
+.NavBarbg{
+    z-index: 2;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
 }
 .NavBar .logo{
     /* color: rgba(0, 0, 0, 1); */
@@ -301,15 +310,16 @@ padding-bottom: 40%;
 width: 376px;
 height: 100%;
 position: absolute;
-left: -1000px;
+z-index: 5;
+/* right: 100px; */
 }
 .NavBar .navPosition{
     /* padding-top: 5%; */
-    left: 50%;
+    /* left: 50%; */
     position: relative;
-    width: 50%;
+    width: 100%;
     height: 100vh;
-    z-index: 2;
+    z-index: 10;
     /* background-color: rgba(255, 200, 18, 0.9); */
     background-color: rgba(255, 255, 255, 0.9); 
 }
@@ -323,13 +333,64 @@ left: -1000px;
     /* background-color: rgba(221, 210, 57, 0.3); */
 }
 .NavBar .imageDiv {
-    border-radius: 20%;
+    border-radius: 100px;
+    border: 5px solid rgb(57, 62, 57);
     position: relative;
     margin:0 auto;
     overflow: hidden;
     width: 200px;
     height: 200px;
+    z-index: 10;
     /* background-color: #FFC812; */
+}
+.NavBar .nbName {
+    margin-top: 20px;
+font-size: 30px;
+font-weight: bold;
+}
+.NavBar .nbBtn {
+    margin-top: 80px;
+font-size: 30px;
+font-weight: bold;
+background-color: #176a49;
+border: hidden;
+width: 80vw;
+height: 50px;
+
+box-shadow: 3px 3px 3px rgb(100, 100, 100);
+border-radius: 30px;
+}
+.NavBar .nbBtn2 {
+    margin-top: 10px;
+font-size: 30px;
+font-weight: bold;
+background-color: #98a7fa;
+border: hidden;
+width: 80vw;
+height: 50px;
+box-shadow: 3px 3px 3px rgb(100, 100, 100);
+border-radius: 30px;
+}
+.NavBar .nbBtn3 {
+    margin-top: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #2f3431;
+    border: hidden;
+    width: 80vw;
+    height: 50px;
+    box-shadow: 3px 3px 3px rgb(100, 100, 100);
+    border-radius: 30px;
+}
+.NavBar .kakao {
+    margin-top: 10px;
+    border: hidden;
+}
+.kakaoImg {
+    position: fixed;
+    margin: 3% 0 0 13% ;
+    height: 60px;
+    /* float: right; */
 }
 .NavBar .imageDiv2 {
     border-radius: 20%;
@@ -403,15 +464,15 @@ left: -1000px;
     padding-bottom: 20%;
     padding-top: 3%;
 }
-
 /* ! ================================================ */
 /* ! ================ reservation ================ */
 /* ! ================================================ */
 .reservation {
-    /* margin-top: 60px; */
     padding-top: 65px;
     padding-bottom: 20%;
 }
+
+
 /* ! ================================================ */
 /* ! ================ reservationResult ================ */
 /* ! ================================================ */
@@ -616,128 +677,7 @@ left: -1000px;
 }
 
 
-/* ! ================================================ */
-/* ! ================ bookingHistory ================ */
-/* ! ================================================ */
-.bookingHistory {
-    padding-top: 65px;
-    padding-bottom: 20%;
-}
-.bookingHistory .btnDiv {
-    margin-top: 50px;
-}
-.bookingHistory .bookTable{
-    width: 95%;
-    table-layout: fixed;
-    font-size: 15px;
-    word-break: break-all;
-    margin: 10px auto 10% auto;
-}
-.bookingHistory .bookDiv {
-    border-top: hidden;
-    /* border: 1px solid #b4b3b3; */
-    box-shadow: 2px 2px 2px #b4b3b3;
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    margin-bottom: 30px;
-    /* padding: 0 0 0 10px; */
-    /* font-size: 90%; */
-    overflow: hidden;
-}
-.bookingHistory .bookTh {
-    padding-bottom: 5px;
-    border-bottom: 1px solid #b4b3b3;
-}
-.bookingHistory .bookTd {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: center;
-    vertical-align: middle;
-}
-.bookingHistory .bookQrTd {
-    border-top: hidden;
-    border-bottom: hidden;
-    padding-bottom: 20px;
-}
 
-.bookingHistory .trHead {
-    border-top: hidden;
-    border-bottom: hidden;
-    background-color: #23cc88;
-}
-.bookingHistory .trHead2 {
-    border-top: hidden;
-    border-bottom: hidden;
-    background-color: #ffd701;
-}
-.bookingHistory .thName {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    text-align: center;
-    font-size: 25px;
-    color: #FFF;
-    padding: 5px 10px 5px 10px;
-}
-.bookingHistory .thDate {
-    /* display:inline-block; */
-    text-align: right;
-    font-size: small;
-    font-weight: lighter;
-    border-bottom: hidden;
-    /* margin: 5px 7px 5px 0; */
-    /* color: #aeaeae; */
-    /* border: 1px solid black; */
-    /* border-radius: 20px; */
-    padding: 10px 10px 10px 10px;
-}
-.bookingHistory .bookTbody {
-    /* borderBottomWidth: "2px", borderColor: "#F5F5F5" */
-    border-bottom-width: 2px;
-    border-color: #f5f5f5;
-    /* border-bottom: hidden; */
-}
-.bookingHistory .bookImageDiv {
-    border-radius: 20%;
-    position: relative;
-    margin:0 auto;
-    overflow: hidden;
-    /* text-align: right; */
-    float: right;
-    width: 80px;
-    height: 80px;
-    /* background-color: #FFC812; */
-}
-.bookingHistory .bookImgFile {
-    position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.bookingHistory .table>:not(:first-child) {
-    /* border-top: 2px solid currentColor; */
-    border-top: hidden;
-}
-.bookingHistory .QrBtn {
-    width: 90%;
-    background-color: #b4b3b3;
-    border: 0px;
-    margin-top: 5%;
-}
-.qrCodeHeader {
-    border-bottom: #ffffff;
-    
-}
-.qrCodeBody {
-    margin: 0 0 10% 0;
-    text-align: center;
-    
-}
-.qrCodeBody .img{
-    width: 100%;
-    
-}
 /* ! ================================================ */
 /* ! ================== userCarbon ================== */
 /* ! ================================================ */
@@ -1067,9 +1007,15 @@ text-align: left;
     /* margin: 0 5px 0 5px; */
     color: #000;
 }
-.allProductManagement .page-item:last-child .page-link {
-    /* margin: 0 5px 0 5px; */
+/* .allProductManagement .page-item:last-child .page-link {
+    margin: 0 5px 0 5px;
     color: #000
+} */
+.allProductManagement .row {
+    /* margin: 0 5px 0 5px; */
+    color: #000;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 /* ! ================================================ */
 /* ! ================ updateProduct ================ */
@@ -1084,6 +1030,67 @@ text-align: left;
     float: left;
     margin-bottom: 1%;
 }
+.updateProduct .updateProductImageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    /* background-color: #FFC812; */
+}
+.updateProduct .updateProductImgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* ! ================================================ */
+/* ! ================ registrationProduct ================ */
+/* ! ================================================ */
+.registrationProduct {
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+.registrationProduct .label {
+    font-weight: 900;
+    padding-left: 5%;
+    float: left;
+    margin-bottom: 1%;
+}
+.registrationProduct .registrationProductImageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    /* background-color: #FFC812; */
+}
+.registrationProduct .registrationProductImgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.registrationProduct .imageButton {
+    text-align: center;
+    padding: 10px 10px;
+    margin: 10px 5px 10px 5px;
+    width: 150px;
+    height: 50px;
+}
+.registrationProduct .invalid-input{
+    color: red;
+    font-size: medium;
+}
+.registrationProduct .submitBtn{
+    height: 60px;
+}
 /* ! ================================================ */
 /* ! ================ checkReservation ================ */
 /* ! ================================================ */
@@ -1091,93 +1098,7 @@ text-align: left;
     padding-top: 65px;
     padding-bottom: 20%;
 }
-/* ! ================================================ */
-/* ! ================== DatePicker ================== */
-/* ! ================================================ */
-.react-datepicker {
-    font-family: "LeeSeoyun" !important;
-    font-size: 1rem !important;
-    background-color: #fff;
-    color: #000;
-    border: 1px solid #aeaeae;
-    border-radius: 0.3rem;
-    display: inline-block;
-    position: relative;
-    margin-top: 40px !important;
-    width: 300px !important;
-    height: 300px !important;
-  }
 
-
-  .react-datepicker__header {
-    text-align: center;
-    background-color: #22cc88 !important;
-    /* background-color: #fdcc72 !important; */
-    border-bottom: 1px solid #aeaeae;
-    border-top-left-radius: 0.3rem;
-    padding: 8px 0;
-    position: relative;
-    width: 300px !important;
-  }
-.react-datepicker__year-read-view--down-arrow,
-.react-datepicker__month-read-view--down-arrow,
-.react-datepicker__month-year-read-view--down-arrow, .react-datepicker__navigation-icon::before {
-  border-color: rgb(255, 255, 255) !important;
-  border-style: solid;
-  border-width: 3px 3px 0 0;
-  content: "";
-  display: block;
-  height: 9px;
-  position: absolute;
-  top: 11px !important;
-  width: 9px;
-}
-.react-datepicker__current-month,
-.react-datepicker-time__header,
-.react-datepicker-year-header {
-  margin-top: 0;
-  color: rgb(0, 0, 0);
-  font-weight: bolder !important;
-  font-size: 1.2rem;
-}
-.react-datepicker__day-name,
-.react-datepicker__day,
-.react-datepicker__time-name {
-  color: #000;
-  display: inline-block;
-  width: 2.2rem;
-  line-height: 2.2rem;
-  text-align: center;
-  margin: 0.166rem;
-}
-.react-datepicker__day--highlighted,
-.react-datepicker__month-text--highlighted,
-.react-datepicker__quarter-text--highlighted,
-.react-datepicker__year-text--highlighted {
-    border-radius: 50% !important;
-  background-color: #FFD700 !important;
-  color: #fff;
-}
-.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range,
-.react-datepicker__month-text--selected,
-.react-datepicker__month-text--in-selecting-range,
-.react-datepicker__month-text--in-range,
-.react-datepicker__quarter-text--selected,
-.react-datepicker__quarter-text--in-selecting-range,
-.react-datepicker__quarter-text--in-range,
-.react-datepicker__year-text--selected,
-.react-datepicker__year-text--in-selecting-range,
-.react-datepicker__year-text--in-range {
-  border-radius: 50% !important;
-  background-color: #22cc88 !important;
-  /* background-color: #2E8B57 !important; */
-  color: #fff;
-}
-
-.react-datepicker__day--outside-month{
-    color: rgb(224, 222, 222) !important;
-    /* width: 300px !important; */
-}
 
 /* ! ================================================ */
 /* ! ==================== map ==================== */
@@ -1186,12 +1107,98 @@ text-align: left;
 
 .MainCategory {
     box-Shadow: 3px 3px 3px #b4b3b3;
-    margin-Top: 15px;
+    margin-Top: 10px;
     padding: 10px 10px 10px 10px;
-
     border-radius:30px;
 }
+.MainCategory .categoryDiv{
+    display: flex;
+    justify-content: center;
+}
+.MainCategory .mapCategory1 {
+    width: 100%;
+    height: 40px;
+    /* color: #000; */
+    font-size: 15px;
+    /* font-weight: bold; */
+    border-radius: 15px;
+    border: hidden;
+    background-color: #a2a2ee;
+}
+.MainCategory .mapCategory2 {
+    width: 100%;
+    height: 40px;
+    color: #000;
+    font-size: 15px;
+    /* font-weight: bold; */
+    border-radius: 15px;
+    border: hidden;
+    background-color: #f5f5f5;
+}
+.map .reservationResultImageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    /* background-color: #FFC812; */
+}
+.map .reservationResultImgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.map .reservationTableHeader {
+    border-bottom: hidden;
+    background-color: #a2a2ee;
+}
+.map .reservationTableBody {
+    border-bottom: hidden;
+}
+.map .reservationTableStoreName {
+    border-bottom: hidden;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 20px;
+    font-weight: bold;
+}
 
+.wrap {
+    
+    position: absolute;
+    left: 0;
+    bottom: 40px;
+    width: 288px;
+    height: 180px;
+    margin-left: -130px;
+    text-align: left;
+    /* overflow: hidden; */
+    font-size: 14px;
+    line-height: 1.5;
+}
+.wrap .info {
+    width: 286px;
+    height: 160px;
+    border-radius: 20px;
+    border-bottom: 2px solid #ccc;
+    border-right: 2px solid #ccc;
+    overflow: hidden;
+    background: #fff;
+}
+.info .close {
+    position: absolute;
+    top: 10px;right: 15px;
+    color: #888;width: 17px;
+    height: 17px;
+    background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+}
+.info .close:hover {
+    cursor: pointer;
+}
 
 
 /* ! ================================================ */
@@ -1257,6 +1264,235 @@ text-align: left;
 /* ! ================================================ */
 
 .QrCheck {
-    background-color: rgb(47, 47, 47);
+    height: 100vh;
+    background-color: rgb(32, 32, 32);
     color: white;
+}
+.QrCheck .qrDiv{
+    padding-top: 30%;
+}
+
+
+/* ! ================================================ */
+/* ! ================ bookingHistory ================ */
+/* ! ================================================ */
+.bookingHistory {
+    padding-top: 65px;
+    padding-bottom: 20%;
+}
+.bookingHistory .btnDiv {
+    margin-top: 50px;
+}
+.bookingHistory .bookTable{
+    width: 95%;
+    table-layout: fixed;
+    font-size: 15px;
+    word-break: break-all;
+    margin: 10px auto 10% auto;
+}
+.bookingHistory .bookDiv {
+    border-top: hidden;
+    /* border: 1px solid #b4b3b3; */
+    box-shadow: 2px 2px 2px #b4b3b3;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    /* padding: 0 0 0 10px; */
+    /* font-size: 90%; */
+    overflow: hidden;
+}
+.bookingHistory .bookTh {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #b4b3b3;
+}
+.bookingHistory .bookTd {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+.bookingHistory .bookQrTd {
+    border-top: hidden;
+    border-bottom: hidden;
+    padding-bottom: 20px;
+}
+
+.bookingHistory .trHead {
+    border-top: hidden;
+    border-bottom: hidden;
+    background-color: #23cc88;
+}
+.bookingHistory .trHead2 {
+    border-top: hidden;
+    border-bottom: hidden;
+    background-color: #ffd701;
+}
+.bookingHistory .thName {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 25px;
+    color: #FFF;
+    padding: 5px 10px 5px 10px;
+}
+.bookingHistory .thDate {
+    /* display:inline-block; */
+    text-align: right;
+    font-size: small;
+    font-weight: lighter;
+    border-bottom: hidden;
+    /* margin: 5px 7px 5px 0; */
+    /* color: #aeaeae; */
+    /* border: 1px solid black; */
+    /* border-radius: 20px; */
+    padding: 10px 10px 10px 10px;
+}
+.bookingHistory .bookTbody {
+    /* borderBottomWidth: "2px", borderColor: "#F5F5F5" */
+    border-bottom-width: 2px;
+    border-color: #f5f5f5;
+    /* border-bottom: hidden; */
+}
+.bookingHistory .bookImageDiv {
+    border-radius: 20%;
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    /* text-align: right; */
+    float: right;
+    width: 85px;
+    height: 85px;
+    /* background-color: #FFC812; */
+}
+.bookingHistory .bookImgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bookingHistory .noReservation {
+    font-size: 30px;
+}
+
+.bookingHistory .QrBtn {
+    width: 90%;
+    background-color: #b4b3b3;
+    border: 0px;
+    margin-top: 5%;
+}
+.qrCodeHeader {
+    border-bottom: #ffffff;
+    
+}
+.qrCodeBody {
+    margin: 0 0 10% 0;
+    text-align: center;
+    
+}
+.qrCodeBody .img{
+    width: 100%;
+    
+}
+.table>:not(:first-child){
+    border-top: hidden;
+}
+.react-datepicker{
+    font-family: "LeeSeoyun" !important;
+    font-size: 1rem !important;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #aeaeae;
+    border-radius: 0.3rem;
+    display: inline-block;
+    position: relative;
+    margin-top: 40px !important;
+    /* width: 300px !important;
+    height: 300px !important; */
+  }
+  .react-datepicker__header {
+    text-align: center;
+    background-color: #22cc88 !important;
+    /* background-color: #fdcc72 !important; */
+    border-bottom: 1px solid #aeaeae;
+    border-top-left-radius: 0.3rem;
+    padding: 8px 0;
+    position: relative;
+    /* width: 300px !important; */
+  }
+  .react-datepicker__year-read-view--down-arrow,
+.react-datepicker__month-read-view--down-arrow,
+.react-datepicker__month-year-read-view--down-arrow, .react-datepicker__navigation-icon::before {
+  border-color: rgb(255, 255, 255) !important;
+  border-style: solid;
+  border-width: 3px 3px 0 0;
+  content: "";
+  display: block;
+  height: 9px;
+  position: absolute;
+  top: 11px !important;
+  width: 9px;
+}
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  margin-top: 0;
+  color: rgb(0, 0, 0);
+  font-weight: bolder !important;
+  font-size: 1.2rem;
+}
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: #000;
+  display: inline-block;
+  /* width: 2.2rem; */
+  /* line-height: 2.2rem; */
+  text-align: center;
+  /* margin: 0.166rem; */
+}
+.react-datepicker__day--highlighted,
+.react-datepicker__month-text--highlighted,
+.react-datepicker__quarter-text--highlighted,
+.react-datepicker__year-text--highlighted {
+    border-radius: 50% !important;
+  background-color: #FFD700 !important;
+  color: #fff;
+}
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+  border-radius: 50% !important;
+  background-color: #22cc88 !important;
+  /* background-color: #2E8B57 !important; */
+  color: #fff;
+}
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
+
+    border-radius: 50% !important;
+  background-color: #22cc88 !important;
+  color: #fff;
+}
+.react-datepicker__time-container
+.react-datepicker__time
+.react-datepicker__time-box
+ul.react-datepicker__time-list
+li.react-datepicker__time-list-item--disabled {
+    display: none;
+}
+
+.react-datepicker__day--outside-month{
+    color: rgb(224, 222, 222) !important;
+    /* width: 300px !important; */
 }

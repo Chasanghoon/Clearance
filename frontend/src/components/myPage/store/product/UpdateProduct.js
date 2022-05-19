@@ -260,8 +260,8 @@ function UpdateProduct(props) {
             <Container className='mt-5'>
                 <Form>
                     <Form.Group as={Row} className="mb-3" controlId="formFile1" style={{ "textAlign": "center" }}>
-                        <div className='imageDiv'>
-                            <img className='imgFile' src={frontImage.front_preview_URL} alt="userImage" />
+                        <div className='updateProductImageDiv'>
+                            <img className='updateProductImgFile' src={frontImage.front_preview_URL} alt="userImage" />
                             {/* {frontLoaded === false || frontLoaded === true ?
                                 (<img className='imgFile' src={frontImage.front_preview_URL} alt="userImage" />) :
                                 (<Spinner animation="border" variant="warning" />)} */}
@@ -276,8 +276,8 @@ function UpdateProduct(props) {
                         {/* <Col >
                             <Row sm className='label'>상품 상세 이미지</Row>
                         </Col> */}
-                        <div className='imageDiv'>
-                            <img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />
+                        <div className='updateProductImageDiv'>
+                            <img className='updateProductImgFile' src={backImage.back_preview_URL} alt="userImage" />
                             {/* {backLoaded === false || backLoaded === true ?
                                 (<img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />) :
                                 (<Spinner animation="border" variant="warning" />)} */}
@@ -352,7 +352,7 @@ function UpdateProduct(props) {
                         </Col>
                         <Col sm>
                             {/* <Form.Control maxLength={20} placeholder="카테고리" value={categoryId} onChange={onChangeCategoryId} /> */}
-                            <Form.Select value={categoryId} onChange={onChangeCategoryId}>
+                            <Form.Select className='mb-3' value={categoryId} onChange={onChangeCategoryId}>
                                 <option>카테고리</option>
                                 <option value="0">과일</option>
                                 <option value="1">채소</option>

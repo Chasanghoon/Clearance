@@ -67,7 +67,7 @@ function UserProfile(props) {
         setNavHeader("프로필");
         // ! axios get
         axios
-            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${localStorage.getItem("id")}`)
             .then((result) => {
                 setUserId(result.data.userId);
                 setUserName(result.data.userName);

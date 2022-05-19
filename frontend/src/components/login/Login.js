@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import userStore from '../../store/userStore';
+import Swal from 'sweetalert2'
 
 function Login(props) {
 
@@ -45,24 +46,39 @@ function Login(props) {
             )
             .then((e) => {
                 console.log("axios post 성공")
-                alert("로그인 완료!");
+                // alert("로그인 완료!");
                 // console.log(e)
                 // console.log(e.data[0]);
                 // console.log(e.data[1]);
-                sessionStorage.setItem("id", e.data[1]);
-                sessionStorage.setItem("access_token", e.data[0]);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'success!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                localStorage.setItem("id", e.data[1]);
+                localStorage.setItem("access_token", e.data[0]);
                 userData();
             })
             .catch((e) => {
+                
                 console.error("axios post 실패");
                 console.error(e.message);
-                alert("아이디와 비밀번호를 확인해주세요.");
+                Swal.fire({
+                    // icon: 'success',
+                    // title: 'success!',
+                    icon: 'error',
+                    title: 'error!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                // alert("아이디와 비밀번호를 확인해주세요.");
             });
     };
     function userData() {
         // ! axios get
         axios
-            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${localStorage.getItem("id")}`)
             .then((result) => {
                 setUserId(result.data.userId);
                 setUserRole(result.data.userRole);
@@ -72,9 +88,9 @@ function Login(props) {
                 setUserAddress(result.data.userAddress);
                 setUserLicenseNum(result.data.userLicensenum);
                 setUserImage(result.data.userImage);
-                sessionStorage.setItem("userImage", result.data.userImage);
-                sessionStorage.setItem("userName", result.data.userName);
-                sessionStorage.setItem("userRole", result.data.userRole);
+                localStorage.setItem("userImage", result.data.userImage);
+                localStorage.setItem("userName", result.data.userName);
+                localStorage.setItem("userRole", result.data.userRole);
                 if(result.data.userRole === 2){
                     navigate("/storeMyPage");
                 }

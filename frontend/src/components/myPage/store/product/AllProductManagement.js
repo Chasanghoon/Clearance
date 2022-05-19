@@ -27,21 +27,21 @@ function AllProductManagement(props) {
     let showItems = [];
 
 
-    console.log(sessionStorage.getItem("id"));
+    console.log(localStorage.getItem("id"));
     console.error(checkWord);
     useEffect(() => {
-        setNavHeader("전체 상품 관리");
+        setNavHeader("상품 관리");
         console.log("실행샐행!!!!!!!!!!!!!!")
         // ! axios get
         console.log("axios get")
         axios
-            .get(`https://k6e203.p.ssafy.io:8443/api/product/info?page=${page}&size=${size}&storeId=${sessionStorage.getItem("id")}&word=${word}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/product/info?page=${page}&size=${size}&storeId=${localStorage.getItem("id")}&word=${word}`)
             .then((result) => {
                 console.log(result.data);
 
                 setProduct(result.data.content);
-                // setTotalPage(result.data.totalPages);
-                setTotalPage(24);
+                setTotalPage(result.data.totalPages);
+                // setTotalPage(24);
             })
             .catch((e) => {
                 // console.error("axios get 실패");
@@ -78,29 +78,60 @@ function AllProductManagement(props) {
     }
 
     function MyVerticallyCenteredModal(props) {
-        // console.log("모달 : " + JSON.stringify(modalProduct));
+        console.log("모달 : " + JSON.stringify(modalProduct));
         return (
             <>
                 {modalProduct !== undefined ?
                     <Modal
                         {...props}
                         // size="lg"
-                        aria-labelledby="contained-modal-title-vcenter"
+                        // aria-labelledby="contained-modal-title-vcenter"
                         centered
                     >
-                        <Modal.Header closeButton>
-                            <Modal.Title>{modalProduct.productName}</Modal.Title>
+                        <Modal.Header closeButton className='pmModalHeader'>
+                            <Modal.Title className='pmModalTitle'>상품 상세 정보</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body>
-                            {/* {modalProduct.productName} */}
-                            sd
-                        </Modal.Body>
-                        <ModalFooter>
-                            <div style={{ textAlign: "center" }}>
-                                <Link to="../updateProduct" state={{ data: modalProduct }}><Button variant="success"> 수정 </Button></Link>
-                                <Button variant="danger" onClick={deleteProduct}> 삭제 </Button>
+                        <Modal.Body className='pmModalBody'>
+                            <Table>
+                                <tbody>
+                                    <tr style={{borderBottom:"hidden"}}>
+                                        <td colSpan={2}><img className='img' src={modalProduct.productImagefront} alt=''></img></td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>상품 명</td>
+                                        <td>{modalProduct.productName}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>원가</td>
+                                        <td>{modalProduct.productPrice}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>할인 율</td>
+                                        <td>{modalProduct.productDiscount * 100}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>할인가</td>
+                                        <td>{modalProduct.productDiscountprice}원</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>재고</td>
+                                        <td>{modalProduct.productStock}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>유통기한</td>
+                                        <td>{modalProduct.productExpdate}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='nameTd'>카테고리</td>
+                                        <td>{changeCategory(modalProduct.categoryId)}</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                            <div className='pmModalBtnGroup'>
+                                <Link to="../updateProduct" state={{ data: modalProduct }}><Button className='pmModalUpdateBtn'> 수정 </Button></Link>
+                                <Button className='pmModalDeleteBtn' onClick={deleteProduct}> 삭제 </Button>
                             </div>
-                        </ModalFooter>
+                        </Modal.Body>
                     </Modal>
                     : null}
             </>
@@ -228,7 +259,7 @@ function AllProductManagement(props) {
                 </Table>
             </div>
             <div>
-                <Row>
+                <Row className='row'>
                     <Col>
                     </Col>
                     <Col style={{ textAlign: 'center' }}>
@@ -248,7 +279,7 @@ function AllProductManagement(props) {
                         placeholder=""
                         onChange={(e) => setWord(e.target.value)}
                     />
-                    <Button variant="outline-secondary" id="button-addon2" onClick={() => setCheckWord(!checkWord)}>
+                    <Button variant="outline-secondary" onClick={() => setCheckWord(!checkWord)}>
                         검색
                     </Button>
                 </InputGroup >
@@ -257,6 +288,58 @@ function AllProductManagement(props) {
     );
 }
 
-
+function changeCategory(data) {
+    let reCategory = ""
+    switch (data) {
+        case 0:
+            reCategory = "과일";
+            break;
+        case 1:
+            reCategory = "채소";
+            break;
+        case 2:
+            reCategory = "쌀/잡곡/견과";
+            break;
+        case 3:
+            reCategory = "정육/계란류";
+            break;
+        case 4:
+            reCategory = "수산물/건해산";
+            break;
+        case 5:
+            reCategory = "우유/유제품/유아식";
+            break;
+        case 6:
+            reCategory = "냉장/냉동/간편식";
+            break;
+        case 7:
+            reCategory = "밀키트/김치/반찬";
+            break;
+        case 8:
+            reCategory = "생수/음료/주류";
+            break;
+        case 9:
+            reCategory = "커피/원두/차";
+            break;
+        case 10:
+            reCategory = "라면/면류/즉석식품/통조림";
+            break;
+        case 11:
+            reCategory = "장류/양념/가루/오일";
+            break;
+        case 12:
+            reCategory = "과자/시리얼/빙과/떡";
+            break;
+        case 13:
+            reCategory = "베이커리/잼/샐러드";
+            break;
+        case 14:
+            reCategory = "건강식품";
+            break;
+        default:
+            break;
+    }
+    return reCategory;
+}
 
 export default AllProductManagement;

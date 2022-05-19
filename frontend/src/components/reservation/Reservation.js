@@ -83,7 +83,7 @@ function Reservation(props) {
         axios
             .post(`https://k6e203.p.ssafy.io:5001/data/reservation-add`,
                 {
-                    user_id: sessionStorage.getItem("id"),
+                    user_id: localStorage.getItem("id"),
                     store_user_id: storeId,
                     book_date: saveData,
                     book_hour: saveTime
@@ -144,6 +144,7 @@ function Reservation(props) {
                             <Col xs={2}><Form.Label column >날짜</Form.Label></Col>
                             <Col>
                                 <DatePicker
+                                    className='react-datepicker2'
                                     selected={startDate}
                                     dateFormat="yyyy년 MM월 dd일 (eee)"
                                     customInput={<ExampleCustomInput />}

@@ -9,6 +9,7 @@ import NavStore from '../../../store/NavStore';
 import Fade from "react-reveal/Fade";
 
 
+
 function BookingHistory(props) {
 
     const setNavHeader = NavStore(state => state.setNavHeader);
@@ -32,14 +33,14 @@ function BookingHistory(props) {
 
 
     console.log(selectDate)
-    console.log(sessionStorage.getItem("id"));
+    console.log(localStorage.getItem("id"));
 
     // 유저 예약 날짜 가져오기
     useEffect(() => {
         // ! axios get
         console.log("axios get")
         axios
-            .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/${localStorage.getItem("id")}`)
             .then((result) => {
                 console.log(result.data.result);
                 setHighlight(result.data.result);
@@ -69,7 +70,7 @@ function BookingHistory(props) {
         console.log("axios get")
         console.log("searchDay = " + searchDay);
         axios
-            .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/all/${sessionStorage.getItem("id")}/${searchDay}`)
+            .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/all/${localStorage.getItem("id")}/${searchDay}`)
             .then((result) => {
                 console.log(result.data.info);
                 setProduct(result.data.info);
@@ -86,7 +87,7 @@ function BookingHistory(props) {
         console.log("axios get")
         console.log("searchDay = " + searchDay);
         axios
-            .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/progress/${sessionStorage.getItem("id")}/${searchDay}`)
+            .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/progress/${localStorage.getItem("id")}/${searchDay}`)
             .then((result) => {
                 console.log(result.data.info);
                 setProduct(result.data.info);
@@ -103,7 +104,7 @@ function BookingHistory(props) {
         console.log("axios get")
         console.log("searchDay = " + searchDay);
         axios
-            .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/complete/${sessionStorage.getItem("id")}/${searchDay}`)
+            .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/complete/${localStorage.getItem("id")}/${searchDay}`)
             .then((result) => {
                 console.log(result.data.info);
                 setProduct(result.data.info);

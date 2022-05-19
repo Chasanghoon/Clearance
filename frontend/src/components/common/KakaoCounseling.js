@@ -20,8 +20,7 @@ function KakaoCounseling(props) {
     
     return (
         <div>
-            <a href='http://pf.kakao.com/_UYstb/chat' target="_blank"><img src='img/kakaoCounseling.png' alt=''/></a>
-            
+            <a href='http://pf.kakao.com/_UYstb/chat' target="_blank"><img className='kakaoImg' src='img/kakaoCounseling.png' alt=''/></a>
         </div>
         
     );
