@@ -158,8 +158,7 @@ function Main() {
         
           {/* <img className='TOPImg' alt='' src='img/top_arrow.png'></img> */}
       
-        <button onClick={() => {
-        }}>위로가기</button>
+        
       </div>
     );
 }
