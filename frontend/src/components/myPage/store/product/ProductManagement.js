@@ -210,7 +210,7 @@ function ProductManagement(props) {
                                                     </td>
                                                     <td className='pmTd' >{data.productName}</td>
                                                     <td className='pmTd' >{data.productStock}</td>
-                                                    <td className='pmTd' >{data.productDiscountprice}원</td>
+                                                    <td className='pmTd' >{(data.productDiscountprice).toLocaleString()}원</td>
                                                 </tr>
                                             </Fade>
                                         </tbody>
