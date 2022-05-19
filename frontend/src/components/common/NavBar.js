@@ -70,6 +70,11 @@ const NavBar = () => {
                                     <img className='imgFile' src={localStorage.getItem("userImage")} alt="userImage" />
                                 </div>
                                 <span className="nbName">{localStorage.getItem("userName")}</span>
+                                {localStorage.getItem("userRole") >= 2 ?
+                                    <div>
+                                        {/* 3번 : 유저 , 2번 : 매장 */}
+                                        {localStorage.getItem("userRole") == 3 ? <div>고객 회원</div>: <div>매점 회원</div>}
+                                </div> : <div></div>}
                                 {localStorage.getItem("userRole") == 3 ?
                                     <>
                                         <Link to="/userMyPage"><Button className="nbBtn">마이페이지</Button></Link>
