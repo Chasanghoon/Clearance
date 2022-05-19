@@ -171,12 +171,12 @@ function StoreCarbon() {
   return (
     <div className="storeCarbon">
       <NavBar />
-      <h1>탄소발자국</h1>
       <h1>May 2022</h1>
       <Chart data={data} skipAngle={skipAngle} height={height}></Chart>
       <Category idxArr={idxArr}></Category>
       <h1>Clearance를 사용하면서</h1>
-      <h1>{(totalSaveCarbon / 6.6).toFixed(2)}그루 만큼의 나무를 심었습니다!</h1>
+      <h1>{(totalSaveCarbon / 6.6).toFixed(2)}그루 만큼의 <br />
+        나무를 심었습니다!</h1>
       <div className="imageDiv">
           <img className="imgFile" alt="" src="img/carbonGrass.png"></img>
       </div>
