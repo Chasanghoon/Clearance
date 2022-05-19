@@ -182,8 +182,8 @@ function splitDate(date) {
         console.log(Object.values(basket.data[0]))
     }
     return (
-        <div className="Basket" style={{
-            
+        <div style={{
+            marginTop:"25%"
         }}>
             <NavBar></NavBar>
 
@@ -193,7 +193,7 @@ function splitDate(date) {
                 amountDiscount = 0,
                 amountDiscountedPrice=0,
                             
-                <div key={idx}>
+                <div key={idx} className="Basket">
                     {console.log(Object.values(value)[0])}
                     <div className="store">
                         {Object.keys(value)}
