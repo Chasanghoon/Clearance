@@ -176,7 +176,7 @@ function StoreCarbon() {
       <Chart data={data} skipAngle={skipAngle} height={height}></Chart>
       <Category idxArr={idxArr}></Category>
       <h1>Total Save Carbon : {totalSaveCarbon}</h1>
-      <img alt="" src="img/carbon_Gross.png" />
+      <img alt="" src="img/Carbon_Grass.png" />
       <BackButton></BackButton>
     </div>
   );
