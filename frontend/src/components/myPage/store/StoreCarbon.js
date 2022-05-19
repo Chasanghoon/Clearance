@@ -4,6 +4,7 @@ import NavBar from "../../common/NavBar";
 import { ResponsivePie } from "@nivo/pie";
 import Brightness1Icon from "@mui/icons-material/Brightness1";
 import BackButton from "../../BackButton";
+import NavStore from "../../../store/NavStore";
 
 function Chart(props) {
   if (props.height !== 0) {
@@ -99,6 +100,10 @@ function Category(props) {
 }
 
 function StoreCarbon() {
+
+  const setNavHeader = NavStore(state => state.setNavHeader);
+  setNavHeader("탄소발자국");
+
   const [data, setData] = useState([]);
   const [skipAngle, setSkipAngle] = useState(1.1);
   const [height, setHeight] = useState(400);
@@ -171,7 +176,6 @@ function StoreCarbon() {
   return (
     <div className="storeCarbon">
       <NavBar />
-      <h1>May 2022</h1>
       <Chart data={data} skipAngle={skipAngle} height={height}></Chart>
       <Category idxArr={idxArr}></Category>
       <h1>Clearance를 사용하면서</h1>

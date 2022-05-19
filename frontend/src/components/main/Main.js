@@ -15,9 +15,11 @@ import '../../App.css'
 
 function Main() {
 
+  
 
   const setNavHeader = NavStore(state => state.setNavHeader);
-  setNavHeader('\u00A0');
+  // setNavHeader('\u00A0');
+  setNavHeader('메인페이지');
 
   const pos = useMainStore(state => state.position)
   const bs = marketStore(state => state.bookSet)
