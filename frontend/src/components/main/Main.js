@@ -10,6 +10,7 @@ import marketStore from '../../store/marketStore';
 import NavStore from '../../store/NavStore';
 import { Table } from 'react-bootstrap';
 import '../../App.css'
+import Fade from 'react-reveal/Fade'
 
 
 
@@ -90,6 +91,7 @@ function Main() {
             >{val.user_name}</div>
             {nearProduct.filter(value => value.storeUserId === val.user_id).map((value,index) => (
               <div key={index} className="ProductItem" onClick={() => { console.log("이거", value,storeName) }}>
+               <Fade>
                 <div style={{
                   textAlign:"left"
                 }}>
@@ -150,7 +152,7 @@ function Main() {
               localStorage.setItem("product_stock", value.productStock)
               localStorage.setItem("store_user_id", value.storeUserId)
             }}>상세 보기</Button></Link></div>
-            
+            </Fade>
           </div>
               
             ))}

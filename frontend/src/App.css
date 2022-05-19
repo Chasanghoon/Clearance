@@ -291,7 +291,7 @@ padding-bottom: 40%;
     position: fixed;
     width: 100%;
     top: 0;
-    overflow: auto;
+    overflow: hidden;
     z-index: 5;
     /* background-color: #000; */
     
@@ -429,7 +429,7 @@ border-radius: 30px;
     height: 60px;
     /* float: right; */
 }
-.NavBar .imageDiv2 {
+.NavBar .nvnvimageDiv {
     border-radius: 20%;
     position: relative;
     margin:10px 15px 0 0;
@@ -440,7 +440,7 @@ border-radius: 30px;
     height: 25px;
     /* background-color: #FFC812; */
 }
-.NavBar .imgFile {
+.NavBar .nvnvimgFile {
     position: absolute;
   top: 0;
   left: 0;
@@ -465,6 +465,25 @@ border-radius: 30px;
   height: 100%;
   object-fit: cover;
 }
+.NavBar .imgimageDiv {
+    border-radius: 50%;
+    border : 5px solid rgb(71, 70, 70);
+    position: relative;
+    margin:0 auto;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    /* background-color: #FFC812; */
+}
+.NavBar .imgimgimgFile {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 
 .signupUser .imageButton {
     text-align: center;
@@ -762,7 +781,7 @@ border-radius: 30px;
     /* padding-bottom: 20%; */
 }
 
-.storeCarbon .imageDiv {
+.storeCarbon .scimageDiv {
     position: relative;
     margin: 0 auto;
     overflow: hidden;
@@ -771,7 +790,7 @@ border-radius: 30px;
     /* background-color: #FFC812; */
 }
 
-.storeCarbon .imgFile {
+.storeCarbon .scimgFile {
     position: absolute;
     top: 0;
     left: 0;

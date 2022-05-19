@@ -29,6 +29,7 @@ function Start() {
                 {/* <h1>Clearance</h1> */}
                 <img className='loseImg' src='img/logoClearance.png' alt='' />
             </div>
+            
             <div className='title2'>you can become A smart <br /> Consumer</div>
 
             <Container fluid className='startBtnGroup' >
