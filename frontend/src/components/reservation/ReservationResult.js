@@ -179,7 +179,7 @@ function ReservationResult(props) {
                                                     <tr>
                                                         <td rowSpan={3}>
                                                             <div className='reservationResultImageDiv'>
-                                                                <img className='reservationResultImgFile' src={sellerImage} alt="img"></img>
+                                                                <img width="90px" className='reservationResultImgFile' src={sellerImage} alt="img"></img>
                                                             </div>
                                                         </td>
                                                         <td className='reservationTableStoreName'>{sellerName}</td>
@@ -224,8 +224,13 @@ function ReservationResult(props) {
                         </Row>
                     </Container>
                 </div>
-                <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
-                    <Table style={{ width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all" }}>
+                {/* backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)" */}
+                <div style={{ backgroundColor:"white", margin: "10px 5% 10px 5%", boxShadow: "2px 2px 2px black", borderRadius:"30px" }}>
+                    <Table style={{
+                        width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all",
+                        borderBottom:"hidden"
+                        
+                    }}>
                         <colgroup>
                             <col width="35%" />
                             <col width="35%" />
@@ -233,7 +238,7 @@ function ReservationResult(props) {
                             <col width="25%" />
                         </colgroup>
                         <thead>
-                            <tr style={{ borderTop: "hidden" }}>
+                            <tr style={{ borderTop: "hidden",}}>
                                 <th>상품</th>
                                 <th>상품명</th>
                                 <th>수량</th>
@@ -251,12 +256,12 @@ function ReservationResult(props) {
                                         <tr >
                                             <td>
                                                 <div className='imageDiv2'>
-                                                    <img className='imgFile' src={data.product_imagefront} alt="userImage" />
+                                                    <img  width="80%" className='imgFile' src={data.product_imagefront} alt="userImage" />
                                                 </div>
                                             </td>
                                             <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.product_name}</td>
                                             <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.book_count}</td>
-                                            <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.product_price}원</td>
+                                            <td style={{ textAlign: "center", verticalAlign: "middle" }} >{(data.product_price).toLocaleString()}원</td>
                                         </tr>
                                     </tbody>
                                 )
@@ -266,8 +271,9 @@ function ReservationResult(props) {
                     </Table>
                 </div>
             </div>
-            <div style={{ backgroundImage: "linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%)", margin: "10px 5% 10px 5%" }}>
-                <Table style={{ width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all" }}>
+            {/* backgroundImage: "linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%)" */}
+            <div style={{ backgroundColor:"white" , margin: "10px 5% 10px 5%" }}>
+                <Table style={{ width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all", boxShadow:"1px 1px 1px 1px black" }}>
                     <colgroup>
                         <col width="33%" />
                         <col width="33%" />
@@ -277,22 +283,22 @@ function ReservationResult(props) {
                         <tr style={{ borderTop: "hidden" }}>
                             <td style={{ textAlign: "center", verticalAlign: "middle" }}>예약 상품 수</td>
                             <td style={{ textAlign: "center", verticalAlign: "middle" }}></td>
-                            <td style={{ textAlign: "center", verticalAlign: "middle" }}>{totalReservation} 개</td>
+                            <td style={{ textAlign: "center", verticalAlign: "middle" }}>{(totalReservation).toLocaleString()} 개</td>
                         </tr>
                         <tr style={{ borderTop: "hidden" }}>
                             <td style={{ textAlign: "center", verticalAlign: "middle" }}>상품 금액</td>
                             <td style={{ textAlign: "center", verticalAlign: "middle" }}></td>
-                            <td style={{ textAlign: "center", verticalAlign: "middle" }}>{totalProductPrice} 원</td>
+                            <td style={{ textAlign: "center", verticalAlign: "middle" }}>{(totalProductPrice).toLocaleString()} 원</td>
                         </tr>
                         <tr style={{ borderTop: "hidden" }}>
                             <td style={{ textAlign: "center", verticalAlign: "middle" }}>상품 할인</td>
                             <td style={{ textAlign: "center", verticalAlign: "middle" }}></td>
-                            <td style={{ textAlign: "center", verticalAlign: "middle" }}>{totalProductDiscount} 원</td>
+                            <td style={{ textAlign: "center", verticalAlign: "middle" }}>{(totalProductDiscount).toLocaleString()} 원</td>
                         </tr>
                         <tr style={{ borderTop: "solid", borderTopWidth: "2px", borderColor: "#F5F5F5" }}>
                             <td style={{ textAlign: "center", verticalAlign: "middle" }}>총 예약 금액</td>
                             <td style={{ textAlign: "center", verticalAlign: "middle" }}></td>
-                            <td style={{ textAlign: "center", verticalAlign: "middle" }}>{totalPrice} 원</td>
+                            <td style={{ textAlign: "center", verticalAlign: "middle" }}>{(totalPrice).toLocaleString()} 원</td>
                         </tr>
                     </tbody>
                 </Table>

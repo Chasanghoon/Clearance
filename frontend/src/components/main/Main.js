@@ -70,11 +70,12 @@ function Main() {
                   <span>유통기한 : </span>
                   <span style={{
                     color: "red",
-                    
-                  }}>~{value.productExpdate}</span>
+                    fontWeight:"bold"
+                  }}>{value.productExpdate}</span>
                   <span style={{
                     borderRadius: "0px",
-                    float:"right"
+                    float: "right",
+                    fontWeight:"bold"
                   }}>{value.productStock }개 남음</span>
                 </div>
                 <img style={{
@@ -90,7 +91,8 @@ function Main() {
                     <tr>
                       <td style={{
                         color: "red",
-                        fontSize:"150%"
+                        fontSize: "150%",
+                        fontWeight:"bold"
                       }}>-{value.productDiscount*100}%</td>
                       <td style={{
                         textDecoration: "line-through",
@@ -102,7 +104,8 @@ function Main() {
                         fontSize: "150%"
                       }}>할인가</td>
                       <td style={{
-                        fontSize: "150%"
+                        fontSize: "150%",
+                        fontWeight:"bold"
                       }}>{(value.productDiscountprice).toLocaleString()}원</td>
                     </tr>
                   </tbody>

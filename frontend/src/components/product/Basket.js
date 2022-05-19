@@ -182,8 +182,8 @@ function splitDate(date) {
         console.log(Object.values(basket.data[0]))
     }
     return (
-        <div className="Basket" style={{
-            
+        <div style={{
+            marginTop:"25%"
         }}>
             <NavBar></NavBar>
 
@@ -193,7 +193,7 @@ function splitDate(date) {
                 amountDiscount = 0,
                 amountDiscountedPrice=0,
                             
-                <div key={idx}>
+                <div key={idx} className="Basket">
                     {console.log(Object.values(value)[0])}
                     <div className="store">
                         {Object.keys(value)}
@@ -225,7 +225,7 @@ function splitDate(date) {
                             amountDiscountedPrice += (p.product_discountprice*p.basket_count),
                             <tbody key={index} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
                                 <tr>
-                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} ><img alt="" src={p.product_imagefront}/></td>
+                                    <td style={{ textAlign: "center", verticalAlign: "middle" }} ><img width="120%" alt="" src={p.product_imagefront}/></td>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.product_name}</td>
                                     <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.basket_count}</td>
                                     

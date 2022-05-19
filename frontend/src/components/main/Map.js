@@ -117,7 +117,7 @@ function SampleMap() {
             // console.log(marker)
             
             {
-              // map.panTo(marker.getPosition())
+              map.panTo(marker.getPosition())
               storePos.map((value, index) => {
                 roundMarkerLat = marker.getPosition().Ma.toFixed(10);
                 roundMarkerLng = marker.getPosition().La.toFixed(10);

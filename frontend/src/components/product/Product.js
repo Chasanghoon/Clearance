@@ -20,7 +20,7 @@ const Product = () => {
     const [info, setInfo] = useState({
         category_id:"",
         productDiscount: 0.1,
-        productDiscountPrice: 0,
+        productDiscountprice: 0,
         productExpdate: '',
         productId: "",
         productImagefront: '',
@@ -92,13 +92,19 @@ const Product = () => {
     
     function MyVerticallyCenteredModal(props) {
   return (
-    <Modal
+      <Modal
+          style={{
+          fontFamily:"LeeSeoyun"
+      }}
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+          <Modal.Header closeButton style={{
+              backgroundColor: "#22cc88",
+              color:"white"
+      }}>
         <Modal.Title id="contained-modal-title-vcenter">
           알림
         </Modal.Title>
@@ -109,11 +115,13 @@ const Product = () => {
           장바구니로 이동하시겠습니까?
         </p>
       </Modal.Body>
-      <Modal.Footer>
+          <Modal.Footer style={{
+          float:"initial"
+      }}>
               <Button onClick={() => {
                 navigate("/basket")
         }}>장바구니로 이동</Button>
-              <Button onClick={() => {
+              <Button variant="secondary" onClick={() => {
                 navigate("/main")
         }}>계속 쇼핑하기</Button>
     </Modal.Footer>
@@ -151,20 +159,21 @@ const Product = () => {
             <div id="product" className="pb-2 pt-2">
                 <div style={{
                     position: "sticky",
-                    marginTop:"15%"
+                    marginTop:"5%"
                 }}>
                     <span style={{
                         float: "left",
-                        marginLeft:"3%"
-                    }}>유통기한 : <span style={{color:"red"}}>~{info.productExpdate}</span></span>
+                        marginLeft:"7%"
+                    }}>유통기한 : <span style={{color:"red"}}>{info.productExpdate}</span></span>
                     <span style={{
                         float: "right",
-                        marginRight:"3%"
+                        marginRight:"7%"
                     }}>{info.productStock}개 남음</span>
                 </div>
                 <img style={{
                     width: "50%",
-                    height:"50%"
+                    height: "50%",
+                    paddingTop: "5%"
                 }} alt="" src={info.productImagefront}></img>
 
                 <div style={{
@@ -174,11 +183,11 @@ const Product = () => {
                     <tbody>
                         <tr>
                             <td style={{ fontSize:"30px", color:"red"}}> {info.productDiscount * 100}%</td>
-                            <td style={{ textDecoration: "line-through", verticalAlign:"middle"}}>{info.productPrice}</td>
+                            <td style={{ textDecoration: "line-through", verticalAlign:"middle"}}>{(info.productPrice).toLocaleString()}원</td>
                         </tr>
                         <tr>
                             <td style={{fontSize:"22px"}}>할인가</td>
-                            <td style={{fontSize:"22px"}}>{info.productDiscountprice}</td>
+                            <td style={{fontSize:"22px"}}>{(info.productDiscountprice).toLocaleString()}원</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -210,7 +219,9 @@ const Product = () => {
                 <div style={{
                     paddingTop: "10px"
                 }}>
-                    <Button variant="success" onClick={() => {
+                    <Button style={{
+                        backgroundColor:"#22cc88"
+                    }} onClick={() => {
                         basketadd();
                         
                     }}>장바구니 등록</Button>
@@ -221,7 +232,7 @@ const Product = () => {
                 margin:"15px auto"
             }} defaultActiveKey="상품설명" id="uncontrolled-tab-example" className="mb-3">
                     <Tab eventKey="상품설명" title="상품설명">
-                    <img style={{width:"50%", height:"50%"}} alt="" src={info.productImageback}></img>
+                    <img style={{width:"90%", height:"90%"}} alt="" src={info.productImageback}></img>
                     </Tab>
                     <Tab eventKey="이용안내" title="이용안내">
                         <div className="information">- 본 서비스는 Clearance 입니다.</div>
