@@ -159,7 +159,7 @@ function SignupStore() {
         formData.append('file', image.image_file);
 
         axios
-            .post("http://localhost:8080/api/signup/store",
+            .post("https://k6e203.p.ssafy.io:8443/api/signup/store",
                 formData
                 ,
                 {

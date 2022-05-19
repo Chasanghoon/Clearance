@@ -115,7 +115,7 @@ function SignupUser() {
         formData.append('file', image.image_file);
 
         axios
-            .post("http://localhost:8080/api/signup/user",
+            .post("https://k6e203.p.ssafy.io:8443/api/signup/user",
             // .post("https://k6e203.p.ssafy.io:8443/api/signup/user",
                 formData
                 ,
