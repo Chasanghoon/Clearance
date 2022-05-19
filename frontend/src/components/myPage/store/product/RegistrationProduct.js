@@ -14,6 +14,7 @@ import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 import NavBar from '../../../common/NavBar';
 import NavStore from '../../../../store/NavStore';
+import Swal from 'sweetalert2'
 
 function RegistrationProduct(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
@@ -137,7 +138,14 @@ function RegistrationProduct(props) {
             )
             .then(() => {
                 console.log("axios post 성공")
-                alert("상품등록 완료!");
+                Swal.fire({
+                    icon: 'success',
+                    title: '상품등록 완료!',
+                    // icon: 'error',
+                    // title: 'error!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 // navigate("/allProductManagement");
                 navigate(-1);
 

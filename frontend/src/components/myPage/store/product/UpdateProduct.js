@@ -13,6 +13,7 @@ import { ko } from "date-fns/esm/locale";
 import { useLocation } from 'react-router-dom';
 import NavBar from '../../../common/NavBar';
 import NavStore from '../../../../store/NavStore';
+import Swal from 'sweetalert2'
 
 function UpdateProduct(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
@@ -123,7 +124,15 @@ function UpdateProduct(props) {
             )
             .then(() => {
                 console.log("axios post 성공")
-                alert("상품수정 완료!");
+                // alert("상품수정 완료!");
+                Swal.fire({
+                    icon: 'success',
+                    title: '상품수정 완료!',
+                    // icon: 'error',
+                    // title: 'error!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 // navigate("/allProductManagement");
                 navigate(-1);
 

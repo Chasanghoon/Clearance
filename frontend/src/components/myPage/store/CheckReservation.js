@@ -5,6 +5,7 @@ import { Button,Table } from 'react-bootstrap';
 import { Navigate, useNavigate } from 'react-router-dom';
 import NavBar from '../../common/NavBar';
 import NavStore from "../../../store/NavStore";
+import Swal from 'sweetalert2'
 
 
 function CheckReservation() {
@@ -26,7 +27,14 @@ function CheckReservation() {
             {
                 "book_set":  bookSet,
             })
-            alert("거래가 완료되었습니다!")
+            Swal.fire({
+                icon: 'success',
+                title: '거래 완료!',
+                // icon: 'error',
+                // title: 'error!',
+                showConfirmButton: false,
+                timer: 1500
+              })
             console.log(response)
         
             navigate("/bookingHistory")

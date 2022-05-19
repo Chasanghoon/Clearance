@@ -7,6 +7,7 @@ import { Spinner } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function SignupUser() {
 
@@ -125,12 +126,19 @@ function SignupUser() {
             )
             .then(() => {
                 console.log("axios post 성공")
-                alert("회원가입 완료!");
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원가입 완료!',
+                    // icon: 'error',
+                    // title: 'error!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 navigate("/login");
 
             })
             .catch((e) => {
-                alert(e.response.data);
+                // alert(e.response.data);
                 console.error("axios post 실패");
                 console.error(e);
             });

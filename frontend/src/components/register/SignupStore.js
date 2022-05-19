@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import { InputGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function SignupStore() {
 
@@ -168,7 +169,14 @@ function SignupStore() {
             )
             .then(() => {
                 console.log("axios post 성공")
-                alert("회원가입 완료!");
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원가입 완료!',
+                    // icon: 'error',
+                    // title: 'error!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 navigate("/login");
 
             })
