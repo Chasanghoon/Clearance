@@ -7,6 +7,7 @@ import NavBar from '../../common/NavBar';
 import DatePicker from 'react-datepicker';
 import NavStore from '../../../store/NavStore';
 import Fade from "react-reveal/Fade";
+import BackButton from '../../BackButton';
 
 
 
@@ -317,7 +318,7 @@ function BookingHistory(props) {
                     onHide={() => setModalQrShow(false)}
                 />
             </Container>
-
+                <BackButton></BackButton>
         </div>
     );
 }

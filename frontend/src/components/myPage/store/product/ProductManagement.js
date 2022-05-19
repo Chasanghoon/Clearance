@@ -8,6 +8,7 @@ import Modal from 'react-bootstrap/Modal'
 import NavBar from '../../../common/NavBar';
 import NavStore from '../../../../store/NavStore';
 import Fade from "react-reveal/Fade";
+import BackButton from '../../../BackButton';
 
 function ProductManagement(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
@@ -219,6 +220,7 @@ function ProductManagement(props) {
                 </div>
 
             </Container>
+            <BackButton></BackButton>
         </div>
     );
 }

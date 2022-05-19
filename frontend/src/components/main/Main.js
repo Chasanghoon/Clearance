@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../common/NavBar';
 import Map from "./Map";
 
@@ -10,7 +10,6 @@ import marketStore from '../../store/marketStore';
 import NavStore from '../../store/NavStore';
 import { Table } from 'react-bootstrap';
 import '../../App.css'
-import Topbutton from '../Topbutton';
 
 
 
@@ -23,10 +22,13 @@ function Main() {
   const pos = useMainStore(state => state.position)
   const bs = marketStore(state => state.bookSet)
 
+  const [storeName,setStoreName] = useState("")
   
   console.log(bs)
 
-  
+  const stores = []
+ 
+  const [stores_2,setStores] = useState([])
   const nearStore = useMainStore(state => state.nearStore);
   const nearProduct = useMainStore(state => state.nearProduct)
 
@@ -51,7 +53,7 @@ function Main() {
               <Map></Map>
             </div>
 
-        {/* <div>{pos.lat}, {pos.lng}</div> */}
+        {console.log(nearStore)}
         {nearProduct.length > 0 ? nearStore.map((val,idx) => (
           <div key={idx}>
 
@@ -60,10 +62,32 @@ function Main() {
               fontSize:"150%",
               backgroundColor:"#176a49",
               borderRadius: "30px",
-              margin:"6% 3% 1% 3%"
-            }}>{val.user_name}</div>
+              margin: "6% 3% 1% 3%",
+            }}
+              // onClick={() => {
+              //   // if(storeName === val.user_name) setStoreName("")
+              //   // else if (storeName === "") setStoreName(val.user_name)
+              //   // else if (storeName !== val.user_name) setStoreName(val.user_name)
+              //   // console.log(storeName.indexOf(val.user_name), storeName)
+
+              //   if (stores.indexOf(val.user_name) === -1) {
+              //     stores.push(val.user_name)
+              //     console.log("넣기", stores.indexOf(val.user_name))
+              //     console.log(stores)
+              //     setStores(...stores_2,stores )
+              //   } else if(stores.indexOf(val.user_name) !== -1) { // 포함하고 있다면?
+              //     stores.splice(stores.indexOf(val.user_name), 1) // 1. store라는 함수에서 제거 시도. 실시간 랜더링 실패
+              //     console.log("빼기",stores.indexOf(val.user_name)) // 빼기도 잘 안됨.
+              //     setStores(stores_2.filter((storename) => storename !== val.user_name)) // 2. filter를 사용하는중
+              //     if (stores.length === 0) {
+              //       setStores([])
+              //     }
+              //   }
+              //   console.log("길이",stores)
+              // }}
+            >{val.user_name}</div>
             {nearProduct.filter(value => value.storeUserId === val.user_id).map((value,index) => (
-              <div key={index} className="ProductItem" onClick={() => { console.log("이거", value) }}>
+              <div key={index} className="ProductItem" onClick={() => { console.log("이거", value,storeName) }}>
                 <div style={{
                   textAlign:"left"
                 }}>
@@ -127,7 +151,7 @@ function Main() {
             
           </div>
               
-          ))}
+            ))}
           </div>
           
         )) : <div>Loading...</div>} 
@@ -136,7 +160,6 @@ function Main() {
       
         <button onClick={() => {
         }}>위로가기</button>
-        <Topbutton></Topbutton>
       </div>
     );
 }

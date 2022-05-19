@@ -24,8 +24,8 @@ function CheckReservation() {
         try {
             const response = await axios.put(`https://k6e203.p.ssafy.io:8443/api/book/modifybookset`,
             {
-                 "book_set":  bookSet,
-                })
+                "book_set":  bookSet,
+            })
             alert("거래가 완료되었습니다!")
             console.log(response)
         
@@ -55,7 +55,7 @@ function CheckReservation() {
     // console.log(bookData)
     console.log(books)
     return (
-        <div className='checkReservation'>
+        <div>
             
             <NavBar></NavBar>
             {books !== undefined ?
@@ -63,7 +63,7 @@ function CheckReservation() {
                     <Table style={{
                         backgroundColor: "white",
                         boxShadow: "2px 2px 2px #bbbbbb",
-                        borderRadius:"30px"
+                        borderRadius: "30px",
                     }}>
                         <colgroup>
                             <col width="25%" />
@@ -82,7 +82,7 @@ function CheckReservation() {
                         <tbody>
                         {books.map((value, index) => (
                             <tr key={index}>
-                                <td className='option'><img alt='' src={value.productImagefront}></img></td>
+                                <td className='option'><img width="90px" alt='' src={value.productImagefront}></img></td>
                                 <td className='option'>{value.productName}</td>
                                 <td className='option'>{value.basketCount}</td>
                                 <td className='option'>{(value.productDiscountprice * value.basketCount).toLocaleString()}</td>
@@ -112,7 +112,6 @@ function CheckReservation() {
                     }}>돌아가기</Button>
                     </div>
                     : <div> Loading....</div>}
-                
             </div>
     );
 }

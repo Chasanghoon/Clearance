@@ -336,6 +336,7 @@ function RegistrationProduct(props) {
                     </Form.Group>
                     <div className="d-grid gap-1 mb-3 submitBtn">
                         <Button variant="secondary" onClick={onSubmit}>상품 등록</Button>
+                        <Button variant="secondary" onClick={() => navigate(-1)}>돌아가기</Button>
                     </div>
                 </Form>
                 {/* <br />

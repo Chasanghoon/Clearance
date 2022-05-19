@@ -523,8 +523,8 @@ function SampleMap() {
           setState((prev) => ({
             ...prev,
             center: {
-              lat: position.coords.latitude, // 위도
-              lng: position.coords.longitude, // 경도
+              lat: 35.1012889287059, // 위도
+              lng: 128.971520894865, // 경도
             },
             isLoading: false,
             isPanto: false,
@@ -533,8 +533,8 @@ function SampleMap() {
           setMyHome((prev) => ({
             ...prev,
             center: {
-              lat: position.coords.latitude, // 위도
-              lng: position.coords.longitude, // 경도
+              lat: 35.1012889287059, // 위도
+              lng: 128.971520894865, // 경도
             },
             isLoading: false,
             isPanto: false,

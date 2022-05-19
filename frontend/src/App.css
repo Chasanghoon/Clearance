@@ -1143,10 +1143,7 @@ text-align: left;
 /* ! ================================================ */
 /* ! ================ checkReservation ================ */
 /* ! ================================================ */
-.checkReservation {
-    padding-top: 65px;
-    padding-bottom: 20%;
-}
+
 
 
 /* ! ================================================ */
@@ -1544,4 +1541,11 @@ li.react-datepicker__time-list-item--disabled {
 .react-datepicker__day--outside-month{
     color: rgb(224, 222, 222) !important;
     /* width: 300px !important; */
+}
+
+
+.back {
+    position: fixed;
+    bottom: 5%;
+    right: 10%;
 }

@@ -6,6 +6,7 @@ import "./Product.css";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from '../common/NavBar';
 import NavStore from "../../store/NavStore";
+import BackButton from "../BackButton";
 
 // 상품을 클릭했을 때 나올 화면
 const Product = () => {
@@ -274,6 +275,7 @@ const Product = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
+            {/* <BackButton></BackButton> */}
         </div>
     )
 }

@@ -6,6 +6,7 @@ import Brightness1Icon from "@mui/icons-material/Brightness1";
 import NavStore from '../../../store/NavStore';
 import { id } from "date-fns/locale";
 import { Row, Col } from "react-bootstrap";
+import BackButton from "../../BackButton";
 
 function UserCarbon() {
 
@@ -75,7 +76,8 @@ function UserCarbon() {
         <div className="imageDiv">
           <img className="imgFile" alt="" src="img/Carbon_Grass.png"></img>
         </div>
-        </div>
+      </div>
+      <BackButton></BackButton>
     </div>
   );
 }
