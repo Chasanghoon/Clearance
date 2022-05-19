@@ -74,7 +74,7 @@ function UserCarbon() {
         <h1>Clearance를 사용하면서</h1>
         <h1>{(totalSaveCarbon / 6.6).toFixed(2)}그루 만큼의 나무를 심었습니다!</h1>
         <div className="imageDiv">
-          <img className="imgFile" alt="" src="img/Carbon_Grass.png"></img>
+          <img className="imgFile" alt="" src="img/carbonGrass.png"></img>
         </div>
       </div>
       <BackButton></BackButton>
