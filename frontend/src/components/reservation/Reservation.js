@@ -13,6 +13,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ReservationStore from '../../store/ReservationStore';
 import NavStore from '../../store/NavStore';
+import Swal from 'sweetalert2';
 
 function Reservation(props) {
 
@@ -93,7 +94,14 @@ function Reservation(props) {
                 setBookSet(e.data.book_set);
                 console.error(e.data.book_set);
                 console.log("axios post 성공")
-                alert("예약 완료!");
+                Swal.fire({
+                    icon: 'success',
+                    title: '예약 완료!',
+                    // icon: 'error',
+                    // title: 'error!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 navigate("/reservationResult");
             })
             .catch((e) => {

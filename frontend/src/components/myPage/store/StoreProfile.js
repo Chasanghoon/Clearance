@@ -12,6 +12,7 @@ import axios from 'axios';
 import NavBar from '../../common/NavBar';
 import NavStore from '../../../store/NavStore';
 import BackButton from '../../BackButton';
+import Swal from 'sweetalert2'
 
 function StoreProfile(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
@@ -103,7 +104,14 @@ function StoreProfile(props) {
             )
             .then(() => {
                 console.log("axios post 성공")
-                alert("회원정보 수정!");
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원정보 수정!',
+                    // icon: 'error',
+                    // title: 'error!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 navigate(-1);
 
             })

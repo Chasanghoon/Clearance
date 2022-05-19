@@ -108,7 +108,8 @@ function Login(props) {
     return (
         <div className='login'>
             <div className='title'>
-                <h1>Clearance</h1>
+                {/* <h1>Clearance</h1> */}
+                <img className='loseImg' src='img/logoClearance.png' alt='' />
             </div>
             <Container className='mt-5'>
                 <Form className='form'>

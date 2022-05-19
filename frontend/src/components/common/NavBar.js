@@ -52,7 +52,9 @@ const NavBar = () => {
                 <Container>
                     <Row className="navRow">
                         <Col>
-                            <Link className="navLink" to="/main"><div>Clearance</div></Link>
+                            <Link className="navLink" to="/main">
+                                <div className="nvImageDiv"><img className='nvImgFile' src='img/logoClearance.png' alt='' /></div>
+                                </Link>
                         </Col>
                         <Col xs={6}><div className="navHeader">{navHeader}</div></Col>
                         <Col>

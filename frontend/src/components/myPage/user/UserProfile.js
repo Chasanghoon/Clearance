@@ -11,6 +11,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import userStore from '../../../store/userStore';
 import axios from 'axios';
 import BackButton from '../../BackButton';
+import Swal from 'sweetalert2';
 
 function UserProfile(props) {
 
@@ -104,7 +105,14 @@ function UserProfile(props) {
             )
             .then(() => {
                 console.log("axios post 성공")
-                alert("회원수정 완료!");
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원수정 완료!',
+                    // icon: 'error',
+                    // title: 'error!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 navigate(-1);
 
             })

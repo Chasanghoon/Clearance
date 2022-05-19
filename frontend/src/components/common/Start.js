@@ -27,7 +27,7 @@ function Start() {
         <div className='Start'>
             <div className='title'>
                 {/* <h1>Clearance</h1> */}
-                <img className='loseImg' src='img/imlose.png' alt='' />
+                <img className='loseImg' src='img/logoClearance.png' alt='' />
             </div>
             <div className='title2'>you can become A smart <br /> Consumer</div>
 

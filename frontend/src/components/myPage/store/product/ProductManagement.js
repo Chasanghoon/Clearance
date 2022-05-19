@@ -9,6 +9,7 @@ import NavBar from '../../../common/NavBar';
 import NavStore from '../../../../store/NavStore';
 import Fade from "react-reveal/Fade";
 import BackButton from '../../../BackButton';
+import Swal from 'sweetalert2'
 
 function ProductManagement(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
@@ -73,7 +74,14 @@ function ProductManagement(props) {
                 }
             )
             .then(() => {
-                alert("상품 삭제 완료");
+                Swal.fire({
+                    icon: 'success',
+                    title: '상품삭제 완료!',
+                    // icon: 'error',
+                    // title: 'error!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 setModalShow(false);
                 setDelectCheck(!deleteCheck);
             })

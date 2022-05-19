@@ -22,8 +22,9 @@
 .Start .loseImg{
     /* width: 500px;
     height: 400px; */
-    width: 390px;
-    height: 312px;
+    /* width: 390px;
+    height: 312px; */
+    width: 100%;
 }
 .Start .title h1{
     
@@ -44,7 +45,7 @@
     text-shadow: 2px 2px 3px rgb(148, 148, 148)
 }
 .Start .startBtnGroup{
-padding-top: 10%;
+padding-top: 15%;
 padding-bottom: 40%;
 }
 .Start .loginBtn{
@@ -86,19 +87,25 @@ padding-bottom: 40%;
 /* ! ==================== login ==================== */
 /* ! ================================================ */
 .login .title{
-    margin-top: 30%;
-    padding-bottom: 20%;
+    margin-top: 20%;
+    /* padding-bottom: 20%; */
 }
-.login .title h1{
+.login .loseImg{
+    /* width: 500px;
+    height: 400px; */
+    /* width: 390px;
+    height: 312px; */
+    width: 100%;
+}
+
+/* .login .title h1{
     font-size: 400%;
     font-weight: bold;
-    /* color: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
-    /* color: #FFC812; */
     color: #176a49;
     text-shadow: 2px 2px 3px rgb(148, 148, 148)
-}
+} */
 .login .form {
-    margin-top: 45%;
+    margin-top: 30%;
     margin-bottom: 30%;
 }
 .login .text{
@@ -286,6 +293,7 @@ padding-bottom: 40%;
     overflow: auto;
     z-index: 5;
     /* background-color: #000; */
+    
 }
 .NavBarbg{
     z-index: 2;
@@ -294,6 +302,7 @@ padding-bottom: 40%;
     top: 0;
     overflow: auto;
     background-color: rgba(0,0,0,0.5);
+    
 }
 .NavBar .logo{
     /* color: rgba(0, 0, 0, 1); */
@@ -304,6 +313,23 @@ padding-bottom: 40%;
     text-align: center;
     /* margin: auto; */
     /* margin: auto; */
+}
+.NavBar .nvImageDiv {
+    border-radius: 20%;
+    /* position: relative; */
+    margin:0 auto;
+    overflow: hidden;
+    width: 100%;
+    /* height: 100px; */
+    /* background-color: #FFC812; */
+}
+.NavBar .nvImgFile {
+    /* position: absolute; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .NavBar .navHeader{
     color: rgba(0, 0, 0, 1);
@@ -405,7 +431,7 @@ border-radius: 30px;
 .NavBar .imageDiv2 {
     border-radius: 20%;
     position: relative;
-    margin:0 auto;
+    margin:10px 15px 0 0;
     overflow: hidden;
     /* text-align: right; */
     float: right;
