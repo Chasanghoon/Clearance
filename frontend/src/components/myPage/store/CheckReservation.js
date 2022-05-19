@@ -103,7 +103,9 @@ function CheckReservation() {
                         position:'fixed',
                         bottom: "10%",
                         left: "20%",
-                        right:"20%"
+                        right: "20%",
+                        marginBottom: "5%",
+                        backgroundColor:"#176a49"
                     }}
                         onClick={() => {
                             complete(localStorage.getItem("bookSet"));

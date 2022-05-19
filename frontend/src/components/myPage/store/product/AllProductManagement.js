@@ -231,8 +231,8 @@ function AllProductManagement(props) {
                     <colgroup>
                         <col width="20%" />
                         <col width="40%" />
-                        <col width="12%" />
-                        <col width="28%" />
+                        <col width="15%" />
+                        <col width="25%" />
                     </colgroup>
                     <thead className='apmTableThead'>
                         <tr className='apmTableTr'>
@@ -254,7 +254,7 @@ function AllProductManagement(props) {
                                         </td>
                                         <td className='apmTableTd' >{data.productName}</td>
                                         <td className='apmTableTd' >{data.productStock}</td>
-                                        <td className='apmTableTd' >{data.productDiscountprice}원</td>
+                                        <td className='apmTableTd' >{(data.productDiscountprice).toLocaleString()}원</td>
                                     </tr>
                                 </tbody>
                             )

@@ -271,7 +271,7 @@ function splitDate(date) {
                                         color: "red",
                                         fontSize: "80%",
                                         verticalAlign:'10%'
-                                    }}>({-(amountDiscount/amountprice).toFixed(3) * 100}%)</span></td>
+                                    }}>({-(amountDiscount/amountprice).toFixed(1) * 100}%)</span></td>
                             </tr>
                             <tr>
                                 <td>총 예약 금액</td>
@@ -327,7 +327,6 @@ function splitDate(date) {
                 marginTop: "10px",
                 margin: "0px auto",
             }} />
-            
             <BackButton></BackButton>
         </div>
     )
