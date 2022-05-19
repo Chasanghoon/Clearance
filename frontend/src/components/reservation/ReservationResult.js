@@ -303,7 +303,7 @@ function ReservationResult(props) {
                     </tbody>
                 </Table>
             </div>
-            <Button onClick={done}>확인 버튼</Button>
+            <Button className='rvrBtn' onClick={done}>확인 버튼</Button>
         </div>
 
     );

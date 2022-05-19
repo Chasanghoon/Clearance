@@ -52,12 +52,16 @@ padding-bottom: 40%;
     width: 100%;
     height: 8vh;
     font-size: x-large;
+    background-color: #176a49;
+    border: #176a49;
 }
 .Start .registerBtn{
     margin: 20px 0 0 0;
     width: 100%;
     height: 8vh;
     font-size: x-large;
+    background-color: #6e4422;
+    border: #6e4422;
 }
 .startModalBody{
     padding: 20% 5% 20% 5%;
@@ -76,7 +80,7 @@ padding-bottom: 40%;
     height: 8vh;
     font-size: x-large;
     border: hidden;
-    background-color: #ff9012;
+    background-color: #a2a2ee;
 }
 /* ! ================================================ */
 /* ! ==================== login ==================== */
@@ -88,9 +92,9 @@ padding-bottom: 40%;
 .login .title h1{
     font-size: 400%;
     font-weight: bold;
-    color: linear-gradient(120deg, #f6d365 0%, #fda085 100%);;
+    /* color: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
     /* color: #FFC812; */
-    color: #fda085;
+    color: #176a49;
     text-shadow: 2px 2px 3px rgb(148, 148, 148)
 }
 .login .form {
@@ -101,7 +105,7 @@ padding-bottom: 40%;
     text-align: center;
 }
 .login .button{
-    background-color: #FFC812;
+    background-color: #176a49;
     height: 8vh;
     border: none;
     font-size: x-large;
@@ -177,6 +181,8 @@ padding-bottom: 40%;
     margin: 10px 5px 10px 5px;
     width: 150px;
     height: 50px;
+    background-color: #176a49;
+    border: #176a49;
 }
 .signupUser .invalid-input{
     color: red;
@@ -184,6 +190,7 @@ padding-bottom: 40%;
 }
 .signupUser .submitBtn{
     height: 60px;
+    background-color: #6e4422;
 }
 
 /* ! ================================================ */
@@ -196,9 +203,9 @@ padding-bottom: 40%;
 .signupStore .title h1{
     font-size: 400%;
     font-weight: bold;
-    color: linear-gradient(120deg, #f6d365 0%, #fda085 100%);;
+    /* color: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
     /* color: #FFC812; */
-    color: #fda085;
+    color: #176a49;
     text-shadow: 2px 2px 3px rgb(148, 148, 148)
 }
 .signupStore .label {
@@ -257,6 +264,8 @@ padding-bottom: 40%;
     margin: 10px 5px 10px 5px;
     width: 150px;
     height: 50px;
+    background-color: #176a49;
+    border-color: #176a49;
 }
 .signupStore .invalid-input{
     color: red;
@@ -264,6 +273,7 @@ padding-bottom: 40%;
 }
 .signupStore .submitBtn{
     height: 60px;
+    background-color: #6e4422;
 }
 /* ! ================================================ */
 /* ! ==================== Navbar ==================== */
@@ -471,6 +481,10 @@ border-radius: 30px;
     padding-top: 65px;
     padding-bottom: 20%;
 }
+.reservation .rvBtn{
+    background-color: #176a49;
+    border-color: #176a49;
+}
 
 
 /* ! ================================================ */
@@ -480,6 +494,11 @@ border-radius: 30px;
     /* margin-top: 60px; */
     padding-top: 65px;
     padding-bottom: 20%;
+}
+.reservationResult .rvrBtn{
+    /* margin-top: 60px; */
+    background-color: #FFC812;
+    border-color: #FFC812;
 }
 .reservationResult .reservationResultImageDiv {
     border-radius: 20%;
@@ -506,7 +525,7 @@ border-radius: 30px;
 
 .reservationResult .reservationTableHeader {
     border-bottom: hidden;
-    background-color: #a2a2ee;
+    background-color: #176a49;
 }
 .reservationResult .reservationTableBody {
     border-bottom: hidden;
@@ -888,7 +907,7 @@ border-radius: 30px;
     border-color: #3f3a3a; */
     border-top: hidden;
     border-bottom: hidden;
-    background-color: #22cc88;
+    background-color: #176a49;
     color: #fff;
     font-size: large;
     font-weight: bold;
@@ -914,7 +933,8 @@ border-radius: 30px;
 .pmModalHeader {
     font-family: "LeeSeoyun";
     border-bottom: #ffffff;
-    background-color: #a2a2ee;
+    background-color: #176a49;
+    color: white;
 }
 
 .pmModalHeader .pmModalTitle {
@@ -943,11 +963,15 @@ text-align: left;
     margin: 0 20px 0 20px;
     width: 25vw;
     height: 40px;
+    background-color: #f6d365;
+    border-color: #f6d365;
 }
 .pmModalBody .pmModalDeleteBtn{
     margin: 0 20px 0 20px;
     width: 25vw;
     height: 40px;
+    background-color: #888;
+    border-color: #888;
 }
 /* ! ================================================ */
 /* ! ================ allProductManagement ================ */
@@ -1145,7 +1169,7 @@ text-align: left;
     /* font-weight: bold; */
     border-radius: 15px;
     border: hidden;
-    background-color: #a2a2ee;
+    background-color: #568975;
 }
 .MainCategory .mapCategory2 {
     width: 100%;
@@ -1342,7 +1366,7 @@ text-align: left;
 .bookingHistory .trHead {
     border-top: hidden;
     border-bottom: hidden;
-    background-color: #23cc88;
+    background-color: #176a49;
 }
 .bookingHistory .trHead2 {
     border-top: hidden;
@@ -1435,7 +1459,7 @@ text-align: left;
   }
   .react-datepicker__header {
     text-align: center;
-    background-color: #22cc88 !important;
+    background-color: #176a49 !important;
     /* background-color: #fdcc72 !important; */
     border-bottom: 1px solid #aeaeae;
     border-top-left-radius: 0.3rem;

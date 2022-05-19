@@ -159,7 +159,7 @@ function SignupStore() {
         formData.append('file', image.image_file);
 
         axios
-            .post("http://localhost:8080/api/signup/store",
+            .post("https://k6e203.p.ssafy.io:8443/api/signup/store",
                 formData
                 ,
                 {
@@ -305,9 +305,9 @@ function SignupStore() {
                         <Col sm>
                             <InputGroup>
                                 <Form.Control maxLength={20} placeholder="사업자 등록 번호" value={licenseNum} onChange={onChangeLicenseNum} />
-                                <Button onClick={checkLicenseNum}>사업자 등록 번호 확인</Button>
+                                <Button variant="secondary" onClick={checkLicenseNum}>사업자 등록 번호 확인</Button>
                             </InputGroup>
-                            {(licenseNumError || licenseNumCheck) && <div className="invalid-input">올바른 사업자 등록 번호 10자리를 숫자만 입력하세요.</div>}
+                            {(licenseNumError || licenseNumCheck) && <div className="invalid-input" >올바른 사업자 등록 번호 10자리를 숫자만 입력하세요.</div>}
                         </Col>
                     </Form.Group>
                     <div className="d-grid gap-1 mb-3">

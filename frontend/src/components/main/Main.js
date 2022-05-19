@@ -60,7 +60,7 @@ function Main() {
             <div style={{
               color: "white",
               fontSize:"150%",
-              backgroundColor:"#22cc88",
+              backgroundColor:"#176a49",
               borderRadius: "30px",
               margin: "6% 3% 1% 3%",
             }}
@@ -135,7 +135,7 @@ function Main() {
                   </tbody>
                 </Table>
               
-                <div><Link to="/product"><Button style={{fontSize:"130%"}} variant='success' onClick={() => {
+                <div><Link to="/product"><Button style={{fontSize:"130%", backgroundColor:"#6e4422", borderColor:"#6e4422"}} onClick={() => {
               localStorage.setItem("product_id", value.productId)
               localStorage.setItem("category_id", value.categoryId)
               localStorage.setItem("product_discount",value.productDiscount)
