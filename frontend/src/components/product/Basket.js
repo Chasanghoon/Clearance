@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ca } from "date-fns/locale";
 import NavBar from '../common/NavBar';
 import NavStore from "../../store/NavStore";
+import BackButton from "../BackButton";
 
 const Basket = () => {
 
@@ -325,12 +326,9 @@ function splitDate(date) {
             <hr width="90%" style={{
                 marginTop: "10px",
                 margin: "0px auto",
-            }}/>
-            <Button style={{
-                margin: "15px 15px 15px 15px"
-            }} variant="danger" onClick={() => {
-                            navigate("/main")
-                        }}>돌아가기</Button>
+            }} />
+            
+            <BackButton></BackButton>
         </div>
     )
 }

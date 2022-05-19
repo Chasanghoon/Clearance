@@ -3,6 +3,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import NavBar from '../../common/NavBar';
 import NavStore from '../../../store/NavStore';
+import BackButton from '../../BackButton';
 
 function UserMyPage(props) {
 
@@ -46,6 +47,7 @@ function UserMyPage(props) {
                     </Link>
                 </Col>
             </Row>
+            <BackButton></BackButton>
         </div>
     );
 }

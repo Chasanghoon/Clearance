@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal'
 import UpdateProduct from './UpdateProduct';
 import NavBar from '../../../common/NavBar';
 import NavStore from '../../../../store/NavStore';
+import BackButton from '../../../BackButton';
 
 function AllProductManagement(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
@@ -283,6 +284,7 @@ function AllProductManagement(props) {
                         검색
                     </Button>
                 </InputGroup >
+                <BackButton></BackButton>
             </div>
         </div>
     );

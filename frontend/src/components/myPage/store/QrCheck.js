@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import QrReader from 'modern-react-qr-reader'
 import { useNavigate } from 'react-router-dom'
 import marketStore from '../../../store/marketStore';
+import BackButton from '../../BackButton';
 
 
 
@@ -49,6 +50,7 @@ function QrCheck() {
         />
         <p>{state.result}</p>
       </div>
+      <BackButton></BackButton>
     </div>
   )
 }

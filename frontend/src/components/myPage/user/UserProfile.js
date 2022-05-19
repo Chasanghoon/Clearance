@@ -10,6 +10,7 @@ import NavStore from '../../../store/NavStore';
 import { Navigate, useNavigate } from 'react-router-dom'
 import userStore from '../../../store/userStore';
 import axios from 'axios';
+import BackButton from '../../BackButton';
 
 function UserProfile(props) {
 
@@ -202,6 +203,7 @@ function UserProfile(props) {
                 {/* <br />
                 <span className="text">Have an account? <Link to="/login" className="link">Sign In</Link></span> */}
             </Container>
+            <BackButton></BackButton>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import axios from "axios";
 import NavBar from "../../common/NavBar";
 import { ResponsivePie } from "@nivo/pie";
 import Brightness1Icon from "@mui/icons-material/Brightness1";
+import BackButton from "../../BackButton";
 
 function Chart(props) {
   if (props.height !== 0) {
@@ -176,6 +177,7 @@ function StoreCarbon() {
       <Category idxArr={idxArr}></Category>
       <h1>Total Save Carbon : {totalSaveCarbon}</h1>
       <img alt="" src="img/carbon_Gross.png" />
+      <BackButton></BackButton>
     </div>
   );
 }

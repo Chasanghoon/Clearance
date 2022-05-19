@@ -11,6 +11,7 @@ import userStore from '../../../store/userStore';
 import axios from 'axios';
 import NavBar from '../../common/NavBar';
 import NavStore from '../../../store/NavStore';
+import BackButton from '../../BackButton';
 
 function StoreProfile(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
@@ -206,6 +207,7 @@ function StoreProfile(props) {
                     </div>
                 </Form>
             </Container>
+            <BackButton></BackButton>
         </div>
     );
 }
