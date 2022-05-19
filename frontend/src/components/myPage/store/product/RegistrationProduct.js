@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useEffect } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from 'react-bootstrap/Row';
@@ -13,10 +13,10 @@ import { ko } from "date-fns/esm/locale";
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 import NavBar from '../../../common/NavBar';
-
+import NavStore from '../../../../store/NavStore';
 
 function RegistrationProduct(props) {
-
+    const setNavHeader = NavStore(state => state.setNavHeader);
     const userId = userStore(state => state.userId);
 
     const [productName, setProductName] = useState("");
@@ -75,10 +75,14 @@ function RegistrationProduct(props) {
         if (!productExpDate) setProductExpDateError(true);
         if (!categoryId) setCategoryIdError(true);
 
-        if (productNameError || productPriceError || productDiscountError || productStockeError || productExpDateError || categoryIdError) return true;
+        if (productName.length === 0 || productPrice.length === 0 || productDiscount.length === 0 || productStock.length === 0 || productExpDate.length === 0 || categoryId.length === 0 ||
+            productNameError || productPriceError || productDiscountError || productStockeError || productExpDateError || categoryIdError) return true;
         else return false;
     };
-
+    
+    useEffect(() => {
+        setNavHeader("상품 등록");
+    }, []);
     const onSubmit = (e) => {
         // console.log(productExpDate);
         // console.log(categoryId);
@@ -219,14 +223,14 @@ function RegistrationProduct(props) {
         <Form.Control style={{backgroundColor:"white"}} maxLength={50} placeholder="유통기한" value={value} onClick={onClick} onChange={onChangeProductExpDate}  readOnly />
       ));
     return (
-        <div>
+        <div className='registrationProduct'>
             <NavBar></NavBar>
             <Container className='mt-5'>
                 <Form>
                     <Form.Group as={Row} className="mb-3" controlId="formFile1" style={{ "textAlign": "center" }}>
-                        <div className='imageDiv'>
+                        <div className='registrationProductImageDiv'>
                             {frontLoaded === false || frontLoaded === true ?
-                                (<img className='imgFile' src={frontImage.front_preview_URL} alt="userImage" />) :
+                                (<img className='registrationProductImgFile' src={frontImage.front_preview_URL} alt="userImage" />) :
                                 (<Spinner animation="border" variant="warning" />)}
                         </div>
                         <div>
@@ -235,31 +239,58 @@ function RegistrationProduct(props) {
                             <Form.Control type="file" accept="image/*" onChange={saveFrontImage} style={{ display: "none" }} />
                         </div>
                     </Form.Group>
+                    <Form.Group as={Row} className="mb-3" controlId="formFile2" style={{ "textAlign": "center" }}>
+                        <div className='registrationProductImageDiv'>
+                            {backLoaded === false || backLoaded === true ?
+                                (<img className='registrationProductImgFile' src={backImage.back_preview_URL} alt="userImage" />) :
+                                (<Spinner animation="border" variant="warning" />)}
+                        </div>
+                        <div>
+                            <Button className='imageButton'><Form.Label>상품 상세 이미지 선택</Form.Label></Button>
+                            <Button className='imageButton' onClick={deleteBackImage}>상품 상세 이미지 삭제</Button>
+                            <Form.Control type="file" accept="image/*" onChange={saveBackImage} style={{ display: "none" }} />
+                        </div>
+                    </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <Col >
+                            <Row sm className='label'>상품명</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="상품명" value={productName} onChange={onChangeProductName} />
                             {productNameError && <div className="invalid-input">상품명을 입력해주세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <Col >
+                            <Row sm className='label'>상품가격</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="상품가격" value={productPrice} onChange={onChangeProductPrice} />
                             {productPriceError && <div className="invalid-input">숫자로만 입력해주세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <Col >
+                            <Row sm className='label'>할인율</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="할인율" value={productDiscount} onChange={onChangeProductDiscount} />
                             {productDiscountError && <div className="invalid-input">할인율을 숫자로만 입력해주세요. ( ex. 30% → 30 )</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <Col >
+                            <Row sm className='label'>재고</Row>
+                        </Col>
                         <Col sm>
                             <Form.Control maxLength={20} placeholder="재고" value={productStock} onChange={onChangeProductStock} />
                             {productStockeError && <div className="invalid-input">재고 수량을 숫자로만 입력해주세요.</div>}
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3" >
+                    <Col >
+                            <Row sm className='label'>유통기한</Row>
+                        </Col>
                         <Col sm>
                             {/* <Form.Label column >유통ㄴ기한</Form.Label> */}
                             {/* <Form.Control maxLength={50} placeholder="유통기한" value={productExpDate} onChange={onChangeProductExpDate} /> */}
@@ -277,6 +308,9 @@ function RegistrationProduct(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
+                    <Col >
+                            <Row sm className='label'>카테고리</Row>
+                        </Col>
                         <Col sm>
                             {/* <Form.Control maxLength={20} placeholder="카테고리" value={categoryId} onChange={onChangeCategoryId} /> */}
                             <Form.Select value={categoryId} onChange={onChangeCategoryId}>
@@ -300,20 +334,7 @@ function RegistrationProduct(props) {
                             {categoryIdError && <div className="invalid-input">카테고리를 선택해 주세요.</div>}
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="formFile2" style={{ "textAlign": "center" }}>
-                        <div className='imageDiv'>
-                            {backLoaded === false || backLoaded === true ?
-                                (<img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />) :
-                                (<Spinner animation="border" variant="warning" />)}
-                        </div>
-                        <div>
-                            <Button className='imageButton'><Form.Label>상품 상세 이미지 선택</Form.Label></Button>
-                            <Button className='imageButton' onClick={deleteBackImage}>상품 상세 이미지 삭제</Button>
-                            <Form.Control type="file" accept="image/*" onChange={saveBackImage} style={{ display: "none" }} />
-                        </div>
-                    </Form.Group>
-
-                    <div className="d-grid gap-1 mb-3">
+                    <div className="d-grid gap-1 mb-3 submitBtn">
                         <Button variant="secondary" onClick={onSubmit}>상품 등록</Button>
                     </div>
                 </Form>

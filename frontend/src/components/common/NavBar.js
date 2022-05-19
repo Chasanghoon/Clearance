@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import userStore from "../../store/userStore";
 import NavStore from "../../store/NavStore";
 import Fade from "react-reveal/Fade";
+import KakaoCounseling from "./KakaoCounseling";
 
 const NavBar = () => {
 
@@ -32,9 +33,9 @@ const NavBar = () => {
         setIsOpen(isOpen => !isOpen); // on,off 개념 boolean
     }
     const Logout = (e) => {
-        sessionStorage.clear();
-        console.log("id : " + sessionStorage.getItem("id"));
-        console.log("token : " + sessionStorage.getItem("access_token"));
+        localStorage.clear();
+        console.log("id : " + localStorage.getItem("id"));
+        console.log("token : " + localStorage.getItem("access_token"));
         setUserId("");
         setUserRole("");
         setUserName("");
@@ -44,44 +45,48 @@ const NavBar = () => {
         setUserLicenseNum("");
         setUserImage("img/default_image.png");
     };
-    console.log("네브바에서 확인하는 세션 유저 롤 = ", sessionStorage.getItem("userRole"))
+    // console.log("네브바에서 확인하는 세션 유저 롤 = ", localStorage.getItem("userRole"))
     return (
         <div className="NavBar">
-            <Container>
-                <Row className="navRow">
-                    <Col>
-                        <Link className="navLink" to="/main"><div>Clearance</div></Link>
-                    </Col>
-                    <Col xs={6}><div className="navHeader">{navHeader}</div></Col>
-                    <Col>
-                        <div className="imageDiv2">
-                            <img className="imgFile" onClick={toggleMenu} src="img/menub.png" alt="" />
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
-            <Fade right when={isOpen}>
-                <div className={isOpen ? "show-menu" : "hide-menu"}>
-                    <div className="navPosition ">
-                        <Nav className="flex-column">
-                            <div className='imageDiv'>
-                                <img className='imgFile' src={sessionStorage.getItem("userImage")} alt="userImage" />
+            <div className={isOpen ? "NavBarbg" : ""} >
+                <Container>
+                    <Row className="navRow">
+                        <Col>
+                            <Link className="navLink" to="/main"><div>Clearance</div></Link>
+                        </Col>
+                        <Col xs={6}><div className="navHeader">{navHeader}</div></Col>
+                        <Col>
+                            <div className="imageDiv2">
+                                <img className="imgFile" onClick={toggleMenu} src="img/menub.png" alt="" />
                             </div>
-                            <span>{sessionStorage.getItem("userName")}</span>
-                            <br />
-                            {sessionStorage.getItem("userRole") == 3 ?
-                                <>
-                                    <Link to="/userMyPage" style={{ color: 'black', textDecoration: 'none' }}>유저 마이페이지</Link>
-                                    <Link to="/basket" style={{ color: 'black', textDecoration: 'none' }}>장바구니</Link>
-                                </>
-                                :
-                                <Link to="/storeMyPage" style={{ color: 'black', textDecoration: 'none' }}>매장 마이페이지</Link>
-                            }
-                            <Link onClick={Logout} to="/" style={{ color: 'black', textDecoration: 'none' }}>로그아웃</Link>
-                        </Nav>
+                        </Col>
+                    </Row>
+                </Container>
+                <Fade right when={isOpen} duration={500}>
+                    <div className={isOpen ? "show-menu" : "hide-menu"}>
+                        <div className="navPosition ">
+                            <Nav className="flex-column">
+                                <div className='imageDiv'>
+                                    <img className='imgFile' src={localStorage.getItem("userImage")} alt="userImage" />
+                                </div>
+                                <span className="nbName">{localStorage.getItem("userName")}</span>
+                                {localStorage.getItem("userRole") == 3 ?
+                                    <>
+                                        <Link to="/userMyPage"><Button className="nbBtn">마이페이지</Button></Link>
+                                        <Link to="/basket"><Button className="nbBtn2">장바구니</Button></Link>
+                                    </>
+                                    :
+                                    <Link to="/storeMyPage"><Button className="nbBtn">마이페이지</Button></Link>
+                                }
+                                <Link onClick={Logout} to="/"><Button className="nbBtn3">로그아웃</Button></Link>
+                                <div className="kakao">
+                                    <KakaoCounseling />
+                                </div>
+                            </Nav>
+                        </div>
                     </div>
-                </div>
-            </Fade>
+                </Fade>
+            </div>
         </div>
     )
 }

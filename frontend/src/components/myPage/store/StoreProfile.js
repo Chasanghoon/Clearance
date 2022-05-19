@@ -64,7 +64,7 @@ function StoreProfile(props) {
     useEffect(() => {
         // ! axios get
         axios
-            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${localStorage.getItem("id")}`)
             .then((result) => {
                 console.log(result);
                 setUserId(result.data.userId);

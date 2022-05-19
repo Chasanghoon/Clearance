@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import { Col, Container, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 function Start() {
     const [modalShow, setModalShow] = React.useState(false);
     const [buttonShow, setButtonShow] = React.useState(false);
-    console.log("id : " + sessionStorage.getItem("id"));
-    console.log("token : " + sessionStorage.getItem("access_token"));
+    let navigate = useNavigate();
+    console.log("id : " + localStorage.getItem("id"));
+    console.log("token : " + localStorage.getItem("access_token"));
+    console.log("localStorage.getItem('userRole') == ", localStorage.getItem("userRole"))
+
+    useEffect(() => {
+        if (localStorage.getItem("userRole") == 2) {
+            // alert("매장 회원임");
+            navigate("/storeMyPage");
+        } else if (localStorage.getItem("userRole") == 3) {
+            // alert("유저 회원임");
+            navigate("/main");
+        }
+    }, [])
+    
     return (
         <div className='Start'>
             <div className='title'>
@@ -31,10 +45,10 @@ function Start() {
                     <div>
                         <Row>
                             <Col>
-                            <Link to="../signupUser"><Button className='registerUserBtn'> 일반 회원가입 </Button></Link>
+                                <Link to="../signupUser"><Button className='registerUserBtn'> 일반 회원가입 </Button></Link>
                             </Col>
                             <Col>
-                            <Link to="../signupStore"><Button className='registerStoreBtn'> 매장 회원가입 </Button></Link>
+                                <Link to="../signupStore"><Button className='registerStoreBtn'> 매장 회원가입 </Button></Link>
                             </Col>
                         </Row>
                         {/* <Row>

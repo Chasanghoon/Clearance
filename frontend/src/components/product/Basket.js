@@ -49,7 +49,7 @@ const Basket = () => {
     const CallBasket = async () => {
             console.log("callbasket 시작")
                 try {
-                    const response = await axios.get(`https://k6e203.p.ssafy.io:5001/data/basket/${sessionStorage.getItem('id')}`)
+                    const response = await axios.get(`https://k6e203.p.ssafy.io:5001/data/basket/${localStorage.getItem('id')}`)
                     setBasket(response)
                     console.log(response.data)
                     for (let i = 0; i < response.data.length; i++) {
@@ -309,7 +309,7 @@ function splitDate(date) {
                         <Button variant="secondary" style={{
                             marginLeft: "5px"
                         }} onClick={() => {
-                            cancelStoreAll(sessionStorage.getItem("id"), Object.values(value)[0][0].store_user_id)
+                            cancelStoreAll(localStorage.getItem("id"), Object.values(value)[0][0].store_user_id)
                             // console.log(Object.values(value)[0][0].store_user_id)
                             
                                 }}>해당 점포의 목록 제거</Button>

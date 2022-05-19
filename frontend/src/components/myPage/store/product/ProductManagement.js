@@ -31,7 +31,7 @@ function ProductManagement(props) {
         // ! axios get
         console.log("axios get")
         axios
-            .get(`https://k6e203.p.ssafy.io:8443/api/product/distinctdate?storeuserId=${sessionStorage.getItem("id")}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/product/distinctdate?storeuserId=${localStorage.getItem("id")}`)
             // .get(`http://localhost:8080/api/product/distinctdate?storeuserId=in1`)
             .then((result) => {
                 setHighlight(result.data);
@@ -46,7 +46,7 @@ function ProductManagement(props) {
         console.log("axios get")
         console.log("searchDay = " + searchDay);
         axios
-            .get(`https://k6e203.p.ssafy.io:8443/api/product/date?userId=${sessionStorage.getItem("id")}&date=${searchDay}`)
+            .get(`https://k6e203.p.ssafy.io:8443/api/product/date?userId=${localStorage.getItem("id")}&date=${searchDay}`)
             // .get(`http://localhost:8080/api/product/date?userId=in1&date=${searchDay}`)
             .then((result) => {
                 console.log(result.data);

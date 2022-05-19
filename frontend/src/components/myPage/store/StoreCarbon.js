@@ -120,8 +120,8 @@ function StoreCarbon() {
   ]);
   const [idxArr, setIdxArr] = useState([]);
   const [totalSaveCarbon, setTotalSaveCarbon] = useState(0);
-  // console.log(sessionStorage.getItem("id"));
-  const userId = sessionStorage.getItem("id");
+  // console.log(localStorage.getItem("id"));
+  const userId = localStorage.getItem("id");
   // axios 데이터 받아오기
   // const URL = `http://localhost:8080/api/store/co?StoreId=${userId}`;
   const URL = `https://k6e203.p.ssafy.io:8443/api/store/co?StoreId=${userId}`;
