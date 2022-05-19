@@ -729,6 +729,8 @@ function SampleMap() {
           // 지도의 크기
           width: "auto",
           height: "300px",
+          borderRadius: "20px",
+          boxShadow : "2px 2px 3px rgb(150,150,150)",
         }}
         level={7} // 지도의 확대 레벨
       >

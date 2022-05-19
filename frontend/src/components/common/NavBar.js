@@ -58,8 +58,8 @@ const NavBar = () => {
                         </Col>
                         <Col xs={6}><div className="navHeader">{navHeader}</div></Col>
                         <Col>
-                            <div className="imageDiv2">
-                                <img className="imgFile" onClick={toggleMenu} src="img/menub.png" alt="" />
+                            <div className="nvnvimageDiv">
+                                <img className="nvnvimgFile" onClick={toggleMenu} src="img/menub.png" alt="" />
                             </div>
                         </Col>
                     </Row>
@@ -68,8 +68,8 @@ const NavBar = () => {
                     <div className={isOpen ? "show-menu" : "hide-menu"}>
                         <div className="navPosition ">
                             <Nav className="flex-column">
-                                <div className='imageDiv'>
-                                    <img className='imgFile' src={localStorage.getItem("userImage")} alt="userImage" />
+                                <div className='imgimageDiv'>
+                                    <img className='imgimgimgFile' src={localStorage.getItem("userImage")} alt="userImage" />
                                 </div>
                                 <span className="nbName">{localStorage.getItem("userName")}</span>
                                 {localStorage.getItem("userRole") >= 2 ?

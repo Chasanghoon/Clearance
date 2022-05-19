@@ -87,7 +87,7 @@ function Chart(props) {
   if (props.height !== 0) {
     return (
       // <div style={{ height: props.height }}>
-      <div style={{ height: 400 }}>
+      <div style={{ height: 360 }}>
         <ResponsivePie
           data={props.data}
           margin={{ top: 10, right: 40, bottom: 20, left: 40 }}
