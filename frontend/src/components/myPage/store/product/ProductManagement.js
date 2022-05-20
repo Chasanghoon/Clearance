@@ -13,28 +13,19 @@ import Swal from 'sweetalert2'
 
 function ProductManagement(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
-
-
     const [highlight, setHighlight] = useState();
     const [selectDate, setSelectDate] = useState(new Date());
     const [searchDay, setSearchDay] = useState(splitDate(selectDate));
-
     const [product, setProduct] = useState();
     const [modalProduct, setModalProduct] = useState();
     const [deleteCheck, setDelectCheck] = useState(false);
     const [modalShow, setModalShow] = React.useState(false);
 
-
-    console.log(selectDate);
-
-
     useEffect(() => {
         setNavHeader("상품 관리");
         // ! axios get
-        console.log("axios get")
         axios
             .get(`https://k6e203.p.ssafy.io:8443/api/product/distinctdate?storeuserId=${localStorage.getItem("id")}`)
-            // .get(`http://localhost:8080/api/product/distinctdate?storeuserId=in1`)
             .then((result) => {
                 setHighlight(result.data);
             })
@@ -45,14 +36,9 @@ function ProductManagement(props) {
     }, [deleteCheck])
     useEffect(() => {
         // ! axios get
-        console.log("axios get")
-        console.log("searchDay = " + searchDay);
         axios
             .get(`https://k6e203.p.ssafy.io:8443/api/product/date?userId=${localStorage.getItem("id")}&date=${searchDay}`)
-            // .get(`http://localhost:8080/api/product/date?userId=in1&date=${searchDay}`)
             .then((result) => {
-                console.log(result.data);
-
                 setProduct(result.data);
             })
             .catch((e) => {
@@ -64,7 +50,6 @@ function ProductManagement(props) {
     function deleteProduct() {
         console.log(modalProduct.productId);
         // ! axios delete
-        console.log("axios delete")
         axios
             .delete("https://k6e203.p.ssafy.io:8443/api/product/remove",
                 {
@@ -77,16 +62,13 @@ function ProductManagement(props) {
                 Swal.fire({
                     icon: 'success',
                     title: '상품삭제 완료!',
-                    // icon: 'error',
-                    // title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
-                  })
+                })
                 setModalShow(false);
                 setDelectCheck(!deleteCheck);
             })
             .catch((e) => {
-                // console.error("axios get 실패");
                 console.error(e)
             });
     }
@@ -103,8 +85,6 @@ function ProductManagement(props) {
                 {modalProduct !== undefined ?
                     <Modal
                         {...props}
-                        // size="lg"
-                        // aria-labelledby="contained-modal-title-vcenter"
                         centered
                     >
                         <Modal.Header closeButton className='pmModalHeader'>
@@ -113,7 +93,7 @@ function ProductManagement(props) {
                         <Modal.Body className='pmModalBody'>
                             <Table>
                                 <tbody>
-                                    <tr style={{borderBottom:"hidden"}}>
+                                    <tr style={{ borderBottom: "hidden" }}>
                                         <td colSpan={2}><img className='img' src={modalProduct.productImagefront} alt=''></img></td>
                                     </tr>
                                     <tr>
@@ -154,7 +134,6 @@ function ProductManagement(props) {
                     </Modal>
                     : null}
             </>
-
         );
     }
 
@@ -165,7 +144,6 @@ function ProductManagement(props) {
         })
     }
     function setDate(date) {
-        console.log(date);
         setSelectDate(date)
         setSearchDay(splitDate(date));
     }
@@ -221,12 +199,10 @@ function ProductManagement(props) {
                                 show={modalShow}
                                 onHide={() => setModalShow(false)}
                             />
-
                         </Table>
                         :
                         null}
                 </div>
-
             </Container>
             <BackButton></BackButton>
         </div>
@@ -237,10 +213,7 @@ function splitDate(date) {
     let year = '';
     let month = '';
     let day = '';
-
-
     let str = date + '';
-    // console.log(str);
     let split = str.split(' ');
 
     switch (split[1]) {
@@ -283,10 +256,8 @@ function splitDate(date) {
         default:
             break;
     }
-
     year = split[3];
     day = split[2];
-
     let reDate = year + "-" + month + "-" + day
     return reDate;
 }

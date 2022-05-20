@@ -26,10 +26,6 @@ import Product from './components/product/Product';
 import KakaoCounseling from './components/common/KakaoCounseling';
 import QrCheck from './components/myPage/store/QrCheck';
 import NavBar from './components/common/NavBar';
-// import Topbutton from './components/Topbutton';
-
-
-
 
 function App() {
   return (
@@ -61,18 +57,14 @@ function App() {
           <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/bookingHistory" element={<BookingHistory />} />
           <Route path="/userCarbon" element={<UserCarbon />} />
-
-          
-          
           <Route path="/login" element={<Login />} />
-          
+
           {/* 상품 관련 페이지 */}
           <Route path="/basket" element={<Basket />} />
           <Route path="/product" element={<Product/> } />
 
         </Routes>
       </BrowserRouter>
-      
     </div>
   );
 }

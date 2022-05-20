@@ -4,10 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import marketStore from '../../../store/marketStore';
 import BackButton from '../../BackButton';
 
-
-
-
-
 function QrCheck() {
 
   const bs = marketStore(state => state.bookSet)
@@ -17,9 +13,7 @@ function QrCheck() {
   let urls = "No Result"
 
   function handleScan(data) {
-    // console.log(data);
     if (data !== null && data !== 'No result') {
-      // setState(data);
       urls = data; // bookset이 와야함.
       let result = ''
       const numRegix = /^[0-9]$/;
@@ -41,7 +35,7 @@ function QrCheck() {
   return (
     <div className='QrCheck'>
       <div className='qrDiv'>
-        <div style={{  fontSize: "20px" }}> 아래 카메라에 QR코드를 인식시켜주세요!</div>
+        <div style={{ fontSize: "20px" }}> 아래 카메라에 QR코드를 인식시켜주세요!</div>
         <QrReader
           delay={300}
           facingMode={"environment"}

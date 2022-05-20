@@ -88,7 +88,7 @@ function SignupStore() {
         if (!address) setAddressError(true);
         if (!licenseNum) setLicenseNumError(true);
 
-        if (userId.length === 0 || password.length === 0 || confirmPassword.length === 0 || userName.length === 0 || email.length === 0 || phone.length === 0 || address.length === 0 || licenseNum.length === 0 || 
+        if (userId.length === 0 || password.length === 0 || confirmPassword.length === 0 || userName.length === 0 || email.length === 0 || phone.length === 0 || address.length === 0 || licenseNum.length === 0 ||
             userIdError || passwordError || confirmPasswordError || userNameError || emailError || phoneError || addressError || licenseNumError || licenseNumCheck) return true;
         else return false;
     };
@@ -104,10 +104,6 @@ function SignupStore() {
                     ]
                 })
             .then((e) => {
-                console.log("사업자 등록번호 확인 성공");
-                console.log(e);
-                console.log(e.data.data[0].b_no);
-                console.log(e.data.data[0].tax_type);
                 const checkTaxType = "국세청에 등록되지 않은 사업자등록번호입니다.";
                 if (e.data.data[0].tax_type !== checkTaxType) {
                     console.log("정상 처리.");
@@ -129,22 +125,7 @@ function SignupStore() {
 
         if (validation()) return;
 
-        // ! axios GET
-        // console.log("axios get")
-        // axios
-        //     .get("http://localhost:8080/api/user/?userId=테스트")
-        //     .then((result) => {
-        //         console.log(result);
-        //         console.log(result.data.userId);
-        //         alert("회원가입 완료!");
-        //     })
-        // .catch((e) => {
-        //     console.error("axios get 실패");
-        //     console.error(e)
-        // });
-
         // ! axios POST
-        console.log("axios post")
         const storeSignUpRequest = {
             user_address: address,
             user_email: email,
@@ -176,7 +157,7 @@ function SignupStore() {
                     // title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
-                  })
+                })
                 navigate("/login");
 
             })
@@ -322,8 +303,6 @@ function SignupStore() {
                         <Button className='submitBtn' variant="secondary" onClick={onSubmit}>Sign Up</Button>
                     </div>
                 </Form>
-                {/* <br />
-                <span className="text">Have an account? <Link to="/login" className="link">Sign In</Link></span> */}
             </Container>
         </div>
     );

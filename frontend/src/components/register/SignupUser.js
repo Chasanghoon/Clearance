@@ -86,20 +86,6 @@ function SignupUser() {
 
         if (validation()) return;
 
-        // ! axios GET
-        // console.log("axios get")
-        // axios
-        //     .get("http://localhost:8080/api/user/?userId=테스트")
-        //     .then((result) => {
-        //         console.log(result);
-        //         console.log(result.data.userId);
-        //         alert("회원가입 완료!");
-        //     })
-        // .catch((e) => {
-        //     console.error("axios get 실패");
-        //     console.error(e)
-        // });
-
         // ! axios POST
         console.log("axios post")
         const userSignUpRequest = {
@@ -117,7 +103,6 @@ function SignupUser() {
 
         axios
             .post("https://k6e203.p.ssafy.io:8443/api/signup/user",
-            // .post("https://k6e203.p.ssafy.io:8443/api/signup/user",
                 formData
                 ,
                 {
@@ -129,8 +114,6 @@ function SignupUser() {
                 Swal.fire({
                     icon: 'success',
                     title: '회원가입 완료!',
-                    // icon: 'error',
-                    // title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
                   })
@@ -138,7 +121,6 @@ function SignupUser() {
 
             })
             .catch((e) => {
-                // alert(e.response.data);
                 console.error("axios post 실패");
                 console.error(e);
             });
@@ -268,8 +250,6 @@ function SignupUser() {
                         <Button className='submitBtn' variant="secondary" onClick={onSubmit}>가입하기</Button>
                     </div>
                 </Form>
-                {/* <br />
-                <span className="text">Have an account? <Link to="/login" className="link">Sign In</Link></span> */}
             </Container>
         </div>
     );

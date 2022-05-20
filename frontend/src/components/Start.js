@@ -10,7 +10,6 @@ function Start() {
     let lat = 33.450701;
     let lon = 126.570667;
 
-    // 임시 지정. Zustand 만들 때 전역변수로  값을 가져와줘야 함!
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             lat = position.coords.latitude;
@@ -25,7 +24,6 @@ function Start() {
             </div>
             <div style={{
                 textAlign: 'left',
-                // position: 'relative',
                 left: '30px'
             }
             }>you can become A smart <br /> Consumer</div>
@@ -49,7 +47,6 @@ function MyVerticallyCenteredModal(props) {
     return (
         <Modal
             {...props}
-            // size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >

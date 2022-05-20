@@ -32,10 +32,6 @@ function BookingHistory(props) {
     const [modalQrData, setModalQrData] = useState();
     const [modalQrShow, setModalQrShow] = React.useState(false);
 
-
-    console.log(selectDate)
-    console.log(localStorage.getItem("id"));
-
     // 유저 예약 날짜 가져오기
     useEffect(() => {
         // ! axios get
@@ -43,7 +39,6 @@ function BookingHistory(props) {
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/${localStorage.getItem("id")}`)
             .then((result) => {
-                console.log(result.data.result);
                 setHighlight(result.data.result);
             })
             .catch((e) => {
@@ -73,7 +68,6 @@ function BookingHistory(props) {
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/all/${localStorage.getItem("id")}/${searchDay}`)
             .then((result) => {
-                console.log(result.data.info);
                 setProduct(result.data.info);
             })
             .catch((e) => {
@@ -85,8 +79,6 @@ function BookingHistory(props) {
     useEffect(() => {
         if (!checkProgress) return
         // ! axios get
-        console.log("axios get")
-        console.log("searchDay = " + searchDay);
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/progress/${localStorage.getItem("id")}/${searchDay}`)
             .then((result) => {
@@ -102,12 +94,9 @@ function BookingHistory(props) {
     useEffect(() => {
         if (!checkComplete) return
         // ! axios get
-        console.log("axios get")
-        console.log("searchDay = " + searchDay);
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/complete/${localStorage.getItem("id")}/${searchDay}`)
             .then((result) => {
-                console.log(result.data.info);
                 setProduct(result.data.info);
             })
             .catch((e) => {
@@ -131,9 +120,6 @@ function BookingHistory(props) {
         setCheckProgress(false);
         setCheckComplete(true);
     }
-
-
-
     function modalControl(data) {
         setModalShow(true);
         setModalProduct(data);
@@ -150,12 +136,10 @@ function BookingHistory(props) {
                 {modalProduct !== undefined ?
                     <Modal
                         {...props}
-                        // size="lg"
                         aria-labelledby="contained-modal-title-vcenter"
                         centered
                     >
                         <Modal.Header closeButton>
-                            {/* <Modal.Title>{modalProduct.product_name}</Modal.Title> */}
                         </Modal.Header>
                         <Modal.Body closeButton>
                             <img src={modalProduct.product_imagefront} alt=''></img><br />
@@ -171,18 +155,14 @@ function BookingHistory(props) {
         );
     }
     function ModalQr(props) {
-        // console.log("모달 : " + JSON.stringify(modalProduct));
         return (
             <>
                 {modalQrData !== undefined ?
                     <Modal
                         {...props}
-                        // size="lg"
-                        // aria-labelledby="contained-modal-title-vcenter"
                         centered
                     >
                         <Modal.Header closeButton className='qrCodeHeader' >
-                            {/* <Modal.Title>Qr코드</Modal.Title> */}
                         </Modal.Header>
                         <Modal.Body className='qrCodeBody'>
                             <img className='img' src={modalQrData} alt=''></img><br />
@@ -190,18 +170,13 @@ function BookingHistory(props) {
                     </Modal>
                     : null}
             </>
-
         );
     }
     function createQrCode(data) {
-        console.log("큐알코드 만들기 = " + data);
         // ! axios get
-        console.log("axios get")
-        console.log("searchDay = " + searchDay);
         axios
             .get(`https://k6e203.p.ssafy.io:8443/api/book/qrcode?bookSet=${data}`)
             .then((result) => {
-                console.log(result.data);
                 modalQrControl(result.data);
             })
             .catch((e) => {
@@ -209,7 +184,6 @@ function BookingHistory(props) {
                 console.error(e)
             });
     }
-
     return (
         <div className='bookingHistory'>
             <NavBar></NavBar>
@@ -217,7 +191,6 @@ function BookingHistory(props) {
                 <Fade>
                     <DatePicker
                         locale={ko}
-                        // fixedHeight
                         selected={selectDate}
                         onChange={(date) => setDate(date)}
                         highlightDates={highlightArray}
@@ -229,13 +202,11 @@ function BookingHistory(props) {
                     <Button onClick={changeProgress} variant={checkProgress === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>거래 진행 중</Button>
                     <Button onClick={changeComplete} variant={checkComplete === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>거래 완료</Button>
                 </div>
-                
                 <Table className='bookTable'>
                     <Fade>
                         {product !== undefined && product.length > 0 ?
                             product.map((data, index) => {
                                 console.log("product[" + index + "] = " + JSON.stringify(data[0].user_name));
-                                // console.log("product[" + index + "] = " + product[index].product_name);
                                 return (
                                     <>
                                         <div className='bookDiv'>
@@ -245,7 +216,6 @@ function BookingHistory(props) {
                                                 <col width="15%" />
                                                 <col width="35%" />
                                             </colgroup>
-
                                             <thead>
                                                 {index % 2 === 0 ?
                                                     <tr className='trHead'>
@@ -271,7 +241,6 @@ function BookingHistory(props) {
                                                 return (
                                                     <>
                                                         <tbody key={i} className='bookTbody'>
-                                                            {/* <tr onClick={() => modalControl(d)}> */}
                                                             <tr>
                                                                 <td className='bookTd'>
                                                                     <span className='bookImageDiv'>
@@ -289,11 +258,6 @@ function BookingHistory(props) {
 
                                             <tr>
                                                 <td className='bookQrTd' colSpan={"4"}>
-                                                    {/* {console.log("[index][0].book_status ========= " ,[index][0].book_status)}
-
-                                                    {product[index][0].book_status === 0  ?
-                                                    <Button className='QrBtn' onClick={() => createQrCode(data[index].book_set)}>Qr코드</Button>
-                                                    : null} */}
                                                     {data[0].book_status === 0 ?
                                                         <Button className='QrBtn' onClick={() => createQrCode(data[0].book_set)}>Qr코드</Button>
                                                         : null}
@@ -318,7 +282,7 @@ function BookingHistory(props) {
                     onHide={() => setModalQrShow(false)}
                 />
             </Container>
-                <BackButton></BackButton>
+            <BackButton></BackButton>
         </div>
     );
 }
@@ -330,7 +294,6 @@ function splitDate(date) {
 
 
     let str = date + '';
-    // console.log(str);
     let split = str.split(' ');
 
     switch (split[1]) {
@@ -381,20 +344,13 @@ function splitDate(date) {
     return reDate;
 }
 function changeDate(date) {
-    console.error(date);
     let year = '';
     let month = '';
     let day = '';
-
-
-    // let str = date + '';
-    // console.log(str);
     let split = date.split('-');
     year = split[0];
     month = split[1];
     day = split[2];
-
-
     let reDate = year + '년 ' + month + '월 ' + day + '일'
     console.log(reDate);
     return reDate;

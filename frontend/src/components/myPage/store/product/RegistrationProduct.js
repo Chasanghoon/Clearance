@@ -80,29 +80,13 @@ function RegistrationProduct(props) {
             productNameError || productPriceError || productDiscountError || productStockeError || productExpDateError || categoryIdError) return true;
         else return false;
     };
-    
+
     useEffect(() => {
         setNavHeader("상품 등록");
     }, []);
     const onSubmit = (e) => {
-        // console.log(productExpDate);
-        // console.log(categoryId);
 
         if (validation()) return;
-
-        // ! axios GET
-        // console.log("axios get")
-        // axios
-        //     .get("http://localhost:8080/api/user/?userId=테스트")
-        //     .then((result) => {
-        //         console.log(result);
-        //         console.log(result.data.userId);
-        //         alert("회원가입 완료!");
-        //     })
-        // .catch((e) => {
-        //     console.error("axios get 실패");
-        //     console.error(e)
-        // });
 
         // ! axios POST
         console.log("axios post")
@@ -141,14 +125,10 @@ function RegistrationProduct(props) {
                 Swal.fire({
                     icon: 'success',
                     title: '상품등록 완료!',
-                    // icon: 'error',
-                    // title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
-                  })
-                // navigate("/allProductManagement");
+                })
                 navigate(-1);
-
             })
             .catch((e) => {
                 console.error("axios post 실패");
@@ -228,8 +208,8 @@ function RegistrationProduct(props) {
     }
 
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <Form.Control style={{backgroundColor:"white"}} maxLength={50} placeholder="유통기한" value={value} onClick={onClick} onChange={onChangeProductExpDate}  readOnly />
-      ));
+        <Form.Control style={{ backgroundColor: "white" }} maxLength={50} placeholder="유통기한" value={value} onClick={onClick} onChange={onChangeProductExpDate} readOnly />
+    ));
     return (
         <div className='registrationProduct'>
             <NavBar></NavBar>
@@ -260,7 +240,7 @@ function RegistrationProduct(props) {
                         </div>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <Col >
+                        <Col >
                             <Row sm className='label'>상품명</Row>
                         </Col>
                         <Col sm>
@@ -269,7 +249,7 @@ function RegistrationProduct(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <Col >
+                        <Col >
                             <Row sm className='label'>상품가격</Row>
                         </Col>
                         <Col sm>
@@ -278,7 +258,7 @@ function RegistrationProduct(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <Col >
+                        <Col >
                             <Row sm className='label'>할인율</Row>
                         </Col>
                         <Col sm>
@@ -287,7 +267,7 @@ function RegistrationProduct(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <Col >
+                        <Col >
                             <Row sm className='label'>재고</Row>
                         </Col>
                         <Col sm>
@@ -296,12 +276,10 @@ function RegistrationProduct(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3" >
-                    <Col >
+                        <Col >
                             <Row sm className='label'>유통기한</Row>
                         </Col>
                         <Col sm>
-                            {/* <Form.Label column >유통ㄴ기한</Form.Label> */}
-                            {/* <Form.Control maxLength={50} placeholder="유통기한" value={productExpDate} onChange={onChangeProductExpDate} /> */}
                             <DatePicker
                                 selected={startDate}
                                 dateFormat="yyyy년 MM월 dd일 (eee)"
@@ -316,11 +294,10 @@ function RegistrationProduct(props) {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
-                    <Col >
+                        <Col >
                             <Row sm className='label'>카테고리</Row>
                         </Col>
                         <Col sm>
-                            {/* <Form.Control maxLength={20} placeholder="카테고리" value={categoryId} onChange={onChangeCategoryId} /> */}
                             <Form.Select value={categoryId} onChange={onChangeCategoryId}>
                                 <option>카테고리</option>
                                 <option value="0">과일</option>
@@ -343,14 +320,12 @@ function RegistrationProduct(props) {
                         </Col>
                     </Form.Group>
                     <div className="d-grid gap-1 mb-3 submitBtn">
-                        <Button variant="secondary" onClick={onSubmit}>상품 등록</Button>
+                        <Button style={{ backgroundColor: "#176a49", border: "hidden" }} onClick={onSubmit}>상품 등록</Button>
                         <Button style={{
-                            marginTop:"3%"
+                            marginTop: "3%"
                         }} variant="secondary" onClick={() => navigate(-1)}>돌아가기</Button>
                     </div>
                 </Form>
-                {/* <br />
-                <span className="text">Have an account? <Link to="/login" className="link">Sign In</Link></span> */}
             </Container>
         </div>
     );

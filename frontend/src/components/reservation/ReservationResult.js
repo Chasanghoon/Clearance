@@ -83,23 +83,16 @@ function ReservationResult(props) {
         // ! 북셋 어디서 가져오지..?
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/reservation-complete/${bookSet}`)
-            // .get("https://k6e203.p.ssafy.io:5000/data/reservation-complete/8")
             .then((result) => {
                 setSellerName(result.data.seller[0].user_name);
 
                 setSellerImage(result.data.seller[0].user_image);
                 setSellerAddress(result.data.seller[0].user_address);
-                console.log('result.data.seller[0].user_address: ', result.data.seller[0].user_address);
                 setSellerPhone(result.data.seller[0].user_phone);
-                console.log('result.data.seller[0].user_phone: ', result.data.seller[0].user_phone);
                 setSellerLat(result.data.seller[0].location_ypoint);
-                console.log('result.data.seller[0].location_ypoint: ', result.data.seller[0].location_ypoint);
                 setSellerLng(result.data.seller[0].location_xpoint);
-                console.log('result.data.seller[0].location_xpoint: ', result.data.seller[0].location_xpoint);
                 setReservationData(result.data.seller[0].book_date);
-                console.log('result.data.seller[0].book_date: ', result.data.seller[0].book_date);
                 setReservationTime(result.data.seller[0].book_hour);
-                console.log('result.data.seller[0].book_hour: ', result.data.seller[0].book_hour);
 
                 setProduct(result.data.product);
                 timeout();
@@ -120,7 +113,7 @@ function ReservationResult(props) {
 
         if (sellerLat !== undefined) {
             setState((prev) => ({
-                ...prev, center: { lat: sellerLat + 0.03, lng: sellerLng + 0.005},
+                ...prev, center: { lat: sellerLat + 0.03, lng: sellerLng + 0.005 },
                 isLoading: false,
                 isPanto: true
             }))
@@ -145,19 +138,19 @@ function ReservationResult(props) {
                         id={`map`}
                         center={state.center}
                         isPanto={state.isPanto}
-                        style={{ width: "100%", height: "300px", }}
+                        style={{ width: "100%", height: "300px", borderRadius: "30px", border: "1px solid rgb(100,100,100)", boxShadow: "2px 2px 3px rgb(100,100,100)" }}
                         level={8} // 지도의 확대 레벨
                     >
-                        <MapMarker 
-                        position={marker.center} 
-                        image={{
-                            src: "img/shop.png", // 마커이미지의 주소입니다
-                            size: {
-                              widht: 36,
-                              height: 53
-                            }, // 마커이미지의 크기입니다
-                          }}
-                        onClick={() => setIsOpen(true)} />
+                        <MapMarker
+                            position={marker.center}
+                            image={{
+                                src: "img/shop.png", // 마커이미지의 주소입니다
+                                size: {
+                                    widht: 36,
+                                    height: 53
+                                }, // 마커이미지의 크기입니다
+                            }}
+                            onClick={() => setIsOpen(true)} />
                         {isOpen && (
                             <CustomOverlayMap position={marker.center}>
                                 <div className="wrap">
@@ -185,28 +178,10 @@ function ReservationResult(props) {
                                                         <td className='reservationTableStoreName'>{sellerName}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>{sellerAddress}<br/>{sellerPhone}</td>
+                                                        <td>{sellerAddress}<br />{sellerPhone}</td>
                                                     </tr>
                                                 </tbody>
                                             </Table>
-                                            {/* <Container>
-                                                <Row>
-                                                    <Col>
-                                                        <div className='reservationResultImageDiv'>
-                                                            <img className='reservationResultImgFile' src={sellerImage} alt="img"></img>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col>{sellerName}</Col>
-                                                    <Col>{sellerAddress}</Col>
-                                                    <Col>{sellerPhone}</Col>
-                                                </Row>
-                                            </Container> */}
-
-                                            {/* <p>{sellerName}</p>
-                                            <p>{sellerAddress}</p>
-                                            <p>{sellerPhone}</p> */}
                                         </div>
                                     </div>
                                 </div>
@@ -214,7 +189,7 @@ function ReservationResult(props) {
                         )}
                     </Map>
                 </div>
-                <div style={{ backgroundColor: "#F5F5F5", margin: "10px 5% 0px 5%" }}>
+                <div style={{ backgroundColor: "#FFF", margin: "10px 5% 0px 5%", borderRadius: "30px", border: "1px solid rgb(100,100,100)", boxShadow: "2px 2px 2px rgb(100,100,100)" }}>
                     <Container>
                         <Row>
                             <Col>{sellerName}</Col>
@@ -224,12 +199,10 @@ function ReservationResult(props) {
                         </Row>
                     </Container>
                 </div>
-                {/* backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)" */}
-                <div style={{ backgroundColor:"white", margin: "10px 5% 10px 5%", boxShadow: "2px 2px 2px black", borderRadius:"30px" }}>
+                <div style={{ backgroundColor: "white", margin: "10px 5% 10px 5%", boxShadow: "2px 2px 2px rgb(100,100,100)", borderRadius: "30px" }}>
                     <Table style={{
                         width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all",
-                        borderBottom:"hidden"
-                        
+                        borderBottom: "hidden"
                     }}>
                         <colgroup>
                             <col width="35%" />
@@ -238,7 +211,7 @@ function ReservationResult(props) {
                             <col width="25%" />
                         </colgroup>
                         <thead>
-                            <tr style={{ borderTop: "hidden",}}>
+                            <tr style={{ borderTop: "hidden", }}>
                                 <th>상품</th>
                                 <th>상품명</th>
                                 <th>수량</th>
@@ -256,7 +229,7 @@ function ReservationResult(props) {
                                         <tr >
                                             <td>
                                                 <div className='imageDiv2'>
-                                                    <img  width="80%" className='imgFile' src={data.product_imagefront} alt="userImage" />
+                                                    <img width="80%" className='imgFile' src={data.product_imagefront} alt="userImage" />
                                                 </div>
                                             </td>
                                             <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.product_name}</td>
@@ -271,9 +244,8 @@ function ReservationResult(props) {
                     </Table>
                 </div>
             </div>
-            {/* backgroundImage: "linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%)" */}
-            <div style={{ backgroundColor:"white" , margin: "10px 5% 10px 5%" }}>
-                <Table style={{ width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all", boxShadow:"1px 1px 1px 1px black" }}>
+            <div style={{ backgroundColor: "white", margin: "10px 5% 10px 5%" }}>
+                <Table style={{ width: "100%", tableLayout: "fixed", fontSize: "15px", wordBreak: "break-all", boxShadow: "2px 2px 2px 1px rgb(100,100,100)" }}>
                     <colgroup>
                         <col width="33%" />
                         <col width="33%" />
