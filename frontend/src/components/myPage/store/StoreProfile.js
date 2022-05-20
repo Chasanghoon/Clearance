@@ -68,7 +68,6 @@ function StoreProfile(props) {
         axios
             .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${localStorage.getItem("id")}`)
             .then((result) => {
-                console.log(result);
                 setUserId(result.data.userId);
                 setUserName(result.data.userName);
                 setUserEmail(result.data.userEmail);
@@ -87,7 +86,6 @@ function StoreProfile(props) {
         if (validation()) return;
 
         // ! axios POST
-        console.log("axios post")
         axios
             .put("https://k6e203.p.ssafy.io:8443/api/member",
                 {
@@ -107,11 +105,9 @@ function StoreProfile(props) {
                 Swal.fire({
                     icon: 'success',
                     title: '회원정보 수정!',
-                    // icon: 'error',
-                    // title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
-                  })
+                })
                 navigate(-1);
 
             })
@@ -120,8 +116,6 @@ function StoreProfile(props) {
                 console.error(e);
             });
     };
-
-
 
     const [loaded, setLoaded] = useState(false);
     const saveImage = (e) => {

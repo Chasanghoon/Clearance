@@ -33,8 +33,6 @@ function Login(props) {
     }
 
     const onSubmit = (e) => {
-        // console.log("id : " + inputUserId);
-        // console.log("pw : " + inputPassword);
         // ! axios POST
         console.log("axios post")
         axios
@@ -46,10 +44,6 @@ function Login(props) {
             )
             .then((e) => {
                 console.log("axios post 성공")
-                // alert("로그인 완료!");
-                // console.log(e)
-                // console.log(e.data[0]);
-                // console.log(e.data[1]);
                 Swal.fire({
                     icon: 'success',
                     title: 'success!',
@@ -61,18 +55,14 @@ function Login(props) {
                 userData();
             })
             .catch((e) => {
-                
                 console.error("axios post 실패");
                 console.error(e.message);
                 Swal.fire({
-                    // icon: 'success',
-                    // title: 'success!',
                     icon: 'error',
                     title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
                   })
-                // alert("아이디와 비밀번호를 확인해주세요.");
             });
     };
     function userData() {
@@ -108,7 +98,6 @@ function Login(props) {
     return (
         <div className='login'>
             <div className='title'>
-                {/* <h1>Clearance</h1> */}
                 <img className='loseImg' src='img/logoClearance.png' alt='' />
             </div>
             <Container className='mt-5'>
@@ -134,4 +123,3 @@ function Login(props) {
 }
 
 export default Login;
-//userContext

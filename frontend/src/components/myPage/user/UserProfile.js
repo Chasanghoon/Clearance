@@ -108,8 +108,6 @@ function UserProfile(props) {
                 Swal.fire({
                     icon: 'success',
                     title: '회원수정 완료!',
-                    // icon: 'error',
-                    // title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
                   })
@@ -208,8 +206,6 @@ function UserProfile(props) {
                         <Button className='submit' variant="secondary" onClick={onSubmit}>회원 정보 수정</Button>
                     </div>
                 </Form>
-                {/* <br />
-                <span className="text">Have an account? <Link to="/login" className="link">Sign In</Link></span> */}
             </Container>
             <BackButton></BackButton>
         </div>

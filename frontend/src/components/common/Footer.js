@@ -32,7 +32,6 @@ const Footer = () => {
                 paddingLeft: '10px'
             }}>개인정보처리방침</span>
             <span style={{
-                
                 fontWeight:'bold',
                 textAlign: 'left',
                 fontSize: '15px',
@@ -46,7 +45,6 @@ const Footer = () => {
                     따라서 Clearance는 상품거래정보 및 거래에 대한 책임을 지지 않습니다.
             </div>
             </div>
-            
         </div>
     )
 }

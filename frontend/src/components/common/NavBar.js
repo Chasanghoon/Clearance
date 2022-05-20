@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Col, Container, NavLink, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
@@ -7,7 +6,6 @@ import { Link } from "react-router-dom";
 import userStore from "../../store/userStore";
 import NavStore from "../../store/NavStore";
 import Fade from "react-reveal/Fade";
-import KakaoCounseling from "./KakaoCounseling";
 
 const NavBar = () => {
 
@@ -45,7 +43,6 @@ const NavBar = () => {
         setUserLicenseNum("");
         setUserImage("img/default_image.png");
     };
-    // console.log("네브바에서 확인하는 세션 유저 롤 = ", localStorage.getItem("userRole"))
     return (
         <div className="NavBar">
             <div className={isOpen ? "NavBarbg" : ""} >
@@ -86,9 +83,6 @@ const NavBar = () => {
                                     <Link to="/storeMyPage"><Button className="nbBtn">마이페이지</Button></Link>
                                 }
                                 <Link onClick={Logout} to="/"><Button className="nbBtn3">로그아웃</Button></Link>
-                                {/* <div className="kakao">
-                                    <KakaoCounseling />
-                                </div> */}
                             </Nav>
                         </div>
                     </div>

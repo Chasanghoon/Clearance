@@ -9,7 +9,6 @@ import NavStore from "../../../store/NavStore";
 function Chart(props) {
   if (props.height !== 0) {
     return (
-      // <div style={{ height: props.height }}>
       <div style={{ height: 360 }}>
         <ResponsivePie
           data={props.data}
@@ -127,10 +126,7 @@ function StoreCarbon() {
   ]);
   const [idxArr, setIdxArr] = useState([]);
   const [totalSaveCarbon, setTotalSaveCarbon] = useState(0);
-  // console.log(localStorage.getItem("id"));
   const userId = localStorage.getItem("id");
-  // axios 데이터 받아오기
-  // const URL = `http://localhost:8080/api/store/co?StoreId=${userId}`;
   const URL = `https://k6e203.p.ssafy.io:8443/api/store/co?StoreId=${userId}`;
   useEffect(() => {
     axios
@@ -154,7 +150,6 @@ function StoreCarbon() {
             temp += result.data[i];
           }
         }
-        // console.log(newData);
         if (newData.length === 0) {
           newData.push({
             id: "No items",
@@ -164,7 +159,6 @@ function StoreCarbon() {
           setSkipAngle(10000);
           setHeight(0);
         }
-        // console.log(temp);
         setData(newData);
         setIdxArr(newIdxArr);
         setTotalSaveCarbon(temp);
@@ -179,11 +173,11 @@ function StoreCarbon() {
       <NavBar />
       <Chart data={data} skipAngle={skipAngle} height={height}></Chart>
       <Category idxArr={idxArr}></Category>
-      <h1 style={{marginTop:"30px"}}>Clearance를 사용하면서</h1>
+      <h1 style={{ marginTop: "30px" }}>Clearance를 사용하면서</h1>
       <h1>{(totalSaveCarbon / 6.6).toFixed(2)}그루 만큼의 <br />
         나무를 심었습니다!</h1>
       <div className="scimageDiv">
-          <img className="scimgFile" alt="" src="img/carbonGrass.png"></img>
+        <img className="scimgFile" alt="" src="img/carbonGrass.png"></img>
       </div>
       <BackButton></BackButton>
     </div>

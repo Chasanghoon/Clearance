@@ -171,14 +171,15 @@
 
 ## 📋 6. 산출물
 
-| 구분                |                                                               링크                                                               |
-| :------------------ | :------------------------------------------------------------------------------------------------------------------------------: |
-| 기획서              |                                     [기획서 바로가기](/exec/프로젝트_계획서_부울경_E203.pdf)                                     |
+| 구분                |                             링크                             |
+| :------------------ | :----------------------------------------------------------: |
+| 기획서              |   [기획서 바로가기](/exec/프로젝트_계획서_부울경_E203.pdf)   |
 | 요구사항/API 정의서 | [요구사항 정의서 바로가기](https://docs.google.com/spreadsheets/d/11YK9m3-BMdoCCrjv6fx36IJgI-pvypHpYIhc1MlR5Oc/edit#gid=9810042) |
-| 플로우차트          |                                [플로우차트 바로가기](https://www.mindmeister.com/map/2253219011)                                 |
-| 스토리보드          |                          [스토리보드 바로가기](https://www.figma.com/file/MPWOWxpHMV9bMNM4btjs3r/E203)                           |
-| ERD                 |                                 [ERD 바로가기](https://www.erdcloud.com/team/jCG5JFqNeZTLtQGWN)                                  |
-| 발표자료            |                                             [발표자료 바로가기](/exec/발표자료.pdf)                                              |
+| 플로우차트          | [플로우차트 바로가기](https://www.mindmeister.com/map/2253219011) |
+| 스토리보드          | [스토리보드 바로가기](https://www.figma.com/file/MPWOWxpHMV9bMNM4btjs3r/E203) |
+| ERD                 | [ERD 바로가기](https://www.erdcloud.com/team/jCG5JFqNeZTLtQGWN) |
+| 발표자료            |   [발표자료 바로가기](/exec/부울경_2반_E203_발표자료.pdf)    |
+| 시연시나리오        |   [발표자료 바로가기](/exec/자율프로젝트_E203_시연시나리오.pdf)    |
 
 <br/>
 

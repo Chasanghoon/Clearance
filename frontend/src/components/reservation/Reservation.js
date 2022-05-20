@@ -59,11 +59,9 @@ function Reservation(props) {
         console.log(storeId);
         splitDate2(expdate);
         // ! axios get
-        // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/reservation-progress/${storeId}`)
             .then((result) => {
-                
                 setUserName(result.data[0].user_name);
                 setUserImage(result.data[0].user_image);
                 setUserPhone(result.data[0].user_phone);
@@ -80,7 +78,6 @@ function Reservation(props) {
         if (validation()) return;
 
         // ! axios POST
-        // ! 스토어 아이디 장바구니에서 저스텐드에 저장해서 써야함.
         console.log("axios post")
         axios
             .post(`https://k6e203.p.ssafy.io:5001/data/reservation-add`,
@@ -98,11 +95,9 @@ function Reservation(props) {
                 Swal.fire({
                     icon: 'success',
                     title: '예약 완료!',
-                    // icon: 'error',
-                    // title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
-                  })
+                })
                 navigate("/reservationResult");
             })
             .catch((e) => {
@@ -119,13 +114,12 @@ function Reservation(props) {
         setStartTime(time);
         onChangeSaveTime(splitTime(time));
     }
-    
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <Form.Control style={{backgroundColor:"white"}} maxLength={50} placeholder="예약 날짜" value={value} onClick={onClick} onChange={onChangeSaveData}  readOnly />
-      ));
-      const ExampleCustomInput2 = forwardRef(({ value, onClick }, ref) => (
-        <Form.Control style={{backgroundColor:"white"}} maxLength={50} placeholder="예약 시간" value={value} onClick={onClick} onChange={onChangeSaveTime}  readOnly />
-      ));
+        <Form.Control style={{ backgroundColor: "white" }} maxLength={50} placeholder="예약 날짜" value={value} onClick={onClick} onChange={onChangeSaveData} readOnly />
+    ));
+    const ExampleCustomInput2 = forwardRef(({ value, onClick }, ref) => (
+        <Form.Control style={{ backgroundColor: "white" }} maxLength={50} placeholder="예약 시간" value={value} onClick={onClick} onChange={onChangeSaveTime} readOnly />
+    ));
     let navigate = useNavigate();
     return (
         <div className='reservation'>
@@ -223,7 +217,7 @@ function splitDate(date) {
     day = split[2];
 
     let reDate = year + '-' + month + '-' + day
-    
+
     return reDate;
 }
 function splitTime(time) {
@@ -242,15 +236,15 @@ function splitDate2(date) {
     let month = '';
     let day = '';
     let str = date + '';
-    
-    year = str.substring(0,4);
+
+    year = str.substring(0, 4);
     console.log('year: ', year);
-    month = str.substring(4,6);
+    month = str.substring(4, 6);
     console.log('month: ', month);
-    day = str.substring(6,8);
+    day = str.substring(6, 8);
     console.log('day: ', day);
 
-    
+
     let reDate = year + "-" + month + "-" + day
     return reDate;
 }

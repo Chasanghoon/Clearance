@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, FormControl, InputGroup, ModalFooter, Pagination, Row, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal'
-import UpdateProduct from './UpdateProduct';
 import NavBar from '../../../common/NavBar';
 import NavStore from '../../../../store/NavStore';
 import BackButton from '../../../BackButton';
@@ -28,33 +27,22 @@ function AllProductManagement(props) {
     let items = [];
     let showItems = [];
 
-
-    console.log(localStorage.getItem("id"));
-    console.error(checkWord);
     useEffect(() => {
         setNavHeader("상품 관리");
-        console.log("실행샐행!!!!!!!!!!!!!!")
         // ! axios get
-        console.log("axios get")
         axios
             .get(`https://k6e203.p.ssafy.io:8443/api/product/info?page=${page}&size=${size}&storeId=${localStorage.getItem("id")}&word=${word}`)
             .then((result) => {
-                console.log(result.data);
-
                 setProduct(result.data.content);
                 setTotalPage(result.data.totalPages);
-                // setTotalPage(24);
             })
             .catch((e) => {
-                // console.error("axios get 실패");
                 console.error(e)
             });
     }, [deleteCheck, checkWord, page]);
 
     function deleteProduct() {
-        console.log(modalProduct.productId);
         // ! axios delete
-        console.log("axios delete")
         axios
             .delete("https://k6e203.p.ssafy.io:8443/api/product/remove",
                 {
@@ -67,11 +55,9 @@ function AllProductManagement(props) {
                 Swal.fire({
                     icon: 'success',
                     title: '상품삭제 완료!',
-                    // icon: 'error',
-                    // title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
-                  })
+                })
                 setModalShow(false);
                 setDelectCheck(!deleteCheck);
             })
@@ -93,8 +79,6 @@ function AllProductManagement(props) {
                 {modalProduct !== undefined ?
                     <Modal
                         {...props}
-                        // size="lg"
-                        // aria-labelledby="contained-modal-title-vcenter"
                         centered
                     >
                         <Modal.Header closeButton className='pmModalHeader'>
@@ -103,7 +87,7 @@ function AllProductManagement(props) {
                         <Modal.Body className='pmModalBody'>
                             <Table>
                                 <tbody>
-                                    <tr style={{borderBottom:"hidden"}}>
+                                    <tr style={{ borderBottom: "hidden" }}>
                                         <td colSpan={2}><img className='img' src={modalProduct.productImagefront} alt=''></img></td>
                                     </tr>
                                     <tr>
@@ -144,23 +128,17 @@ function AllProductManagement(props) {
                     </Modal>
                     : null}
             </>
-
         );
     }
 
-
-
     function plus() {
-
         if ((firstPage + 5) <= totalPage) {
             setFirstPage(firstPage + 5);
             setPage(firstPage + 5)
-
         }
         if ((lastPage + 5) <= totalPage) setLastPage(lastPage + 5);
         else setLastPage(totalPage);
         changePagination();
-
     }
     function minus() {
         if ((firstPage - 5) >= 1) setFirstPage(firstPage - 5);
@@ -169,15 +147,11 @@ function AllProductManagement(props) {
             setLastPage(lastPage - 5);
             setPage(lastPage - 5)
         }
-
         if (lastPage == totalPage) {
             setLastPage(firstPage - 1);
             setPage(lastPage - 1)
         }
-
-        console.error("firstPage = " + firstPage);
         changePagination();
-
     }
 
     if (totalPage !== undefined) {
@@ -202,10 +176,6 @@ function AllProductManagement(props) {
             );
         }
         console.warn();
-
-        // console.log("Items = " + items);
-        // console.log("showItems = " + showItems);
-
     }
 
     function test(number) {
@@ -213,19 +183,16 @@ function AllProductManagement(props) {
         setPage(number)
     };
 
-
-
     return (
         <div className='allProductManagement'>
             <NavBar></NavBar>
             <Row>
                 <Col>
-                <div className='apmRegister'>
-                <Link to={"/registrationProduct"}><Button variant='warning'>상품 등록</Button></Link>
-            </div>
+                    <div className='apmRegister'>
+                        <Link to={"/registrationProduct"}><Button variant='warning'>상품 등록</Button></Link>
+                    </div>
                 </Col>
             </Row>
-            
             <div className='apmDiv'>
                 <Table className='apmTable'>
                     <colgroup>
@@ -264,7 +231,6 @@ function AllProductManagement(props) {
                         show={modalShow}
                         onHide={() => setModalShow(false)}
                     />
-
                 </Table>
             </div>
             <div>
@@ -297,7 +263,6 @@ function AllProductManagement(props) {
         </div>
     );
 }
-
 function changeCategory(data) {
     let reCategory = ""
     switch (data) {

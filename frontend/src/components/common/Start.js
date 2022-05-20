@@ -15,21 +15,16 @@ function Start() {
 
     useEffect(() => {
         if (localStorage.getItem("userRole") == 2) {
-            // alert("매장 회원임");
             navigate("/storeMyPage");
         } else if (localStorage.getItem("userRole") == 3) {
-            // alert("유저 회원임");
             navigate("/main");
         }
     }, [])
-    
     return (
         <div className='Start'>
             <div className='title'>
-                {/* <h1>Clearance</h1> */}
                 <img className='loseImg' src='img/logoClearance.png' alt='' />
             </div>
-            
             <div className='title2'>you can become A smart <br /> Consumer</div>
 
             <Container fluid className='startBtnGroup' >
@@ -52,22 +47,13 @@ function Start() {
                                 <Link to="../signupStore"><Button className='registerStoreBtn'> 매장 회원가입 </Button></Link>
                             </Col>
                         </Row>
-                        {/* <Row>
-                            <Col><Button className='registerBtn' onClick={() => setButtonShow(false)}>
-                                매장 회원가입
-                            </Button></Col>
-                        </Row> */}
                     </div>
                 }
-
-
             </Container>
-
             <MyVerticallyCenteredModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
-
         </div>
     );
 }

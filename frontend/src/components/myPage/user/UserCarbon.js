@@ -86,7 +86,6 @@ function UserCarbon() {
 function Chart(props) {
   if (props.height !== 0) {
     return (
-      // <div style={{ height: props.height }}>
       <div style={{ height: 360 }}>
         <ResponsivePie
           data={props.data}
@@ -96,7 +95,6 @@ function Chart(props) {
           innerRadius={0.5}
           padAngle={1}
           cornerRadius={5}
-          // sortByValue={true}
           activeOuterRadiusOffset={8}
           colors={{ scheme: "set3" }}
           borderWidth={0}
@@ -165,16 +163,16 @@ function Category(props) {
     "건강식품",
   ]);
 
-  
+
   let content = [];
   for (let i = 0; i < props.idxArr.length; i++) {
     content.push(
-        <span>
-          <Brightness1Icon style={{ color: colorArr[props.idxArr[i]] }} />
-            {dataId[props.idxArr[i]]}
-            {(i > 0 && i % 3 ===0) ? <br />: " "}
-        </span>
-      
+      <span>
+        <Brightness1Icon style={{ color: colorArr[props.idxArr[i]] }} />
+        {dataId[props.idxArr[i]]}
+        {(i > 0 && i % 3 === 0) ? <br /> : " "}
+      </span>
+
     );
   }
   console.log(content);
@@ -182,7 +180,7 @@ function Category(props) {
   return (
     <div>
       {content}
-      
+
     </div>
   )
 }

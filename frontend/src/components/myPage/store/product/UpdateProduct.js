@@ -52,7 +52,6 @@ function UpdateProduct(props) {
         setProductPrice(e.target.value)
     };
     const onChangeProductDiscount = (e) => {
-        // const productDiscountRegex = /^[0-9]{1}[.]{1}[0-9]$/;
         const productDiscountRegex = /^[0-9]+$/;
         if ((!e.target.value || (productDiscountRegex.test(e.target.value)))) setProductDiscountError(false);
         else setProductDiscountError(true);
@@ -82,7 +81,7 @@ function UpdateProduct(props) {
         if (!productExpDate) setProductExpDateError(true);
         if (!categoryId) setCategoryIdError(true);
 
-        if (productName.length === 0 || productPrice.length === 0 || productDiscount.length === 0 || productStock.length === 0 || productExpDate.length === 0 || categoryId.length === 0 || 
+        if (productName.length === 0 || productPrice.length === 0 || productDiscount.length === 0 || productStock.length === 0 || productExpDate.length === 0 || categoryId.length === 0 ||
             productNameError || productPriceError || productDiscountError || productStockeError || productExpDateError || categoryIdError) return true;
         else return false;
     };
@@ -92,17 +91,11 @@ function UpdateProduct(props) {
     }, []);
 
     const onSubmit = (e) => {
-        console.warn("");
-        console.log(productExpDate);
-        console.log(categoryId);
-        console.log(checkProductChange);
-
         if (validation()) return;
         if (!checkProductChange) {
             console.warn("안바뀜!");
             setProductExpDate(notChangeDate(productExpDate));
         }
-        console.log(productExpDate);
 
         // ! axios PUT      
         axios
@@ -123,17 +116,12 @@ function UpdateProduct(props) {
                 },
             )
             .then(() => {
-                console.log("axios post 성공")
-                // alert("상품수정 완료!");
                 Swal.fire({
                     icon: 'success',
                     title: '상품수정 완료!',
-                    // icon: 'error',
-                    // title: 'error!',
                     showConfirmButton: false,
                     timer: 1500
-                  })
-                // navigate("/allProductManagement");
+                })
                 navigate(-1);
 
             })
@@ -142,104 +130,16 @@ function UpdateProduct(props) {
                 console.error(e);
             });
     };
-    //     const productRegisterRequest = {
-    //         category_id: categoryId,
-    //         product_discount: productDiscount / 100,
-    //         product_expDate: productExpDate,
-    //         product_name: productName,
-    //         product_price: productPrice,
-    //         product_stock: productStock,
-    //         store_user_id: userId
-    //     }
-
-    //     const formData = new FormData();
-    //     formData.append('productRegisterRequest', new Blob([JSON.stringify(productRegisterRequest)], { type: "application/json" }));
-    //     formData.append('backimage', backImage.back_image_file);
-    //     formData.append('frontimage', frontImage.front_image_file);
-
-    //     axios
-    //         .post("http://localhost:8080/api/product/register",
-    //             formData
-    //             ,
-    //             {
-    //                 headers: { 'Content-Type': 'application/json' }
-    //             },
-    //         )
-    //         .then(() => {
-    //             console.log("axios post 성공")
-    //             alert("상품등록 완료!");
-    //             navigate("/allProductManagement");
-
-    //         })
-    //         .catch((e) => {
-    //             console.error("axios post 실패");
-    //             console.error(e);
-    //         });
-    // };
 
     const [frontImage, setFrontImage] = useState({
         front_image_file: "",
         front_preview_URL: data.productImagefront,
     });
-    // const [frontLoaded, setFrontLoaded] = useState(false);
-
-    // const saveFrontImage = (e) => {
-    //     e.preventDefault();
-    //     const frontFileReader = new FileReader();
-
-    //     if (e.target.files[0]) {
-    //         setFrontLoaded("loading")
-    //         frontFileReader.readAsDataURL(e.target.files[0]);
-    //     }
-    //     frontFileReader.onload = () => {
-    //         setFrontImage(
-    //             {
-    //                 front_image_file: e.target.files[0],
-    //                 front_preview_URL: frontFileReader.result
-    //             }
-    //         )
-    //         setFrontLoaded(true);
-    //     }
-    // }
-    // const deleteFrontImage = () => {
-    //     setFrontImage({
-    //         front_image_file: "",
-    //         front_preview_URL: "img/default_image.png",
-    //     });
-    //     setFrontLoaded(false);
-    // }
 
     const [backImage, setBackImage] = useState({
         back_image_file: "",
         back_preview_URL: data.productImageback,
     });
-    // const [backLoaded, setBackLoaded] = useState(false);
-
-    // const saveBackImage = (e) => {
-    //     e.preventDefault();
-    //     const backFileReader = new FileReader();
-
-    //     if (e.target.files[0]) {
-    //         setBackLoaded("loading")
-    //         backFileReader.readAsDataURL(e.target.files[0]);
-    //     }
-    //     backFileReader.onload = () => {
-    //         setBackImage(
-    //             {
-    //                 back_image_file: e.target.files[0],
-    //                 back_preview_URL: backFileReader.result
-    //             }
-    //         )
-    //         setBackLoaded(true);
-    //     }
-    // }
-    // const deleteBackImage = () => {
-    //     setBackImage({
-    //         back_image_file: "",
-    //         back_preview_URL: "img/default_image.png",
-    //     });
-    //     setBackLoaded(false);
-    // }
 
     let navigate = useNavigate();
 
@@ -249,12 +149,7 @@ function UpdateProduct(props) {
     }
 
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-        // <Form.Control maxLength={50} placeholder="유통기한" value={productExpDate} onClick={onClick} onChange={onChangeProductExpDate} />
         <Form.Control style={{ backgroundColor: "white", }} maxLength={50} placeholder={updateDate(data.productExpdate)} value={value} onClick={onClick} onChange={onChangeProductExpDate} readOnly />
-        // <Form.Control maxLength={50} placeholder="유통기한" value={value} onClick={onClick} />
-        // <Button onClick={onClick} ref={ref}>
-        //   {value}
-        // </Button>
 
     ));
 
@@ -271,31 +166,12 @@ function UpdateProduct(props) {
                     <Form.Group as={Row} className="mb-3" controlId="formFile1" style={{ "textAlign": "center" }}>
                         <div className='updateProductImageDiv'>
                             <img className='updateProductImgFile' src={frontImage.front_preview_URL} alt="userImage" />
-                            {/* {frontLoaded === false || frontLoaded === true ?
-                                (<img className='imgFile' src={frontImage.front_preview_URL} alt="userImage" />) :
-                                (<Spinner animation="border" variant="warning" />)} */}
                         </div>
-                        {/* <div>
-                            <Button className='imageButton'><Form.Label>상품 이미지 선택</Form.Label></Button>
-                            <Button className='imageButton' onClick={deleteFrontImage}>상품 이미지 삭제</Button>
-                            <Form.Control type="file" accept="image/*" onChange={saveFrontImage} style={{ display: "none" }} />
-                        </div> */}
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3" controlId="formFile2" style={{ "textAlign": "center" }}>
-                        {/* <Col >
-                            <Row sm className='label'>상품 상세 이미지</Row>
-                        </Col> */}
                         <div className='updateProductImageDiv'>
                             <img className='updateProductImgFile' src={backImage.back_preview_URL} alt="userImage" />
-                            {/* {backLoaded === false || backLoaded === true ?
-                                (<img className='imgFile' src={backImage.back_preview_URL} alt="userImage" />) :
-                                (<Spinner animation="border" variant="warning" />)} */}
                         </div>
-                        {/* <div>
-                            <Button className='imageButton'><Form.Label>상품 상세 이미지 선택</Form.Label></Button>
-                            <Button className='imageButton' onClick={deleteBackImage}>상품 상세 이미지 삭제</Button>
-                            <Form.Control type="file" accept="image/*" onChange={saveBackImage} style={{ display: "none" }} />
-                        </div> */}
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
                         <Col >
@@ -338,8 +214,6 @@ function UpdateProduct(props) {
                             <Row sm className='label'>유통기한</Row>
                         </Col>
                         <Col sm>
-                            {/* <Form.Label column >유통ㄴ기한</Form.Label> */}
-                            {/* <Form.Control maxLength={50} placeholder="유통기한" value={productExpDate} onChange={onChangeProductExpDate} /> */}
                             <DatePicker
                                 selected={startDate}
                                 dateFormat="yyyy년 MM월 dd일 (eee)"
@@ -347,9 +221,7 @@ function UpdateProduct(props) {
                                 locale={ko}
                                 showPopperArrow={false}
                                 popperPlacement="auto"
-                                // excludeDates={[new Date(), subDays(new Date(), 1),new Date("2022/05/18")]}
                                 minDate={new Date()}
-                                // onChange={date => setStartDate(date)} />
                                 onChange={date => dateData(date)} />
 
                             {productExpDateError && <div className="invalid-input">유통기한을 입력하세요.</div>}
@@ -360,7 +232,6 @@ function UpdateProduct(props) {
                             <Row sm className='label'>카테고리</Row>
                         </Col>
                         <Col sm>
-                            {/* <Form.Control maxLength={20} placeholder="카테고리" value={categoryId} onChange={onChangeCategoryId} /> */}
                             <Form.Select className='mb-3' value={categoryId} onChange={onChangeCategoryId}>
                                 <option>카테고리</option>
                                 <option value="0">과일</option>
@@ -382,15 +253,11 @@ function UpdateProduct(props) {
                             {categoryIdError && <div className="invalid-input">카테고리를 선택해 주세요.</div>}
                         </Col>
                     </Form.Group>
-                    
-
                     <div className="d-grid gap-1 mb-3">
-                        <Button variant="secondary" onClick={onSubmit}>상품 수정</Button>
+                        <Button style={{ backgroundColor: "#176a49", border: "hidden", marginBottom: "3%" }} onClick={onSubmit}>상품 수정</Button>
                         <Button variant="secondary" onClick={() => navigate(-1)}>돌아가기</Button>
                     </div>
                 </Form>
-                {/* <br />
-                <span className="text">Have an account? <Link to="/login" className="link">Sign In</Link></span> */}
             </Container>
         </div>
     );
@@ -403,7 +270,6 @@ function splitDate(date) {
 
 
     let str = date + '';
-    console.log(str);
     let split = str.split(' ');
 
     switch (split[1]) {
@@ -467,14 +333,7 @@ function updateDate(date) {
 
     let split = str.split('-');
     let split2 = str2.substring(0, 1);
-    console.log(str);
-    console.log(split[0]);
-    console.log(split[1]);
-    console.log(split[2]);
-    console.log(split2);
-
     const reDate = split[0] + '년 ' + split[1] + '월 ' + split[2] + '일 (' + split2 + ')';
-    console.log(reDate);
 
     return reDate;
 }
@@ -484,9 +343,6 @@ function notChangeDate(date) {
     let month = '';
     let day = '';
 
-
-    // let str = date + '';
-    // console.log(str);
     let split = date.split('-');
     year = split[0];
     month = split[1];
@@ -494,7 +350,6 @@ function notChangeDate(date) {
 
 
     let reDate = year + month + day
-    console.log(reDate);
     return reDate;
 }
 export default UpdateProduct;
