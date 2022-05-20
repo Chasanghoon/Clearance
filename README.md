@@ -179,7 +179,7 @@
 | 스토리보드          | [스토리보드 바로가기](https://www.figma.com/file/MPWOWxpHMV9bMNM4btjs3r/E203) |
 | ERD                 | [ERD 바로가기](https://www.erdcloud.com/team/jCG5JFqNeZTLtQGWN) |
 | 발표자료            |   [발표자료 바로가기](/exec/부울경_2반_E203_발표자료.pdf)    |
-| 시연시나리오        |   [발표자료 바로가기](/exec/자율프로젝트_E203_시연시나리오.pdf)    |
+| 시연시나리오        |   [시연시나리오 바로가기](/exec/자율프로젝트_E203_시연시나리오.pdf)    |
 
 <br/>
 
