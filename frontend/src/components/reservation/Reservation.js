@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import ReservationStore from '../../store/ReservationStore';
 import NavStore from '../../store/NavStore';
 import Swal from 'sweetalert2';
+import BackButton from '../BackButton';
 
 function Reservation(props) {
 
@@ -189,6 +190,7 @@ function Reservation(props) {
                     <Button className='rvBtn' onClick={submit}>예약하기</Button>
                 </div>
             </div>
+            <BackButton></BackButton>
         </div>
     );
 }

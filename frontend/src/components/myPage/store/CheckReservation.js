@@ -37,7 +37,7 @@ function CheckReservation() {
               })
             console.log(response)
         
-            navigate("/bookingHistory")
+            navigate("/storeMyPage")
             
         } catch (error) {
             console.error(error)
@@ -93,7 +93,7 @@ function CheckReservation() {
                                 <td className='option'><img width="90px" alt='' src={value.productImagefront}></img></td>
                                 <td className='option'>{value.productName}</td>
                                 <td className='option'>{value.basketCount}</td>
-                                <td className='option'>{(value.productDiscountprice * value.basketCount).toLocaleString()}</td>
+                                <td className='option'>{(value.productDiscountprice * value.basketCount).toLocaleString()}원</td>
                             </tr>
                         ))}
                         </tbody>
