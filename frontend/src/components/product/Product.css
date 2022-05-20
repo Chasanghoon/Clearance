@@ -1,0 +1,23 @@
+/* 상세 페이지 화면에 대한 CSS */
+#product {
+    /* border: 3px solid #FFC812; */
+    border-radius: 30px;
+    background-color: white;
+    margin: 20% 5% 5% 5%;
+    box-shadow: 1px 3px 3px 3px #bbbbbb;
+
+}
+
+/* 상세 페이지 상품의 항목(가격 etc)에 대한 CSS */
+.information {
+    font-size: 16px;
+    text-align: left;
+    text-indent: 3px;
+    margin-left: 5%;
+    margin-right: 5%;
+    color: rgb(63, 63, 63);
+}
+
+
+
+/* f4f6f9 */

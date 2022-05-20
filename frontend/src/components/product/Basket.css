@@ -1,0 +1,17 @@
+
+.store {
+    border: 5px solid 22cc88;
+    background-color: #176a49;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    border-radius: 15px 15px 0px 0px;
+}
+
+
+.summary {
+    margin: 10px;
+    border-radius: 30px;
+    border: 2px solid black;
+    box-shadow: 1px 1px 1px 1px;
+}
