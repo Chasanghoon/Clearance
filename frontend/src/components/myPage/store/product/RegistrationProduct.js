@@ -243,7 +243,7 @@ function RegistrationProduct(props) {
                         </div>
                         <div>
                             <Button className='imageButton'><Form.Label>상품 이미지 선택</Form.Label></Button>
-                            <Button className='imageButton' onClick={deleteFrontImage}>상품 이미지 삭제</Button>
+                            <Button variant='danger' className='imageButton' onClick={deleteFrontImage}>상품 이미지 삭제</Button>
                             <Form.Control type="file" accept="image/*" onChange={saveFrontImage} style={{ display: "none" }} />
                         </div>
                     </Form.Group>
@@ -255,7 +255,7 @@ function RegistrationProduct(props) {
                         </div>
                         <div>
                             <Button className='imageButton'><Form.Label>상품 상세 이미지 선택</Form.Label></Button>
-                            <Button className='imageButton' onClick={deleteBackImage}>상품 상세 이미지 삭제</Button>
+                            <Button variant='danger' className='imageButton' onClick={deleteBackImage}>상품 상세 이미지 삭제</Button>
                             <Form.Control type="file" accept="image/*" onChange={saveBackImage} style={{ display: "none" }} />
                         </div>
                     </Form.Group>
@@ -344,7 +344,9 @@ function RegistrationProduct(props) {
                     </Form.Group>
                     <div className="d-grid gap-1 mb-3 submitBtn">
                         <Button variant="secondary" onClick={onSubmit}>상품 등록</Button>
-                        <Button variant="secondary" onClick={() => navigate(-1)}>돌아가기</Button>
+                        <Button style={{
+                            marginTop:"3%"
+                        }} variant="secondary" onClick={() => navigate(-1)}>돌아가기</Button>
                     </div>
                 </Form>
                 {/* <br />
