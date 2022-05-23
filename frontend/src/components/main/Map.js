@@ -64,7 +64,7 @@ function SampleMap() {
       cl(response.data)
     }
     catch (err) {
-      console.log(err)
+      console.error(err);
     }
   }
   const search = async () => {
@@ -72,7 +72,7 @@ function SampleMap() {
       const response = await axios.get(`https://k6e203.p.ssafy.io:8443/api/product/list?ypoint=${state.center.lat}&xpoint=${state.center.lng}&storeId=${storeID}&categoryId=${categoryID}&word=${word}`)
       np(response.data)
     } catch (error) {
-      console.log(error)
+      console.error(error);
     }
   }
   const getLocations = async () => { // 상품 정보를 가져오는 함수
@@ -86,7 +86,7 @@ function SampleMap() {
       }
     }
     catch (err) {
-      console.log(err)
+      console.error(err);
     }
   }
   useEffect(() => { // geolocation을 활용하여 현재 위치를 가져오는 userEffect
@@ -145,7 +145,6 @@ function SampleMap() {
   }, [])
   useEffect(() => {
     if (state.center.lat !== null) {
-      console.log("useEffect 작동")
       search();
     }
   }, [categoryID, storeID, word])
@@ -164,12 +163,10 @@ function SampleMap() {
   const [userImage, setUserImage] = useState("");
 
   useEffect(() => {
-    console.log("스토어 아이디 확인 ㅇㅅㅇ ", storeID)
     axios
       .get(`https://k6e203.p.ssafy.io:8443/api/member?userId=${storeID}`)
 
       .then((result) => {
-        console.log('result: ', result);
         if (result.data === null) return
         setUserName(result.data.userName);
         setUserImage(result.data.userImage);
@@ -177,7 +174,6 @@ function SampleMap() {
         setUserPhone(result.data.userPhone);
       })
       .catch((e) => {
-        console.error("axios get 실패");
         console.error(e)
       });
   }, [storeID])
@@ -253,7 +249,6 @@ function SampleMap() {
                 height: 52.5
               }, // 마커이미지의 크기입니다
             }}
-            onClick={() => console.log(state.center)}
           >
           </MapMarker>
         )}
@@ -288,7 +283,6 @@ function SampleMap() {
                 }))
 
               }} />
-            {console.log(storeID)}
             {isVisible && isStore == value.user_name &&
               <CustomOverlayMap
                 position={{

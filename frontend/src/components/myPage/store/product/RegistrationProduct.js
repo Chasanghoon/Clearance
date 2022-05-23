@@ -89,14 +89,6 @@ function RegistrationProduct(props) {
         if (validation()) return;
 
         // ! axios POST
-        console.log("axios post")
-        console.log(categoryId);
-        console.log(productDiscount / 100);
-        console.log(productExpDate);
-        console.log(productName);
-        console.log(productPrice);
-        console.log(productStock);
-        console.log(userId);
         const productRegisterRequest = {
             category_id: categoryId,
             product_discount: productDiscount / 100,
@@ -121,7 +113,6 @@ function RegistrationProduct(props) {
                 },
             )
             .then(() => {
-                console.log("axios post 성공")
                 Swal.fire({
                     icon: 'success',
                     title: '상품등록 완료!',
@@ -131,7 +122,6 @@ function RegistrationProduct(props) {
                 navigate(-1);
             })
             .catch((e) => {
-                console.error("axios post 실패");
                 console.error(e);
             });
     };
@@ -339,7 +329,6 @@ function splitDate(date) {
 
 
     let str = date + '';
-    console.log(str);
     let split = str.split(' ');
 
     switch (split[1]) {

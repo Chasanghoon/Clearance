@@ -27,13 +27,10 @@ const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = () => {
-        console.log(isOpen);
         setIsOpen(isOpen => !isOpen); // on,off 개념 boolean
     }
     const Logout = (e) => {
         localStorage.clear();
-        console.log("id : " + localStorage.getItem("id"));
-        console.log("token : " + localStorage.getItem("access_token"));
         setUserId("");
         setUserRole("");
         setUserName("");

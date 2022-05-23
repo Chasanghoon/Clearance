@@ -9,9 +9,6 @@ function Start() {
     const [modalShow, setModalShow] = React.useState(false);
     const [buttonShow, setButtonShow] = React.useState(false);
     let navigate = useNavigate();
-    console.log("id : " + localStorage.getItem("id"));
-    console.log("token : " + localStorage.getItem("access_token"));
-    console.log("localStorage.getItem('userRole') == ", localStorage.getItem("userRole"))
 
     useEffect(() => {
         if (localStorage.getItem("userRole") == 2) {

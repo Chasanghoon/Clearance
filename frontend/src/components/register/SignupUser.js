@@ -87,7 +87,6 @@ function SignupUser() {
         if (validation()) return;
 
         // ! axios POST
-        console.log("axios post")
         const userSignUpRequest = {
             user_address: address,
             user_email: email,
@@ -110,7 +109,6 @@ function SignupUser() {
                 },
             )
             .then(() => {
-                console.log("axios post 성공")
                 Swal.fire({
                     icon: 'success',
                     title: '회원가입 완료!',
@@ -121,7 +119,6 @@ function SignupUser() {
 
             })
             .catch((e) => {
-                console.error("axios post 실패");
                 console.error(e);
             });
     };

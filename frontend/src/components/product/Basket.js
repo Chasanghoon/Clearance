@@ -13,7 +13,9 @@ import BackButton from "../BackButton";
 const Basket = () => {
 
     const setNavHeader = NavStore(state => state.setNavHeader);
-    setNavHeader("장바구니");
+    useEffect(()=>{
+        setNavHeader('장바구니');
+      },[])
 
     const setStoreId = ReservationStore(state => state.setStoreId)
     const expdate = ReservationStore(state => state.expdate)
@@ -38,19 +40,14 @@ const Basket = () => {
         })
     }
     const CallBasket = async () => {
-        console.log("callbasket 시작")
         try {
             const response = await axios.get(`https://k6e203.p.ssafy.io:5001/data/basket/${localStorage.getItem('id')}`)
             setBasket(response)
-            console.log(response.data)
             for (let i = 0; i < response.data.length; i++) {
                 let keys = Object.keys(response.data[i])
-                console.log(Object.values(response)[0])
-                console.log(keys[0])
                 addSeller(keys[0])
                 for (let j = 0; j < Object.values(response)[0].length; j++) {
                     let values = Object.values(response.data[i][keys])
-                    console.log("value : ", values[j])
                 }
             }
         } catch (error) {
@@ -59,13 +56,11 @@ const Basket = () => {
     }
 
     async function cancelStore(storeId) {
-        console.log(storeId)
         try {
             const response = await axios.delete(`https://k6e203.p.ssafy.io:5001/data/basket-rem`,
                 {
                     data: { "basket_id": storeId, },
                 })
-            console.log(response)
         } catch (error) {
             console.error(error)
         }
@@ -79,7 +74,6 @@ const Basket = () => {
                     "store_user_id": storeId
                 }
             })
-            console.log(response)
             window.location.reload();
         } catch (error) {
             console.error(error)
@@ -92,7 +86,6 @@ const Basket = () => {
         let day = '';
 
         let str = date + '';
-        console.log(str);
         let split = str.split(' ');
 
         switch (split[2]) {
@@ -153,21 +146,9 @@ const Basket = () => {
         CallBasket();
     }, [])
 
-    if (seller.length > 0) {
-        console.log(seller)
-    }
-    if (product.length > 0) {
-        console.log(product)
-    }
-    if (basket !== undefined && basket.length > 0) {
-        console.log(basket)
-        console.log(basket.data)
-        console.log(basket.data[0])
-        console.log(Object.values(basket.data[0]))
-    }
     return (
         <div style={{
-            marginTop: "25%"
+            marginTop: "20%"
         }}>
             <NavBar></NavBar>
             {(basket !== undefined && basket.data.length > 0) ? basket.data.map((value, idx) => (
@@ -176,16 +157,15 @@ const Basket = () => {
                 amountDiscount = 0,
                 amountDiscountedPrice = 0,
                 <div key={idx} className="Basket">
-                    {console.log(Object.values(value)[0])}
-                    <div className="store">
+                    <div className="store" style={{padding: "12px 0 12px 0"}}>
                         {Object.keys(value)}
                     </div>
                     <Table>
                         <colgroup>
                             <col width="25%" />
-                            <col width="35%" />
+                            <col width="30%" />
                             <col width="15%" />
-                            <col width="20%" />
+                            <col width="25%" />
                             <col width="5%" />
                         </colgroup>
                         <thead>
@@ -205,20 +185,18 @@ const Basket = () => {
                                 amountDiscountedPrice += (p.product_discountprice * p.basket_count),
                                 <tbody key={index} style={{ borderBottomWidth: "2px", borderColor: "#F5F5F5" }}>
                                     <tr>
-                                        <td style={{ textAlign: "center", verticalAlign: "middle" }} ><img width="120%" alt="" src={p.product_imagefront} /></td>
+                                        <td style={{ textAlign: "center", verticalAlign: "middle", }} ><img style={{borderRadius:"20px"}} width="100%" alt="" src={p.product_imagefront} /></td>
                                         <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.product_name}</td>
                                         <td style={{ textAlign: "center", verticalAlign: "middle" }} >{p.basket_count}</td>
                                         <td style={{ textAlign: "center", verticalAlign: "middle" }} >{(p.product_discountprice * p.basket_count).toLocaleString()}원</td>
-                                        <td style={{ textAlign: "center", verticalAlign: "middle" }}><button style={{
-                                            borderRadius: "30px",
-                                            border: "none",
-                                            backgroundColor: "red",
-                                            color: "white"
-                                        }} onClick={() => {
-                                            cancelStore(p.basket_id)
+                                        <td style={{ textAlign: "center", verticalAlign: "middle", padding:"0px 0px 0px 0px" }}>
+                                            <button  type="button"
+                                            style={{border:"hidden", backgroundColor:"#fff"}}
+                                        onClick={() => {
+                                            cancelStore(p.basket_id);
                                             window.location.reload();
                                         }
-                                        }>취소</button></td>
+                                        }><img src="img/cancel_button.png" width={"20px"} alt=""/></button></td>
                                     </tr>
                                 </tbody>
                             )
@@ -263,16 +241,10 @@ const Basket = () => {
                         <Button variant="warning" onClick={() => {
                             for (let i = 0; i < Object.values(value)[0].length; i++) {
                                 const element = splitDate2(splitDate(Object.values(value)[0][i].product_expdate));
-                                console.log("element : ", element);
-                                console.log("expdate : ", minExpdate);
                                 if (minExpdate > element) {
-                                    console.log(element, "가 ", minExpdate, "보다 빠름")
                                     minExpdate = element
-                                    console.log(expdate)
                                 }
                                 else if (minExpdate <= element) {
-                                    console.log(minExpdate, "가 ", element, "보다 빠름")
-                                    console.log(minExpdate)
                                 }
                             }
 
