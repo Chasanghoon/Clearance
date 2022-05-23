@@ -15,39 +15,36 @@ import Fade from 'react-reveal/Fade'
 function Main() {
 
   const setNavHeader = NavStore(state => state.setNavHeader);
-  setNavHeader('메인페이지');
+
 
   const pos = useMainStore(state => state.position)
   const bs = marketStore(state => state.bookSet)
 
   const [storeName, setStoreName] = useState("")
-  console.log(bs)
 
   const stores = []
   const [stores_2, setStores] = useState([])
   const nearStore = useMainStore(state => state.nearStore);
   const nearProduct = useMainStore(state => state.nearProduct)
 
-
-
-
+useEffect(()=>{
+  setNavHeader('메인페이지');
+},[])
 
   //--------------------------- top 버튼
-  const scrollToTop = () => {
-    console.log(document.getElementById('rootmains'))
-    document.getElementById('root').scrollTo(0, 0);
-  };
-  const moveToTop = () => {
-    window.scrollTo(0, 1000)
-  }
+  // const scrollToTop = () => {
+  //   document.getElementById('root').scrollTo(0, 0);
+  // };
+  // const moveToTop = () => {
+  //   window.scrollTo(0, 1000)
+  // }
+
   return (
     <div id='rootmains' className='main'>
       <NavBar></NavBar>
       <div style={{ backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)", margin: "10px 5% 10px 5%" }}>
         <Map></Map>
       </div>
-
-      {console.log(nearStore)}
       {nearProduct.length > 0 ? nearStore.map((val, idx) => (
         <div key={idx}>
 
@@ -60,7 +57,7 @@ function Main() {
           }}
           >{val.user_name}</div>
           {nearProduct.filter(value => value.storeUserId === val.user_id).map((value, index) => (
-            <div key={index} className="ProductItem" onClick={() => { console.log("이거", value, storeName) }}>
+            <div key={index} className="ProductItem" onClick={() => {}}>
               <Fade>
                 <div style={{
                   textAlign: "left"
@@ -80,6 +77,7 @@ function Main() {
                   margin: "5px 5px 5px 5px",
                   width: "50%",
                   height: "50%",
+                  borderRadius: "20px"
                 }}
                   alt="" src={value.productImagefront}></img>
                 <div style={{ fontSize: "150%" }}>{value.productName}</div>

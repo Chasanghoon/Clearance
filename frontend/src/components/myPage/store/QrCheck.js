@@ -22,8 +22,6 @@ function QrCheck() {
           result = urls.charAt(i) + result
         else break;
       }
-      console.log(result)
-      console.log(urls);
       localStorage.setItem("bookSet", result)
       navigate("/checkReservation");
     }

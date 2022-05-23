@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { Button, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import NavBar from '../../common/NavBar';
@@ -7,7 +7,9 @@ import BackButton from '../../BackButton';
 
 function StoreMyPage(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
-    setNavHeader("마이페이지");
+    useEffect(()=>{
+        setNavHeader('마이페이지');
+      },[])
 
     return (
         <div className='storeMyPage'>

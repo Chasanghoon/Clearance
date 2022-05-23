@@ -30,7 +30,6 @@ function ProductManagement(props) {
                 setHighlight(result.data);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, [deleteCheck])
@@ -42,13 +41,11 @@ function ProductManagement(props) {
                 setProduct(result.data);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, [selectDate, deleteCheck])
 
     function deleteProduct() {
-        console.log(modalProduct.productId);
         // ! axios delete
         axios
             .delete("https://k6e203.p.ssafy.io:8443/api/product/remove",
@@ -79,7 +76,6 @@ function ProductManagement(props) {
     }
 
     function MyVerticallyCenteredModal(props) {
-        console.log("모달 : " + JSON.stringify(modalProduct));
         return (
             <>
                 {modalProduct !== undefined ?

@@ -16,7 +16,9 @@ import Swal from 'sweetalert2'
 
 function StoreProfile(props) {
     const setNavHeader = NavStore(state => state.setNavHeader);
-    setNavHeader("프로필");
+    useEffect(()=>{
+        setNavHeader('프로필');
+      },[])
 
     const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
@@ -77,7 +79,6 @@ function StoreProfile(props) {
                 setUserImage(result.data.userImage);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, []);
@@ -101,7 +102,6 @@ function StoreProfile(props) {
                 },
             )
             .then(() => {
-                console.log("axios post 성공")
                 Swal.fire({
                     icon: 'success',
                     title: '회원정보 수정!',
@@ -112,7 +112,6 @@ function StoreProfile(props) {
 
             })
             .catch((e) => {
-                console.error("axios post 실패");
                 console.error(e);
             });
     };

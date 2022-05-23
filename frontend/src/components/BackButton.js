@@ -11,8 +11,8 @@ const BackButton = () => {
     return (
         <div className="back">
             <img style={{
-                opacity:"60%"
-            }} width="60px" alt="" src="img/back.png" onClick={() => {
+                opacity:"50%"
+            }} width="50px" alt="" src="img/back.png" onClick={() => {
                 navigate(-1)
             }}/>
         </div>

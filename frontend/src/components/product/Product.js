@@ -11,11 +11,12 @@ import BackButton from "../BackButton";
 const Product = () => {
 
     const setNavHeader = NavStore(state => state.setNavHeader);
-    setNavHeader("제품 상세");
+    useEffect(()=>{
+        setNavHeader('제품상세');
+      },[])
 
     //새로고침 할 때마다 수량이 갱신되어야 함! => 매 새로고침마다 axios를 통해서 db에 있는 데이터를 사용해야 함!
     const product_id = localStorage.getItem("product_id")
-    console.log("이곳에서 사용할 product_id : ", product_id)
 
     const [info, setInfo] = useState({
         category_id: "",
@@ -35,7 +36,6 @@ const Product = () => {
     const getInfo = async () => {
         try {
             const response = await axios.get(`https://k6e203.p.ssafy.io:8443/api/product?productId=${product_id}`)
-            console.log(response)
             setInfo((prev) => ({
                 ...prev,
                 categoryId: response.data.categoryId,
@@ -51,7 +51,7 @@ const Product = () => {
                 storeUserId: response.data.storeUserId,
             }))
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
     const basket_cnt = productStore(state => state.basket_cnt)
@@ -113,10 +113,9 @@ const Product = () => {
                 "product_id": product_id,
                 "basket_count": basket_cnt // 예약할 상품 개수
             })
-            console.log(response)
             setModalShow(true)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -124,18 +123,18 @@ const Product = () => {
         getInfo()
     }, [])
 
-    console.log(info)
     return (
         <div>
             <NavBar></NavBar>
             <div id="product" className="pb-2 pt-2">
                 <div style={{
                     position: "sticky",
-                    marginTop: "5%"
+                    marginTop: "5%",
                 }}>
                     <span style={{
                         float: "left",
-                        marginLeft: "7%"
+                        marginLeft: "7%",
+                        marginBottom: "20px"
                     }}>유통기한 : <span style={{ color: "red" }}>{info.productExpdate}</span></span>
                     <span style={{
                         float: "right",
@@ -145,8 +144,9 @@ const Product = () => {
                 <img style={{
                     width: "50%",
                     height: "50%",
-                    paddingTop: "5%",
-                    fontWeight: "bold"
+                    // paddingTop: "5%",
+                    fontWeight: "bold",
+                    borderRadius:"20px"
                 }} alt="" src={info.productImagefront}></img>
 
                 <div style={{

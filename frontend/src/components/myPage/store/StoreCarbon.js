@@ -94,7 +94,6 @@ function Category(props) {
       </>
     );
   }
-  console.log(content);
   // Chart category 표시 (material UI)
   return <div>{content}</div>;
 }
@@ -102,7 +101,9 @@ function Category(props) {
 function StoreCarbon() {
 
   const setNavHeader = NavStore(state => state.setNavHeader);
-  setNavHeader("탄소발자국");
+  useEffect(()=>{
+    setNavHeader('탄소발자국');
+  },[])
 
   const [data, setData] = useState([]);
   const [skipAngle, setSkipAngle] = useState(1.1);
@@ -132,7 +133,6 @@ function StoreCarbon() {
     axios
       .get(URL)
       .then((result) => {
-        console.log(result.data);
 
         let temp = 0;
         const newData = [];
@@ -164,7 +164,7 @@ function StoreCarbon() {
         setTotalSaveCarbon(temp);
       })
       .catch((e) => {
-        console.log("error");
+        console.error("error");
       });
   }, []);
 

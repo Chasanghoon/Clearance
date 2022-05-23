@@ -20,7 +20,6 @@ function UpdateProduct(props) {
 
     const location = useLocation();
     const data = location.state.data;
-    console.log(data);
 
     const userId = userStore(state => state.userId);
 
@@ -93,7 +92,6 @@ function UpdateProduct(props) {
     const onSubmit = (e) => {
         if (validation()) return;
         if (!checkProductChange) {
-            console.warn("안바뀜!");
             setProductExpDate(notChangeDate(productExpDate));
         }
 
@@ -126,7 +124,6 @@ function UpdateProduct(props) {
 
             })
             .catch((e) => {
-                console.error("axios post 실패");
                 console.error(e);
             });
     };

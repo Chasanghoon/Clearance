@@ -34,7 +34,6 @@ function Login(props) {
 
     const onSubmit = (e) => {
         // ! axios POST
-        console.log("axios post")
         axios
             .post("https://k6e203.p.ssafy.io:8443/api/auth/login",
                 {
@@ -43,7 +42,6 @@ function Login(props) {
                 },
             )
             .then((e) => {
-                console.log("axios post 성공")
                 Swal.fire({
                     icon: 'success',
                     title: 'success!',
@@ -55,7 +53,6 @@ function Login(props) {
                 userData();
             })
             .catch((e) => {
-                console.error("axios post 실패");
                 console.error(e.message);
                 Swal.fire({
                     icon: 'error',
@@ -89,7 +86,6 @@ function Login(props) {
                 }
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }

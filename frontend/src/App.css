@@ -566,7 +566,7 @@ border-radius: 30px;
 
 .reservationResult .reservationTable {
     border-radius: 30px;
-    box-shadow: 3px 3px 3px 30px black;
+    /* box-shadow: 3px 3px 3px 30px black; */
 }
 
 .reservationResult .reservationTableHeader {
@@ -589,10 +589,9 @@ border-radius: 30px;
     background-color: #a2a2ee;
 } */
 .wrap {
-    
     position: absolute;
     left: 0;
-    bottom: 40px;
+    bottom: 30px;
     width: 288px;
     height: 180px;
     margin-left: -130px;
@@ -1618,5 +1617,5 @@ li.react-datepicker__time-list-item--disabled {
 .back {
     position: fixed;
     bottom: 5%;
-    right: 10%;
+    right: 7%;
 }

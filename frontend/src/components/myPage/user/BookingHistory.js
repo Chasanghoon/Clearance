@@ -14,7 +14,9 @@ import BackButton from '../../BackButton';
 function BookingHistory(props) {
 
     const setNavHeader = NavStore(state => state.setNavHeader);
-    setNavHeader("예약 내역");
+    useEffect(()=>{
+        setNavHeader('예약 내역');
+      },[])
 
     const [highlight, setHighlight] = useState();
     const [selectDate, setSelectDate] = useState(new Date());
@@ -35,14 +37,12 @@ function BookingHistory(props) {
     // 유저 예약 날짜 가져오기
     useEffect(() => {
         // ! axios get
-        console.log("axios get")
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/${localStorage.getItem("id")}`)
             .then((result) => {
                 setHighlight(result.data.result);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, []);
@@ -54,7 +54,6 @@ function BookingHistory(props) {
         })
     }
     function setDate(date) {
-        console.log(date);
         setSelectDate(date)
         setSearchDay(splitDate(date));
     }
@@ -63,15 +62,12 @@ function BookingHistory(props) {
     useEffect(() => {
         if (!checkAll) return
         // ! axios get
-        console.log("axios get")
-        console.log("searchDay = " + searchDay);
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/all/${localStorage.getItem("id")}/${searchDay}`)
             .then((result) => {
                 setProduct(result.data.info);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, [selectDate, checkAll]);
@@ -82,11 +78,9 @@ function BookingHistory(props) {
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/calender-detail/progress/${localStorage.getItem("id")}/${searchDay}`)
             .then((result) => {
-                console.log(result.data.info);
                 setProduct(result.data.info);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, [selectDate, checkProgress]);
@@ -100,7 +94,6 @@ function BookingHistory(props) {
                 setProduct(result.data.info);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, [selectDate, checkComplete]);
@@ -130,7 +123,6 @@ function BookingHistory(props) {
     }
 
     function MyVerticallyCenteredModal(props) {
-        console.log("모달 : " + JSON.stringify(modalProduct));
         return (
             <>
                 {modalProduct !== undefined ?
@@ -180,7 +172,6 @@ function BookingHistory(props) {
                 modalQrControl(result.data);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }
@@ -197,7 +188,7 @@ function BookingHistory(props) {
                         inline />
                 </Fade>
 
-                <div className='btnDiv'>
+                <div className='btnDiv' style={{marginBottom:"20px"}}>
                     <Button onClick={changeAll} variant={checkAll === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>전체</Button>
                     <Button onClick={changeProgress} variant={checkProgress === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>거래 진행 중</Button>
                     <Button onClick={changeComplete} variant={checkComplete === true ? 'warning' : 'light'} style={{ margin: "0 5px 0 5px" }}>거래 완료</Button>
@@ -206,7 +197,6 @@ function BookingHistory(props) {
                     <Fade>
                         {product !== undefined && product.length > 0 ?
                             product.map((data, index) => {
-                                console.log("product[" + index + "] = " + JSON.stringify(data[0].user_name));
                                 return (
                                     <>
                                         <div className='bookDiv'>
@@ -237,7 +227,6 @@ function BookingHistory(props) {
                                                 </tr>
                                             </thead>
                                             {data.map((d, i) => {
-                                                console.warn(d);
                                                 return (
                                                     <>
                                                         <tbody key={i} className='bookTbody'>
@@ -352,7 +341,6 @@ function changeDate(date) {
     month = split[1];
     day = split[2];
     let reDate = year + '년 ' + month + '월 ' + day + '일'
-    console.log(reDate);
     return reDate;
 }
 function changeTime(date) {

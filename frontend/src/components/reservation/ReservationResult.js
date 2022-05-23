@@ -14,7 +14,9 @@ const { kakao } = window;
 function ReservationResult(props) {
 
     const setNavHeader = NavStore(state => state.setNavHeader);
-    setNavHeader("예약 완료");
+    useEffect(()=>{
+        setNavHeader('예약완료');
+      },[])
 
     let [loading, setLoading] = useState(true);
 
@@ -80,7 +82,6 @@ function ReservationResult(props) {
             )
         }
         // ! axios get
-        // ! 북셋 어디서 가져오지..?
         axios
             .get(`https://k6e203.p.ssafy.io:5001/data/reservation-complete/${bookSet}`)
             .then((result) => {
@@ -98,7 +99,6 @@ function ReservationResult(props) {
                 timeout();
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, [sellerLat]);
@@ -229,7 +229,7 @@ function ReservationResult(props) {
                                         <tr >
                                             <td>
                                                 <div className='imageDiv2'>
-                                                    <img width="80%" className='imgFile' src={data.product_imagefront} alt="userImage" />
+                                                    <img width="80%" className='imgFile' style={{borderRadius:"20px"}} src={data.product_imagefront} alt="userImage" />
                                                 </div>
                                             </td>
                                             <td style={{ textAlign: "center", verticalAlign: "middle" }} >{data.product_name}</td>
@@ -275,7 +275,7 @@ function ReservationResult(props) {
                     </tbody>
                 </Table>
             </div>
-            <Button className='rvrBtn' onClick={done}>확인 버튼</Button>
+            <Button className='rvrBtn' onClick={done}>확인</Button>
         </div>
 
     );
