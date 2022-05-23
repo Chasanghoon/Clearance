@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService{
         product.setProductPrice(productRegisterRequest.getProduct_price());
         product.setProductName(productRegisterRequest.getProduct_name());
         product.setProductDiscount(productRegisterRequest.getProduct_discount());
-        product.setProductDiscountprice((int) (productRegisterRequest.getProduct_price() * productRegisterRequest.getProduct_discount()));
+        product.setProductDiscountprice((int) (productRegisterRequest.getProduct_price() * (1-productRegisterRequest.getProduct_discount())));
         product.setProductStock(productRegisterRequest.getProduct_stock());
         product.setProductExpdate(productRegisterRequest.getProduct_expDate());
         //이미지 Base64 인코딩 소스로 변환
@@ -152,7 +152,7 @@ public class ProductServiceImpl implements ProductService{
         product.setStoreUserId(productUpdatePutRequest.getStore_user_id());
         product.setProductPrice(productUpdatePutRequest.getProduct_price());
         product.setProductDiscount(productUpdatePutRequest.getProduct_discount());
-        product.setProductDiscountprice((int) (productUpdatePutRequest.getProduct_price() * productUpdatePutRequest.getProduct_discount()));
+        product.setProductDiscountprice((int) (productUpdatePutRequest.getProduct_price() * (1-productUpdatePutRequest.getProduct_discount())));
         product.setProductStock(productUpdatePutRequest.getProduct_stock());
         product.setProductExpdate(productUpdatePutRequest.getProduct_expDate());
         productRepository.save(product);
