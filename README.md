@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-  <img src="./image/Clearance.png" alt="Clearrance" />
+  <img src="./image/mainimage.png" alt="Clearrance" />
   <br />
   <h1>클리어런스</h1>
   <br />
