@@ -2,8 +2,6 @@
   <br />
   <img src="./image/mainimage.png" alt="Clearrance" />
   <br />
-  <h1>클리어런스</h1>
-  <br />
 </div>
 
 ## 목차
