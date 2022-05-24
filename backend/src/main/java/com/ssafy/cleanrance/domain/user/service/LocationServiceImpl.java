@@ -12,6 +12,8 @@ import com.ssafy.cleanrance.domain.user.bean.LocationFind;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,8 +73,11 @@ public class LocationServiceImpl implements LocationService{
         List<Object> obj = new ArrayList<>();
         obj.add(list);
 //        List<List<Product>> productList = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String strDate = now.format(formatter);
         for (LocationFind loca: list) {
-            List<Product> products= productRepository.findProductByStoreUserId(loca.getUser_id());
+            List<Product> products= productRepository.findByProductExpdateGreaterThanEqualAndStoreUserId(strDate,loca.getUser_id());
             obj.add(products);
         }
         return obj;

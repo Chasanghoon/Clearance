@@ -17,11 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> findBystoreUserIdAndProductNameContains(String storeId, String productName, Pageable pageable);
     Page<Product> findBystoreUserId(String storeId, Pageable pageable);
 
-    @Query(value = "select product_id, category_id, store_user_id, product_name, product_price, product_discount, product_discountprice, product_stock, product_expdate, product_imagefront, product_imageback\n" +
-            "from product\n" +
-            "where store_user_id = :storeId and product_expdate >=date_format(now(), '%Y-%m-%d')",nativeQuery = true)
-    List<Product> findProductByStoreUserId(String storeId);
-
     List<Product> findByProductExpdateGreaterThanEqualAndStoreUserIdIn(String strDate, String[] arr);
     List<Product> findByProductExpdateGreaterThanEqualAndStoreUserId(String strDate,String storeId);
     List<Product> findByProductExpdateGreaterThanEqualAndCategoryIdAndStoreUserId(String strDate, int categoryId,String storeId);
