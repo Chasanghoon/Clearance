@@ -2,6 +2,7 @@ package com.ssafy.cleanrance.domain.user.service;
 
 import com.querydsl.core.Tuple;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
+import com.ssafy.cleanrance.domain.product.db.repository.ProductRepository;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySupport;
 import com.ssafy.cleanrance.domain.user.db.entity.Location;
 import com.ssafy.cleanrance.domain.user.db.repository.LocationRepository;
@@ -19,7 +20,7 @@ public class LocationServiceImpl implements LocationService{
     @Autowired
     LocationRepository locationRepository;
     @Autowired
-    ProductRepositorySupport productRepositorySupport;
+    ProductRepository productRepository;
     @Autowired
     LocationRepositorySupport locationRepositorySupport;
     @Override
@@ -71,7 +72,7 @@ public class LocationServiceImpl implements LocationService{
         obj.add(list);
 //        List<List<Product>> productList = new ArrayList<>();
         for (LocationFind loca: list) {
-            List<Product> products= productRepositorySupport.findProductByStoreId(loca.getUser_id());
+            List<Product> products= productRepository.findProductByStoreUserId(loca.getUser_id());
             obj.add(products);
         }
         return obj;
