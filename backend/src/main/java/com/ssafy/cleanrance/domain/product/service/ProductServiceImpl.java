@@ -1,5 +1,4 @@
 package com.ssafy.cleanrance.domain.product.service;
-import com.querydsl.core.Tuple;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
 import com.ssafy.cleanrance.domain.product.db.entity.ProductCategory;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductCategoryRepository;
@@ -8,16 +7,13 @@ import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySuppor
 import com.ssafy.cleanrance.domain.product.request.ProductRegisterRequest;
 import com.ssafy.cleanrance.domain.product.request.ProductStockUpdatePutRequest;
 import com.ssafy.cleanrance.domain.product.request.ProductUpdatePutRequest;
-import com.ssafy.cleanrance.domain.product.response.ProductFindStoreId;
 import com.ssafy.cleanrance.domain.user.db.entity.Location;
 import com.ssafy.cleanrance.domain.user.db.repository.LocationRepository;
 import com.ssafy.cleanrance.global.util.ImageUtil;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.FileUtils;
@@ -26,13 +22,10 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service("productService")
 public class ProductServiceImpl implements ProductService{
@@ -250,23 +243,26 @@ public class ProductServiceImpl implements ProductService{
         for(int i=0; i<n; i++){
             arr[i] = loc.get(i);
         }
-        List<Product> list = new ArrayList<>();
+        List<Product> list;
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String strDate = now.format(formatter);
         if(storeId.equals("") && categoryId == 20 && word.equals("")){    //매장, 카테고리, 검색어 입력 안 한 경우
-            list = productRepositorySupport.findProduct(arr);
+            list = productRepository.findByProductExpdateGreaterThanEqualAndStoreUserIdIn(strDate,arr);
         }else if(!storeId.equals("") && categoryId == 20 && word.equals("")){ //매장만 선택 했을 경우
-            list = productRepositorySupport.findProductByStoreId(storeId);
+            list = productRepository.findByProductExpdateGreaterThanEqualAndStoreUserId(strDate,storeId);
         }else if(!storeId.equals("") && categoryId != 20 && word.equals("")){ //매장과 카테고리 선택했을 경우
-            list = productRepositorySupport.findProductByStoreIdAndCategoryId(storeId,categoryId);
+            list = productRepository.findByProductExpdateGreaterThanEqualAndCategoryIdAndStoreUserId(strDate,categoryId,storeId);
         }else if(!storeId.equals("") && categoryId == 20 && !word.equals("")){ //매장, 검색 했을 경우
-            list = productRepositorySupport.findProductByStoreIdAndWord(storeId, word);
+            list = productRepository.findByProductExpdateGreaterThanEqualAndStoreUserIdAndProductNameContains(strDate,storeId, word);
         }else if(storeId.equals("") && categoryId == 20 && !word.equals("")){ //검색했을 경우
-            list = productRepositorySupport.findProductByWord(arr, word);
+            list = productRepository.findByProductExpdateGreaterThanEqualAndProductNameContainsAndStoreUserIdIn(strDate,word, arr);
         }else if(storeId.equals("") && categoryId !=20 && word.equals("")){ //카테고리 선택했을 경우
-            list = productRepositorySupport.findProductByCategoryId(arr, categoryId);
+            list = productRepository.findByProductExpdateGreaterThanEqualAndStoreUserIdInAndCategoryId(strDate,arr, categoryId);
         }else if(storeId.equals("")& categoryId !=20 && !word.equals("")){ //카테고리와 검색 했을 경우
-            list =productRepositorySupport.findProductByCategoryIdAndWord(arr, categoryId, word);
+            list =productRepository.findByProductExpdateGreaterThanEqualAndStoreUserIdInAndCategoryIdAndProductNameContains(strDate, arr, categoryId, word);
         }else{                                                      //셋다 입력한 경우
-            list= productRepositorySupport.findProductByStoreIdAndCategoryIdAndWord(storeId,categoryId,word);
+            list= productRepository.findByProductExpdateGreaterThanEqualAndStoreUserIdAndCategoryIdAndProductNameContains(strDate,storeId,categoryId,word);
         }
         return list;
     }

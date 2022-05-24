@@ -21,7 +21,16 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "from product\n" +
             "where store_user_id = :storeId and product_expdate >=date_format(now(), '%Y-%m-%d')",nativeQuery = true)
     List<Product> findProductByStoreUserId(String storeId);
-//    @Query(value = "select product_imagefront, product_name, product_stock, product_expdate\n" +
+
+    List<Product> findByProductExpdateGreaterThanEqualAndStoreUserIdIn(String strDate, String[] arr);
+    List<Product> findByProductExpdateGreaterThanEqualAndStoreUserId(String strDate,String storeId);
+    List<Product> findByProductExpdateGreaterThanEqualAndCategoryIdAndStoreUserId(String strDate, int categoryId,String storeId);
+    List<Product> findByProductExpdateGreaterThanEqualAndStoreUserIdAndProductNameContains(String strDate, String streId, String word);
+    List<Product> findByProductExpdateGreaterThanEqualAndProductNameContainsAndStoreUserIdIn(String strDate,String word, String[] arr);
+    List<Product> findByProductExpdateGreaterThanEqualAndStoreUserIdInAndCategoryId(String strDate, String[] arr,int categoryId);
+    List<Product> findByProductExpdateGreaterThanEqualAndStoreUserIdInAndCategoryIdAndProductNameContains(String strDate,String[] arr,int categoryId, String word);
+    List<Product> findByProductExpdateGreaterThanEqualAndStoreUserIdAndCategoryIdAndProductNameContains(String strDate, String storeId, int categoryId, String word);
+    //    @Query(value = "select product_imagefront, product_name, product_stock, product_expdate\n" +
 //            "from product\n" +
 //            "where store_user_id=:userId and product_expdate=:date", nativeQuery = true)
 //    List<Product> findProductByDate(String userId, String date);
