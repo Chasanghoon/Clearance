@@ -94,7 +94,7 @@ function AllProductManagement(props) {
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>원가</td>
-                                        <td>{modalProduct.productPrice}</td>
+                                        <td>{(modalProduct.productPrice).toLocaleString()}원</td>
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>할인 율</td>
@@ -102,7 +102,7 @@ function AllProductManagement(props) {
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>할인가</td>
-                                        <td>{modalProduct.productDiscountprice}원</td>
+                                        <td>{(modalProduct.productDiscountprice).toLocaleString()}원</td>
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>재고</td>
