@@ -15,7 +15,6 @@ function CheckReservation() {
     let navigate = useNavigate();
 
     async function complete(bookSet) {
-        console.log(bookSet)
         try {
             const response = await axios.put(`https://k6e203.p.ssafy.io:8443/api/book/modifybookset`,
                 {
@@ -35,18 +34,15 @@ function CheckReservation() {
     const CallResvationInfo = async () => {
         try {
             const response = await axios.get(`https://k6e203.p.ssafy.io:8443/api/book/qrcode/list?bookSet=${localStorage.getItem("bookSet")}`)
-            console.log(response)
             setBooks(response.data)
-            console.log(books)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
     useEffect(() => {
         setNavHeader("예약 확인");
         CallResvationInfo();
     }, [])
-    console.log(books)
     return (
         <div>
             <NavBar></NavBar>

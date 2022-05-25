@@ -30,7 +30,6 @@ function ProductManagement(props) {
                 setHighlight(result.data);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, [deleteCheck])
@@ -42,13 +41,11 @@ function ProductManagement(props) {
                 setProduct(result.data);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, [selectDate, deleteCheck])
 
     function deleteProduct() {
-        console.log(modalProduct.productId);
         // ! axios delete
         axios
             .delete("https://k6e203.p.ssafy.io:8443/api/product/remove",
@@ -79,7 +76,6 @@ function ProductManagement(props) {
     }
 
     function MyVerticallyCenteredModal(props) {
-        console.log("모달 : " + JSON.stringify(modalProduct));
         return (
             <>
                 {modalProduct !== undefined ?
@@ -102,7 +98,7 @@ function ProductManagement(props) {
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>원가</td>
-                                        <td>{modalProduct.productPrice}</td>
+                                        <td>{(modalProduct.productPrice).toLocaleString()}원</td>
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>할인 율</td>
@@ -110,7 +106,7 @@ function ProductManagement(props) {
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>할인가</td>
-                                        <td>{modalProduct.productDiscountprice}원</td>
+                                        <td>{(modalProduct.productDiscountprice).toLocaleString()}원</td>
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>재고</td>
@@ -165,9 +161,9 @@ function ProductManagement(props) {
                         <Table>
                             <colgroup>
                                 <col width="25%" />
-                                <col width="40%" />
-                                <col width="15%" />
-                                <col width="20%" />
+                                <col width="37%" />
+                                <col width="13%" />
+                                <col width="25%" />
                             </colgroup>
                             <thead className='pmThead'>
                                 <tr>

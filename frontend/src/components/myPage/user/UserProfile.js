@@ -54,7 +54,6 @@ function UserProfile(props) {
     };
 
     const validation = () => {
-        console.log("userEmail = " + userEmail.length);
         if (!userName) setUserNameError(true);
         if (!userEmail) setEmailError(true);
         if (!userPhone) setPhoneError(true);
@@ -79,7 +78,6 @@ function UserProfile(props) {
                 setUserImage(result.data.userImage);
             })
             .catch((e) => {
-                console.error("axios get 실패");
                 console.error(e)
             });
     }, []);
@@ -88,7 +86,6 @@ function UserProfile(props) {
         if (validation()) return;
 
         // ! axios POST
-        console.log("axios post")
         axios
             .put("https://k6e203.p.ssafy.io:8443/api/member",
                 {
@@ -104,7 +101,6 @@ function UserProfile(props) {
                 },
             )
             .then(() => {
-                console.log("axios post 성공")
                 Swal.fire({
                     icon: 'success',
                     title: '회원수정 완료!',
@@ -115,7 +111,6 @@ function UserProfile(props) {
 
             })
             .catch((e) => {
-                console.error("axios post 실패");
                 console.error(e);
             });
     };

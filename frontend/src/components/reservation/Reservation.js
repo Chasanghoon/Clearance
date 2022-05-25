@@ -19,7 +19,9 @@ import BackButton from '../BackButton';
 function Reservation(props) {
 
     const setNavHeader = NavStore(state => state.setNavHeader);
-    setNavHeader("예약 진행");
+    useEffect(()=>{
+        setNavHeader('예약진행');
+      },[])
 
     const [startDate, setStartDate] = useState();
     const [startTime, setStartTime] = useState();
@@ -46,7 +48,6 @@ function Reservation(props) {
         setSaveTime(e)
     };
 
-    console.log("여기로 온 expdate : ", expdate)
     const validation = () => {
         if (!saveData) setSaveDataError(true);
         if (!saveTime) setSaveTimeError(true);
@@ -56,7 +57,6 @@ function Reservation(props) {
     };
 
     useEffect(() => {
-        console.log(storeId);
         splitDate2(expdate);
         // ! axios get
         axios
@@ -74,11 +74,9 @@ function Reservation(props) {
     }, []);
 
     const submit = () => {
-
+        
         if (validation()) return;
-
         // ! axios POST
-        console.log("axios post")
         axios
             .post(`https://k6e203.p.ssafy.io:5001/data/reservation-add`,
                 {
@@ -90,8 +88,6 @@ function Reservation(props) {
             )
             .then((e) => {
                 setBookSet(e.data.book_set);
-                console.error(e.data.book_set);
-                console.log("axios post 성공")
                 Swal.fire({
                     icon: 'success',
                     title: '예약 완료!',
@@ -101,7 +97,6 @@ function Reservation(props) {
                 navigate("/reservationResult");
             })
             .catch((e) => {
-                console.error("axios post 실패");
                 console.error(e.message);
             });
     };
@@ -223,7 +218,6 @@ function splitDate(date) {
 function splitTime(time) {
 
     let str = time + '';
-    console.log(str);
     let split = str.split(' ');
 
     let reTime = split[4];
@@ -238,11 +232,8 @@ function splitDate2(date) {
     let str = date + '';
 
     year = str.substring(0, 4);
-    console.log('year: ', year);
     month = str.substring(4, 6);
-    console.log('month: ', month);
     day = str.substring(6, 8);
-    console.log('day: ', day);
 
 
     let reDate = year + "-" + month + "-" + day

@@ -94,7 +94,7 @@ function SignupStore() {
     };
 
     const checkLicenseNum = () => {
-        alert("사업자 등록번호 확인 : " + licenseNum);
+        // alert("사업자 등록번호 확인 : " + licenseNum);
 
         axios
             .post("https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=2LlEyKxqr1YfX0CBc7emYGAsWH2IYBHaW3%2FaUCe68sdkVkrNRiRCjvdwbGZ3Z4MqvbUQTa%2BgMx0sxGXW%2F4fsrA%3D%3D",
@@ -106,17 +106,25 @@ function SignupStore() {
             .then((e) => {
                 const checkTaxType = "국세청에 등록되지 않은 사업자등록번호입니다.";
                 if (e.data.data[0].tax_type !== checkTaxType) {
-                    console.log("정상 처리.");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'success!',
+                        // text: '사업자 등록 번호 인증이 완료되었습니다!',
+                        html: '사업자 등록 번호 인증이<br> 완료되었습니다!',
+                      })
                     setLicenseNumCheck(false);
                 } else {
-                    console.log("오류 처리");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '사업자 등록 번호를 확인해주세요!',
+                      })
                     setLicenseNumError(false);
                     setLicenseNumCheck(true);
                 }
             })
             .catch((e) => {
-                console.log("사업자 등록번호 확인 실패");
-                console.log(e);
+                console.error(e);
             })
 
     }
@@ -149,7 +157,6 @@ function SignupStore() {
                 },
             )
             .then(() => {
-                console.log("axios post 성공")
                 Swal.fire({
                     icon: 'success',
                     title: '회원가입 완료!',
@@ -162,8 +169,6 @@ function SignupStore() {
 
             })
             .catch((e) => {
-                console.log(e.response.data);
-                console.error("axios post 실패");
                 console.error(e);
             });
     };

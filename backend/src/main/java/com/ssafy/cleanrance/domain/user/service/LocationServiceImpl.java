@@ -2,6 +2,7 @@ package com.ssafy.cleanrance.domain.user.service;
 
 import com.querydsl.core.Tuple;
 import com.ssafy.cleanrance.domain.product.db.entity.Product;
+import com.ssafy.cleanrance.domain.product.db.repository.ProductRepository;
 import com.ssafy.cleanrance.domain.product.db.repository.ProductRepositorySupport;
 import com.ssafy.cleanrance.domain.user.db.entity.Location;
 import com.ssafy.cleanrance.domain.user.db.repository.LocationRepository;
@@ -11,6 +12,8 @@ import com.ssafy.cleanrance.domain.user.bean.LocationFind;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +22,7 @@ public class LocationServiceImpl implements LocationService{
     @Autowired
     LocationRepository locationRepository;
     @Autowired
-    ProductRepositorySupport productRepositorySupport;
+    ProductRepository productRepository;
     @Autowired
     LocationRepositorySupport locationRepositorySupport;
     @Override
@@ -70,8 +73,11 @@ public class LocationServiceImpl implements LocationService{
         List<Object> obj = new ArrayList<>();
         obj.add(list);
 //        List<List<Product>> productList = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String strDate = now.format(formatter);
         for (LocationFind loca: list) {
-            List<Product> products= productRepositorySupport.findProductByStoreId(loca.getUser_id());
+            List<Product> products= productRepository.findByProductExpdateGreaterThanEqualAndStoreUserId(strDate,loca.getUser_id());
             obj.add(products);
         }
         return obj;

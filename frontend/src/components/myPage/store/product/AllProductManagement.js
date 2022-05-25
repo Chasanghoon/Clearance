@@ -62,7 +62,6 @@ function AllProductManagement(props) {
                 setDelectCheck(!deleteCheck);
             })
             .catch((e) => {
-                // console.error("axios get 실패");
                 console.error(e)
             });
     }
@@ -73,7 +72,6 @@ function AllProductManagement(props) {
     }
 
     function MyVerticallyCenteredModal(props) {
-        console.log("모달 : " + JSON.stringify(modalProduct));
         return (
             <>
                 {modalProduct !== undefined ?
@@ -96,7 +94,7 @@ function AllProductManagement(props) {
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>원가</td>
-                                        <td>{modalProduct.productPrice}</td>
+                                        <td>{(modalProduct.productPrice).toLocaleString()}원</td>
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>할인 율</td>
@@ -104,7 +102,7 @@ function AllProductManagement(props) {
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>할인가</td>
-                                        <td>{modalProduct.productDiscountprice}원</td>
+                                        <td>{(modalProduct.productDiscountprice).toLocaleString()}원</td>
                                     </tr>
                                     <tr>
                                         <td className='nameTd'>재고</td>
@@ -168,18 +166,14 @@ function AllProductManagement(props) {
 
     function changePagination() {
         showItems = [];
-        console.log("firstPage = " + firstPage);
-        console.log("lastPage = " + lastPage);
         for (let number = firstPage; number <= lastPage; number++) {
             showItems.push(
                 items[number - 1]
             );
         }
-        console.warn();
     }
 
     function test(number) {
-        console.log(number + " 눌렀따");
         setPage(number)
     };
 
