@@ -238,7 +238,7 @@ function BookingHistory(props) {
                                                                 </td>
                                                                 <td className='bookTd' >{d.product_name}</td>
                                                                 <td className='bookTd'>{d.basket_count}</td>
-                                                                <td className='bookTd'>{d.product_discountprice}원</td>
+                                                                <td className='bookTd'>{(d.product_discountprice).toLocaleString()}원</td>
                                                             </tr>
                                                         </tbody>
                                                     </>
