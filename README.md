@@ -108,7 +108,7 @@
 
 |                                                               메인                                                               |
 | :------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./image/main.JPG" alt="메인 페이지" height="400px"/> <img src="./image/product.JPG" alt="메인 페이지" height="400px"/> |
+| <img src="./image/Main1.png" alt="메인 페이지" height="400px"/> <img src="./image/detail1.png" alt="메인 페이지" height="400px"/> |
 
 ### 예약
 
@@ -118,7 +118,7 @@
 
 |                                                                                              예약                                                                                              |
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./image/basket.JPG" alt="장바구니" height="400px"/> <img src="./image/book_ing.JPG" alt="예약진행" height="400px"/> <img src="./image/book_done.JPG" alt="예약완료" height="400px"/> |
+| <img src="./image/basker1.png" alt="장바구니" width = "250px" height="400px"/> <img src="./image/se1.png" alt="예약진행" width = "250px" height="400px"/> <img src="./image/se2.png" alt="예약완료" width = "250px" height="400px"/> |
 
 ### 마이페이지
 
@@ -129,8 +129,8 @@
 
 | 마이페이지 |                                                                                                                                                                                                             |
 | :--------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|    매장    | <img src="./image/storemypage.JPG" alt="마이페이지" height="400px"/> <img src="./image/storeManage.JPG" alt="상품관리" height="400px"/> <img src="./image/storeManage2.JPG" alt="상품관리" height="400px"/> |
-|   구매자   | <img src="./image/userMypage.JPG" alt="마이페이지" height="400px"/> <img src="./image/reservList.JPG" alt="예약리스트" height="400px"/> <img src="./image/reserve.JPG" alt="예약리스트" height="400px"/>    |
+|    매장    | <img src="./image/store1.JPG" alt="마이페이지"  width="200px" height="400px"/> <img src="./image/store2.JPG" alt="상품관리" width="200px" height="400px"/> <img src="./image/store2 (2).JPG" alt="상품관리" width="200px" height="400px"/> |
+|   구매자   | <img src="./image/user1.png" alt="마이페이지" width="200px" height="400px"/> <img src="./image/user2.png" alt="예약리스트" width="200px" height="400px"/>    |
 
 ### QR코드
 
@@ -140,7 +140,7 @@
 
 |                                                                     QR코드                                                                     |
 | :--------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./image/QRcode.JPG" height="400px"/> <img src="./image/storeQR.JPG" height="400px"/> <img src="./image/storeOK.JPG" height="400px"/> |
+| <img src="./image/QRcr.png" height="400px"/> <img src="./image/QRsc.png" height="400px"/> <img src="./image/qr3.png" height="400px"/> |
 
 ### 탄소 발자국
 
@@ -149,7 +149,7 @@
 
 |                탄소 발자국                 |
 | :----------------------------------------: |
-| <img src="./image/co.JPG" height="400px"/> |
+| <img src="./image/co22.png" height="400px"/> |
 
 <div id="5"></div>
 
